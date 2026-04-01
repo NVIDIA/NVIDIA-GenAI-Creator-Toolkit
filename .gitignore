@@ -1,0 +1,17 @@
+# Models — too large for git
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.bin
+*.gguf
+
+# Generated outputs
+output/
+outputs/
+
+# ComfyUI state
+*.log
+__pycache__/
+.DS_Store
+Thumbs.db

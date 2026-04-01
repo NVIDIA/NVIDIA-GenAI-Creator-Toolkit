@@ -1,0 +1,15 @@
+{
+  "last_node_id": 1,
+  "last_link_id": 0,
+  "nodes": [],
+  "links": [],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 1,
+      "offset": [0, 0]
+    }
+  },
+  "version": 0.4
+}
