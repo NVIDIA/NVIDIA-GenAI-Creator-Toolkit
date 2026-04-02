@@ -3,12 +3,12 @@
 Total storage: ~29 GB
 VRAM: 12–16 GB
 
-| Model | Size | Source |
-|-------|------|--------|
-| Qwen Image Edit 2511 BF16 | 13.5 GB | `Qwen/Qwen-Image-Edit-2511` |
-| Qwen 2.5 VL 7B Text Encoder | 14.5 GB | `Qwen/Qwen2.5-VL-7B` |
-| Qwen Image VAE | 170 MB | bundled |
-| Qwen Sharp Gaussian Splat LoRA | 500 MB | DLI course asset — trained specifically for Gaussian Splat scene fill |
-| Qwen Lightning 8-step LoRA | 500 MB | bundled |
+| Model | File | Size | Source |
+|-------|------|------|--------|
+| Qwen Image Edit 2511 BF16 | `qwen_image_edit_2511_bf16.safetensors` | 13.5 GB | [Comfy-Org/Qwen-Image-Edit_ComfyUI](https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_2511_bf16.safetensors) |
+| Qwen 2.5 VL 7B Text Encoder | `qwen_2.5_vl_7b.safetensors` | 14.5 GB | [Comfy-Org/Qwen-Image_ComfyUI](https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b.safetensors) |
+| Qwen Image VAE | `qwen_image_vae.safetensors` | 170 MB | [Comfy-Org/Qwen-Image_ComfyUI](https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors) |
+| Qwen Lightning 8-step LoRA | `Qwen-Image-Lightning-8steps-V2.0.safetensors` | 500 MB | [lightx2v/Qwen-Image-Lightning](https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/main/Qwen-Image-Lightning-8steps-V2.0.safetensors) |
+| Qwen Sharp Gaussian Splat LoRA | `Qwen2511SharpGaussianSplat.safetensors` | 500 MB | [dx8152/Qwen-Image-Edit-2511-Gaussian-Splash](https://huggingface.co/dx8152/Qwen-Image-Edit-2511-Gaussian-Splash) |
 
-> If you ran Module 04, the base Qwen models and the SHARP model are already downloaded — this module adds only the Gaussian Splat-specific LoRA on top.
+> The base Qwen Image Edit 2511 stack is shared with Modules 03, 06, and Bonus A. If you've run any of those, the large models are already downloaded.

@@ -1,11 +1,11 @@
 # Custom Nodes — Module 02: Image Deconstruction
 
-This module uses extended ComfyUI core nodes bundled with the Qwen Image Layered model package. No third-party node packs required beyond the model's companion nodes.
+Install via ComfyUI Manager → Install Missing Custom Nodes.
 
-| Node | Source | Purpose |
-|------|--------|---------|
-| `ReferenceLatent` | Bundled with Qwen Image Layered | Latent reference conditioning |
-| `EmptyQwenImageLayeredLatentImage` | Bundled with Qwen Image Layered | Initialize layered latent space |
-| `LatentCutToBatch` | Bundled with Qwen Image Layered | Split latent tensor into individual layer outputs |
+| Node Pack | Repo | Key Nodes |
+|-----------|------|-----------|
+| ComfyUI-TextureAlchemy | [amtarr/ComfyUI-TextureAlchemy](https://github.com/amtarr/ComfyUI-TextureAlchemy) (branch: `Sandbox`) | `ReferenceLatent`, `EmptyQwenImageLayeredLatentImage`, `LatentCutToBatch`, `ModelSamplingAuraFlow` |
+| ComfyUI-WJNodes | [807502278/ComfyUI-WJNodes](https://github.com/807502278/ComfyUI-WJNodes) | Utility nodes |
+| ComfyUI-Easy-Use | [yolain/ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use) | `GetImageSize`, helper nodes |
 
-Install the model via ComfyUI Manager — the companion nodes install automatically alongside it.
+> **Note:** ComfyUI-TextureAlchemy must be cloned from the `Sandbox` branch specifically — the default branch does not include the Qwen Layered nodes.

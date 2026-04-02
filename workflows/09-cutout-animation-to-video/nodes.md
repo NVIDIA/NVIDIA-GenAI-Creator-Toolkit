@@ -1,11 +1,21 @@
 # Custom Nodes — Module 09: Cutout Animation to Video
 
-| Node / Pack | Source | Purpose |
-|-------------|--------|---------|
-| TTM Custom Node | DLI course asset | Trajectory mask processing for Wan TTM video generation |
-| VideoPrep-Nodes | DLI course asset | Prerequisite helper — generates first/last frames, rough animation pass, and subject mask |
-| VideoHelperSuite | [Kosinkadink/ComfyUI-VideoHelperSuite](https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite) | Video load/save, frame extraction |
+Two workflows are included: `videoprep.json` (run first) and `workflow.json` (TTM generation).
 
-**Important:** The VideoPrep-Nodes suite is a direct prerequisite. Run the VideoPrep workflow first to generate the inputs that TTM requires (first frame, last frame, rough 2D trajectory video, subject mask).
+## VideoPrep workflow (`videoprep.json`)
 
-VideoPrep-Nodes also solves the "mask drift" problem — it includes a Preview Bridge that preserves painted masks that would otherwise be lost in standard ComfyUI preview nodes.
+| Node Pack | Repo | Purpose |
+|-----------|------|---------|
+| comfy_nv_video_prep | [NVIDIA/comfy_nv_video_prep](https://github.com/NVIDIA/comfy_nv_video_prep) | TTM trajectory mask prep, SAM2-based click-to-segment, mask bridge |
+| ComfyUI-KJNodes | [kijai/ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes) | Utility nodes |
+| ComfyUI-Custom-Scripts | [pythongosssss/ComfyUI-Custom-Scripts](https://github.com/pythongosssss/ComfyUI-Custom-Scripts) | `StringFunction|pysssss` |
+| ComfyUI_essentials | [cubiq/ComfyUI_essentials](https://github.com/cubiq/ComfyUI_essentials) | Utility nodes |
+| ComfyUI-Inpaint-CropAndStitch | [lquesada/ComfyUI-Inpaint-CropAndStitch](https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch) | Inpainting crop/stitch |
+| comfyui-sam2 | [neverbiasu/ComfyUI-SAM2](https://github.com/neverbiasu/ComfyUI-SAM2) | Click-to-segment subject mask |
+| ComfyUI-VideoHelperSuite | [Kosinkadink/ComfyUI-VideoHelperSuite](https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite) | Video I/O, frame extraction |
+
+## TTM workflow (`workflow.json`)
+
+Reuses the same node packs as VideoPrep — no additional installs required.
+
+**Run VideoPrep first.** It generates the first frame, last frame, trajectory video, and subject mask that `workflow.json` requires as inputs.

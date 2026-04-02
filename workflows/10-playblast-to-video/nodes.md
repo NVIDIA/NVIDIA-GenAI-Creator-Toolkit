@@ -1,12 +1,13 @@
 # Custom Nodes — Module 10: Playblast to Video
 
-| Node Pack | Repo | Purpose |
-|-----------|------|---------|
-| ComfyUI-WanVideoWrapper | [kijai/ComfyUI-WanVideoWrapper](https://github.com/kijai/ComfyUI-WanVideoWrapper) | Wan2.2 model loading and Vid2Vid generation |
-| VideoHelperSuite | [Kosinkadink/ComfyUI-VideoHelperSuite](https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite) | Video I/O, frame extraction |
-| comfyui_controlnet_aux | [Fannovel16/comfyui_controlnet_aux](https://github.com/Fannovel16/comfyui_controlnet_aux) | Canny edge extraction from beauty render |
+| Node Pack | Repo | Key Nodes |
+|-----------|------|-----------|
+| ComfyUI-WanVideoWrapper | [kijai/ComfyUI-WanVideoWrapper](https://github.com/kijai/ComfyUI-WanVideoWrapper) | `WanVideoModelLoader`, `WanVideoVACEEncode`, `WanVideoSampler`, `WanVideoDecode`, `WanVideoExtraModelSelect` and related |
+| ComfyUI-VideoHelperSuite | [Kosinkadink/ComfyUI-VideoHelperSuite](https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite) | `VHS_LoadVideo`, `VHS_VideoCombine`, `VHS_VideoInfo` |
+| ComfyUI-KJNodes | [kijai/ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes) | `ImageResizeKJv2`, `GetImageSizeAndCount`, `FloatConstant`, `INTConstant`, `StringToFloatList` |
+| ComfyUI-Lotus | [kijai/ComfyUI-Lotus](https://github.com/kijai/ComfyUI-Lotus) | `LoadLotusModel`, `LotusSampler` (depth estimation from video frames) |
+| radiance | [fxtdstudios/radiance](https://github.com/fxtdstudios/radiance) | `FXTDAIUpscale`, `FXTDFilmLook`, `FXTDProUpscale` |
+| cg-use-everywhere | [chrisgoringe/cg-use-everywhere](https://github.com/chrisgoringe/cg-use-everywhere) | `Seed Everywhere` |
+| ComfyUI-Custom-Scripts | [pythongosssss/ComfyUI-Custom-Scripts](https://github.com/pythongosssss/ComfyUI-Custom-Scripts) | `StringFunction\|pysssss` |
 
-**External requirement:** Your 3D application (Blender, Maya, Cinema 4D, Unreal) must export:
-1. Beauty/color render video
-2. Depth pass video (normalized Z-depth)
-3. Canny/Edge pass (can be generated in-workflow from the beauty render using comfyui_controlnet_aux)
+> This workflow uses **WAN VACE** (Video Annotated Conditioning for Editing) for video-conditioned generation. Lotus handles depth estimation from the input video frames for conditioning — no separate depth pass export from your 3D application is required.

@@ -1,9 +1,13 @@
 # Custom Nodes — Module 07: Panorama to HDRI
 
-| Node | Purpose |
-|------|---------|
-| `LuminanceStackProcessor5Stops` | Merges 5 exposure images into HDR using the Debevec algorithm |
-| `SaveImageOpenEXR` | Exports 32-bit EXR / HDRI file |
-| `AutoContrastLevels` | Automatic histogram adjustment per exposure pass |
+Install via ComfyUI Manager → Install Missing Custom Nodes.
 
-These nodes were built for the DLI course. Install via ComfyUI Manager — search by node name. They ship alongside the Marigold wrapper extensions used in Bonus B.
+| Node Pack | Repo | Key Nodes |
+|-----------|------|-----------|
+| ComfyUI-TextureAlchemy | [amtarr/ComfyUI-TextureAlchemy](https://github.com/amtarr/ComfyUI-TextureAlchemy) (branch: `Sandbox`) | `LuminanceStackProcessor5Stops`, `SaveImageOpenEXR`, `AutoContrastLevels` |
+
+- `LuminanceStackProcessor5Stops` — merges 5 exposure images into HDR using the Debevec algorithm
+- `SaveImageOpenEXR` — exports 32-bit EXR / HDRI file
+- `AutoContrastLevels` — automatic histogram adjustment per exposure pass
+
+> **Note:** ComfyUI-TextureAlchemy must be cloned from the `Sandbox` branch. These HDRI-specific nodes are part of the same package used across Modules 02–06 and Bonus A+B.

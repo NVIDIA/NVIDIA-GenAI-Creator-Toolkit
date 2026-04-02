@@ -3,12 +3,6 @@
 # No UI. Run from the ComfyUI root directory:
 #   bash /path/to/comfyui-generative-ai-workflows/install.sh
 #
-# What this does:
-#   1. Installs ComfyUI-Manager (if not already present)
-#   2. Clones all required custom node packs
-#   3. Installs each pack's Python dependencies
-#   4. Prompts you to install Ollama (required for Module 01)
-#
 # Does NOT download models — see each module's models.md for that.
 
 set -e
@@ -28,13 +22,18 @@ mkdir -p "$NODES_DIR"
 install_node() {
   local name="$1"
   local repo="$2"
+  local branch="${3:-}"
   local dir="$NODES_DIR/$name"
 
   if [ -d "$dir" ]; then
     echo "  [skip] $name already installed"
   else
     echo "  [install] $name"
-    git clone --depth 1 "$repo" "$dir"
+    if [ -n "$branch" ]; then
+      git clone --depth 1 --branch "$branch" "$repo" "$dir"
+    else
+      git clone --depth 1 "$repo" "$dir"
+    fi
   fi
 
   if [ -f "$dir/requirements.txt" ]; then
@@ -47,8 +46,17 @@ echo "=== ComfyUI Manager ==="
 install_node "ComfyUI-Manager" "https://github.com/ltdrdata/ComfyUI-Manager"
 
 echo ""
+echo "=== Modules 01 + 02 — Qwen utilities ==="
+install_node "ComfyUI-WJNodes" "https://github.com/807502278/ComfyUI-WJNodes"
+install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use"
+
+echo ""
 echo "=== Module 01 — LLM Prompt Enhancer ==="
-install_node "ComfyUI-Ollama" "https://github.com/stavsap/ComfyUI-Ollama"
+install_node "comfyui-ollama" "https://github.com/stavsap/comfyui-ollama"
+
+echo ""
+echo "=== Modules 02–07, Bonus A+B — TextureAlchemy (Qwen/HDRI custom nodes) ==="
+install_node "ComfyUI-TextureAlchemy" "https://github.com/amtarr/ComfyUI-TextureAlchemy" "Sandbox"
 
 echo ""
 echo "=== Modules 04 + 05 — Gaussian Splat ==="
@@ -56,14 +64,28 @@ install_node "ComfyUI-Sharp" "https://github.com/PozzettiAndrea/ComfyUI-Sharp"
 install_node "ComfyUI-GeometryPack" "https://github.com/PozzettiAndrea/ComfyUI-GeometryPack"
 
 echo ""
-echo "=== Module 08 — Trellis2 ==="
+echo "=== Module 08 — Trellis2 3D ==="
 install_node "ComfyUI-TRELLIS2" "https://github.com/PozzettiAndrea/ComfyUI-TRELLIS2"
 
 echo ""
-echo "=== Modules 09 + 10 — Wan Video ==="
-install_node "ComfyUI-WanVideoWrapper" "https://github.com/kijai/ComfyUI-WanVideoWrapper"
+echo "=== Module 09 — Cutout Animation (VideoPrep + TTM) ==="
+install_node "comfy_nv_video_prep" "https://github.com/NVIDIA/comfy_nv_video_prep"
+install_node "ComfyUI-Custom-Scripts" "https://github.com/pythongosssss/ComfyUI-Custom-Scripts"
+install_node "ComfyUI_essentials" "https://github.com/cubiq/ComfyUI_essentials"
+install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch"
+install_node "comfyui-sam2" "https://github.com/neverbiasu/ComfyUI-SAM2"
 install_node "ComfyUI-VideoHelperSuite" "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
-install_node "comfyui_controlnet_aux" "https://github.com/Fannovel16/comfyui_controlnet_aux"
+
+echo ""
+echo "=== Module 10 — Playblast to Video (Wan VACE) ==="
+install_node "ComfyUI-WanVideoWrapper" "https://github.com/kijai/ComfyUI-WanVideoWrapper"
+install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes"
+install_node "cg-use-everywhere" "https://github.com/chrisgoringe/cg-use-everywhere"
+install_node "radiance" "https://github.com/fxtdstudios/radiance"
+
+echo ""
+echo "=== Modules 10 + Bonus B — Lotus depth estimation ==="
+install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus"
 
 echo ""
 echo "=== Bonus B — Texture to PBR ==="

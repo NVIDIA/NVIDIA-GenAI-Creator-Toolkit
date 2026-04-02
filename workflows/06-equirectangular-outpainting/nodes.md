@@ -1,11 +1,9 @@
 # Custom Nodes — Module 06: Equirectangular Outpainting
 
-| Node | Purpose |
-|------|---------|
-| `TextureOffset` | Wraps images horizontally for seamless tiling during seam removal |
-| `InpaintCropImproved` | Smart cropping for targeted inpainting (same as Module 03) |
-| `CreateShapeMask` | Generates geometric mask shapes (for seam region masking) |
-| `ImagePadForOutpaint` | Extends canvas with padding for outpainting |
-| `SimpleInpaintStitch` | Seamless compositing after seam inpaint |
+Install via ComfyUI Manager → Install Missing Custom Nodes.
 
-Install via ComfyUI Manager — search by node name.
+| Node Pack | Repo | Key Nodes |
+|-----------|------|-----------|
+| ComfyUI-TextureAlchemy | [amtarr/ComfyUI-TextureAlchemy](https://github.com/amtarr/ComfyUI-TextureAlchemy) (branch: `Sandbox`) | `TextureOffset`, `DifferentialDiffusion`, `ModelSamplingAuraFlow` |
+
+> **Note:** ComfyUI-TextureAlchemy must be cloned from the `Sandbox` branch. `TextureOffset` wraps the image horizontally to eliminate the seam at the panorama boundary before inpainting.
