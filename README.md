@@ -52,8 +52,8 @@ bash install.sh
 | 06 | [Image → Equirectangular](workflows/06-equirectangular-outpainting/) | Qwen Image Edit 2511 + MikMumpitz 360 LoRA | Turn a single image into a seamless 360° panorama |
 | 07 | [Panorama → HDRI](workflows/07-panorama-to-hdri/) | Flux Dev Kontext + Exposure LoRAs | Generate a production-ready HDRI from a panoramic image |
 | 08 | [Trellis2 3D Asset Gen](workflows/08-trellis2-3d-gen/) | Trellis2 | Convert a 2D reference into a textured 3D model with PBR materials |
-| 09 | [Cutout Animation → Video](workflows/09-cutout-animation-to-video/) | Wan2.2 TTM | Trajectory-controlled video — define exactly when and where motion happens |
-| 10 | [Playblast → Video](workflows/10-playblast-to-video/) | Wan2.2 Vid2Vid | Transform a basic 3D render into stylized video using depth + edge passes |
+| 09 | [Cutout Animation → Video](workflows/09-cutout-animation-to-video/) | Wan2.2 TTM + VideoPrep | Trajectory-controlled video — define exactly when and where motion happens |
+| 10 | [Playblast → Video](workflows/10-playblast-to-video/) | Wan2.2 VACE + Lotus | Transform a basic 3D render into stylized video — depth extracted automatically |
 
 ### Bonus Modules
 
@@ -75,6 +75,8 @@ workflows/01-llm-prompt-enhancer/
 ├── models.md       ← model names, sizes, download sources
 └── nodes.md        ← required custom nodes and install instructions
 ```
+
+Module 09 includes two workflows — run `videoprep.json` first, then `workflow.json`.
 
 ---
 
