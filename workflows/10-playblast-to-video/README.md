@@ -1,4 +1,4 @@
-![](images/preview.png)
+![](images/preview.gif)
 
 # Module 10 — Playblast to Video (Wan VACE)
 
