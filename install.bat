@@ -22,6 +22,20 @@ if not exist "%COMFYUI_DIR%\main.py" (
   exit /b 1
 )
 
+REM Detect which Python/pip to use
+REM Priority: Portable embedded Python > manual venv > system pip (with warning)
+if exist "%COMFYUI_DIR%\python_embeded\python.exe" (
+  set PIP=%COMFYUI_DIR%\python_embeded\python.exe -m pip
+  echo Detected ComfyUI Portable - using embedded Python
+) else if exist "%COMFYUI_DIR%\venv\Scripts\pip.exe" (
+  set PIP=%COMFYUI_DIR%\venv\Scripts\pip.exe
+  echo Detected venv - using %COMFYUI_DIR%\venv\Scripts\pip.exe
+) else (
+  set PIP=pip
+  echo WARNING: No venv or embedded Python found. Using system pip.
+  echo          If installs fail, activate your venv first or check your ComfyUI path.
+)
+
 echo Installing custom nodes into: %NODES_DIR%
 if not exist "%NODES_DIR%" mkdir "%NODES_DIR%"
 
@@ -83,7 +97,9 @@ echo   1. Install Ollama for Module 01: https://ollama.com/download
 echo      Then run: ollama pull gemma3
 echo   2. Download models - see each workflow's models.md
 echo      Large models (Wan2.2, Trellis2) should be pre-downloaded before running
-echo   3. Launch ComfyUI: python main.py
+echo   3. Launch ComfyUI:
+echo      Portable: run_nvidia_gpu.bat (in the portable root folder)
+echo      Manual install: venv\Scripts\activate ^&^& python main.py
 echo   4. Drag a workflow.json into the ComfyUI canvas
 goto :eof
 
@@ -105,6 +121,6 @@ if exist "%NODE_DIR%" (
 )
 
 if exist "%NODE_DIR%\requirements.txt" (
-  pip install -q -r "%NODE_DIR%\requirements.txt"
+  %PIP% install -q -r "%NODE_DIR%\requirements.txt"
 )
 goto :eof
