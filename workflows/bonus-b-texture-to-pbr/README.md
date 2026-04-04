@@ -47,14 +47,16 @@ Marigold depth and height outputs can develop gradient shifts — a gradual brig
 
 ## Models
 
-See [models.md](models.md) — total storage ~8–12 GB
+See [models.md](models.md) — total storage ~37 GB
+
+> **Note on storage:** The ~37 GB figure includes the full Qwen Image Edit 2511 stack (~28 GB), which is shared with Modules 03, 05, 06, and Bonus A. If you've run any of those, you only need to download the Lotus models and the upscaler (~6 GB additional). Marigold models auto-download on first run.
 
 | Model | Source | Output |
 |-------|--------|--------|
-| Lotus Depth | `prs-eth/lotus-depth-g-v1-1` | Depth map |
-| Lotus Normal | `prs-eth/lotus-normal-g-v1-1` | Normal map |
-| Marigold Appearance | `prs-eth/marigold-appearance` | Roughness, Metallic, Albedo |
-| Marigold Light | `prs-eth/marigold-lcm-v1-0` | Lighting separation |
+| Lotus Depth | `Kijai/lotus-comfyui` | Depth map |
+| Lotus Normal | `Kijai/lotus-comfyui` | Normal map |
+| Marigold Appearance | auto-download | Roughness, Metallic, Albedo |
+| Marigold Light | auto-download | Lighting separation |
 
 ---
 
@@ -71,16 +73,19 @@ See [nodes.md](nodes.md)
 
 | Node Pack | Purpose |
 |-----------|---------|
-| [ComfyUI-Marigold](https://github.com/kijai/ComfyUI-Marigold) | Marigold appearance decomposition |
-| Marigold HDR wrapper extensions | Marigold Light pass (shared with Module 07) |
-| Padding/cropping + level nodes | Gradient shift correction |
+| [ComfyUI-Lotus](https://github.com/kijai/ComfyUI-Lotus) | Depth and normal extraction |
+| [ComfyUI-Marigold](https://github.com/kijai/ComfyUI-Marigold) | Appearance decomposition |
+| [ComfyUI-TextureAlchemy](https://github.com/amtarr/ComfyUI-TextureAlchemy) | Qwen-based generation nodes (Sandbox branch) |
+| [ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes) | Utility nodes |
+| [ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use) | Helper nodes |
+| [ComfyUI-Inpaint-CropAndStitch](https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch) | Crop/stitch |
 
 ---
 
 ## Usage
 
-1. Install custom nodes via ComfyUI Manager
-2. Download Lotus and Marigold models (they download automatically on first run)
+1. Install custom nodes via `install.sh` / `install.bat` or ComfyUI Manager
+2. Download Lotus models (see [models.md](models.md)) — Marigold downloads automatically on first run
 3. Drag `workflow.json` into ComfyUI
 4. Load a flat, seamless texture (Bonus A output recommended)
 5. Queue — outputs all PBR maps as separate images

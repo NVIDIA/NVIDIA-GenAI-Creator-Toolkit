@@ -48,9 +48,9 @@ See [models.md](models.md) — total storage ~21.5 GB
 | Model | Size |
 |-------|------|
 | Qwen Image Layered BF16 | 13.5 GB |
-| Qwen 2.5 VL 7B Text Encoder FP8 | 7.3 GB |
+| Qwen 2.5 VL 7B Text Encoder | 14.5 GB |
 | Qwen Image Layered VAE | 170 MB |
-| Qwen Edit Lightning 4-step LoRA | 500 MB |
+| Qwen Edit Lightning 4-step BF16 LoRA | 500 MB |
 
 ---
 
@@ -64,13 +64,22 @@ See [models.md](models.md) — total storage ~21.5 GB
 
 See [nodes.md](nodes.md)
 
-The required nodes (`ReferenceLatent`, `EmptyQwenImageLayeredLatentImage`, `LatentCutToBatch`) install automatically alongside the Qwen Image Layered model via ComfyUI Manager — no additional node packs needed.
+This module requires three node packs — install all of them:
+
+| Node Pack | Repo |
+|-----------|------|
+| [ComfyUI-TextureAlchemy](https://github.com/amtarr/ComfyUI-TextureAlchemy) | Must use `Sandbox` branch |
+| [ComfyUI-WJNodes](https://github.com/807502278/ComfyUI-WJNodes) | |
+| [ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use) | |
+
+> The install scripts handle the `Sandbox` branch automatically. If installing manually via ComfyUI Manager, TextureAlchemy will install the wrong branch — use `git clone --branch Sandbox` instead.
 
 ---
 
 ## Usage
 
-1. Install the Qwen Image Layered model via ComfyUI Manager (companion nodes install with it)
-2. Drag `workflow.json` into ComfyUI
-3. Load your input image
-4. Queue — outputs three separate layer images
+1. Run `install.sh` / `install.bat` to install all node packs (or install them manually per [nodes.md](nodes.md))
+2. Download models listed in [models.md](models.md)
+3. Drag `workflow.json` into ComfyUI
+4. Load your input image
+5. Queue — outputs three separate layer images

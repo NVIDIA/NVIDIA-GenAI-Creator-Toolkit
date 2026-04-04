@@ -22,18 +22,23 @@ See [REQUIREMENTS.md](REQUIREMENTS.md) for full details.
 
 ## Quick Start
 
+> **New to ComfyUI?** Read [REQUIREMENTS.md](REQUIREMENTS.md) first — it covers ComfyUI installation, virtual environment setup, system packages, and Git.
+
 ```bash
-# 1. Clone the repo
+# 1. Clone this repo
 git clone https://github.com/nvidia/comfyui-generative-ai-workflows
 cd comfyui-generative-ai-workflows
 
-# 2. Install custom nodes (run from your ComfyUI root directory)
+# 2. Install all custom nodes
+#    Run from your ComfyUI root directory, with your Python venv active:
 # Windows:
-install.bat
+install.bat C:\path\to\ComfyUI
 # Linux:
-bash install.sh
+bash install.sh /path/to/ComfyUI
 
-# 3. Open a workflow folder, read its README, then drag workflow.json into ComfyUI
+# 3. Download models for the module(s) you want — see each module's models.md
+
+# 4. Open a workflow folder, read its README, then drag workflow.json into ComfyUI
 ```
 
 ---

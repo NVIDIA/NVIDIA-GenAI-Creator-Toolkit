@@ -38,18 +38,22 @@ See [models.md](models.md) — total storage ~29 GB + LLM
 | Qwen Image 2512 BF16 | 13.5 GB |
 | Qwen 2.5 VL 7B Text Encoder | 14.5 GB |
 | Qwen Image VAE | 170 MB |
-| Qwen Lightning 4-step LoRA | 1 GB |
-| Gemma 3 (via Ollama) | 2–7 GB |
+| Qwen Lightning 8-step FP32 LoRA | 1 GB |
+| Gemma 3 (via Ollama) | 2–27 GB (see below) |
 
 ---
 
 ## Requirements
 
-- [Ollama](https://ollama.com/download) installed and running before launching the workflow
 - VRAM: 12–16 GB
+- [Ollama](https://ollama.com/download) installed and running before launching the workflow
+
+**Pull the LLM:**
 
 ```bash
-ollama pull gemma3
+ollama pull gemma3        # pulls gemma3:4b by default (~5 GB, works on 8GB+ VRAM)
+ollama pull gemma3:2b     # lighter option for lower VRAM
+ollama pull gemma3:12b    # higher quality, needs 16GB+ VRAM
 ```
 
 ---
@@ -60,16 +64,25 @@ See [nodes.md](nodes.md)
 
 | Node Pack | Purpose |
 |-----------|---------|
-| [ComfyUI-Ollama](https://github.com/stavsap/ComfyUI-Ollama) | Connects ComfyUI to the local Ollama API |
+| [ComfyUI-WJNodes](https://github.com/807502278/ComfyUI-WJNodes) | Utility nodes including RegexExtract |
+| [comfyui-ollama](https://github.com/stavsap/comfyui-ollama) | Connects ComfyUI to the local Ollama API |
 
 ---
 
 ## Usage
 
-1. Install Ollama and pull a model: `ollama pull gemma3`
-2. Start Ollama: `ollama serve`
-3. Install custom nodes listed in [nodes.md](nodes.md) via ComfyUI Manager
-4. Confirm models are downloaded (see [models.md](models.md))
-5. Drag `workflow.json` into ComfyUI
-6. Enter your base instruction in the prompt node
-7. Queue
+**1. Install and start Ollama**
+
+- **Windows:** Download the installer from https://ollama.com/download and run it. Ollama starts automatically as a background service.
+- **Linux:** `curl -fsSL https://ollama.com/install.sh | sh` — this registers a systemd service that starts automatically. Do not run `ollama serve` manually if using the official installer (it will conflict).
+
+**2. Pull a model:**
+```bash
+ollama pull gemma3
+```
+
+**3. Install custom nodes** listed in [nodes.md](nodes.md) via ComfyUI Manager
+
+**4. Download models** listed in [models.md](models.md)
+
+**5. Drag `workflow.json` into ComfyUI**, enter your instruction, and queue

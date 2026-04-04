@@ -3,9 +3,9 @@
 Total storage: 15–20 GB
 VRAM: 16–24 GB
 
-| Model | Size | Source |
-|-------|------|--------|
-| Trellis2 (1536 cascade) | 15–20 GB | `JeffreyXiang/TRELLIS-image-large` |
+| Model | Size | Destination | Source |
+|-------|------|-------------|--------|
+| Trellis2 (1536 cascade) | 15–20 GB | `ComfyUI/models/trellis2` (set via `--local-dir` in download command) | `JeffreyXiang/TRELLIS-image-large` |
 
 Trellis2 includes multiple components:
 - Structured latent diffusion models
