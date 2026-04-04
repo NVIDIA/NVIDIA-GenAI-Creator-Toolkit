@@ -1,3 +1,5 @@
+![](images/preview.png)
+
 # Module 01 — LLM Prompt Enhancer
 
 Build an AI agent that automatically refines and strengthens text prompts before they reach a generation model.

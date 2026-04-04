@@ -1,3 +1,5 @@
+![](images/preview.png)
+
 # Module 07 — Panorama to HDRI
 
 > **Access requirement:** This module requires four custom EV LoRAs (EV +4, +2, -2, -4) that are currently only available through the NVIDIA DLI course [DLIT81948](https://www.nvidia.com/en-us/training/). **Without these LoRAs the workflow will not run.** Public release is pending — watch this repo for updates. If you have not taken the course, skip this module for now.

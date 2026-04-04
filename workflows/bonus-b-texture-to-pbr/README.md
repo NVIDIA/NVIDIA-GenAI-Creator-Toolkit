@@ -1,3 +1,5 @@
+![](images/preview.png)
+
 # Bonus B — Texture to PBR
 
 Generate a complete PBR material set from a single texture image.

@@ -1,3 +1,5 @@
+![](images/preview.png)
+
 # Module 06 — Image to Seamless Equirectangular Panorama
 
 Turn a single image into a seamless 360° equirectangular panorama ready for spherical mapping.

@@ -1,3 +1,5 @@
+![](images/preview.png)
+
 # Module 08 — Trellis2 3D Asset Gen
 
 Convert a 2D image reference into a textured 3D model with PBR materials.

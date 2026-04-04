@@ -132,4 +132,4 @@ Model licenses vary — see each module's `models.md` for details. Notable excep
 
 ## Credits
 
-Course developed by Guillaume Polaillon and Ashlee Martino-Tarr, NVIDIA Studio team.
+Course developed by Guillaume Polaillon, Ashlee Martino-Tarr, Daniela [LastName], and Alessandro [LastName].

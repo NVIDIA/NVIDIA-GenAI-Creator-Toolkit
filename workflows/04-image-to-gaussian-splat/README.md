@@ -1,3 +1,5 @@
+![](images/preview.png)
+
 # Module 04 — Image to Gaussian Splat
 
 Convert a single 2D image into a navigable 3D Gaussian point cloud.

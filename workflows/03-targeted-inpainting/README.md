@@ -1,3 +1,5 @@
+![](images/preview.png)
+
 # Module 03 — Targeted Inpainting
 
 Edit only the pixels you select — mask a region, replace it, blend it back seamlessly.

@@ -1,3 +1,5 @@
+![](images/preview.png)
+
 # Module 05 — Gaussian Splat SceneFill
 
 Reconstruct the missing areas in a Gaussian Splat so you can freely move the camera.

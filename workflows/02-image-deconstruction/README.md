@@ -1,3 +1,5 @@
+![](images/preview.png)
+
 # Module 02 — Image Deconstruction
 
 Split any image into foreground, midground, and background layers — with alpha channels and automatic background repair.

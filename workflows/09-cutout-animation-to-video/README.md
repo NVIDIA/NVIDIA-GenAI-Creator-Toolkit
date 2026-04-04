@@ -1,3 +1,5 @@
+![](images/preview.png)
+
 # Module 09 — Cutout Animation to Video (Wan TTM)
 
 Trajectory-controlled video generation — define exactly when and where motion happens.

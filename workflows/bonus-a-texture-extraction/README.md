@@ -1,3 +1,5 @@
+![](images/preview.png)
+
 # Bonus A — Texture Extraction from Image
 
 Extract a clean, seamless, tileable texture from any image — photo, render, or AI-generated.
