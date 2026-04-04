@@ -1,3 +1,5 @@
+![](images/preview.png)
+
 # Module 10 — Playblast to Video (Wan VACE)
 
 Transform a basic 3D render into a stylized, production-quality video — without re-animating or re-rendering.

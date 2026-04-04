@@ -2,7 +2,7 @@
 
 # ComfyUI Generative AI Workflows
 
-**Free, self-paced AI workflows for design and visualization — built on NVIDIA RTX.**
+**Achieve professional creative control over 3D assets and motion for visualization, powered by modular generative AI pipelines on NVIDIA RTX.**
 
 Adapted from NVIDIA's GTC 2026 DLI course *Create Generative AI Workflows for Design and Visualization in ComfyUI* (DLIT81948). Each module is standalone — pick the pipelines that fit your work.
 
