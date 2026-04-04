@@ -1,3 +1,5 @@
+![](docs/hero.jpg)
+
 # ComfyUI Generative AI Workflows
 
 **Free, self-paced AI workflows for design and visualization — built on NVIDIA RTX.**
@@ -132,4 +134,4 @@ Model licenses vary — see each module's `models.md` for details. Notable excep
 
 ## Credits
 
-Course developed by Guillaume Polaillon, Ashlee Martino-Tarr, Daniela [LastName], and Alessandro [LastName].
+Course developed by Alessandro La Tona, Ashlee Martino-Tarr, and Daniela Flamm Jackson. Workflows by Guillaume Polaillon.
