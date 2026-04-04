@@ -115,10 +115,30 @@ To install individually via ComfyUI Manager:
 
 Most models must be downloaded manually before running a workflow. See each module's `models.md` for exact filenames, sizes, download URLs, and which subfolder of `ComfyUI/models/` to place each file in.
 
-For large models (Wan2.2 ~28 GB, Trellis2 ~20 GB), use `huggingface-cli` to pre-download:
+For large models (Wan2.2 ~28 GB, Trellis2 ~20 GB), use `huggingface-cli` to pre-download.
+
+**Run download commands from the parent directory of your ComfyUI install** — i.e., the folder that *contains* the `ComfyUI/` directory:
 
 ```bash
-huggingface-cli download <repo-id> --local-dir ComfyUI/models/<destination>
+# Linux example — run from the folder containing ComfyUI/
+huggingface-cli download Wan-AI/Wan2.2-Fun-14B-VACE --local-dir ComfyUI/models/video/wan
+
+# Or use an absolute path from anywhere
+huggingface-cli download Wan-AI/Wan2.2-Fun-14B-VACE --local-dir /path/to/ComfyUI/models/video/wan
 ```
 
-If `huggingface-cli` is not found, install it first: `pip install huggingface_hub`
+If `huggingface-cli` is not found, install it first (with your venv active): `pip install huggingface_hub`
+
+**Model subdirectories:** Some destination paths (e.g. `ComfyUI/models/diffusion_models/qwen/`, `ComfyUI/models/loras/qwen/`, `ComfyUI/models/sam2/`) do not exist on a fresh ComfyUI install. Create them before downloading:
+
+```bash
+mkdir -p ComfyUI/models/diffusion_models/qwen
+mkdir -p ComfyUI/models/text_encoders/qwen
+mkdir -p ComfyUI/models/vae/qwen
+mkdir -p ComfyUI/models/loras/qwen
+mkdir -p ComfyUI/models/diffusion_models/lotus
+mkdir -p ComfyUI/models/sam2
+mkdir -p ComfyUI/models/video/wan
+```
+
+`huggingface-cli` creates the target directory automatically. Manual downloads (browser/wget) require the directories to exist first.

@@ -1,6 +1,6 @@
 # Custom Nodes — Module 07: Panorama to HDRI
 
-Install via ComfyUI Manager → Install Missing Custom Nodes.
+> **Important:** Do NOT install `ComfyUI-TextureAlchemy` via ComfyUI Manager — Manager installs the wrong branch. Use the `install.sh` / `install.bat` scripts (recommended), or install it manually with the git command below.
 
 | Node Pack | Repo | Key Nodes |
 |-----------|------|-----------|
@@ -10,4 +10,8 @@ Install via ComfyUI Manager → Install Missing Custom Nodes.
 - `SaveImageOpenEXR` — exports 32-bit EXR / HDRI file
 - `AutoContrastLevels` — automatic histogram adjustment per exposure pass
 
-> **Note:** ComfyUI-TextureAlchemy must be cloned from the `Sandbox` branch. These HDRI-specific nodes are part of the same package used across Modules 02–06 and Bonus A+B.
+**Manual TextureAlchemy install (Sandbox branch):**
+
+```bash
+git clone --branch Sandbox https://github.com/amtarr/ComfyUI-TextureAlchemy ComfyUI/custom_nodes/ComfyUI-TextureAlchemy
+```

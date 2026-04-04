@@ -11,9 +11,21 @@ COMFYUI_DIR="${1:-$(pwd)}"
 NODES_DIR="$COMFYUI_DIR/custom_nodes"
 
 if [ ! -f "$COMFYUI_DIR/main.py" ]; then
-  echo "ERROR: Run this from the ComfyUI root directory, or pass it as an argument:"
+  echo "ERROR: ComfyUI not found. Pass the path as an argument:"
   echo "  bash install.sh /path/to/ComfyUI"
   exit 1
+fi
+
+# Detect venv and use its pip, or fall back to system pip with a warning
+if [ -n "$VIRTUAL_ENV" ]; then
+  PIP="$VIRTUAL_ENV/bin/pip"
+elif [ -f "$COMFYUI_DIR/venv/bin/pip" ]; then
+  PIP="$COMFYUI_DIR/venv/bin/pip"
+  echo "NOTE: Using venv pip at $PIP (activate the venv first for best results)"
+else
+  PIP="pip"
+  echo "WARNING: No venv detected. If pip installs fail, activate your ComfyUI venv first:"
+  echo "  source $COMFYUI_DIR/venv/bin/activate"
 fi
 
 echo "Installing custom nodes into: $NODES_DIR"
@@ -37,7 +49,7 @@ install_node() {
   fi
 
   if [ -f "$dir/requirements.txt" ]; then
-    pip install -q -r "$dir/requirements.txt"
+    $PIP install -q -r "$dir/requirements.txt"
   fi
 }
 
@@ -99,5 +111,5 @@ echo "  1. Install Ollama for Module 01: https://ollama.com/download"
 echo "     Then: ollama pull gemma3"
 echo "  2. Download models — see each workflow's models.md"
 echo "     Large models (Wan2.2, Trellis2) should be pre-downloaded before running"
-echo "  3. Launch ComfyUI: python main.py"
+echo "  3. Launch ComfyUI: source venv/bin/activate && python main.py"
 echo "  4. Drag a workflow.json into the ComfyUI canvas"

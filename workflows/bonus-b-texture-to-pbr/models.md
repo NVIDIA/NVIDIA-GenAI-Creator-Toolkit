@@ -19,7 +19,7 @@ VRAM: 8–12 GB
 | Lotus Depth | `lotus-depth-g-v2-1-disparity-fp16.safetensors` | ~2 GB | `ComfyUI/models/diffusion_models/lotus/` | [Kijai/lotus-comfyui](https://huggingface.co/Kijai/lotus-comfyui/resolve/main/lotus-depth-g-v2-1-disparity-fp16.safetensors) | Depth / height map |
 | Lotus Normal G | `lotus-normal-g-v1-0.safetensors` | ~2 GB | `ComfyUI/models/diffusion_models/lotus/` | [Kijai/lotus-comfyui](https://huggingface.co/Kijai/lotus-comfyui/resolve/main/lotus-normal-g-v1-0.safetensors) | Normal map |
 | Lotus Normal D | `lotus-normal-d-v1-0.safetensors` | ~2 GB | `ComfyUI/models/diffusion_models/lotus/` | [Kijai/lotus-comfyui](https://huggingface.co/Kijai/lotus-comfyui/resolve/main/lotus-normal-d-v1-0.safetensors) | Normal map (deterministic) |
-| Lotus VAE | `LotusVAE.safetensors` | ~300 MB | `ComfyUI/models/vae/` | [jingheya/lotus-depth-g-v2-0-disparity](https://huggingface.co/jingheya/lotus-depth-g-v2-0-disparity/resolve/main/vae/diffusion_pytorch_model.safetensors) | Shared VAE |
+| Lotus VAE | `LotusVAE.safetensors` | ~300 MB | `ComfyUI/models/vae/` | [jingheya/lotus-depth-g-v2-0-disparity](https://huggingface.co/jingheya/lotus-depth-g-v2-0-disparity/resolve/main/vae/diffusion_pytorch_model.safetensors) — **rename from `diffusion_pytorch_model.safetensors` to `LotusVAE.safetensors` after download** | Shared VAE |
 
 ## Upscaler
 

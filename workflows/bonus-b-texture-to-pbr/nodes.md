@@ -1,6 +1,8 @@
 # Custom Nodes — Bonus B: Texture to PBR
 
-Install via ComfyUI Manager → Install Missing Custom Nodes.
+> **Important:** Do NOT install `ComfyUI-TextureAlchemy` via ComfyUI Manager — Manager installs the wrong branch. Use the `install.sh` / `install.bat` scripts (recommended), or install it manually with the git command below.
+
+For all other packages, ComfyUI Manager → Install Missing Custom Nodes works fine.
 
 | Node Pack | Repo | Key Nodes |
 |-----------|------|-----------|
@@ -11,4 +13,8 @@ Install via ComfyUI Manager → Install Missing Custom Nodes.
 | ComfyUI-Lotus | [kijai/ComfyUI-Lotus](https://github.com/kijai/ComfyUI-Lotus) | `LoadLotusModel`, `LotusSampler` (depth + normal extraction) |
 | ComfyUI-Marigold | [kijai/ComfyUI-Marigold](https://github.com/kijai/ComfyUI-Marigold) | Appearance decomposition (Albedo, Roughness, Metallic, Lighting) |
 
-> ComfyUI-TextureAlchemy must be cloned from the `Sandbox` branch. ComfyUI-Lotus and ComfyUI-Marigold are both by kijai.
+**Manual TextureAlchemy install (Sandbox branch):**
+
+```bash
+git clone --branch Sandbox https://github.com/amtarr/ComfyUI-TextureAlchemy ComfyUI/custom_nodes/ComfyUI-TextureAlchemy
+```
