@@ -11,7 +11,7 @@ VRAM: 16–24 GB (highest of all modules)
 
 | Model | File | Size | Destination | Source |
 |-------|------|------|-------------|--------|
-| Flux Dev Kontext FP8 | `flux1-dev-kontext_fp8_scaled.safetensors` | 11.9 GB | `ComfyUI/models/diffusion_models/` | [black-forest-labs/FLUX.1-Kontext-dev](https://huggingface.co/black-forest-labs/FLUX.1-Kontext-dev) (requires HuggingFace login — access the FP8 variant via community conversions or the DLI lab) |
+| Flux Dev Kontext FP8 | `flux1-dev-kontext_fp8_scaled.safetensors` | 11.9 GB | `ComfyUI/models/diffusion_models/` | [Comfy-Org/flux1-kontext-dev_ComfyUI](https://huggingface.co/Comfy-Org/flux1-kontext-dev_ComfyUI/resolve/main/split_files/diffusion_models/flux1-dev-kontext_fp8_scaled.safetensors) |
 | CLIP-L / ViT-L-14 | `ViT-L-14-TEXT-detail-improved-hiT-GmP-HF.safetensors` | 250 MB | `ComfyUI/models/text_encoders/` | [comfyanonymous/flux_text_encoders](https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/ViT-L-14-TEXT-detail-improved-hiT-GmP-HF.safetensors) |
 | T5-XXL FP16 | `t5xxl_fp16.safetensors` | 9.8 GB | `ComfyUI/models/text_encoders/` | [comfyanonymous/flux_text_encoders](https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp16.safetensors) |
 | Flux VAE | `ae.safetensors` | 340 MB | `ComfyUI/models/vae/` | [black-forest-labs/FLUX.1-dev](https://huggingface.co/black-forest-labs/FLUX.1-dev/resolve/main/ae.safetensors) |
@@ -34,9 +34,14 @@ The 4 exposure LoRAs are custom-trained for HDRI generation. Total: 2 GB for the
 
 ## Download Commands
 
-Download the publicly available models (run from the parent directory of your ComfyUI install):
+Run from the parent directory of your ComfyUI install (the folder containing `ComfyUI/`):
 
 ```bash
+# Flux Dev Kontext FP8 diffusion model
+huggingface-cli download Comfy-Org/flux1-kontext-dev_ComfyUI \
+  split_files/diffusion_models/flux1-dev-kontext_fp8_scaled.safetensors \
+  --local-dir ComfyUI/models/diffusion_models
+
 # Text encoders
 huggingface-cli download comfyanonymous/flux_text_encoders \
   ViT-L-14-TEXT-detail-improved-hiT-GmP-HF.safetensors \
@@ -48,4 +53,4 @@ huggingface-cli download black-forest-labs/FLUX.1-dev ae.safetensors \
   --local-dir ComfyUI/models/vae
 ```
 
-> The Flux Dev Kontext FP8 diffusion model (`flux1-dev-kontext_fp8_scaled.safetensors`) is available in the DLI lab environment. The BF16 source is at `black-forest-labs/FLUX.1-Kontext-dev` (gated — requires HuggingFace login and license acceptance).
+> The `huggingface-cli` download places files in a subdirectory matching the repo path. After downloading the diffusion model, move `flux1-dev-kontext_fp8_scaled.safetensors` out of `split_files/diffusion_models/` directly into `ComfyUI/models/diffusion_models/`.
