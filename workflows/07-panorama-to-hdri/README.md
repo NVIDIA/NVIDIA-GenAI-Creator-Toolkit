@@ -74,6 +74,19 @@ See [nodes.md](nodes.md)
 
 ---
 
+## Tips for Best Results
+
+- **Start with a high-quality equirectangular source.** The EV LoRAs amplify whatever is in your input — noise, compression artifacts, and banding all become more visible across the exposure stack. Use Module 06 output or a clean, uncompressed 2:1 panorama.
+- **Maintain a strict 2:1 aspect ratio.** The Debevec merge assumes all five passes are pixel-aligned. Any resize or crop that breaks the ratio will misalign the exposure stack and produce ghosting in the merged EXR.
+- **Do not apply tone mapping before input.** Feed a linear or lightly processed panorama. If your source is already tone-mapped (e.g., a JPEG with embedded color grading), the EV LoRAs will generate inconsistent highlights and the HDR merge will clip incorrectly.
+- **Run all five passes before inspecting output.** The individual EV passes look wrong by design — severely over- or underexposed. Only the final merged `.exr` reflects the true HDR result. Don't abort mid-run based on a single pass preview.
+- **Check the AutoContrastLevels node per-pass if results look flat.** Each exposure pass gets its own histogram adjustment. If a specific stop (usually EV+4) looks blown out, nudge that pass's contrast node rather than changing the LoRA strength globally.
+- **Validate in your target renderer, not in ComfyUI.** EXR preview in-browser is tone-mapped automatically and will not accurately represent the HDR range. Load the `.exr` into Blender, Unreal, or your renderer of choice to evaluate actual lighting behavior.
+- **Use the HDRI as a light source, not just a background.** The 32-bit range is what enables physically accurate specular reflections and shadow directionality. Plug it into your Dome Light / Skydome / IBL slot — don't just use it as a backdrop texture.
+- **Seed consistency matters across passes.** If the workflow allows per-pass seeding, keep seeds fixed during a session. Randomizing seeds between exposure passes introduces geometry and content drift that the Debevec merge cannot reconcile.
+
+---
+
 ## Usage
 
 1. Install custom nodes via ComfyUI Manager

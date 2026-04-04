@@ -119,6 +119,20 @@ See [nodes.md](nodes.md)
 
 ---
 
+## Tips for Best Results
+
+- **VideoPrep output quality determines everything downstream.** If the SAM2 mask is leaky or the rough animation pass has major artifacts, the TTM generation will inherit those problems. Take the time to get clean VideoPrep outputs before running `workflow.json` — re-running TTM is expensive (~55 GB model, long inference).
+- **Use SAM2's click-to-segment carefully on complex silhouettes.** Click inside the subject's core mass first, then add positive clicks to capture extremities (hands, hair, loose clothing edges). Add negative clicks to exclude background elements that are bleeding into the mask. A few extra clicks here saves significant cleanup later.
+- **Keep your background image static and neutral.** TTM locks non-masked regions using the trajectory mask. If the background has strong patterns, gradients, or fine detail, subtle model-induced variation becomes visible as flickering. Flat or softly textured backgrounds are forgiving.
+- **Match the start and last frames tightly to your intended motion arc.** The TTM model interpolates between first and last frames. If the last frame represents a position the character cannot plausibly reach given the trajectory video, the model will either warp the subject or produce an unnatural snap at the end.
+- **Keep trajectory paths physically plausible.** TTM respects your trajectory mask for motion direction and magnitude, but the underlying Wan2.2 model still enforces physics-like motion priors. Extremely fast trajectories, sharp direction reversals, or implausibly large displacements produce instability — ease the motion arc.
+- **Use the Preview Bridge node — do not skip it.** It exists specifically to prevent mask loss through ComfyUI's preview pipeline. Bypassing it or substituting a standard preview node will silently corrupt your painted mask before it reaches the TTM input, giving you unmasked or wrong-region motion.
+- **x86_64 is not optional.** Wan2.2 uses architecture-specific CUDA kernels. Do not attempt to run this on ARM64, Apple Silicon via emulation, or RTX Spark systems — it will either fail on load or silently produce garbage output.
+- **First frame and last frame must be the same resolution as the trajectory video.** A resolution mismatch between the frames and the trajectory video causes misalignment in the motion-conditioned generation step. Let VideoPrep generate all four outputs in a single run to guarantee they match.
+- **For looping animation, make the last frame identical to the first.** If you need a seamless loop (e.g., idle cycle, ambient motion), set the VideoPrep source animation to loop cleanly and verify the first/last frames match before feeding TTM.
+
+---
+
 ## Usage
 
 1. Install custom nodes via ComfyUI Manager

@@ -113,3 +113,25 @@ See [nodes.md](nodes.md)
 5. Drag `workflow.json` into ComfyUI
 6. Load your render and style image
 7. Queue
+
+---
+
+## Tips for Best Results
+
+- **Keep your beauty render simple — that's a feature, not a bug.** Flat shading, basic lighting, and solid colors give Lotus clean geometry to read. Overly complex renders with lens flares or post-processing glare confuse depth extraction. Save the polish for the AI output.
+
+- **Shoot your style reference like a final frame, not a mood board.** The reference image should match the framing, scale, and lighting direction of your render as closely as possible. A hero character reference for a wide environment shot will produce inconsistent results. Crop or reframe reference images to match the render's composition.
+
+- **Avoid motion blur in your source render.** Wan VACE is already reading motion from frame-to-frame differences. Pre-baked motion blur in the beauty pass creates ambiguous depth cues for Lotus and muddy outputs. Render with motion blur off; the model adds its own temporal smoothing.
+
+- **Keep sequences under 120 frames when testing.** At 16–24 GB VRAM, long sequences queue large frame batches that can cause OOM crashes or very long generation times. Nail the look on a 3–4 second clip first, then run the full sequence.
+
+- **Resolution matters for Lotus depth quality.** Input below 720p tends to produce coarse, blocky depth maps that telegraph into the final output as floating or misaligned geometry. 1080p is the sweet spot; higher than that has diminishing returns for depth accuracy.
+
+- **Swap the style reference to art-direct without re-rendering.** The same animation can become photorealistic, cel-shaded, or painterly just by changing the reference image. Use this to pitch multiple art directions from a single blocked-out animation — it's one of the biggest workflow advantages this pipeline offers.
+
+- **Consistent camera movement yields better temporal coherence.** Slow, deliberate camera moves (orbits, dollies, slow pans) give VACE more time per frame to maintain style consistency. Fast cuts or sudden camera snaps often produce flickering or style drift between shots. Split multi-cut sequences into individual clips.
+
+- **If depth extraction looks wrong, check your render's exposure.** Lotus reads luminance as a proxy for depth when geometry cues are ambiguous. Overexposed or blown-out areas (pure white sky, emissive surfaces) read as near-distance geometry. Clamp your render's white point in your 3D app before exporting.
+
+- **Use the seed control for iterative refinement.** Lock the seed after you find a result you like for a particular shot, then adjust prompts or the style reference without losing the spatial layout that worked. Randomizing seed on every run makes it hard to isolate what changed.

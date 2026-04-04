@@ -76,3 +76,23 @@ See [nodes.md](nodes.md)
 4. Load an image containing the target material
 5. Optionally describe the material type in the prompt
 6. Queue — outputs a seamless tileable texture at 4K
+
+---
+
+## Tips for Best Results
+
+- **Fill the frame with your target material.** The VLM segments the dominant surface in the image. If your photo of a brick wall has a door, a window, or a person taking up significant space, the segmentation mask may be partial or incorrect. Crop tightly to just the material before loading it.
+
+- **Shoot (or find) source photos with diffuse, flat lighting.** Raking sunlight, deep shadows, or a single strong light source bakes directional illumination into the texture — which then fights against your 3D scene's own lighting. Overcast natural light or a light box setup produces the cleanest extractions.
+
+- **Describe the material explicitly in the prompt field.** Qwen is good at identifying obvious materials, but ambiguous surfaces (aged concrete that could read as stone, worn leather that could read as fabric) benefit from a short prompt like `weathered concrete, coarse aggregate, no moss`. This steers both the VLM identification pass and the diffusion output.
+
+- **Use this workflow on photographs rather than renders — unless the render is purpose-built.** Renders with baked AO, stylized shading, or specular highlights contain non-physical surface data that the LoRA wasn't trained to decompose. Clean, photoreal reference images extract significantly better. If you must use a render, make it a flat-lit, shadeless material preview.
+
+- **Expect some creative interpretation, especially on complex patterns.** Highly irregular materials (random rock fields, tangled roots, dense fabric weaves) will be interpreted and re-synthesized, not copied. The output is a plausible version of the material, not a photogrammetric capture. Use the output as a starting point and re-run with a fixed seed to explore variations.
+
+- **Square input images produce better tiling output.** The diffusion pipeline assumes a roughly square crop for the seamless synthesis step. Strongly portrait or landscape crops can produce stretching artifacts at the tile seams. Crop your source to 1:1 before loading when possible.
+
+- **Chain directly into Bonus B for a full PBR set.** The 4K output from this workflow is designed as the ideal input for Bonus B. Running a raw photo into Bonus B typically produces less accurate results because the lighting and perspective haven't been decomposed yet. The Bonus A → Bonus B pipeline is the intended authoring path.
+
+- **Re-run with a new seed if seams are visible.** The texture LoRA is stochastic — some seeds produce cleaner seams than others on the same input. Before reaching for external seam-fixing tools, try 3–5 seeds on the same source image. There's usually one that tiles cleanly.

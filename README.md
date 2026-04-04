@@ -4,7 +4,7 @@
 
 **Achieve professional creative control over 3D assets and motion for visualization, powered by modular generative AI pipelines on NVIDIA RTX.**
 
-Adapted from NVIDIA's GTC 2026 DLI course *Create Generative AI Workflows for Design and Visualization in ComfyUI* (DLIT81948). Each module is standalone — pick the pipelines that fit your work.
+Adapted from NVIDIA's GTC 2026 DLI course [*Create Generative AI Workflows for Design and Visualization in ComfyUI*](https://www.nvidia.com/en-us/on-demand/session/gtc26-dlit81948/) (DLIT81948). Each module is standalone — pick the pipelines that fit your work.
 
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-blue)
 ![GPU](https://img.shields.io/badge/GPU-NVIDIA%20RTX%20required-76b900)

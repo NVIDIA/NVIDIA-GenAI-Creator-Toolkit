@@ -78,6 +78,20 @@ This module requires three node packs — install all of them:
 
 ---
 
+## Tips for Best Results
+
+- **Clean, high-contrast subject-background separation gives the best layers.** Images where the subject and background share similar colors or values (e.g., a gray subject against a gray wall) will produce messier alpha edges. If you have control over the input, shoot or render with clear tonal separation between planes.
+- **Resolution matters more here than in most workflows.** The layering model needs enough pixel detail to accurately classify edges. Feed it images at 1024px or higher on the short edge. Upscale a low-res input first rather than running deconstruction on a 512px thumbnail — thin edges like hair and foliage will be lost.
+- **Avoid images with heavy motion blur or out-of-focus subjects.** Blur makes depth plane boundaries ambiguous, and the model will collapse blurry midground elements into the background layer. Crisp focus throughout the frame produces the cleanest layer separation.
+- **Images with clear depth layering decompose better than flat compositions.** A photo with a distinct foreground subject, a readable midground, and a separated background will extract cleanly. A scene where everything is at the same focal plane (flat lay, overhead product shot) may produce a weak or empty midground layer.
+- **Check the repaired background before using it downstream.** The background inpainting is context-aware but not perfect. Areas where the foreground subject is large or complex (a person filling 60% of the frame) will have more visible repair artifacts. Plan to use Module 03 (Targeted Inpainting) to clean those areas if they'll be visible in the final comp.
+- **Use the alpha layers directly for compositing rather than exporting flattened PNGs.** The alpha channel output is your precision asset. Flatten only at the final stage of your pipeline to preserve compositing flexibility.
+- **For the best normals and depth passes, run the image through Marigold or NVIDIA Diffusion Render separately.** The Qwen Layered model focuses on semantic separation (what is foreground vs. background), not geometric data. If you need accurate surface normals or metrically consistent depth, the decomposition layers are a starting point, not a replacement for a dedicated geometry model.
+- **Images with transparent or translucent objects are a known weak point.** Glass, smoke, water surfaces, and thin fabric confuse the semantic layering logic. Expect these elements to land inconsistently between layers and plan for manual cleanup.
+- **Batch consistent inputs.** If you're processing a sequence for animation or a set of assets for the same comp, keep input resolution, aspect ratio, and color grading consistent. Variation between frames causes inconsistent layer quality across the batch.
+
+---
+
 ## Usage
 
 1. Run `install.sh` / `install.bat` to install all node packs (or install them manually per [nodes.md](nodes.md))

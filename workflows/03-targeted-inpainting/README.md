@@ -79,6 +79,21 @@ See [nodes.md](nodes.md)
 
 ---
 
+## Tips for Best Results
+
+- **Mask tightly around the target, not the entire area you want changed.** The crop-and-patch approach works by resolving a small region at high resolution. An oversized mask forces the model to regenerate too much context, which increases drift from the surrounding image. Trace the actual boundary of the object you're editing, then add a small feather — don't box-select a quarter of the frame.
+- **Include enough context in the mask border to guide coherent fill.** If you mask right to the pixel edge of a person, the model has no context to fill against. Expand the mask 10–20 pixels past the object's edge so the model can read the surrounding texture and lighting when it fills.
+- **Write the inpainting prompt to describe what should be there, not what you removed.** "empty park bench against a stone wall" works better than "remove the person sitting on a park bench." The model fills forward from a positive description.
+- **Match the lighting description in your prompt to the existing scene.** The model reads the surrounding image but responds strongly to the prompt. If the scene has warm afternoon light and your prompt says nothing about lighting, results are inconsistent. Add "warm afternoon side lighting" or similar to anchor the fill to the actual image conditions.
+- **Use DifferentialDiffusion for blending, not as a creative control.** Its purpose is to smooth the seam between the patch and the original. Cranking it up doesn't produce better creative results — it produces softer, mushier edges. Keep it at a moderate value and rely on a good mask and prompt for quality.
+- **For object removal, use the Object Remover LoRA.** Switch to it explicitly when your goal is clean deletion and background reconstruction. The base model is optimized for replacement; the LoRA is tuned for disappearance. Using the wrong one for removal tasks produces ghosting artifacts and incomplete fills.
+- **Run multiple seeds before committing.** Inpainting has high variance even with a strong prompt. Queue 4–8 seeds at a time and pick the best result rather than iterating on a single output. The mask region is small enough that generation is fast.
+- **If the seam is visible in the final output**, the mask edge is usually the cause — not the fill quality. Re-mask with a softer edge or slightly larger feather radius, then re-run. Visible seams from the stitch node almost always trace back to a hard mask boundary, not model failure.
+- **For multi-object edits, do them in passes.** Edit one region, bake the result, then mask the next region. Trying to inpaint two non-adjacent objects simultaneously with one mask forces the model to fill two different regions with one conditioning pass, which produces incoherent results for at least one of them.
+- **When replacing rather than removing, describe the new object's material and scale explicitly.** "a red ceramic vase, matte glaze, 30cm tall" outperforms "a vase." Material, scale, and finish details help the model produce a replacement that reads correctly against the existing scene lighting and depth.
+
+---
+
 ## Usage
 
 1. Install custom nodes via ComfyUI Manager (search by node name)

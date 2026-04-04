@@ -79,6 +79,19 @@ pip install -r requirements.txt
 
 ---
 
+## Tips for Best Results
+
+- **Subject isolation is the single biggest quality lever.** Trellis2 infers 3D geometry from a 2D silhouette. A busy or cluttered background confuses the shape stage and produces fused or incomplete geometry. Use a plain white, gray, or transparent-background image whenever possible. If your source is a photo, mask the subject first — even a rough mask is far better than none.
+- **Shoot or render the subject from a 3/4 angle, not dead-on.** A front-facing flat view gives the model almost no depth cues. A 3/4 or slight above-center angle provides enough perspective to infer convincing geometry on the unseen back faces.
+- **Keep input resolution moderate — 512–1024px on the long edge is the sweet spot.** Very high-res inputs slow texture generation without proportionally improving UV quality. Downscale your reference before loading if it's above 2K.
+- **Simple, hard-surfaced objects reconstruct better than organic or complex subjects.** Props, vehicles, furniture, and architecture produce clean meshes. Fur, hair, foliage, and highly translucent materials (glass, fabric) are hard for single-view reconstruction — expect to fix these in your DCC tool.
+- **Inspect the `.glb` in a mesh viewer before committing to a pipeline.** Open it in Blender or an online GLTF viewer immediately after generation. Topology errors (holes, non-manifold edges, flipped normals) are much faster to fix now than after you've already taken the asset downstream.
+- **The back of the model is always an inference.** Trellis2 is generating a plausible back from a single view — it cannot know what's there. For assets where the back is visible (hero props, characters), plan for a cleanup pass in Blender or ZBrush.
+- **Pair with Module 04 for richer results.** If you can generate multiple views of your subject (front, side, back) using another module before feeding Trellis2, even just as separate crops of a multiview sheet, the geometry quality improves substantially.
+- **PBR maps are baked from the diffusion pass, not physically measured.** Roughness and metallic values are plausible but may not match real-world material properties. Treat them as a starting point and adjust in your material editor for final renders.
+
+---
+
 ## Usage
 
 1. Install ComfyUI-TRELLIS2 via ComfyUI Manager and run `pip install -r requirements.txt`
