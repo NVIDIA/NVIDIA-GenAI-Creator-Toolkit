@@ -161,6 +161,11 @@ if exist "%NODE_DIR%" (
 
 if exist "%NODE_DIR%\requirements.txt" (
   echo         Installing Python requirements...
-  %PIP% install -q --no-warn-script-location -r "%NODE_DIR%\requirements.txt" 2>&1
+  %PIP% install -q --no-warn-script-location -r "%NODE_DIR%\requirements.txt" > "%TEMP%\comfyui_pip.tmp" 2>&1
+  if errorlevel 1 (
+    echo         [WARN] Some packages failed to install for !NODE_NAME!
+    echo               This is usually OK - ComfyUI Manager resolves missing deps on first run.
+    echo               To see details: type %TEMP%\comfyui_pip.tmp
+  )
 )
 goto :eof
