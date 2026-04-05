@@ -7,7 +7,16 @@ REM   PowerShell: cmd /c install.bat C:\path\to\ComfyUI
 REM
 REM Does NOT download models — see each module's models.md or run download_models.py.
 
+REM Force UTF-8 output so text is visible in all terminals
+chcp 65001 > nul
+
 setlocal enabledelayedexpansion
+
+echo.
+echo ================================================================
+echo  ComfyUI Generative AI Workflows - Node Installer
+echo ================================================================
+echo.
 
 if "%~1"=="" (
   set COMFYUI_DIR=%cd%
@@ -15,11 +24,20 @@ if "%~1"=="" (
   set COMFYUI_DIR=%~1
 )
 
+echo ComfyUI path: %COMFYUI_DIR%
+echo.
+
 set NODES_DIR=%COMFYUI_DIR%\custom_nodes
 
 if not exist "%COMFYUI_DIR%\main.py" (
-  echo ERROR: Run this from the ComfyUI root directory, or pass it as an argument:
-  echo   install.bat C:\path\to\ComfyUI
+  echo ERROR: main.py not found at: %COMFYUI_DIR%
+  echo.
+  echo   This script requires the ComfyUI root directory ^(the folder containing main.py^).
+  echo   Pass the path as an argument:
+  echo     install.bat C:\path\to\ComfyUI
+  echo.
+  echo   If using ComfyUI Portable, the root is the folder with run_nvidia_gpu.bat,
+  echo   NOT a subfolder. Example: install.bat C:\ComfyUI_windows_portable
   exit /b 1
 )
 
@@ -39,35 +57,31 @@ if exist "%COMFYUI_DIR%\python_embeded\python.exe" (
 
 echo Installing custom nodes into: %NODES_DIR%
 if not exist "%NODES_DIR%" mkdir "%NODES_DIR%"
-
 echo.
-echo === ComfyUI Manager ===
+set NODE_COUNT=0
+set NODE_TOTAL=18
+
+REM --- Core ---
 call :install_node "ComfyUI-Manager" "https://github.com/ltdrdata/ComfyUI-Manager" ""
 
-echo.
-echo === Modules 01 + 02 - Qwen utilities ===
+REM --- Modules 01 + 02: Qwen utilities ---
 call :install_node "ComfyUI-WJNodes" "https://github.com/807502278/ComfyUI-WJNodes" ""
 call :install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use" ""
 
-echo.
-echo === Module 01 - LLM Prompt Enhancer ===
+REM --- Module 01: LLM Prompt Enhancer ---
 call :install_node "comfyui-ollama" "https://github.com/stavsap/comfyui-ollama" ""
 
-echo.
-echo === Modules 02-07, Bonus A+B - TextureAlchemy (Qwen/HDRI custom nodes) ===
+REM --- Modules 02-07, Bonus A+B: TextureAlchemy ---
 call :install_node "ComfyUI-TextureAlchemy" "https://github.com/amtarr/ComfyUI-TextureAlchemy" "Sandbox"
 
-echo.
-echo === Modules 04 + 05 - Gaussian Splat ===
+REM --- Modules 04 + 05: Gaussian Splat ---
 call :install_node "ComfyUI-Sharp" "https://github.com/PozzettiAndrea/ComfyUI-Sharp" ""
 call :install_node "ComfyUI-GeometryPack" "https://github.com/PozzettiAndrea/ComfyUI-GeometryPack" ""
 
-echo.
-echo === Module 08 - Trellis2 3D ===
+REM --- Module 08: Trellis2 3D ---
 call :install_node "ComfyUI-TRELLIS2" "https://github.com/PozzettiAndrea/ComfyUI-TRELLIS2" ""
 
-echo.
-echo === Module 09 - Cutout Animation (VideoPrep + TTM) ===
+REM --- Module 09: Cutout Animation ---
 call :install_node "comfy_nv_video_prep" "https://github.com/NVIDIA/comfy_nv_video_prep" ""
 call :install_node "ComfyUI-Custom-Scripts" "https://github.com/pythongosssss/ComfyUI-Custom-Scripts" ""
 call :install_node "ComfyUI_essentials" "https://github.com/cubiq/ComfyUI_essentials" ""
@@ -75,19 +89,16 @@ call :install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/
 call :install_node "comfyui-sam2" "https://github.com/neverbiasu/ComfyUI-SAM2" ""
 call :install_node "ComfyUI-VideoHelperSuite" "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite" ""
 
-echo.
-echo === Module 10 - Playblast to Video (Wan VACE) ===
+REM --- Module 10: Playblast to Video ---
 call :install_node "ComfyUI-WanVideoWrapper" "https://github.com/kijai/ComfyUI-WanVideoWrapper" ""
 call :install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes" ""
 call :install_node "cg-use-everywhere" "https://github.com/chrisgoringe/cg-use-everywhere" ""
 call :install_node "radiance" "https://github.com/fxtdstudios/radiance" ""
 
-echo.
-echo === Modules 10 + Bonus B - Lotus depth estimation ===
+REM --- Modules 10 + Bonus B: Lotus ---
 call :install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus" ""
 
-echo.
-echo === Bonus B - Texture to PBR ===
+REM --- Bonus B: Texture to PBR ---
 call :install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold" ""
 
 echo.
@@ -109,23 +120,28 @@ set NODE_NAME=%~1
 set NODE_REPO=%~2
 set NODE_BRANCH=%~3
 set NODE_DIR=%NODES_DIR%\%NODE_NAME%
+set /a NODE_COUNT+=1
 
 if exist "%NODE_DIR%" (
-  echo   [skip] %NODE_NAME% already installed
+  echo [%NODE_COUNT%/%NODE_TOTAL%] skip   %NODE_NAME% ^(already installed^)
 ) else (
-  echo   [install] %NODE_NAME%
+  echo [%NODE_COUNT%/%NODE_TOTAL%] install %NODE_NAME% ...
   if "%NODE_BRANCH%"=="" (
     git clone --depth 1 %NODE_REPO% "%NODE_DIR%" 2>&1
   ) else (
     git clone --depth 1 --branch %NODE_BRANCH% %NODE_REPO% "%NODE_DIR%" 2>&1
   )
   if errorlevel 1 (
-    echo   [ERROR] Failed to clone %NODE_NAME% from %NODE_REPO%
-    echo          Check your internet connection and that Git is installed.
+    echo [ERROR] Failed to clone %NODE_NAME%
+    echo         Repo: %NODE_REPO%
+    echo         Check your internet connection and that Git is installed.
+  ) else (
+    echo         OK
   )
 )
 
 if exist "%NODE_DIR%\requirements.txt" (
+  echo         Installing Python requirements...
   %PIP% install -q -r "%NODE_DIR%\requirements.txt" 2>&1
 )
 goto :eof
