@@ -34,16 +34,19 @@ git clone https://github.com/nvidia/comfyui-generative-ai-workflows
 cd comfyui-generative-ai-workflows
 
 # 2. Install all custom nodes
-#    Run from your ComfyUI root directory, with your Python venv active:
-# Windows:
+# Windows — run from Command Prompt (cmd.exe), NOT Git Bash:
 install.bat C:\path\to\ComfyUI
 # Linux:
 bash install.sh /path/to/ComfyUI
 
-# 3. Download models for the module(s) you want — see each module's models.md
+# 3. Download models for the module(s) you want
+python download_models.py --comfyui C:\path\to\ComfyUI --modules 01,02,03
+# or see each module's models.md for individual downloads
 
 # 4. Open a workflow folder, read its README, then drag workflow.json into ComfyUI
 ```
+
+> **New to this?** Don't download everything at once — see [Recommended Starting Point](REQUIREMENTS.md#recommended-starting-point) in REQUIREMENTS.md for a low-friction first module to try.
 
 ---
 

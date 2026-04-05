@@ -1,10 +1,11 @@
 @echo off
 REM install.bat — ComfyUI custom node installer for comfyui-generative-ai-workflows
-REM No UI. Run from the ComfyUI root directory:
-REM   install.bat
-REM   install.bat C:\path\to\ComfyUI
 REM
-REM Does NOT download models — see each module's models.md for that.
+REM IMPORTANT: Run this from Command Prompt (cmd.exe), NOT from Git Bash or PowerShell.
+REM   cmd.exe:    install.bat C:\path\to\ComfyUI
+REM   PowerShell: cmd /c install.bat C:\path\to\ComfyUI
+REM
+REM Does NOT download models — see each module's models.md or run download_models.py.
 
 setlocal enabledelayedexpansion
 
@@ -114,13 +115,17 @@ if exist "%NODE_DIR%" (
 ) else (
   echo   [install] %NODE_NAME%
   if "%NODE_BRANCH%"=="" (
-    git clone --depth 1 %NODE_REPO% "%NODE_DIR%"
+    git clone --depth 1 %NODE_REPO% "%NODE_DIR%" 2>&1
   ) else (
-    git clone --depth 1 --branch %NODE_BRANCH% %NODE_REPO% "%NODE_DIR%"
+    git clone --depth 1 --branch %NODE_BRANCH% %NODE_REPO% "%NODE_DIR%" 2>&1
+  )
+  if errorlevel 1 (
+    echo   [ERROR] Failed to clone %NODE_NAME% from %NODE_REPO%
+    echo          Check your internet connection and that Git is installed.
   )
 )
 
 if exist "%NODE_DIR%\requirements.txt" (
-  %PIP% install -q -r "%NODE_DIR%\requirements.txt"
+  %PIP% install -q -r "%NODE_DIR%\requirements.txt" 2>&1
 )
 goto :eof

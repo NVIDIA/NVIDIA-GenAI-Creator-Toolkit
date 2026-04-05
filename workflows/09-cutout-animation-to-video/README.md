@@ -10,6 +10,10 @@ Trajectory-controlled video generation — define exactly when and where motion 
 
 Without motion guidance, video models animate unpredictably. Walls breathe, backgrounds wobble, unintended elements move. Wan TTM (Time-To-Move) Trajectory Masking gives you precise control: you specify a motion path and the frame window over which movement occurs. Everything outside the trajectory stays locked.
 
+> **Two workflows — must be run in order.**
+> Run `videoprep.json` first to prepare all inputs, then `workflow.json` for generation.
+> Skipping VideoPrep or running `workflow.json` directly will fail — it depends on outputs from the first workflow.
+
 This module includes two workflows that must be run in sequence:
 
 1. **`videoprep.json`** — Prepares all inputs for TTM inside ComfyUI

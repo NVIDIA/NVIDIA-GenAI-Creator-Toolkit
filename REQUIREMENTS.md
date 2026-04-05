@@ -100,6 +100,13 @@ Open `http://127.0.0.1:8188` in your browser.
 
 Each workflow lists its required nodes in `nodes.md`. The fastest path is running `install.sh` / `install.bat` from this repo, which installs all node packs at once.
 
+> **Windows users: run `install.bat` from Command Prompt (`cmd.exe`), not Git Bash or PowerShell.**
+> Git Bash does not execute `.bat` files through cmd.exe, so the script will appear to do nothing.
+>
+> - **Command Prompt:** `install.bat C:\path\to\ComfyUI`
+> - **PowerShell:** `cmd /c install.bat C:\path\to\ComfyUI`
+> - **Git Bash:** Open a separate Command Prompt window and run from there
+
 To install individually via ComfyUI Manager:
 
 1. Click **Manager** in the ComfyUI sidebar
@@ -142,3 +149,64 @@ mkdir -p ComfyUI/models/video/wan
 ```
 
 `huggingface-cli` creates the target directory automatically. Manual downloads (browser/wget) require the directories to exist first.
+
+You can also use `download_models.py` (included in this repo) to download models for one or more modules at once:
+
+```bash
+# Download models for specific modules
+python download_models.py --comfyui C:\path\to\ComfyUI --modules 01,02,03
+
+# Download everything
+python download_models.py --comfyui C:\path\to\ComfyUI --modules all
+```
+
+---
+
+## Recommended Starting Point
+
+The full repo is ~160–180 GB across all modules. If you're exploring for the first time, start with a small subset that doesn't require large model downloads:
+
+| Module | Storage | Why start here |
+|--------|---------|----------------|
+| [01 LLM Prompt Enhancer](workflows/01-llm-prompt-enhancer/) | ~4 GB (Gemma 3 via Ollama) | Fast setup, no HuggingFace download |
+| [02 Image Deconstruction](workflows/02-image-deconstruction/) | ~12 GB | Demonstrates Qwen stack |
+| [03 Targeted Inpainting](workflows/03-targeted-inpainting/) | Shared with 02 | No additional download |
+
+Modules 02–06 and Bonus A all share the same Qwen model stack (~30 GB total). Download once, run five modules.
+
+Modules 09–10 (Wan2.2) and 08 (Trellis2) have the largest individual downloads (28 GB and 20 GB respectively) — save those for when you're ready to commit.
+
+Module 07 (Panorama to HDRI) requires EV LoRAs only available through the NVIDIA DLI course — skip it unless you have course access.
+
+---
+
+## Troubleshooting
+
+**`install.bat` does nothing / no output**
+Running from Git Bash. Open a Command Prompt (`cmd.exe`) and run from there:
+```
+install.bat C:\path\to\ComfyUI
+```
+
+**`git` is not recognized**
+Git is not installed or not in PATH. Install [Git for Windows](https://git-scm.com/downloads) and restart your terminal.
+
+**`huggingface-cli` is not found**
+Install it with your venv active: `pip install huggingface_hub`
+On ComfyUI Portable: `python_embeded\python.exe -m pip install huggingface_hub`
+
+**ComfyUI shows "Failed to import" or missing node errors**
+1. Restart ComfyUI after running `install.bat` / `install.sh`
+2. If errors persist, open ComfyUI Manager → Install Missing Custom Nodes
+3. For `ComfyUI-TextureAlchemy` specifically, ensure it was cloned from the `Sandbox` branch — the Manager installs the wrong branch by default
+
+**VRAM out of memory (OOM) during generation**
+- Close other GPU applications (browsers with hardware acceleration, games, other AI tools)
+- For Wan2.2 modules (09–10): reduce sequence length — stay under 120 frames for 16 GB VRAM
+- For Trellis2 (08): reduce output resolution
+
+**Workflow loads but all nodes show as red/missing**
+The workflow references node types that aren't installed. Run `install.bat` / `install.sh` and restart ComfyUI, then reload the workflow.
+
+**Module 09: first workflow run produces no video**
+Module 09 requires two workflows in sequence: run `videoprep.json` first to prepare inputs, then `workflow.json` for generation. See the Module 09 README for the full two-step process.
