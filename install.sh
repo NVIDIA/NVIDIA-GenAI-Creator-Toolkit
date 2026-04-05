@@ -1,27 +1,41 @@
 #!/usr/bin/env bash
 # install.sh — ComfyUI custom node installer for comfyui-generative-ai-workflows
-# No UI. Run from the ComfyUI root directory:
-#   bash /path/to/comfyui-generative-ai-workflows/install.sh
+# Does NOT download models — see each module's models.md or run download_models.py.
 #
-# Does NOT download models — see each module's models.md for that.
+# Usage:
+#   bash install.sh /path/to/ComfyUI
 
-set -e
+set -euo pipefail
 
 COMFYUI_DIR="${1:-$(pwd)}"
 NODES_DIR="$COMFYUI_DIR/custom_nodes"
+NODE_COUNT=0
+NODE_TOTAL=20
+
+echo ""
+echo "================================================================"
+echo " ComfyUI Generative AI Workflows - Node Installer"
+echo "================================================================"
+echo ""
 
 if [ ! -f "$COMFYUI_DIR/main.py" ]; then
-  echo "ERROR: ComfyUI not found. Pass the path as an argument:"
-  echo "  bash install.sh /path/to/ComfyUI"
+  echo "ERROR: main.py not found at: $COMFYUI_DIR"
+  echo ""
+  echo "  Pass the ComfyUI root directory (the folder containing main.py):"
+  echo "    bash install.sh /path/to/ComfyUI"
   exit 1
 fi
 
+echo "ComfyUI path: $COMFYUI_DIR"
+echo ""
+
 # Detect venv and use its pip, or fall back to system pip with a warning
-if [ -n "$VIRTUAL_ENV" ]; then
+if [ -n "${VIRTUAL_ENV:-}" ]; then
   PIP="$VIRTUAL_ENV/bin/pip"
+  echo "Detected active venv - using $PIP"
 elif [ -f "$COMFYUI_DIR/venv/bin/pip" ]; then
   PIP="$COMFYUI_DIR/venv/bin/pip"
-  echo "NOTE: Using venv pip at $PIP (activate the venv first for best results)"
+  echo "Detected venv - using $PIP"
 else
   PIP="pip"
   echo "WARNING: No venv detected. If pip installs fail, activate your ComfyUI venv first:"
@@ -30,57 +44,60 @@ fi
 
 echo "Installing custom nodes into: $NODES_DIR"
 mkdir -p "$NODES_DIR"
+echo ""
 
 install_node() {
   local name="$1"
   local repo="$2"
   local branch="${3:-}"
   local dir="$NODES_DIR/$name"
+  NODE_COUNT=$((NODE_COUNT + 1))
 
   if [ -d "$dir" ]; then
-    echo "  [skip] $name already installed"
+    echo "[$NODE_COUNT/$NODE_TOTAL] skip    $name (already installed)"
   else
-    echo "  [install] $name"
+    echo "[$NODE_COUNT/$NODE_TOTAL] install $name ..."
     if [ -n "$branch" ]; then
       git clone --depth 1 --branch "$branch" "$repo" "$dir"
     else
       git clone --depth 1 "$repo" "$dir"
     fi
+    echo "        OK"
   fi
 
   if [ -f "$dir/requirements.txt" ]; then
-    $PIP install -q -r "$dir/requirements.txt"
+    echo "        Installing Python requirements..."
+    local pip_log
+    pip_log=$(mktemp)
+    if ! $PIP install -q --no-warn-script-location -r "$dir/requirements.txt" > "$pip_log" 2>&1; then
+      echo "        [WARN] Some packages failed to install for $name"
+      echo "               This is usually OK - ComfyUI Manager resolves missing deps on first run."
+      echo "               To see details: cat $pip_log"
+    fi
   fi
 }
 
-echo ""
-echo "=== ComfyUI Manager ==="
+# --- Core ---
 install_node "ComfyUI-Manager" "https://github.com/ltdrdata/ComfyUI-Manager"
 
-echo ""
-echo "=== Modules 01 + 02 — Qwen utilities ==="
+# --- Modules 01 + 02: Qwen utilities ---
 install_node "ComfyUI-WJNodes" "https://github.com/807502278/ComfyUI-WJNodes"
 install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use"
 
-echo ""
-echo "=== Module 01 — LLM Prompt Enhancer ==="
+# --- Module 01: LLM Prompt Enhancer ---
 install_node "comfyui-ollama" "https://github.com/stavsap/comfyui-ollama"
 
-echo ""
-echo "=== Modules 02–07, Bonus A+B — TextureAlchemy (Qwen/HDRI custom nodes) ==="
+# --- Modules 02-07, Bonus A+B: TextureAlchemy ---
 install_node "ComfyUI-TextureAlchemy" "https://github.com/amtarr/ComfyUI-TextureAlchemy" "Sandbox"
 
-echo ""
-echo "=== Modules 04 + 05 — Gaussian Splat ==="
+# --- Modules 04 + 05: Gaussian Splat ---
 install_node "ComfyUI-Sharp" "https://github.com/PozzettiAndrea/ComfyUI-Sharp"
 install_node "ComfyUI-GeometryPack" "https://github.com/PozzettiAndrea/ComfyUI-GeometryPack"
 
-echo ""
-echo "=== Module 08 — Trellis2 3D ==="
+# --- Module 08: Trellis2 3D ---
 install_node "ComfyUI-TRELLIS2" "https://github.com/PozzettiAndrea/ComfyUI-TRELLIS2"
 
-echo ""
-echo "=== Module 09 — Cutout Animation (VideoPrep + TTM) ==="
+# --- Module 09: Cutout Animation ---
 install_node "comfy_nv_video_prep" "https://github.com/NVIDIA/comfy_nv_video_prep"
 install_node "ComfyUI-Custom-Scripts" "https://github.com/pythongosssss/ComfyUI-Custom-Scripts"
 install_node "ComfyUI_essentials" "https://github.com/cubiq/ComfyUI_essentials"
@@ -88,19 +105,16 @@ install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyU
 install_node "comfyui-sam2" "https://github.com/neverbiasu/ComfyUI-SAM2"
 install_node "ComfyUI-VideoHelperSuite" "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
 
-echo ""
-echo "=== Module 10 — Playblast to Video (Wan VACE) ==="
+# --- Module 10: Playblast to Video ---
 install_node "ComfyUI-WanVideoWrapper" "https://github.com/kijai/ComfyUI-WanVideoWrapper"
 install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes"
 install_node "cg-use-everywhere" "https://github.com/chrisgoringe/cg-use-everywhere"
 install_node "radiance" "https://github.com/fxtdstudios/radiance"
 
-echo ""
-echo "=== Modules 10 + Bonus B — Lotus depth estimation ==="
+# --- Modules 10 + Bonus B: Lotus ---
 install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus"
 
-echo ""
-echo "=== Bonus B — Texture to PBR ==="
+# --- Bonus B: Texture to PBR ---
 install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold"
 
 echo ""
@@ -109,7 +123,8 @@ echo ""
 echo "Next steps:"
 echo "  1. Install Ollama for Module 01: https://ollama.com/download"
 echo "     Then: ollama pull gemma3"
-echo "  2. Download models — see each workflow's models.md"
-echo "     Large models (Wan2.2, Trellis2) should be pre-downloaded before running"
+echo "  2. Download models:"
+echo "     python download_models.py --comfyui $COMFYUI_DIR --modules 01,02,03"
+echo "     (or see each workflow's models.md for individual downloads)"
 echo "  3. Launch ComfyUI: source venv/bin/activate && python main.py"
 echo "  4. Drag a workflow.json into the ComfyUI canvas"
