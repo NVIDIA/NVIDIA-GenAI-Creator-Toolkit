@@ -47,39 +47,38 @@ REM
 REM ComfyUI Portable layout:
 REM   <root>\python_embeded\   <- embedded Python here
 REM   <root>\ComfyUI\main.py   <- main.py here (one level down)
-REM So check both COMFYUI_DIR and its parent for python_embeded.
-if exist "%COMFYUI_DIR%\python_embeded\python.exe" goto :pip_embedded_same
-if exist "%COMFYUI_DIR%\..\python_embeded\python.exe" goto :pip_embedded_parent
-if exist "%COMFYUI_DIR%\venv\Scripts\pip.exe" goto :pip_venv
-goto :pip_system
+REM Uses !PIP_FOUND! (delayed expansion) to short-circuit once a pip is found.
+set PIP_FOUND=0
 
-:pip_embedded_same
-set PIP=%COMFYUI_DIR%\python_embeded\python.exe -m pip
-echo Detected ComfyUI Portable - using embedded Python
-goto :pip_done
+if exist "%COMFYUI_DIR%\python_embeded\python.exe" (
+    set "PIP=%COMFYUI_DIR%\python_embeded\python.exe -m pip"
+    set PIP_FOUND=1
+    echo Detected ComfyUI Portable - using embedded Python
+)
 
-:pip_embedded_parent
-set PIP=%COMFYUI_DIR%\..\python_embeded\python.exe -m pip
-echo Detected ComfyUI Portable - using embedded Python (parent directory)
-goto :pip_done
+if !PIP_FOUND!==0 if exist "%COMFYUI_DIR%\..\python_embeded\python.exe" (
+    set "PIP=%COMFYUI_DIR%\..\python_embeded\python.exe -m pip"
+    set PIP_FOUND=1
+    echo Detected ComfyUI Portable - using embedded Python ^(parent directory^)
+)
 
-:pip_venv
-set PIP=%COMFYUI_DIR%\venv\Scripts\pip.exe
-echo Detected venv - using %COMFYUI_DIR%\venv\Scripts\pip.exe
-goto :pip_done
+if !PIP_FOUND!==0 if exist "%COMFYUI_DIR%\venv\Scripts\pip.exe" (
+    set "PIP=%COMFYUI_DIR%\venv\Scripts\pip.exe"
+    set PIP_FOUND=1
+    echo Detected venv - using %COMFYUI_DIR%\venv\Scripts\pip.exe
+)
 
-:pip_system
-set PIP=pip
-echo WARNING: No venv or embedded Python found. Using system pip.
-echo          If installs fail, activate your venv first or check your ComfyUI path.
-
-:pip_done
+if !PIP_FOUND!==0 (
+    set PIP=pip
+    echo WARNING: No venv or embedded Python found. Using system pip.
+    echo          If installs fail, activate your venv first or check your ComfyUI path.
+)
 
 echo Installing custom nodes into: %NODES_DIR%
 if not exist "%NODES_DIR%" mkdir "%NODES_DIR%"
 echo.
 set NODE_COUNT=0
-set NODE_TOTAL=18
+set NODE_TOTAL=20
 
 REM --- Core ---
 call :install_node "ComfyUI-Manager" "https://github.com/ltdrdata/ComfyUI-Manager" ""
