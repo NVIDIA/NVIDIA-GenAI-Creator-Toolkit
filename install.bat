@@ -161,6 +161,6 @@ if exist "%NODE_DIR%" (
 
 if exist "%NODE_DIR%\requirements.txt" (
   echo         Installing Python requirements...
-  %PIP% install -q -r "%NODE_DIR%\requirements.txt" 2>&1
+  %PIP% install -q --no-warn-script-location -r "%NODE_DIR%\requirements.txt" 2>&1
 )
 goto :eof
