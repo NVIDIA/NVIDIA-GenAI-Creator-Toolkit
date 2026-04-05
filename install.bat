@@ -42,10 +42,18 @@ if not exist "%COMFYUI_DIR%\main.py" (
 )
 
 REM Detect which Python/pip to use
-REM Priority: Portable embedded Python > manual venv > system pip (with warning)
+REM Priority: Portable embedded Python (same dir or parent) > venv > system pip
+REM
+REM ComfyUI Portable layout:
+REM   <root>\python_embeded\   <- embedded Python here
+REM   <root>\ComfyUI\main.py   <- main.py here (one level down)
+REM So check both COMFYUI_DIR and its parent for python_embeded.
 if exist "%COMFYUI_DIR%\python_embeded\python.exe" (
   set PIP=%COMFYUI_DIR%\python_embeded\python.exe -m pip
   echo Detected ComfyUI Portable - using embedded Python
+) else if exist "%COMFYUI_DIR%\..\python_embeded\python.exe" (
+  set PIP=%COMFYUI_DIR%\..\python_embeded\python.exe -m pip
+  echo Detected ComfyUI Portable - using embedded Python (parent directory)
 ) else if exist "%COMFYUI_DIR%\venv\Scripts\pip.exe" (
   set PIP=%COMFYUI_DIR%\venv\Scripts\pip.exe
   echo Detected venv - using %COMFYUI_DIR%\venv\Scripts\pip.exe
