@@ -1,32 +1,27 @@
 # Security Policy
 
-## Supported Versions
+NVIDIA is dedicated to the security and trust of our software products and services, including all source code repositories managed through our organization.
 
-This project provides ComfyUI workflow configurations and installer utilities. Security fixes are applied to the latest version on the `main` branch only.
+If you need to report a security issue, please use the appropriate contact points outlined below. **Please do not report security vulnerabilities through GitHub.** If a potential security issue is inadvertently reported via a public issue or pull request, NVIDIA maintainers may limit public discussion and redirect the reporter to the appropriate private disclosure channels.
 
-## Reporting a Vulnerability
+## Reporting a Potential Security Vulnerability in an NVIDIA Product
 
-**Do not report security vulnerabilities through public GitHub Issues.**
+To report a potential security vulnerability in any NVIDIA product:
 
-To report a security issue, please use the GitHub Security Advisory ["Report a Vulnerability"](../../security/advisories/new) feature, or email the NVIDIA Product Security team at:
+- **Web:** [Security Vulnerability Submission Form](https://www.nvidia.com/en-us/security/report-vulnerability/)
+- **E-Mail:** psirt@nvidia.com
+- We encourage you to use the following PGP key for secure email communication: [NVIDIA public PGP Key for communication](https://www.nvidia.com/en-us/security/pgp-key/)
 
-**psirt@nvidia.com**
+Please include the following information:
 
-Include as much of the following as possible:
+- Product/Driver name and version/branch that contains the vulnerability
+- Type of vulnerability (code execution, denial of service, buffer overflow, etc.)
+- Instructions to reproduce the vulnerability
+- Proof-of-concept or exploit code
+- Potential impact of the vulnerability, including how an attacker could exploit the vulnerability
 
-- Type of issue (e.g., command injection, path traversal, dependency with known CVE)
-- Full paths to source files related to the issue
-- Steps to reproduce
-- Proof-of-concept or exploit code (if available)
-- Impact assessment
+While NVIDIA currently does not have a bug bounty program, we do offer acknowledgement when an externally reported security issue is addressed under our coordinated vulnerability disclosure policy. Please visit our [Product Security Incident Response Team (PSIRT) policies page](https://www.nvidia.com/en-us/security/psirt-policies/) for more information.
 
-NVIDIA PSIRT will acknowledge receipt within 3 business days and provide a more detailed response within 10 business days indicating next steps.
+## NVIDIA Product Security
 
-## Scope
-
-This repository contains:
-- Shell scripts that clone public GitHub repositories via `git clone`
-- A Python utility that downloads models from HuggingFace via `huggingface-cli`
-- ComfyUI workflow JSON files (no executable code)
-
-The scripts execute third-party code (ComfyUI custom nodes) and download large model files. Users should review the licenses and security posture of those third-party dependencies independently.
+For all security-related concerns, please visit NVIDIA's Product Security portal at https://www.nvidia.com/en-us/security
