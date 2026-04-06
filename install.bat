@@ -1,4 +1,7 @@
 @echo off
+REM SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+REM SPDX-License-Identifier: Apache-2.0
+REM
 REM install.bat — ComfyUI custom node installer for comfyui-generative-ai-workflows
 REM
 REM IMPORTANT: Run this from Command Prompt (cmd.exe), NOT from Git Bash or PowerShell.

@@ -1,0 +1,108 @@
+THIRD-PARTY SOFTWARE NOTICES
+
+This project downloads and installs third-party software during setup. The
+following notices apply to that software. Review each project's license terms
+before use in commercial or derivative works.
+
+-------------------------------------------------------------------------------
+
+ComfyUI-Manager
+https://github.com/ltdrdata/ComfyUI-Manager
+License: Apache 2.0 / GPL 3.0
+Note: Contains components under GPL 3.0; check repo for details.
+
+ComfyUI-WJNodes
+https://github.com/807502278/ComfyUI-WJNodes
+License: Apache 2.0
+
+ComfyUI-Easy-Use
+https://github.com/yolain/ComfyUI-Easy-Use
+License: Apache 2.0
+
+comfyui-ollama
+https://github.com/stavsap/comfyui-ollama
+License: MIT
+
+ComfyUI-TextureAlchemy
+https://github.com/amtarr/ComfyUI-TextureAlchemy
+License: See repository
+
+ComfyUI-Sharp
+https://github.com/PozzettiAndrea/ComfyUI-Sharp
+License: See repository
+
+ComfyUI-GeometryPack
+https://github.com/PozzettiAndrea/ComfyUI-GeometryPack
+License: See repository
+
+ComfyUI-TRELLIS2
+https://github.com/PozzettiAndrea/ComfyUI-TRELLIS2
+License: See repository
+
+comfy_nv_video_prep
+https://github.com/NVIDIA/comfy_nv_video_prep
+License: Apache 2.0
+
+ComfyUI-Custom-Scripts
+https://github.com/pythongosssss/ComfyUI-Custom-Scripts
+License: MIT
+
+ComfyUI_essentials
+https://github.com/cubiq/ComfyUI_essentials
+License: MIT
+
+ComfyUI-Inpaint-CropAndStitch
+https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch
+License: Apache 2.0
+
+ComfyUI-SAM2
+https://github.com/neverbiasu/ComfyUI-SAM2
+License: Apache 2.0
+
+ComfyUI-VideoHelperSuite
+https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite
+License: GPL 3.0
+
+ComfyUI-WanVideoWrapper
+https://github.com/kijai/ComfyUI-WanVideoWrapper
+License: Apache 2.0 / GPL 3.0 (see repository)
+
+ComfyUI-KJNodes
+https://github.com/kijai/ComfyUI-KJNodes
+License: Apache 2.0 / GPL 3.0 (see repository)
+
+cg-use-everywhere
+https://github.com/chrisgoringe/cg-use-everywhere
+License: MIT
+
+radiance
+https://github.com/fxtdstudios/radiance
+License: See repository
+
+ComfyUI-Lotus
+https://github.com/kijai/ComfyUI-Lotus
+License: Apache 2.0 / GPL 3.0 (see repository)
+
+ComfyUI-Marigold
+https://github.com/kijai/ComfyUI-Marigold
+License: Apache 2.0 / GPL 3.0 (see repository)
+
+-------------------------------------------------------------------------------
+
+MODELS
+
+This project also downloads AI model weights from HuggingFace and other
+sources. Model licenses are listed in each workflow's models.md file. Notable
+requirements:
+
+- Flux.1-dev (Module 07): Requires a separate license from Black Forest Labs
+  for commercial use. See: https://huggingface.co/black-forest-labs/FLUX.1-dev
+- Wan2.2 (Modules 09, 10): Wan License 1.0.
+  See: https://huggingface.co/Wan-AI/Wan2.2-I2V-14B-480P
+
+-------------------------------------------------------------------------------
+
+NOTE: This THIRD-PARTY.txt reflects the state of third-party dependencies at
+the time of this release. Third-party projects may change their licenses
+independently. Always verify current license terms from the source repositories
+before use.

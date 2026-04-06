@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
 # install.sh — ComfyUI custom node installer for comfyui-generative-ai-workflows
 # Does NOT download models — see each module's models.md or run download_models.py.
 #

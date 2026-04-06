@@ -135,6 +135,8 @@ Code and documentation in this repository are licensed under [Apache 2.0](LICENS
 
 Model licenses vary — see each module's `models.md` for details. Notable exception: **Flux.1-dev** (Module 07) requires a separate license from Black Forest Labs for commercial use.
 
+> **Third-party software notice:** This project will download and install additional third-party open source software projects. Review the license terms of these open source projects before use. See [THIRD-PARTY.txt](THIRD-PARTY.txt) for the full list.
+
 ---
 
 ## Credits
