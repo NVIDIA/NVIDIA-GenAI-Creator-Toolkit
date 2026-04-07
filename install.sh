@@ -120,14 +120,28 @@ install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus"
 # --- Bonus B: Texture to PBR ---
 install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold"
 
+WORKFLOWS_DEST="$COMFYUI_DIR/user/default/workflows/creative-genai-workflows"
+mkdir -p "$WORKFLOWS_DEST"
+for workflow_dir in "$(dirname "$0")/workflows"/*/; do
+  if [ -f "${workflow_dir}workflow.json" ]; then
+    module_name="$(basename "$workflow_dir")"
+    mkdir -p "$WORKFLOWS_DEST/$module_name"
+    cp "${workflow_dir}workflow.json" "$WORKFLOWS_DEST/$module_name/workflow.json"
+  fi
+done
 echo ""
-echo "=== Done ==="
+echo "Workflows copied to: $WORKFLOWS_DEST"
+
+echo ""
+echo "================================================================"
+echo " Installation complete"
+echo "================================================================"
 echo ""
 echo "Next steps:"
-echo "  1. Install Ollama for Module 01: https://ollama.com/download"
-echo "     Then: ollama pull gemma3"
-echo "  2. Download models:"
-echo "     python download_models.py --comfyui $COMFYUI_DIR --modules 01,02,03"
-echo "     (or see each workflow's models.md for individual downloads)"
+echo "  1. Module 01 only — install Ollama: https://ollama.com/download"
+echo "     Then run: ollama pull gemma3"
+echo "  2. Download models for the modules you want to use:"
+echo "     python download_models.py --comfyui \"$COMFYUI_DIR\" --modules 01,02,03"
+echo "     (large models like Wan2.2 and Trellis2 take time -- do this before your session)"
 echo "  3. Launch ComfyUI: source venv/bin/activate && python main.py"
-echo "  4. Drag a workflow.json into the ComfyUI canvas"
+echo "  4. Workflows are ready in ComfyUI under: Load > creative-genai-workflows"

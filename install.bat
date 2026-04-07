@@ -123,18 +123,35 @@ call :install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus" ""
 REM --- Bonus B: Texture to PBR ---
 call :install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold" ""
 
+REM --- Copy workflow JSON files into ComfyUI ---
+set WORKFLOWS_DEST=%COMFYUI_DIR%\user\default\workflows\creative-genai-workflows
+if not exist "%WORKFLOWS_DEST%" mkdir "%WORKFLOWS_DEST%"
+for /d %%D in ("%~dp0workflows\*") do (
+  if exist "%%D\workflow.json" (
+    set "MODULE_NAME=%%~nxD"
+    if not exist "%WORKFLOWS_DEST%\!MODULE_NAME!" mkdir "%WORKFLOWS_DEST%\!MODULE_NAME!"
+    copy /y "%%D\workflow.json" "%WORKFLOWS_DEST%\!MODULE_NAME!\workflow.json" > nul
+  )
+)
 echo.
-echo === Done ===
+echo Workflows copied to: %WORKFLOWS_DEST%
+
+echo.
+echo ================================================================
+echo  Installation complete
+echo ================================================================
 echo.
 echo Next steps:
-echo   1. Install Ollama for Module 01: https://ollama.com/download
+echo   1. Module 01 only — install Ollama: https://ollama.com/download
 echo      Then run: ollama pull gemma3
-echo   2. Download models - see each workflow's models.md
-echo      Large models (Wan2.2, Trellis2) should be pre-downloaded before running
+echo   2. Download models for the modules you want to use:
+echo      python download_models.py --comfyui "%COMFYUI_DIR%" --modules 01,02,03
+echo      (large models like Wan2.2 and Trellis2 take time -- do this before your session)
 echo   3. Launch ComfyUI:
 echo      Portable: run_nvidia_gpu.bat (in the portable root folder)
 echo      Manual install: venv\Scripts\activate ^&^& python main.py
-echo   4. Drag a workflow.json into the ComfyUI canvas
+echo   4. Workflows are ready in ComfyUI under: Load ^> creative-genai-workflows
+echo.
 goto :eof
 
 :install_node

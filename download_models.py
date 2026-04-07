@@ -557,6 +557,9 @@ def run_module(comfyui_root: Path, module_key: str, spec: ModuleSpec,
     # Modules with a hard skip (e.g. Module 01 / Ollama)
     if spec.skip:
         print(f"  [SKIP] {spec.skip_reason}")
+        print(f"  --> Install Ollama: https://ollama.com/download")
+        print(f"  --> Then run: ollama pull gemma3")
+        print(f"  --> Once done, launch ComfyUI — no further downloads needed for this module.")
         summary["manual"].append(f"{spec.label} ({spec.name}): {spec.skip_reason}")
         return
 
