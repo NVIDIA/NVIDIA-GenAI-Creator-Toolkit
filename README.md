@@ -26,7 +26,7 @@ See [REQUIREMENTS.md](REQUIREMENTS.md) for full details.
 
 ## Quick Start
 
-> **Don't have ComfyUI yet?** Read [REQUIREMENTS.md](REQUIREMENTS.md) first — it walks you through installing ComfyUI, setting up a virtual environment, and installing required system packages. Come back here once ComfyUI is running.
+> **Don't have ComfyUI yet?** Go to [REQUIREMENTS.md — Installation (ComfyUI + Manager)](REQUIREMENTS.md#installation-comfyui--manager) for step-by-step setup. Come back here once ComfyUI is running.
 
 ```bash
 # 1. Clone this repo
