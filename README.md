@@ -26,14 +26,16 @@ See [REQUIREMENTS.md](REQUIREMENTS.md) for full details.
 
 ## Quick Start
 
-> **New to ComfyUI?** Read [REQUIREMENTS.md](REQUIREMENTS.md) first — it covers ComfyUI installation, virtual environment setup, system packages, and Git.
+> **Don't have ComfyUI yet?** Read [REQUIREMENTS.md](REQUIREMENTS.md) first — it walks you through installing ComfyUI, setting up a virtual environment, and installing required system packages. Come back here once ComfyUI is running.
 
 ```bash
 # 1. Clone this repo
 git clone https://gitlab-master.nvidia.com/jpennington/creative-comfyui-genai-workflows
 cd creative-comfyui-genai-workflows
 
-# 2. Install all custom nodes
+# 2. Install custom nodes into your existing ComfyUI installation
+#    Replace C:\path\to\ComfyUI with the folder where ComfyUI is installed
+#    (the folder that contains main.py and the custom_nodes/ subfolder)
 # Windows — run from Command Prompt (cmd.exe), NOT Git Bash:
 install.bat C:\path\to\ComfyUI
 # Linux:
