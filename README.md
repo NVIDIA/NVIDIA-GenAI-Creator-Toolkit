@@ -31,7 +31,7 @@ See [REQUIREMENTS.md](REQUIREMENTS.md) for full details.
 ```bash
 # 1. Clone this repo
 git clone https://gitlab-master.nvidia.com/jpennington/creative-comfyui-genai-workflows
-cd comfyui-generative-ai-workflows
+cd creative-comfyui-genai-workflows
 
 # 2. Install all custom nodes
 # Windows — run from Command Prompt (cmd.exe), NOT Git Bash:
