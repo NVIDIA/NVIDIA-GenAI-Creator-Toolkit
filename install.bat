@@ -184,6 +184,50 @@ if not defined MODULES (
     set /p MODULES="  Modules: "
 )
 
+REM --- Offer to install Ollama if module 01 or all selected ---
+set NEEDS_OLLAMA=0
+if defined MODULES (
+    echo %MODULES% | findstr /i "01" > nul && set NEEDS_OLLAMA=1
+    if /i "%MODULES%"=="all" set NEEDS_OLLAMA=1
+)
+if %NEEDS_OLLAMA%==1 (
+    where ollama > nul 2>&1
+    if errorlevel 1 (
+        echo.
+        echo ================================================================
+        echo  Module 01 requires Ollama ^(not detected on this machine^)
+        echo ================================================================
+        echo.
+        set /p INSTALL_OLLAMA="  Install Ollama now? (Y/N): "
+        if /i "!INSTALL_OLLAMA!"=="Y" (
+            echo.
+            echo  Downloading Ollama installer...
+            curl -L -o "%TEMP%\OllamaSetup.exe" "https://ollama.com/download/OllamaSetup.exe"
+            echo  Running installer...
+            "%TEMP%\OllamaSetup.exe"
+            echo.
+            set /p PULL_GEMMA="  Pull gemma3 model now? (~5 GB) (Y/N): "
+            if /i "!PULL_GEMMA!"=="Y" (
+                echo.
+                ollama pull gemma3
+            )
+        )
+    ) else (
+        echo.
+        echo  Ollama already installed.
+        ollama list | findstr /i "gemma3" > nul 2>&1
+        if errorlevel 1 (
+            set /p PULL_GEMMA="  Pull gemma3 model now? (~5 GB) (Y/N): "
+            if /i "!PULL_GEMMA!"=="Y" (
+                echo.
+                ollama pull gemma3
+            )
+        ) else (
+            echo  gemma3 already pulled.
+        )
+    )
+)
+
 if defined MODULES (
     if /i not "%MODULES%"=="" (
         echo.
@@ -198,9 +242,6 @@ echo.
 echo ================================================================
 echo  Installation complete
 echo ================================================================
-echo.
-echo  Note: Module 01 requires Ollama — install from https://ollama.com/download
-echo        then run: ollama pull gemma3
 echo.
 echo  Workflows are pre-loaded in ComfyUI under: Load ^> creative-genai-workflows
 echo.
