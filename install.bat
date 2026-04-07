@@ -199,25 +199,38 @@ echo ================================================================
 echo  Installation complete
 echo ================================================================
 echo.
-if not defined MODULES (
-    echo Next steps:
-    echo   1. Module 01 only — install Ollama: https://ollama.com/download
-    echo      Then run: ollama pull gemma3
-    echo   2. Download models for the modules you want to use:
-    echo      python download_models.py --comfyui "%COMFYUI_DIR%" --modules 02,03,08
-    echo      (large models like Wan2.2 and Trellis2 take time -- do this before your session)
-    echo   3. Launch ComfyUI:
-    echo      Portable: run_nvidia_gpu.bat ^(in the portable root folder^)
-    echo      Manual install: venv\Scripts\activate ^&^& python main.py
-    echo   4. Workflows are ready in ComfyUI under: Load ^> creative-genai-workflows
+echo  Note: Module 01 requires Ollama — install from https://ollama.com/download
+echo        then run: ollama pull gemma3
+echo.
+echo  Workflows are pre-loaded in ComfyUI under: Load ^> creative-genai-workflows
+echo.
+
+REM Ask user if they want to launch ComfyUI now
+set /p LAUNCH="  Launch ComfyUI now? (Y/N): "
+if /i "%LAUNCH%"=="Y" (
+    if exist "%COMFYUI_DIR%\..\run_nvidia_gpu.bat" (
+        echo.
+        echo  Launching ComfyUI ^(Portable^)...
+        start "" "%COMFYUI_DIR%\..\run_nvidia_gpu.bat"
+    ) else if exist "%COMFYUI_DIR%\run_nvidia_gpu.bat" (
+        echo.
+        echo  Launching ComfyUI ^(Portable^)...
+        start "" "%COMFYUI_DIR%\run_nvidia_gpu.bat"
+    ) else if exist "%COMFYUI_DIR%\venv\Scripts\activate.bat" (
+        echo.
+        echo  Launching ComfyUI ^(venv^)...
+        start cmd /k "cd /d "%COMFYUI_DIR%" && venv\Scripts\activate && python main.py"
+    ) else (
+        echo.
+        echo  Could not detect launch method. Start ComfyUI manually:
+        echo    Portable: run_nvidia_gpu.bat ^(in the portable root folder^)
+        echo    Manual install: venv\Scripts\activate ^&^& python main.py
+    )
 ) else (
-    echo Next steps:
-    echo   1. Module 01 only — install Ollama: https://ollama.com/download
-    echo      Then run: ollama pull gemma3
-    echo   2. Launch ComfyUI:
-    echo      Portable: run_nvidia_gpu.bat ^(in the portable root folder^)
-    echo      Manual install: venv\Scripts\activate ^&^& python main.py
-    echo   3. Workflows are ready in ComfyUI under: Load ^> creative-genai-workflows
+    echo.
+    echo  To launch ComfyUI later:
+    echo    Portable: run_nvidia_gpu.bat ^(in the portable root folder^)
+    echo    Manual install: venv\Scripts\activate ^&^& python main.py
 )
 echo.
 goto :eof
