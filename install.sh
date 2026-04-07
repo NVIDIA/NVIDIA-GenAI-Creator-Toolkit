@@ -3,14 +3,25 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 # install.sh — ComfyUI custom node installer for comfyui-generative-ai-workflows
-# Does NOT download models — see each module's models.md or run download_models.py.
 #
 # Usage:
 #   bash install.sh /path/to/ComfyUI
+#   bash install.sh /path/to/ComfyUI --modules 02,03,08
+#   bash install.sh /path/to/ComfyUI --modules all
 
 set -euo pipefail
 
-COMFYUI_DIR="${1:-$(pwd)}"
+# Parse arguments
+COMFYUI_DIR=""
+MODULES=""
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --modules) MODULES="$2"; shift 2 ;;
+    *) if [ -z "$COMFYUI_DIR" ]; then COMFYUI_DIR="$1"; fi; shift ;;
+  esac
+done
+COMFYUI_DIR="${COMFYUI_DIR:-$(pwd)}"
+
 NODES_DIR="$COMFYUI_DIR/custom_nodes"
 NODE_COUNT=0
 NODE_TOTAL=20
@@ -32,15 +43,18 @@ fi
 echo "ComfyUI path: $COMFYUI_DIR"
 echo ""
 
-# Detect venv and use its pip, or fall back to system pip with a warning
+# Detect venv and use its pip/python, or fall back to system with a warning
 if [ -n "${VIRTUAL_ENV:-}" ]; then
   PIP="$VIRTUAL_ENV/bin/pip"
+  PYTHON="$VIRTUAL_ENV/bin/python"
   echo "Detected active venv - using $PIP"
 elif [ -f "$COMFYUI_DIR/venv/bin/pip" ]; then
   PIP="$COMFYUI_DIR/venv/bin/pip"
+  PYTHON="$COMFYUI_DIR/venv/bin/python"
   echo "Detected venv - using $PIP"
 else
   PIP="pip"
+  PYTHON="python3"
   echo "WARNING: No venv detected. If pip installs fail, activate your ComfyUI venv first:"
   echo "  source $COMFYUI_DIR/venv/bin/activate"
 fi
@@ -132,16 +146,33 @@ done
 echo ""
 echo "Workflows copied to: $WORKFLOWS_DEST"
 
+if [ -n "$MODULES" ]; then
+  echo ""
+  echo "================================================================"
+  echo " Downloading models for modules: $MODULES"
+  echo "================================================================"
+  SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+  $PYTHON "$SCRIPT_DIR/download_models.py" --comfyui "$COMFYUI_DIR" --modules "$MODULES"
+fi
+
 echo ""
 echo "================================================================"
 echo " Installation complete"
 echo "================================================================"
 echo ""
-echo "Next steps:"
-echo "  1. Module 01 only — install Ollama: https://ollama.com/download"
-echo "     Then run: ollama pull gemma3"
-echo "  2. Download models for the modules you want to use:"
-echo "     python download_models.py --comfyui \"$COMFYUI_DIR\" --modules 01,02,03"
-echo "     (large models like Wan2.2 and Trellis2 take time -- do this before your session)"
-echo "  3. Launch ComfyUI: source venv/bin/activate && python main.py"
-echo "  4. Workflows are ready in ComfyUI under: Load > creative-genai-workflows"
+if [ -z "$MODULES" ]; then
+  echo "Next steps:"
+  echo "  1. Module 01 only — install Ollama: https://ollama.com/download"
+  echo "     Then run: ollama pull gemma3"
+  echo "  2. Download models for the modules you want to use:"
+  echo "     python download_models.py --comfyui \"$COMFYUI_DIR\" --modules 02,03,08"
+  echo "     (large models like Wan2.2 and Trellis2 take time -- do this before your session)"
+  echo "  3. Launch ComfyUI: source venv/bin/activate && python main.py"
+  echo "  4. Workflows are ready in ComfyUI under: Load > creative-genai-workflows"
+else
+  echo "Next steps:"
+  echo "  1. Module 01 only — install Ollama: https://ollama.com/download"
+  echo "     Then run: ollama pull gemma3"
+  echo "  2. Launch ComfyUI: source venv/bin/activate && python main.py"
+  echo "  3. Workflows are ready in ComfyUI under: Load > creative-genai-workflows"
+fi

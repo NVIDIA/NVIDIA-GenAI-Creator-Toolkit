@@ -8,7 +8,9 @@ REM IMPORTANT: Run this from Command Prompt (cmd.exe), NOT from Git Bash or Powe
 REM   cmd.exe:    install.bat C:\path\to\ComfyUI
 REM   PowerShell: cmd /c install.bat C:\path\to\ComfyUI
 REM
-REM Does NOT download models — see each module's models.md or run download_models.py.
+REM Optionally download models immediately after install:
+REM   install.bat C:\path\to\ComfyUI --modules 02,03,08
+REM   install.bat C:\path\to\ComfyUI --modules all
 
 REM Force UTF-8 output so text is visible in all terminals
 chcp 65001 > nul
@@ -21,11 +23,22 @@ echo  ComfyUI Generative AI Workflows - Node Installer
 echo ================================================================
 echo.
 
-if "%~1"=="" (
-  set COMFYUI_DIR=%cd%
-) else (
-  set COMFYUI_DIR=%~1
+REM Parse arguments: first positional = ComfyUI path, --modules = module list
+set COMFYUI_DIR=
+set MODULES=
+:parse_args
+if "%~1"=="" goto done_parse
+if /i "%~1"=="--modules" (
+    set MODULES=%~2
+    shift /1
+    shift /1
+    goto parse_args
 )
+if not defined COMFYUI_DIR set COMFYUI_DIR=%~1
+shift /1
+goto parse_args
+:done_parse
+if not defined COMFYUI_DIR set COMFYUI_DIR=%cd%
 
 echo ComfyUI path: %COMFYUI_DIR%
 echo.
@@ -136,21 +149,39 @@ for /d %%D in ("%~dp0workflows\*") do (
 echo.
 echo Workflows copied to: %WORKFLOWS_DEST%
 
+if defined MODULES (
+    echo.
+    echo ================================================================
+    echo  Downloading models for modules: %MODULES%
+    echo ================================================================
+    python "%~dp0download_models.py" --comfyui "%COMFYUI_DIR%" --modules %MODULES%
+)
+
 echo.
 echo ================================================================
 echo  Installation complete
 echo ================================================================
 echo.
-echo Next steps:
-echo   1. Module 01 only — install Ollama: https://ollama.com/download
-echo      Then run: ollama pull gemma3
-echo   2. Download models for the modules you want to use:
-echo      python download_models.py --comfyui "%COMFYUI_DIR%" --modules 01,02,03
-echo      (large models like Wan2.2 and Trellis2 take time -- do this before your session)
-echo   3. Launch ComfyUI:
-echo      Portable: run_nvidia_gpu.bat (in the portable root folder)
-echo      Manual install: venv\Scripts\activate ^&^& python main.py
-echo   4. Workflows are ready in ComfyUI under: Load ^> creative-genai-workflows
+if not defined MODULES (
+    echo Next steps:
+    echo   1. Module 01 only — install Ollama: https://ollama.com/download
+    echo      Then run: ollama pull gemma3
+    echo   2. Download models for the modules you want to use:
+    echo      python download_models.py --comfyui "%COMFYUI_DIR%" --modules 02,03,08
+    echo      (large models like Wan2.2 and Trellis2 take time -- do this before your session)
+    echo   3. Launch ComfyUI:
+    echo      Portable: run_nvidia_gpu.bat ^(in the portable root folder^)
+    echo      Manual install: venv\Scripts\activate ^&^& python main.py
+    echo   4. Workflows are ready in ComfyUI under: Load ^> creative-genai-workflows
+) else (
+    echo Next steps:
+    echo   1. Module 01 only — install Ollama: https://ollama.com/download
+    echo      Then run: ollama pull gemma3
+    echo   2. Launch ComfyUI:
+    echo      Portable: run_nvidia_gpu.bat ^(in the portable root folder^)
+    echo      Manual install: venv\Scripts\activate ^&^& python main.py
+    echo   3. Workflows are ready in ComfyUI under: Load ^> creative-genai-workflows
+)
 echo.
 goto :eof
 

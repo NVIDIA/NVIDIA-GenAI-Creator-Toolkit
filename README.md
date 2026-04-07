@@ -31,18 +31,18 @@ See [REQUIREMENTS.md](REQUIREMENTS.md) for full details.
 git clone https://gitlab-master.nvidia.com/jpennington/creative-comfyui-genai-workflows
 cd creative-comfyui-genai-workflows
 
-# 2. Install custom nodes (need ComfyUI first? see REQUIREMENTS.md in this folder)
+# 2. Install custom nodes and download models (need ComfyUI first? see REQUIREMENTS.md in this folder)
 #    Path = the folder containing main.py
+#    Add --modules to download models in the same step (recommended):
 # Windows — run from Command Prompt (cmd.exe), NOT Git Bash:
-install.bat C:\path\to\ComfyUI
+install.bat C:\path\to\ComfyUI --modules 02,03,08
 # Linux:
-bash install.sh /path/to/ComfyUI
+bash install.sh /path/to/ComfyUI --modules 02,03,08
 
-# 3. Download models for the module(s) you want
-python download_models.py --comfyui C:\path\to\ComfyUI --modules 01,02,03
-# or see each module's models.md for individual downloads
+# To download models separately, or add more modules later:
+python download_models.py --comfyui C:\path\to\ComfyUI --modules 02,03,08
 
-# 4. Open a workflow folder, read its README, then drag workflow.json into ComfyUI
+# 3. Launch ComfyUI — workflows are pre-loaded under Load > creative-genai-workflows
 ```
 
 > **New to this?** Don't download everything at once — see [Recommended Starting Point](REQUIREMENTS.md#recommended-starting-point) in REQUIREMENTS.md for a low-friction first module to try.
