@@ -161,12 +161,37 @@ for /d %%D in ("%~dp0workflows\*") do (
 echo.
 echo Workflows copied to: %WORKFLOWS_DEST%
 
-if defined MODULES (
+if not defined MODULES (
     echo.
     echo ================================================================
-    echo  Downloading models for modules: %MODULES%
+    echo  Which modules do you want to download models for?
     echo ================================================================
-    python "%~dp0download_models.py" --comfyui "%COMFYUI_DIR%" --modules %MODULES%
+    echo.
+    echo  Available modules:
+    echo    01  LLM Prompt Enhancer      ^(Ollama/Gemma3 — no download needed^)
+    echo    02  Image Deconstruction     ^(~8 GB^)
+    echo    03  Targeted Inpainting      ^(~8 GB^)
+    echo    04  Image to Gaussian Splat  ^(~1 GB^)
+    echo    05  Gaussian Splat SceneFill ^(~8 GB^)
+    echo    06  Equirectangular Outpaint ^(~12 GB^)
+    echo    07  Panorama to HDRI         ^(~24 GB^)
+    echo    08  Trellis2 3D Asset Gen    ^(~20 GB^)
+    echo    09  Cutout Animation         ^(~30 GB^)
+    echo    10  Playblast to Video       ^(~30 GB^)
+    echo.
+    echo  Enter module numbers ^(e.g. 02,03,08^), "all", or press Enter to skip:
+    echo.
+    set /p MODULES="  Modules: "
+)
+
+if defined MODULES (
+    if /i not "%MODULES%"=="" (
+        echo.
+        echo ================================================================
+        echo  Downloading models for modules: %MODULES%
+        echo ================================================================
+        python "%~dp0download_models.py" --comfyui "%COMFYUI_DIR%" --modules %MODULES%
+    )
 )
 
 echo.
