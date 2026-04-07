@@ -158,6 +158,72 @@ done
 echo ""
 echo "Workflows copied to: $WORKFLOWS_DEST"
 
+# --- Interactive module selection if not passed as argument ---
+if [ -z "$MODULES" ]; then
+  echo ""
+  echo "================================================================"
+  echo " Which modules do you want to download models for?"
+  echo "================================================================"
+  echo ""
+  echo "  Available modules:"
+  echo "   01  LLM Prompt Enhancer      (Ollama/Gemma3 — no download needed)"
+  echo "   02  Image Deconstruction     (~8 GB)"
+  echo "   03  Targeted Inpainting      (~8 GB)"
+  echo "   04  Image to Gaussian Splat  (~1 GB)"
+  echo "   05  Gaussian Splat SceneFill (~8 GB)"
+  echo "   06  Equirectangular Outpaint (~12 GB)"
+  echo "   07  Panorama to HDRI         (~24 GB)"
+  echo "   08  Trellis2 3D Asset Gen    (~20 GB)"
+  echo "   09  Cutout Animation         (~30 GB)"
+  echo "   10  Playblast to Video       (~30 GB)"
+  echo ""
+  echo "  Enter module numbers (e.g. 02,03,08), \"all\", or press Enter to skip:"
+  echo ""
+  read -p "  Modules: " MODULES
+fi
+
+# --- Offer to install Ollama if module 01 or all selected ---
+NEEDS_OLLAMA=0
+if [ -n "$MODULES" ]; then
+  echo "$MODULES" | grep -qi "01" && NEEDS_OLLAMA=1
+  [ "${MODULES,,}" = "all" ] && NEEDS_OLLAMA=1
+fi
+
+if [ "$NEEDS_OLLAMA" = "1" ]; then
+  if ! command -v ollama > /dev/null 2>&1; then
+    echo ""
+    echo "================================================================"
+    echo " Module 01 requires Ollama (not detected on this machine)"
+    echo "================================================================"
+    echo ""
+    read -p "  Install Ollama now? (Y/N): " INSTALL_OLLAMA
+    if [[ "${INSTALL_OLLAMA,,}" == "y" ]]; then
+      echo ""
+      echo "  Installing Ollama..."
+      curl -fsSL https://ollama.com/install.sh | sh
+      echo ""
+      read -p "  Pull gemma3 model now? (~5 GB) (Y/N): " PULL_GEMMA
+      if [[ "${PULL_GEMMA,,}" == "y" ]]; then
+        echo ""
+        ollama pull gemma3
+      fi
+    fi
+  else
+    echo ""
+    echo "  Ollama already installed."
+    if ! ollama list 2>/dev/null | grep -qi "gemma3"; then
+      read -p "  Pull gemma3 model now? (~5 GB) (Y/N): " PULL_GEMMA
+      if [[ "${PULL_GEMMA,,}" == "y" ]]; then
+        echo ""
+        ollama pull gemma3
+      fi
+    else
+      echo "  gemma3 already pulled."
+    fi
+  fi
+fi
+
+# --- Download models ---
 if [ -n "$MODULES" ]; then
   echo ""
   echo "================================================================"
@@ -172,19 +238,23 @@ echo "================================================================"
 echo " Installation complete"
 echo "================================================================"
 echo ""
-if [ -z "$MODULES" ]; then
-  echo "Next steps:"
-  echo "  1. Module 01 only — install Ollama: https://ollama.com/download"
-  echo "     Then run: ollama pull gemma3"
-  echo "  2. Download models for the modules you want to use:"
-  echo "     python download_models.py --comfyui \"$COMFYUI_DIR\" --modules 02,03,08"
-  echo "     (large models like Wan2.2 and Trellis2 take time -- do this before your session)"
-  echo "  3. Launch ComfyUI: source venv/bin/activate && python main.py"
-  echo "  4. Workflows are ready in ComfyUI under: Load > creative-genai-workflows"
+echo "  Workflows are ready in ComfyUI under: Load > creative-genai-workflows"
+echo ""
+
+# --- Offer to launch ComfyUI ---
+read -p "  Launch ComfyUI now? (Y/N): " LAUNCH
+if [[ "${LAUNCH,,}" == "y" ]]; then
+  if [ -f "$COMFYUI_DIR/venv/bin/activate" ]; then
+    echo ""
+    echo "  Launching ComfyUI (venv)..."
+    bash -c "source '$COMFYUI_DIR/venv/bin/activate' && python '$COMFYUI_DIR/main.py'"
+  else
+    echo ""
+    echo "  Could not detect launch method. Start ComfyUI manually:"
+    echo "    source venv/bin/activate && python main.py"
+  fi
 else
-  echo "Next steps:"
-  echo "  1. Module 01 only — install Ollama: https://ollama.com/download"
-  echo "     Then run: ollama pull gemma3"
-  echo "  2. Launch ComfyUI: source venv/bin/activate && python main.py"
-  echo "  3. Workflows are ready in ComfyUI under: Load > creative-genai-workflows"
+  echo ""
+  echo "  To launch ComfyUI later:"
+  echo "    source venv/bin/activate && python main.py"
 fi
