@@ -42,6 +42,17 @@ bash install.sh /path/to/ComfyUI
 
 > **New to this?** Don't download everything at once — see [Recommended Starting Point](REQUIREMENTS.md#recommended-starting-point) in REQUIREMENTS.md for a low-friction first module to try.
 
+### Adding more modules later
+
+Run the same script again with `--modules` and the module number. Already-installed nodes are skipped automatically.
+
+```bash
+# Windows:
+install.bat C:\path\to\ComfyUI --modules 05
+# Linux:
+bash install.sh /path/to/ComfyUI --modules 05
+```
+
 ---
 
 ## Workflows
