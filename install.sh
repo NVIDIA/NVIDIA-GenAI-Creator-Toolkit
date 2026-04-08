@@ -164,9 +164,15 @@ if module_selected "04" || module_selected "05"; then
   install_node "ComfyUI-GeometryPack" "https://github.com/PozzettiAndrea/ComfyUI-GeometryPack"
 fi
 
+# --- Module 07: Panorama to HDRI ---
+if module_selected "07"; then
+  install_node "Luminance-Stack-Processor" "https://github.com/sumitchatterjee13/Luminance-Stack-Processor"
+fi
+
 # --- Module 08: Trellis2 3D ---
 if module_selected "08"; then
   install_node "ComfyUI-TRELLIS2" "https://github.com/PozzettiAndrea/ComfyUI-TRELLIS2"
+  install_node "zsq_prompt" "https://github.com/windfancy/zsq_prompt"
 fi
 
 # --- Module 09: Cutout Animation ---
@@ -177,6 +183,8 @@ if module_selected "09"; then
   install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch"
   install_node "comfyui-sam2" "https://github.com/neverbiasu/ComfyUI-SAM2"
   install_node "ComfyUI-VideoHelperSuite" "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
+  install_node "ComfyUI-Impact-Pack" "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
+  install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use"
 fi
 
 # --- Module 10: Playblast to Video ---
@@ -185,6 +193,7 @@ if module_selected "10"; then
   install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes"
   install_node "cg-use-everywhere" "https://github.com/chrisgoringe/cg-use-everywhere"
   install_node "radiance" "https://github.com/fxtdstudios/radiance"
+  install_node "ComfyUI-Impact-Pack" "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
 fi
 
 # --- Modules 10 + Bonus B: Lotus ---

@@ -183,12 +183,21 @@ if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-GeometryPack" "https://github.com/PozzettiAndrea/ComfyUI-GeometryPack" ""
 )
 
+REM --- Module 07: Panorama to HDRI ---
+set DO_INSTALL=0
+echo ,!MODULES!, | findstr /i ",07," > nul 2>&1 && set DO_INSTALL=1
+if /i "!MODULES!"=="all" set DO_INSTALL=1
+if !DO_INSTALL!==1 (
+    call :install_node "Luminance-Stack-Processor" "https://github.com/sumitchatterjee13/Luminance-Stack-Processor" ""
+)
+
 REM --- Module 08: Trellis2 3D ---
 set DO_INSTALL=0
 echo ,!MODULES!, | findstr /i ",08," > nul 2>&1 && set DO_INSTALL=1
 if /i "!MODULES!"=="all" set DO_INSTALL=1
 if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-TRELLIS2" "https://github.com/PozzettiAndrea/ComfyUI-TRELLIS2" ""
+    call :install_node "zsq_prompt" "https://github.com/windfancy/zsq_prompt" ""
 )
 
 REM --- Module 09: Cutout Animation ---
@@ -202,6 +211,8 @@ if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch" ""
     call :install_node "comfyui-sam2" "https://github.com/neverbiasu/ComfyUI-SAM2" ""
     call :install_node "ComfyUI-VideoHelperSuite" "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite" ""
+    call :install_node "ComfyUI-Impact-Pack" "https://github.com/ltdrdata/ComfyUI-Impact-Pack" ""
+    call :install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use" ""
 )
 
 REM --- Module 10: Playblast to Video ---
@@ -213,6 +224,7 @@ if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes" ""
     call :install_node "cg-use-everywhere" "https://github.com/chrisgoringe/cg-use-everywhere" ""
     call :install_node "radiance" "https://github.com/fxtdstudios/radiance" ""
+    call :install_node "ComfyUI-Impact-Pack" "https://github.com/ltdrdata/ComfyUI-Impact-Pack" ""
     call :install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus" ""
 )
 

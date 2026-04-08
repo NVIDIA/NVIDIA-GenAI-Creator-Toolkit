@@ -88,6 +88,18 @@ ComfyUI-Marigold
 https://github.com/kijai/ComfyUI-Marigold
 License: Apache 2.0 / GPL 3.0 (see repository)
 
+ComfyUI-Impact-Pack
+https://github.com/ltdrdata/ComfyUI-Impact-Pack
+License: GPL-3.0
+
+Luminance-Stack-Processor
+https://github.com/sumitchatterjee13/Luminance-Stack-Processor
+License: MIT
+
+zsq_prompt
+https://github.com/windfancy/zsq_prompt
+License: MIT
+
 -------------------------------------------------------------------------------
 
 MODELS

@@ -25,7 +25,7 @@ Image -> Trellis2 -> 3D Model with PBR Materials
 |-------------|-------|
 | **VRAM (Minimum)** | 16 GB |
 | **VRAM (Recommended)** | 24 GB |
-| **Custom Nodes** | 3 packages |
+| **Custom Nodes** | 2 packages |
 | **Models** | Bundled with ComfyUI-TRELLIS2 |
 
 ## Required Models
@@ -35,7 +35,6 @@ The Trellis2 model (~16.2 GB) downloads automatically when the ComfyUI-TRELLIS2 
 ## Required Custom Nodes
 
 - [ComfyUI-TRELLIS2](https://github.com/PozzettiAndrea/ComfyUI-TRELLIS2)
-- [ComfyUI-Fooocus](https://github.com/mrhan1993/ComfyUI-Fooocus)
 - [zsq_prompt](https://github.com/windfancy/zsq_prompt)
 
 ## Sample Input
