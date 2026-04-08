@@ -25,8 +25,7 @@ License: MIT
 
 ComfyUI-TextureAlchemy
 https://github.com/amtarr/ComfyUI-TextureAlchemy
-License: No license file present in repository (as of 2026-04-07).
-Note: OSRB review required before distribution — no license = all rights reserved.
+License: Apache 2.0
 
 ComfyUI-Sharp
 https://github.com/PozzettiAndrea/ComfyUI-Sharp
