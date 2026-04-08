@@ -803,7 +803,7 @@
         "fp16",
         "disabled",
         "offload_device",
-        "sageattn",
+        "sdpa",
         "default"
       ],
       "color": "#223",
@@ -2812,7 +2812,7 @@
         "fp16",
         "disabled",
         "offload_device",
-        "sageattn",
+        "sdpa",
         "default"
       ],
       "color": "#223",

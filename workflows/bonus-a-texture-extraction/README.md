@@ -1,98 +1,57 @@
-![](images/preview.png)
+<!-- SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved. -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
 
-# Bonus A — Texture Extraction from Image
+# Bonus A — Texture Extraction
 
-Extract a clean, seamless, tileable texture from any image — photo, render, or AI-generated.
+## Overview
 
----
+This workflow extracts clean, seamless, flat-world texture maps from any image using community-trained LoRAs, masking and cropping techniques, and LLM-guided refinement. The result is a production-ready texture for use in 3D materials, look-dev, environment building, or asset creation.
 
-## What It Does
+## The Problem It Solves
 
-A VLM identifies and isolates the target material surface, a texture LoRA conditions the diffusion output for tileability, and an upscaler brings the result to 4K. The workflow handles everything from material identification to final output.
+Whether you are recreating a material from a 2D reference, generating supporting textures for background assets, or experimenting with new surface types, the first step is always the same: producing a seamless, high-quality texture. Doing this manually is slow and inconsistent.
 
-**Pipeline**
+## Key Features
+
+- **LoRA-Driven Texture Extraction:** Uses specialized LoRAs to isolate and extract material patterns from an image.
+- **Masking and Cropping for Consistency:** Ensures the extracted texture is uniform and clean.
+- **Upscaling:** Enhances low-resolution samples into sharp, 4K-ready textures.
+
+## How It Works
 
 ```
-Input Image
-    └── Qwen VLM (material identification and segmentation)
-            └── Mask + Crop
-                    └── Texture Extraction LoRA + Diffusion
-                            └── 4K Upscale
-                                    └── Seamless Tileable Texture
+Image -> VLM -> Segmentation/Masking -> LoRA -> Diffusion Model -> Output Texture
 ```
-
----
-
-## Use Cases
-
-- Recreate a material from a photo reference
-- Extract surfaces from AI-generated scenes
-- Generate textures for background environment assets
-- Prepare material input for Bonus B (Texture → PBR)
-
----
-
-## Models
-
-See [models.md](models.md) — total storage ~29 GB
-
-| Model | Size | Notes |
-|-------|------|-------|
-| Qwen Image Edit 2511 BF16 | 13.5 GB | Base generation + VLM guidance |
-| Qwen 2.5 VL 7B Text Encoder | 14.5 GB | |
-| Qwen Image VAE | 170 MB | |
-| Extract Texture LoRA | 500 MB | Conditions output for seamless tileability |
-| Qwen Lightning 8-step LoRA | 500 MB | |
-
-> Shares the full Qwen stack with Modules 03, 05, and 06. If you've run any of those, the base models are already downloaded.
-
----
 
 ## Requirements
 
-- VRAM: 12–16 GB
+| Requirement | Value |
+|-------------|-------|
+| **VRAM (Minimum)** | 16 GB |
+| **VRAM (Recommended)** | 24 GB |
+| **Custom Nodes** | 1 package |
+| **Models** | 5 files |
 
----
+## Required Models
 
-## Custom Nodes
+| Model | Type | Size |
+|-------|------|------|
+| `qwen_image_edit_2511_bf16.safetensors` | Image Edit Model | 38.05 GB |
+| `qwen_2.5_vl_7b.safetensors` | Text Encoder | 15.45 GB |
+| `qwen_image_vae.safetensors` | VAE | 242 MB |
+| `extract_texture_qwen_image_edit_2509.safetensors` | LoRA | ~500 MB |
+| `Qwen-Image-Lightning-8steps-V2.0.safetensors` | LoRA | 1.58 GB |
 
-See [nodes.md](nodes.md)
+## Required Custom Nodes
 
-| Node | Purpose |
-|------|---------|
-| `TextEncodeQwenImageEditPlus` | Image-aware conditioning |
-| `ModelSamplingAuraFlow` | Advanced sampling for Qwen models |
-| `DifferentialDiffusion` | Blend boundary control |
-| Masking + segmentation nodes | Isolate target material |
-| Upscaling nodes | 4K output |
+- [ComfyUI-Inpaint-CropAndStitch](https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch)
 
----
+## Sample Input
 
-## Usage
+A sample input image is provided in the `input/` folder.
 
-1. Install custom nodes via ComfyUI Manager
-2. Download models listed in [models.md](models.md)
-3. Drag `workflow.json` into ComfyUI
-4. Load an image containing the target material
-5. Optionally describe the material type in the prompt
-6. Queue — outputs a seamless tileable texture at 4K
+## How to Use
 
----
-
-## Tips for Best Results
-
-- **Fill the frame with your target material.** The VLM segments the dominant surface in the image. If your photo of a brick wall has a door, a window, or a person taking up significant space, the segmentation mask may be partial or incorrect. Crop tightly to just the material before loading it.
-
-- **Shoot (or find) source photos with diffuse, flat lighting.** Raking sunlight, deep shadows, or a single strong light source bakes directional illumination into the texture — which then fights against your 3D scene's own lighting. Overcast natural light or a light box setup produces the cleanest extractions.
-
-- **Describe the material explicitly in the prompt field.** Qwen is good at identifying obvious materials, but ambiguous surfaces (aged concrete that could read as stone, worn leather that could read as fabric) benefit from a short prompt like `weathered concrete, coarse aggregate, no moss`. This steers both the VLM identification pass and the diffusion output.
-
-- **Use this workflow on photographs rather than renders — unless the render is purpose-built.** Renders with baked AO, stylized shading, or specular highlights contain non-physical surface data that the LoRA wasn't trained to decompose. Clean, photoreal reference images extract significantly better. If you must use a render, make it a flat-lit, shadeless material preview.
-
-- **Expect some creative interpretation, especially on complex patterns.** Highly irregular materials (random rock fields, tangled roots, dense fabric weaves) will be interpreted and re-synthesized, not copied. The output is a plausible version of the material, not a photogrammetric capture. Use the output as a starting point and re-run with a fixed seed to explore variations.
-
-- **Square input images produce better tiling output.** The diffusion pipeline assumes a roughly square crop for the seamless synthesis step. Strongly portrait or landscape crops can produce stretching artifacts at the tile seams. Crop your source to 1:1 before loading when possible.
-
-- **Chain directly into Bonus B for a full PBR set.** The 4K output from this workflow is designed as the ideal input for Bonus B. Running a raw photo into Bonus B typically produces less accurate results because the lighting and perspective haven't been decomposed yet. The Bonus A → Bonus B pipeline is the intended authoring path.
-
-- **Re-run with a new seed if seams are visible.** The texture LoRA is stochastic — some seeds produce cleaner seams than others on the same input. Before reaching for external seam-fixing tools, try 3–5 seeds on the same source image. There's usually one that tiles cleanly.
+1. Load `workflow.json` into ComfyUI
+2. Connect your input image and click **Queue Prompt**
+3. The output texture can be used directly in [Bonus B — Texture to PBR](../bonus-b-texture-to-pbr/)

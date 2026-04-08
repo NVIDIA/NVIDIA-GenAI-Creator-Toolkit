@@ -1,97 +1,69 @@
-![](images/preview.png)
+<!-- SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved. -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
 
-# Module 07 — Panorama to HDRI
+# 07 — Panorama to HDRI
 
-> **Access requirement:** This module requires four custom EV LoRAs (EV +4, +2, -2, -4) that are currently only available through the NVIDIA DLI course [DLIT81948](https://www.nvidia.com/en-us/training/). **Without these LoRAs the workflow will not run.** Public release is pending — watch this repo for updates. If you have not taken the course, skip this module for now.
+## Overview
 
-Generate a production-ready HDRI environment map from a single panoramic image.
+This workflow converts a panoramic equirectangular image into a true HDRI for lighting in 3D engines, VFX, and PBR workflows. We generate multiple exposure stops using a curated library of LoRAs, then combine them using a custom luminance-stacking node system to produce an HDR environment map ready for use as an IBL in Unreal, Cycles, V-Ray, Arnold, and more.
 
----
+## The Problem It Solves
 
-## What It Does
+Creating a real HDRI traditionally requires specialized equipment — a mirror ball, a professional camera capable of bracketed exposures, and a physical environment to capture. This workflow offers a fast alternative: generate exposure-bracketed panoramas from a single image and assemble them into a production-ready HDRI.
 
-Traditional HDRI capture requires a mirror ball, a camera capable of bracketed exposures, and a real physical environment. This workflow replaces that process: it generates five exposure stops from a single panorama using dedicated LoRAs, then merges them into a true HDRI using the Debevec algorithm.
+## Key Features
 
-**Pipeline**
+- **Multi-LoRA Branching:** Uses several LoRAs to generate reliable exposure stops.
+- **HDR Assembly Pipeline:** Stacks multiple AI-generated exposures into a single HDRI.
+- **Production-Ready Output:** Suitable for lighting in any major 3D engine.
+
+## How It Works
 
 ```
-Equirectangular Panorama (from Module 06 or your own)
-    └── 5 Exposure LoRAs (EV+4, EV+2, base, EV-2, EV-4)
-            └── 5 Diffusion Passes
-                    └── LuminanceStackProcessor5Stops (Debevec merge)
-                            └── 32-bit HDRI (.exr)
+Panoramic Image -> Five LoRAs -> Five Diffusion Passes -> Luminance Stack -> HDRI (IBL)
 ```
-
----
-
-## Compatible Rendering Engines
-
-| Engine | Import Path |
-|--------|-------------|
-| Unreal Engine | Image Based Light |
-| Blender Cycles | World → Environment Texture |
-| V-Ray | Dome Light |
-| Arnold | Skydome Light |
-| Unity HDRP | HDRI Sky Volume |
-
----
-
-## Models
-
-See [models.md](models.md) — total storage ~24.8 GB
-
-| Model | Size | Notes |
-|-------|------|-------|
-| Flux Dev Kontext FP8 | 11.9 GB | Base generation model for this module |
-| CLIP-L / ViT-L-14 | 250 MB | Text encoder |
-| T5-XXL FP16 | 9.8 GB | Text encoder |
-| Flux VAE | 340 MB | |
-| Flux Turbo LoRA | 500 MB | Fast inference |
-| EV +4, +2, -2, -4 LoRAs | 2 GB total | Exposure bracket generation |
-
-> **Note:** This module uses Flux Dev Kontext — a completely different model stack from the Qwen-based modules. If you've only installed modules 01–06, you'll need to download a separate set of models for this one.
-
-> **License:** Flux.1-dev is subject to Black Forest Labs' license terms. Review before commercial use: [flux-1-dev-non-commercial-license](https://huggingface.co/black-forest-labs/FLUX.1-dev/blob/main/LICENSE.md)
-
----
 
 ## Requirements
 
-- VRAM: 16–24 GB (highest of all modules)
-- Recommended input: equirectangular panorama from Module 06
+| Requirement | Value |
+|-------------|-------|
+| **VRAM (Minimum)** | 16 GB |
+| **VRAM (Recommended)** | 24 GB |
+| **Custom Nodes** | 4 packages |
+| **Models** | 6 files + 4 gated LoRAs |
 
----
+## Required Models
 
-## Custom Nodes
+| Model | Type | Size |
+|-------|------|------|
+| `flux1-dev-kontext_fp8_scaled.safetensors` | Image Model | 11.09 GB |
+| `flux1-dev-kontext.safetensors` | Image Model | — |
+| `ViT-L-14-TEXT-detail-improved-hiT-GmP-HF.safetensors` | Text Encoder | 888 MB |
+| `t5xxl_fp16.safetensors` | Text Encoder | 9.12 GB |
+| `ae.safetensors` | VAE | ~340 MB |
+| `Flux1DevTurbo.safetensors` | LoRA | ~500 MB |
+| `evminus4.safetensors` | LoRA (DLI course asset) | 328 MB |
+| `evminus2.safetensors` | LoRA (DLI course asset) | 328 MB |
+| `evplus2.safetensors` | LoRA (DLI course asset) | 328 MB |
+| `evplus4.safetensors` | LoRA (DLI course asset) | 328 MB |
 
-See [nodes.md](nodes.md)
+> **Note:** The EV LoRAs are DLI course assets. Enroll in [NVIDIA DLI course DLIT81948](https://www.nvidia.com/en-us/on-demand/session/gtc26-dlit81948/) to access them.
+>
+> **Note:** Flux.1-dev requires a HuggingFace login and acceptance of the [Black Forest Labs license](https://huggingface.co/black-forest-labs/FLUX.1-dev) for commercial use.
 
-| Node | Purpose |
-|------|---------|
-| `LuminanceStackProcessor5Stops` | Merges 5 exposures into HDR using Debevec algorithm |
-| `SaveImageOpenEXR` | Exports 32-bit EXR / HDRI file |
-| `AutoContrastLevels` | Per-exposure histogram adjustment |
+## Required Custom Nodes
 
----
+- [ComfyUI-TextureAlchemy](https://github.com/amtarr/ComfyUI-TextureAlchemy) (Sandbox branch)
+- [ComfyUI-WJNodes](https://github.com/807502278/ComfyUI-WJNodes)
+- [ComfyUI-Marigold](https://github.com/kijai/ComfyUI-Marigold)
+- [Luminance-Stack-Processor](https://github.com/sumitchatterjee13/Luminance-Stack-Processor)
 
-## Tips for Best Results
+## Sample Input
 
-- **Start with a high-quality equirectangular source.** The EV LoRAs amplify whatever is in your input — noise, compression artifacts, and banding all become more visible across the exposure stack. Use Module 06 output or a clean, uncompressed 2:1 panorama.
-- **Maintain a strict 2:1 aspect ratio.** The Debevec merge assumes all five passes are pixel-aligned. Any resize or crop that breaks the ratio will misalign the exposure stack and produce ghosting in the merged EXR.
-- **Do not apply tone mapping before input.** Feed a linear or lightly processed panorama. If your source is already tone-mapped (e.g., a JPEG with embedded color grading), the EV LoRAs will generate inconsistent highlights and the HDR merge will clip incorrectly.
-- **Run all five passes before inspecting output.** The individual EV passes look wrong by design — severely over- or underexposed. Only the final merged `.exr` reflects the true HDR result. Don't abort mid-run based on a single pass preview.
-- **Check the AutoContrastLevels node per-pass if results look flat.** Each exposure pass gets its own histogram adjustment. If a specific stop (usually EV+4) looks blown out, nudge that pass's contrast node rather than changing the LoRA strength globally.
-- **Validate in your target renderer, not in ComfyUI.** EXR preview in-browser is tone-mapped automatically and will not accurately represent the HDR range. Load the `.exr` into Blender, Unreal, or your renderer of choice to evaluate actual lighting behavior.
-- **Use the HDRI as a light source, not just a background.** The 32-bit range is what enables physically accurate specular reflections and shadow directionality. Plug it into your Dome Light / Skydome / IBL slot — don't just use it as a backdrop texture.
-- **Seed consistency matters across passes.** If the workflow allows per-pass seeding, keep seeds fixed during a session. Randomizing seeds between exposure passes introduces geometry and content drift that the Debevec merge cannot reconcile.
+Run [Module 06](../06-equirectangular-outpainting/) first to generate a panorama, or use a sample from `input/`.
 
----
+## How to Use
 
-## Usage
-
-1. Install custom nodes via ComfyUI Manager
-2. Download Flux models listed in [models.md](models.md)
-3. Drag `workflow.json` into ComfyUI
-4. Load an equirectangular panorama (2:1 ratio)
-5. Queue — runs 5 passes and assembles the HDRI automatically
-6. Output: `.exr` file ready to load in your renderer
+1. Complete [Module 06](../06-equirectangular-outpainting/) to generate your panorama
+2. Load `workflow.json` into ComfyUI
+3. Connect your panorama and click **Queue Prompt**
