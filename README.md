@@ -146,4 +146,4 @@ Model licenses vary — see each module's `models.md` for details. Notable excep
 
 ## Credits
 
-Course developed by Alessandro La Tona, Ashlee Martino-Tarr, and Daniela Flamm Jackson. Workflows by Guillaume Polaillon.
+Course developed by Alessandro La Tona, Ashlee Martino-Tarr, Daniela Flamm Jackson, and Guillaume Polaillon.
