@@ -79,92 +79,38 @@ REM Uses !PIP_FOUND! (delayed expansion) to short-circuit once a pip is found.
 set PIP_FOUND=0
 
 if exist "%COMFYUI_DIR%\python_embeded\python.exe" (
+    set "PYTHON=%COMFYUI_DIR%\python_embeded\python.exe"
     set "PIP=%COMFYUI_DIR%\python_embeded\python.exe -m pip"
     set PIP_FOUND=1
     echo Detected ComfyUI Portable - using embedded Python
 )
 
 if !PIP_FOUND!==0 if exist "%COMFYUI_DIR%\..\python_embeded\python.exe" (
+    set "PYTHON=%COMFYUI_DIR%\..\python_embeded\python.exe"
     set "PIP=%COMFYUI_DIR%\..\python_embeded\python.exe -m pip"
     set PIP_FOUND=1
     echo Detected ComfyUI Portable - using embedded Python ^(parent directory^)
 )
 
 if !PIP_FOUND!==0 if exist "%COMFYUI_DIR%\venv\Scripts\pip.exe" (
+    set "PYTHON=%COMFYUI_DIR%\venv\Scripts\python.exe"
     set "PIP=%COMFYUI_DIR%\venv\Scripts\pip.exe"
     set PIP_FOUND=1
     echo Detected venv - using %COMFYUI_DIR%\venv\Scripts\pip.exe
 )
 
 if !PIP_FOUND!==0 (
+    set PYTHON=python
     set PIP=pip
     echo WARNING: No venv or embedded Python found. Using system pip.
     echo          If installs fail, activate your venv first or check your ComfyUI path.
 )
 
-echo Installing custom nodes into: %NODES_DIR%
-if not exist "%NODES_DIR%" mkdir "%NODES_DIR%"
-echo.
-set NODE_COUNT=0
-set NODE_TOTAL=20
-
-REM --- Core ---
-call :install_node "ComfyUI-Manager" "https://github.com/ltdrdata/ComfyUI-Manager" ""
-
-REM --- Modules 01 + 02: Qwen utilities ---
-call :install_node "ComfyUI-WJNodes" "https://github.com/807502278/ComfyUI-WJNodes" ""
-call :install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use" ""
-
-REM --- Module 01: LLM Prompt Enhancer ---
-call :install_node "comfyui-ollama" "https://github.com/stavsap/comfyui-ollama" ""
-
-REM --- Modules 02-07, Bonus A+B: TextureAlchemy ---
-call :install_node "ComfyUI-TextureAlchemy" "https://github.com/amtarr/ComfyUI-TextureAlchemy" "Sandbox"
-
-REM --- Modules 04 + 05: Gaussian Splat ---
-call :install_node "ComfyUI-Sharp" "https://github.com/PozzettiAndrea/ComfyUI-Sharp" ""
-call :install_node "ComfyUI-GeometryPack" "https://github.com/PozzettiAndrea/ComfyUI-GeometryPack" ""
-
-REM --- Module 08: Trellis2 3D ---
-call :install_node "ComfyUI-TRELLIS2" "https://github.com/PozzettiAndrea/ComfyUI-TRELLIS2" ""
-
-REM --- Module 09: Cutout Animation ---
-call :install_node "comfy_nv_video_prep" "https://github.com/NVIDIA/comfy_nv_video_prep" ""
-call :install_node "ComfyUI-Custom-Scripts" "https://github.com/pythongosssss/ComfyUI-Custom-Scripts" ""
-call :install_node "ComfyUI_essentials" "https://github.com/cubiq/ComfyUI_essentials" ""
-call :install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch" ""
-call :install_node "comfyui-sam2" "https://github.com/neverbiasu/ComfyUI-SAM2" ""
-call :install_node "ComfyUI-VideoHelperSuite" "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite" ""
-
-REM --- Module 10: Playblast to Video ---
-call :install_node "ComfyUI-WanVideoWrapper" "https://github.com/kijai/ComfyUI-WanVideoWrapper" ""
-call :install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes" ""
-call :install_node "cg-use-everywhere" "https://github.com/chrisgoringe/cg-use-everywhere" ""
-call :install_node "radiance" "https://github.com/fxtdstudios/radiance" ""
-
-REM --- Modules 10 + Bonus B: Lotus ---
-call :install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus" ""
-
-REM --- Bonus B: Texture to PBR ---
-call :install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold" ""
-
-REM --- Copy workflow JSON files into ComfyUI ---
-set WORKFLOWS_DEST=%COMFYUI_DIR%\user\default\workflows\creative-genai-workflows
-if not exist "%WORKFLOWS_DEST%" mkdir "%WORKFLOWS_DEST%"
-for /d %%D in ("%~dp0workflows\*") do (
-  if exist "%%D\workflow.json" (
-    set "MODULE_NAME=%%~nxD"
-    if not exist "%WORKFLOWS_DEST%\!MODULE_NAME!" mkdir "%WORKFLOWS_DEST%\!MODULE_NAME!"
-    copy /y "%%D\workflow.json" "%WORKFLOWS_DEST%\!MODULE_NAME!\workflow.json" > nul
-  )
-)
-echo.
-echo Workflows copied to: %WORKFLOWS_DEST%
-
+REM --- Ask which modules BEFORE installing nodes ---
 if not defined MODULES (
     echo.
     echo ================================================================
-    echo  Which modules do you want to download models for?
+    echo  Which modules do you want to install?
     echo ================================================================
     echo.
     echo  Available modules:
@@ -184,9 +130,105 @@ if not defined MODULES (
     set /p MODULES="  Modules: "
 )
 
+echo.
+echo Installing custom nodes into: %NODES_DIR%
+if not exist "%NODES_DIR%" mkdir "%NODES_DIR%"
+echo.
+set NODE_COUNT=0
+
+REM --- Core (always installed) ---
+call :install_node "ComfyUI-Manager" "https://github.com/ltdrdata/ComfyUI-Manager" ""
+
+REM --- Modules 01 + 02: Qwen utilities ---
+set DO_INSTALL=0
+echo ,!MODULES!, | findstr /i ",01," > nul 2>&1 && set DO_INSTALL=1
+echo ,!MODULES!, | findstr /i ",02," > nul 2>&1 && set DO_INSTALL=1
+if /i "!MODULES!"=="all" set DO_INSTALL=1
+if !DO_INSTALL!==1 (
+    call :install_node "ComfyUI-WJNodes" "https://github.com/807502278/ComfyUI-WJNodes" ""
+    call :install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use" ""
+)
+
+REM --- Module 01: LLM Prompt Enhancer ---
+set DO_INSTALL=0
+echo ,!MODULES!, | findstr /i ",01," > nul 2>&1 && set DO_INSTALL=1
+if /i "!MODULES!"=="all" set DO_INSTALL=1
+if !DO_INSTALL!==1 (
+    call :install_node "comfyui-ollama" "https://github.com/stavsap/comfyui-ollama" ""
+)
+
+REM --- Modules 02-07, Bonus A+B: TextureAlchemy ---
+set DO_INSTALL=0
+echo ,!MODULES!, | findstr /i ",02," > nul 2>&1 && set DO_INSTALL=1
+echo ,!MODULES!, | findstr /i ",03," > nul 2>&1 && set DO_INSTALL=1
+echo ,!MODULES!, | findstr /i ",04," > nul 2>&1 && set DO_INSTALL=1
+echo ,!MODULES!, | findstr /i ",05," > nul 2>&1 && set DO_INSTALL=1
+echo ,!MODULES!, | findstr /i ",06," > nul 2>&1 && set DO_INSTALL=1
+echo ,!MODULES!, | findstr /i ",07," > nul 2>&1 && set DO_INSTALL=1
+if /i "!MODULES!"=="all" set DO_INSTALL=1
+if !DO_INSTALL!==1 (
+    call :install_node "ComfyUI-TextureAlchemy" "https://github.com/amtarr/ComfyUI-TextureAlchemy" "Sandbox"
+)
+
+REM --- Modules 04 + 05: Gaussian Splat ---
+set DO_INSTALL=0
+echo ,!MODULES!, | findstr /i ",04," > nul 2>&1 && set DO_INSTALL=1
+echo ,!MODULES!, | findstr /i ",05," > nul 2>&1 && set DO_INSTALL=1
+if /i "!MODULES!"=="all" set DO_INSTALL=1
+if !DO_INSTALL!==1 (
+    call :install_node "ComfyUI-Sharp" "https://github.com/PozzettiAndrea/ComfyUI-Sharp" ""
+    call :install_node "ComfyUI-GeometryPack" "https://github.com/PozzettiAndrea/ComfyUI-GeometryPack" ""
+)
+
+REM --- Module 08: Trellis2 3D ---
+set DO_INSTALL=0
+echo ,!MODULES!, | findstr /i ",08," > nul 2>&1 && set DO_INSTALL=1
+if /i "!MODULES!"=="all" set DO_INSTALL=1
+if !DO_INSTALL!==1 (
+    call :install_node "ComfyUI-TRELLIS2" "https://github.com/PozzettiAndrea/ComfyUI-TRELLIS2" ""
+)
+
+REM --- Module 09: Cutout Animation ---
+set DO_INSTALL=0
+echo ,!MODULES!, | findstr /i ",09," > nul 2>&1 && set DO_INSTALL=1
+if /i "!MODULES!"=="all" set DO_INSTALL=1
+if !DO_INSTALL!==1 (
+    call :install_node "comfy_nv_video_prep" "https://github.com/NVIDIA/comfy_nv_video_prep" ""
+    call :install_node "ComfyUI-Custom-Scripts" "https://github.com/pythongosssss/ComfyUI-Custom-Scripts" ""
+    call :install_node "ComfyUI_essentials" "https://github.com/cubiq/ComfyUI_essentials" ""
+    call :install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch" ""
+    call :install_node "comfyui-sam2" "https://github.com/neverbiasu/ComfyUI-SAM2" ""
+    call :install_node "ComfyUI-VideoHelperSuite" "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite" ""
+)
+
+REM --- Module 10: Playblast to Video ---
+set DO_INSTALL=0
+echo ,!MODULES!, | findstr /i ",10," > nul 2>&1 && set DO_INSTALL=1
+if /i "!MODULES!"=="all" set DO_INSTALL=1
+if !DO_INSTALL!==1 (
+    call :install_node "ComfyUI-WanVideoWrapper" "https://github.com/kijai/ComfyUI-WanVideoWrapper" ""
+    call :install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes" ""
+    call :install_node "cg-use-everywhere" "https://github.com/chrisgoringe/cg-use-everywhere" ""
+    call :install_node "radiance" "https://github.com/fxtdstudios/radiance" ""
+    call :install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus" ""
+)
+
+REM --- Copy workflow JSON files into ComfyUI ---
+set WORKFLOWS_DEST=%COMFYUI_DIR%\user\default\workflows\creative-genai-workflows
+if not exist "%WORKFLOWS_DEST%" mkdir "%WORKFLOWS_DEST%"
+for /d %%D in ("%~dp0workflows\*") do (
+  if exist "%%D\workflow.json" (
+    set "MODULE_NAME=%%~nxD"
+    if not exist "%WORKFLOWS_DEST%\!MODULE_NAME!" mkdir "%WORKFLOWS_DEST%\!MODULE_NAME!"
+    copy /y "%%D\workflow.json" "%WORKFLOWS_DEST%\!MODULE_NAME!\workflow.json" > nul
+  )
+)
+echo.
+echo Workflows copied to: %WORKFLOWS_DEST%
+
 REM --- Offer to install Ollama if module 01 or all selected ---
 set NEEDS_OLLAMA=0
-echo !MODULES! | findstr /i "01" > nul 2>&1 && set NEEDS_OLLAMA=1
+echo ,!MODULES!, | findstr /i ",01," > nul 2>&1 && set NEEDS_OLLAMA=1
 if /i "!MODULES!"=="all" set NEEDS_OLLAMA=1
 
 if %NEEDS_OLLAMA%==1 (
@@ -232,7 +274,7 @@ if /i not "!MODULES!"=="" (
     echo ================================================================
     echo  Downloading models for modules: !MODULES!
     echo ================================================================
-    python "%~dp0download_models.py" --comfyui "%COMFYUI_DIR%" --modules !MODULES!
+    "!PYTHON!" "%~dp0download_models.py" --comfyui "%COMFYUI_DIR%" --modules !MODULES!
 )
 
 echo.
@@ -241,6 +283,10 @@ echo  Installation complete
 echo ================================================================
 echo.
 echo  Workflows are pre-loaded in ComfyUI under: Load ^> creative-genai-workflows
+echo.
+echo  To install a different module later, run:
+echo    install.bat %COMFYUI_DIR% --modules 03
+echo  ^(already-installed nodes are skipped automatically^)
 echo.
 
 REM Ask user if they want to launch ComfyUI now
@@ -285,9 +331,9 @@ set NODE_DIR=%NODES_DIR%\%NODE_NAME%
 set /a NODE_COUNT+=1
 
 if exist "%NODE_DIR%" (
-  echo [%NODE_COUNT%/%NODE_TOTAL%] skip   %NODE_NAME% ^(already installed^)
+  echo   [%NODE_COUNT%] skip    %NODE_NAME% ^(already installed^)
 ) else (
-  echo [%NODE_COUNT%/%NODE_TOTAL%] install %NODE_NAME% ...
+  echo   [%NODE_COUNT%] install %NODE_NAME% ...
   if "%NODE_BRANCH%"=="" (
     git clone --depth 1 %NODE_REPO% "%NODE_DIR%" 2>&1
   ) else (
@@ -298,17 +344,17 @@ if exist "%NODE_DIR%" (
     echo         Repo: %NODE_REPO%
     echo         Check your internet connection and that Git is installed.
   ) else (
-    echo         OK
+    echo           OK
   )
 )
 
 if exist "%NODE_DIR%\requirements.txt" (
-  echo         Installing Python requirements...
+  echo           Installing Python requirements...
   %PIP% install -q --no-warn-script-location -r "%NODE_DIR%\requirements.txt" > "%TEMP%\comfyui_pip.tmp" 2>&1
   if errorlevel 1 (
-    echo         [WARN] Some packages failed to install for !NODE_NAME!
-    echo               This is usually OK - ComfyUI Manager resolves missing deps on first run.
-    echo               To see details: type %TEMP%\comfyui_pip.tmp
+    echo           [WARN] Some packages failed to install for !NODE_NAME!
+    echo                  This is usually OK - ComfyUI Manager resolves missing deps on first run.
+    echo                  To see details: type %TEMP%\comfyui_pip.tmp
   )
 )
 goto :eof

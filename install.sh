@@ -36,7 +36,6 @@ COMFYUI_DIR="${COMFYUI_DIR:-$(pwd)}"
 
 NODES_DIR="$COMFYUI_DIR/custom_nodes"
 NODE_COUNT=0
-NODE_TOTAL=20
 
 echo ""
 echo "================================================================"
@@ -71,10 +70,6 @@ else
   echo "  source $COMFYUI_DIR/venv/bin/activate"
 fi
 
-echo "Installing custom nodes into: $NODES_DIR"
-mkdir -p "$NODES_DIR"
-echo ""
-
 install_node() {
   local name="$1"
   local repo="$2"
@@ -83,86 +78,42 @@ install_node() {
   NODE_COUNT=$((NODE_COUNT + 1))
 
   if [ -d "$dir" ]; then
-    echo "[$NODE_COUNT/$NODE_TOTAL] skip    $name (already installed)"
+    echo "  [$NODE_COUNT] skip    $name (already installed)"
   else
-    echo "[$NODE_COUNT/$NODE_TOTAL] install $name ..."
+    echo "  [$NODE_COUNT] install $name ..."
     if [ -n "$branch" ]; then
       git clone --depth 1 --branch "$branch" "$repo" "$dir"
     else
       git clone --depth 1 "$repo" "$dir"
     fi
-    echo "        OK"
+    echo "           OK"
   fi
 
   if [ -f "$dir/requirements.txt" ]; then
-    echo "        Installing Python requirements..."
+    echo "           Installing Python requirements..."
     local pip_log
     pip_log=$(mktemp)
     if ! $PIP install -q --no-warn-script-location -r "$dir/requirements.txt" > "$pip_log" 2>&1; then
-      echo "        [WARN] Some packages failed to install for $name"
-      echo "               This is usually OK - ComfyUI Manager resolves missing deps on first run."
-      echo "               To see details: cat $pip_log"
+      echo "           [WARN] Some packages failed to install for $name"
+      echo "                  This is usually OK - ComfyUI Manager resolves missing deps on first run."
+      echo "                  To see details: cat $pip_log"
     fi
   fi
 }
 
-# --- Core ---
-install_node "ComfyUI-Manager" "https://github.com/ltdrdata/ComfyUI-Manager"
+# Helper: returns 0 if a module number is in the selected list
+module_selected() {
+  local num="$1"
+  [ -z "$MODULES" ] && return 1
+  [ "${MODULES,,}" = "all" ] && return 0
+  echo ",$MODULES," | grep -qi ",$num," && return 0
+  return 1
+}
 
-# --- Modules 01 + 02: Qwen utilities ---
-install_node "ComfyUI-WJNodes" "https://github.com/807502278/ComfyUI-WJNodes"
-install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use"
-
-# --- Module 01: LLM Prompt Enhancer ---
-install_node "comfyui-ollama" "https://github.com/stavsap/comfyui-ollama"
-
-# --- Modules 02-07, Bonus A+B: TextureAlchemy ---
-install_node "ComfyUI-TextureAlchemy" "https://github.com/amtarr/ComfyUI-TextureAlchemy" "Sandbox"
-
-# --- Modules 04 + 05: Gaussian Splat ---
-install_node "ComfyUI-Sharp" "https://github.com/PozzettiAndrea/ComfyUI-Sharp"
-install_node "ComfyUI-GeometryPack" "https://github.com/PozzettiAndrea/ComfyUI-GeometryPack"
-
-# --- Module 08: Trellis2 3D ---
-install_node "ComfyUI-TRELLIS2" "https://github.com/PozzettiAndrea/ComfyUI-TRELLIS2"
-
-# --- Module 09: Cutout Animation ---
-install_node "comfy_nv_video_prep" "https://github.com/NVIDIA/comfy_nv_video_prep"
-install_node "ComfyUI-Custom-Scripts" "https://github.com/pythongosssss/ComfyUI-Custom-Scripts"
-install_node "ComfyUI_essentials" "https://github.com/cubiq/ComfyUI_essentials"
-install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch"
-install_node "comfyui-sam2" "https://github.com/neverbiasu/ComfyUI-SAM2"
-install_node "ComfyUI-VideoHelperSuite" "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
-
-# --- Module 10: Playblast to Video ---
-install_node "ComfyUI-WanVideoWrapper" "https://github.com/kijai/ComfyUI-WanVideoWrapper"
-install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes"
-install_node "cg-use-everywhere" "https://github.com/chrisgoringe/cg-use-everywhere"
-install_node "radiance" "https://github.com/fxtdstudios/radiance"
-
-# --- Modules 10 + Bonus B: Lotus ---
-install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus"
-
-# --- Bonus B: Texture to PBR ---
-install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold"
-
-WORKFLOWS_DEST="$COMFYUI_DIR/user/default/workflows/creative-genai-workflows"
-mkdir -p "$WORKFLOWS_DEST"
-for workflow_dir in "$(dirname "$0")/workflows"/*/; do
-  if [ -f "${workflow_dir}workflow.json" ]; then
-    module_name="$(basename "$workflow_dir")"
-    mkdir -p "$WORKFLOWS_DEST/$module_name"
-    cp "${workflow_dir}workflow.json" "$WORKFLOWS_DEST/$module_name/workflow.json"
-  fi
-done
-echo ""
-echo "Workflows copied to: $WORKFLOWS_DEST"
-
-# --- Interactive module selection if not passed as argument ---
+# --- Ask which modules BEFORE installing nodes ---
 if [ -z "$MODULES" ]; then
-  echo ""
   echo "================================================================"
-  echo " Which modules do you want to download models for?"
+  echo " Which modules do you want to install?"
   echo "================================================================"
   echo ""
   echo "  Available modules:"
@@ -179,15 +130,89 @@ if [ -z "$MODULES" ]; then
   echo ""
   echo "  Enter module numbers (e.g. 02,03,08), \"all\", or press Enter to skip:"
   echo ""
-  read -p "  Modules: " MODULES
+  read -p "  Modules: " MODULES || true
 fi
+
+echo ""
+echo "Installing custom nodes into: $NODES_DIR"
+mkdir -p "$NODES_DIR"
+echo ""
+
+# --- Core (always installed) ---
+install_node "ComfyUI-Manager" "https://github.com/ltdrdata/ComfyUI-Manager"
+
+# --- Modules 01 + 02: Qwen utilities ---
+if module_selected "01" || module_selected "02"; then
+  install_node "ComfyUI-WJNodes" "https://github.com/807502278/ComfyUI-WJNodes"
+  install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use"
+fi
+
+# --- Module 01: LLM Prompt Enhancer ---
+if module_selected "01"; then
+  install_node "comfyui-ollama" "https://github.com/stavsap/comfyui-ollama"
+fi
+
+# --- Modules 02-07, Bonus A+B: TextureAlchemy ---
+if module_selected "02" || module_selected "03" || module_selected "04" || \
+   module_selected "05" || module_selected "06" || module_selected "07"; then
+  install_node "ComfyUI-TextureAlchemy" "https://github.com/amtarr/ComfyUI-TextureAlchemy" "Sandbox"
+fi
+
+# --- Modules 04 + 05: Gaussian Splat ---
+if module_selected "04" || module_selected "05"; then
+  install_node "ComfyUI-Sharp" "https://github.com/PozzettiAndrea/ComfyUI-Sharp"
+  install_node "ComfyUI-GeometryPack" "https://github.com/PozzettiAndrea/ComfyUI-GeometryPack"
+fi
+
+# --- Module 08: Trellis2 3D ---
+if module_selected "08"; then
+  install_node "ComfyUI-TRELLIS2" "https://github.com/PozzettiAndrea/ComfyUI-TRELLIS2"
+fi
+
+# --- Module 09: Cutout Animation ---
+if module_selected "09"; then
+  install_node "comfy_nv_video_prep" "https://github.com/NVIDIA/comfy_nv_video_prep"
+  install_node "ComfyUI-Custom-Scripts" "https://github.com/pythongosssss/ComfyUI-Custom-Scripts"
+  install_node "ComfyUI_essentials" "https://github.com/cubiq/ComfyUI_essentials"
+  install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch"
+  install_node "comfyui-sam2" "https://github.com/neverbiasu/ComfyUI-SAM2"
+  install_node "ComfyUI-VideoHelperSuite" "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
+fi
+
+# --- Module 10: Playblast to Video ---
+if module_selected "10"; then
+  install_node "ComfyUI-WanVideoWrapper" "https://github.com/kijai/ComfyUI-WanVideoWrapper"
+  install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes"
+  install_node "cg-use-everywhere" "https://github.com/chrisgoringe/cg-use-everywhere"
+  install_node "radiance" "https://github.com/fxtdstudios/radiance"
+fi
+
+# --- Modules 10 + Bonus B: Lotus ---
+if module_selected "10"; then
+  install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus"
+fi
+
+# --- Bonus B: Texture to PBR ---
+if module_selected "bonus-b"; then
+  install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold"
+fi
+
+# --- Copy workflow JSON files into ComfyUI ---
+WORKFLOWS_DEST="$COMFYUI_DIR/user/default/workflows/creative-genai-workflows"
+mkdir -p "$WORKFLOWS_DEST"
+for workflow_dir in "$(dirname "$0")/workflows"/*/; do
+  if [ -f "${workflow_dir}workflow.json" ]; then
+    module_name="$(basename "$workflow_dir")"
+    mkdir -p "$WORKFLOWS_DEST/$module_name"
+    cp "${workflow_dir}workflow.json" "$WORKFLOWS_DEST/$module_name/workflow.json"
+  fi
+done
+echo ""
+echo "Workflows copied to: $WORKFLOWS_DEST"
 
 # --- Offer to install Ollama if module 01 or all selected ---
 NEEDS_OLLAMA=0
-if [ -n "$MODULES" ]; then
-  echo "$MODULES" | grep -qi "01" && NEEDS_OLLAMA=1
-  [ "${MODULES,,}" = "all" ] && NEEDS_OLLAMA=1
-fi
+if module_selected "01"; then NEEDS_OLLAMA=1; fi
 
 if [ "$NEEDS_OLLAMA" = "1" ]; then
   if ! command -v ollama > /dev/null 2>&1; then
@@ -196,13 +221,13 @@ if [ "$NEEDS_OLLAMA" = "1" ]; then
     echo " Module 01 requires Ollama (not detected on this machine)"
     echo "================================================================"
     echo ""
-    read -p "  Install Ollama now? (Y/N): " INSTALL_OLLAMA
+    read -p "  Install Ollama now? (Y/N): " INSTALL_OLLAMA || true
     if [[ "${INSTALL_OLLAMA,,}" == "y" ]]; then
       echo ""
       echo "  Installing Ollama..."
       curl -fsSL https://ollama.com/install.sh | sh
       echo ""
-      read -p "  Pull gemma3 model now? (~5 GB) (Y/N): " PULL_GEMMA
+      read -p "  Pull gemma3 model now? (~5 GB) (Y/N): " PULL_GEMMA || true
       if [[ "${PULL_GEMMA,,}" == "y" ]]; then
         echo ""
         ollama pull gemma3
@@ -212,7 +237,7 @@ if [ "$NEEDS_OLLAMA" = "1" ]; then
     echo ""
     echo "  Ollama already installed."
     if ! ollama list 2>/dev/null | grep -qi "gemma3"; then
-      read -p "  Pull gemma3 model now? (~5 GB) (Y/N): " PULL_GEMMA
+      read -p "  Pull gemma3 model now? (~5 GB) (Y/N): " PULL_GEMMA || true
       if [[ "${PULL_GEMMA,,}" == "y" ]]; then
         echo ""
         ollama pull gemma3
@@ -240,14 +265,18 @@ echo "================================================================"
 echo ""
 echo "  Workflows are ready in ComfyUI under: Load > creative-genai-workflows"
 echo ""
+echo "  To install a different module later, run:"
+echo "    bash install.sh $COMFYUI_DIR --modules 03"
+echo "  (already-installed nodes are skipped automatically)"
+echo ""
 
 # --- Offer to launch ComfyUI ---
-read -p "  Launch ComfyUI now? (Y/N): " LAUNCH
+read -p "  Launch ComfyUI now? (Y/N): " LAUNCH || true
 if [[ "${LAUNCH,,}" == "y" ]]; then
   if [ -f "$COMFYUI_DIR/venv/bin/activate" ]; then
     echo ""
     echo "  Launching ComfyUI (venv)..."
-    bash -c "source '$COMFYUI_DIR/venv/bin/activate' && python '$COMFYUI_DIR/main.py'"
+    cd "$COMFYUI_DIR" && source venv/bin/activate && python main.py
   else
     echo ""
     echo "  Could not detect launch method. Start ComfyUI manually:"

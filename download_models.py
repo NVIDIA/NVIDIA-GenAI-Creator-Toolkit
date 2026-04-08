@@ -24,12 +24,17 @@ Usage:
 
 import argparse
 import os
-import shutil
-import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
+
+try:
+    from huggingface_hub import hf_hub_download, snapshot_download
+except ImportError:
+    print("[ERROR] huggingface_hub is not installed.")
+    print("        Run: pip install huggingface_hub")
+    sys.exit(1)
 
 
 # ---------------------------------------------------------------------------
@@ -459,24 +464,37 @@ def build_module_catalogue() -> dict:
 
 def hf_download_file(repo: str, filename: str, local_dir: Path) -> bool:
     """
-    Run: huggingface-cli download <repo> <filename> --local-dir <local_dir>
+    Download a single file from a HuggingFace repo using the Python API.
     Returns True on success.
     """
-    cmd = ["huggingface-cli", "download", repo, filename, "--local-dir", str(local_dir)]
-    print(f"    Running: {' '.join(cmd)}")
-    result = subprocess.run(cmd, check=False)
-    return result.returncode == 0
+    try:
+        print(f"    Fetching: {repo} / {filename}")
+        hf_hub_download(
+            repo_id=repo,
+            filename=filename,
+            local_dir=str(local_dir),
+        )
+        return True
+    except Exception as e:
+        print(f"    [ERROR] {e}")
+        return False
 
 
 def hf_download_repo(repo: str, local_dir: Path) -> bool:
     """
-    Run: huggingface-cli download <repo> --local-dir <local_dir>
+    Download an entire HuggingFace repo using the Python API.
     Returns True on success.
     """
-    cmd = ["huggingface-cli", "download", repo, "--local-dir", str(local_dir)]
-    print(f"    Running: {' '.join(cmd)}")
-    result = subprocess.run(cmd, check=False)
-    return result.returncode == 0
+    try:
+        print(f"    Fetching repo: {repo}")
+        snapshot_download(
+            repo_id=repo,
+            local_dir=str(local_dir),
+        )
+        return True
+    except Exception as e:
+        print(f"    [ERROR] {e}")
+        return False
 
 
 def dest_file_path(comfyui_root: Path, model: ModelSpec) -> Optional[Path]:
