@@ -25,19 +25,21 @@ License: MIT
 
 ComfyUI-TextureAlchemy
 https://github.com/amtarr/ComfyUI-TextureAlchemy
-License: See repository
+License: No license file present in repository (as of 2026-04-07).
+Note: OSRB review required before distribution — no license = all rights reserved.
 
 ComfyUI-Sharp
 https://github.com/PozzettiAndrea/ComfyUI-Sharp
-License: See repository
+License: GPL-3.0 (wrapper code); additional Apple Software License and Apple ML
+         Research Model License apply to vendored components. See LICENSE file.
 
 ComfyUI-GeometryPack
 https://github.com/PozzettiAndrea/ComfyUI-GeometryPack
-License: See repository
+License: GPL-3.0-or-later
 
 ComfyUI-TRELLIS2
 https://github.com/PozzettiAndrea/ComfyUI-TRELLIS2
-License: See repository
+License: MIT
 
 comfy_nv_video_prep
 https://github.com/NVIDIA/comfy_nv_video_prep
@@ -77,7 +79,7 @@ License: MIT
 
 radiance
 https://github.com/fxtdstudios/radiance
-License: See repository
+License: GPL-3.0
 
 ComfyUI-Lotus
 https://github.com/kijai/ComfyUI-Lotus
