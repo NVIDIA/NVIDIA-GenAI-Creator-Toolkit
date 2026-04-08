@@ -186,10 +186,9 @@ if not defined MODULES (
 
 REM --- Offer to install Ollama if module 01 or all selected ---
 set NEEDS_OLLAMA=0
-if defined MODULES (
-    echo %MODULES% | findstr /i "01" > nul && set NEEDS_OLLAMA=1
-    if /i "%MODULES%"=="all" set NEEDS_OLLAMA=1
-)
+echo !MODULES! | findstr /i "01" > nul 2>&1 && set NEEDS_OLLAMA=1
+if /i "!MODULES!"=="all" set NEEDS_OLLAMA=1
+
 if %NEEDS_OLLAMA%==1 (
     where ollama > nul 2>&1
     if errorlevel 1 (
@@ -228,14 +227,12 @@ if %NEEDS_OLLAMA%==1 (
     )
 )
 
-if defined MODULES (
-    if /i not "%MODULES%"=="" (
-        echo.
-        echo ================================================================
-        echo  Downloading models for modules: %MODULES%
-        echo ================================================================
-        python "%~dp0download_models.py" --comfyui "%COMFYUI_DIR%" --modules %MODULES%
-    )
+if /i not "!MODULES!"=="" (
+    echo.
+    echo ================================================================
+    echo  Downloading models for modules: !MODULES!
+    echo ================================================================
+    python "%~dp0download_models.py" --comfyui "%COMFYUI_DIR%" --modules !MODULES!
 )
 
 echo.
@@ -248,15 +245,19 @@ echo.
 
 REM Ask user if they want to launch ComfyUI now
 set /p LAUNCH="  Launch ComfyUI now? (Y/N): "
-if /i "%LAUNCH%"=="Y" (
+if /i "!LAUNCH!"=="Y" (
     if exist "%COMFYUI_DIR%\..\run_nvidia_gpu.bat" (
         echo.
         echo  Launching ComfyUI ^(Portable^)...
-        start "" "%COMFYUI_DIR%\..\run_nvidia_gpu.bat"
+        pushd "%COMFYUI_DIR%\.."
+        start "" "run_nvidia_gpu.bat"
+        popd
     ) else if exist "%COMFYUI_DIR%\run_nvidia_gpu.bat" (
         echo.
         echo  Launching ComfyUI ^(Portable^)...
-        start "" "%COMFYUI_DIR%\run_nvidia_gpu.bat"
+        pushd "%COMFYUI_DIR%"
+        start "" "run_nvidia_gpu.bat"
+        popd
     ) else if exist "%COMFYUI_DIR%\venv\Scripts\activate.bat" (
         echo.
         echo  Launching ComfyUI ^(venv^)...
