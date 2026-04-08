@@ -2,6 +2,7 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 # 04 — Image to Gaussian Splat
+![](images/preview.png)
 
 ## Overview
 

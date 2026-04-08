@@ -2,6 +2,7 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 # 05 — Gaussian Splat SceneFill
+![](images/preview.png)
 
 ## Overview
 

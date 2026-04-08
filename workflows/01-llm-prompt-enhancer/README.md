@@ -2,6 +2,7 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 # 01 — LLM Prompt Enhancer
+![](images/preview.png)
 
 ## Overview
 

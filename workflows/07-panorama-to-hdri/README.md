@@ -2,6 +2,7 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 # 07 — Panorama to HDRI
+![](images/preview.png)
 
 ## Overview
 

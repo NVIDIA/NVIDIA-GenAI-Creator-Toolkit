@@ -2,6 +2,7 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 # 06 — Image to Equirectangular Panorama
+![](images/preview.png)
 
 ## Overview
 

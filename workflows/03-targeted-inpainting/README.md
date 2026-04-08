@@ -2,6 +2,7 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 # 03 — Targeted Inpainting
+![](images/preview.png)
 
 ## Overview
 

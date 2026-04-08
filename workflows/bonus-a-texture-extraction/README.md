@@ -2,6 +2,7 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 # Bonus A — Texture Extraction
+![](images/preview.png)
 
 ## Overview
 

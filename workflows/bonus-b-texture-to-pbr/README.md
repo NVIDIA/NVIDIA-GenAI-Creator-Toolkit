@@ -2,6 +2,7 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 # Bonus B — Texture to PBR
+![](images/preview.png)
 
 ## Overview
 

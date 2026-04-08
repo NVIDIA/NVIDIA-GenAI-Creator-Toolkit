@@ -2,6 +2,7 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 # 10 — Playblast to Video
+![](images/preview.gif)
 
 ## Overview
 
