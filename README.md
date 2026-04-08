@@ -28,8 +28,8 @@ See [REQUIREMENTS.md](REQUIREMENTS.md) for full details.
 
 ```bash
 # 1. Clone this repo
-git clone https://gitlab-master.nvidia.com/jpennington/creative-comfyui-genai-workflows
-cd creative-comfyui-genai-workflows
+git clone https://github.com/NVIDIA/Creative-GenAI-Workflows
+cd Creative-GenAI-Workflows
 
 # 2. Install custom nodes (need ComfyUI first? see REQUIREMENTS.md in this folder)
 #    Path = the folder containing main.py

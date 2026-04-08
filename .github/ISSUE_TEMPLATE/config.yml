@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: General Questions & Discussions
-    url: https://gitlab-master.nvidia.com/jpennington/creative-comfyui-genai-workflows/-/issues
+    url: https://github.com/NVIDIA/Creative-GenAI-Workflows/issues
     about: Use Issues for questions, ideas, and community support.
   - name: Security Vulnerabilities
-    url: https://gitlab-master.nvidia.com/jpennington/creative-comfyui-genai-workflows/-/issues/new
+    url: https://github.com/NVIDIA/Creative-GenAI-Workflows/security/advisories/new
     about: Report security vulnerabilities privately via GitHub Security Advisories.
