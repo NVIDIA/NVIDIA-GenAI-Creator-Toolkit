@@ -78,6 +78,9 @@ REM   <root>\ComfyUI\main.py   <- main.py here (one level down)
 REM Uses !PIP_FOUND! (delayed expansion) to short-circuit once a pip is found.
 set PIP_FOUND=0
 
+REM Resolve the parent directory as an absolute path so 'if exist' works reliably
+for %%I in ("%COMFYUI_DIR%\..") do set "COMFYUI_PARENT=%%~fI"
+
 if exist "%COMFYUI_DIR%\python_embeded\python.exe" (
     set "PYTHON=%COMFYUI_DIR%\python_embeded\python.exe"
     set "PIP=%COMFYUI_DIR%\python_embeded\python.exe -m pip"
@@ -85,9 +88,9 @@ if exist "%COMFYUI_DIR%\python_embeded\python.exe" (
     echo Detected ComfyUI Portable - using embedded Python
 )
 
-if !PIP_FOUND!==0 if exist "%COMFYUI_DIR%\..\python_embeded\python.exe" (
-    set "PYTHON=%COMFYUI_DIR%\..\python_embeded\python.exe"
-    set "PIP=%COMFYUI_DIR%\..\python_embeded\python.exe -m pip"
+if !PIP_FOUND!==0 if exist "!COMFYUI_PARENT!\python_embeded\python.exe" (
+    set "PYTHON=!COMFYUI_PARENT!\python_embeded\python.exe"
+    set "PIP=!COMFYUI_PARENT!\python_embeded\python.exe -m pip"
     set PIP_FOUND=1
     echo Detected ComfyUI Portable - using embedded Python ^(parent directory^)
 )
