@@ -819,7 +819,7 @@
         "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
-        "pasted/image (8).png",
+        "05-GSplatSInput.png",
         "image"
       ]
     },
@@ -899,7 +899,7 @@
         "aux_id": "PozzettiAndrea/ComfyUI-Sharp"
       },
       "widgets_values": [
-        "ComfyUI_temp_rdjnr_00009_.png",
+        "05-referenceimage.png",
         30,
         "image"
       ]

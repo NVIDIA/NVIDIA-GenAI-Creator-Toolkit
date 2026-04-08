@@ -120,10 +120,10 @@
         "cnr_id": "comfy-core",
         "ver": "0.10.0",
         "Node name for S&R": "LoadImage",
-        "image": "clipspace/clipspace-painted-masked-1769680965402.png [input]"
+        "image": "03-BackgroundWithArtefact.png"
       },
       "widgets_values": [
-        "clipspace/clipspace-painted-masked-1769680965402.png [input]",
+        "03-BackgroundWithArtefact.png",
         "image"
       ]
     },

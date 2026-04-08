@@ -704,7 +704,7 @@
         "ver": "0.10.0"
       },
       "widgets_values": [
-        "X02-SceneInput.png",
+        "X01-TextureInput.png",
         "image"
       ],
       "color": "#232",
