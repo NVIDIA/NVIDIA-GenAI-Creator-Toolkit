@@ -254,6 +254,11 @@ if [ -n "$MODULES" ]; then
   echo "================================================================"
   echo " Downloading models for modules: $MODULES"
   echo "================================================================"
+  echo ""
+  echo "  TIP: Log in to HuggingFace for faster downloads and access to"
+  echo "  gated models (required for Module 07 Flux):"
+  echo "    huggingface-cli login"
+  echo ""
   SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
   $PYTHON "$SCRIPT_DIR/download_models.py" --comfyui "$COMFYUI_DIR" --modules "$MODULES"
 fi

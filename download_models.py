@@ -30,7 +30,7 @@ from pathlib import Path
 from typing import Optional
 
 try:
-    from huggingface_hub import hf_hub_download, snapshot_download
+    from huggingface_hub import hf_hub_download, snapshot_download, get_token
 except ImportError:
     print("[ERROR] huggingface_hub is not installed.")
     print("        Run: pip install huggingface_hub")
@@ -728,6 +728,15 @@ def main() -> None:
     if not selected_keys:
         print("[ERROR] No valid modules selected.", file=sys.stderr)
         sys.exit(1)
+
+    # Check HuggingFace login status
+    if get_token():
+        print("HuggingFace: logged in (faster downloads enabled)")
+    else:
+        print("HuggingFace: not logged in — downloads may be slower or rate-limited.")
+        print("  To log in: huggingface-cli login")
+        print("  (Required for Flux models in Module 07)")
+        print()
 
     catalogue = build_module_catalogue()
 
