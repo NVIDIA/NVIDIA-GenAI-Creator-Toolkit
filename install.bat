@@ -328,6 +328,10 @@ if /i "!LAUNCH!"=="Y" (
         echo.
         echo  Launching ComfyUI ^(venv^)...
         start cmd /k "cd /d "%COMFYUI_DIR%" && venv\Scripts\activate && python main.py"
+    ) else if defined PYTHON (
+        echo.
+        echo  Launching ComfyUI...
+        start cmd /k "cd /d "!COMFYUI_DIR!" && "!PYTHON!" main.py"
     ) else (
         echo.
         echo  Could not detect launch method. Start ComfyUI manually:
