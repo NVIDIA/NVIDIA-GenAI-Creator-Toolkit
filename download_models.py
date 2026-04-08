@@ -465,6 +465,7 @@ def build_module_catalogue() -> dict:
 def hf_download_file(repo: str, filename: str, local_dir: Path) -> bool:
     """
     Download a single file from a HuggingFace repo using the Python API.
+    Moves the file to a flat location in local_dir (strips repo subdirectories).
     Returns True on success.
     """
     try:
@@ -474,10 +475,28 @@ def hf_download_file(repo: str, filename: str, local_dir: Path) -> bool:
             filename=filename,
             local_dir=str(local_dir),
         )
+        # hf_hub_download preserves the repo's directory structure inside
+        # local_dir (e.g. split_files/diffusion_models/foo.safetensors).
+        # Move the file to local_dir/foo.safetensors (flat).
+        downloaded = local_dir / filename
+        target = local_dir / Path(filename).name
+        if downloaded != target and downloaded.exists():
+            downloaded.rename(target)
+            _remove_empty_parents(downloaded.parent, local_dir)
         return True
     except Exception as e:
         print(f"    [ERROR] {e}")
         return False
+
+
+def _remove_empty_parents(path: Path, stop_at: Path) -> None:
+    """Remove empty directories up to (but not including) stop_at."""
+    while path != stop_at and path.exists():
+        try:
+            path.rmdir()
+            path = path.parent
+        except OSError:
+            break
 
 
 def hf_download_repo(repo: str, local_dir: Path) -> bool:

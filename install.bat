@@ -300,10 +300,10 @@ echo.
 REM Ask user if they want to launch ComfyUI now
 set /p LAUNCH="  Launch ComfyUI now? (Y/N): "
 if /i "!LAUNCH!"=="Y" (
-    if exist "%COMFYUI_DIR%\..\run_nvidia_gpu.bat" (
+    if exist "!COMFYUI_PARENT!\run_nvidia_gpu.bat" (
         echo.
         echo  Launching ComfyUI ^(Portable^)...
-        pushd "%COMFYUI_DIR%\.."
+        pushd "!COMFYUI_PARENT!"
         start "" "run_nvidia_gpu.bat"
         popd
     ) else if exist "%COMFYUI_DIR%\run_nvidia_gpu.bat" (
