@@ -228,18 +228,24 @@ if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus" ""
 )
 
-REM --- Copy workflow JSON files into ComfyUI ---
+REM --- Copy workflow JSON files and sample inputs into ComfyUI ---
 set WORKFLOWS_DEST=%COMFYUI_DIR%\user\default\workflows\creative-genai-workflows
+set INPUTS_DEST=%COMFYUI_DIR%\input
 if not exist "%WORKFLOWS_DEST%" mkdir "%WORKFLOWS_DEST%"
+if not exist "%INPUTS_DEST%" mkdir "%INPUTS_DEST%"
 for /d %%D in ("%~dp0workflows\*") do (
   if exist "%%D\workflow.json" (
     set "MODULE_NAME=%%~nxD"
     if not exist "%WORKFLOWS_DEST%\!MODULE_NAME!" mkdir "%WORKFLOWS_DEST%\!MODULE_NAME!"
     copy /y "%%D\workflow.json" "%WORKFLOWS_DEST%\!MODULE_NAME!\workflow.json" > nul
+    if exist "%%D\input\" (
+      copy /y "%%D\input\*" "%INPUTS_DEST%\" > nul
+    )
   )
 )
 echo.
 echo Workflows copied to: %WORKFLOWS_DEST%
+echo Sample inputs copied to: %INPUTS_DEST%
 
 REM --- Offer to install Ollama if module 01 or all selected ---
 set NEEDS_OLLAMA=0

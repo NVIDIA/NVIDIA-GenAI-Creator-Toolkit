@@ -208,16 +208,22 @@ fi
 
 # --- Copy workflow JSON files into ComfyUI ---
 WORKFLOWS_DEST="$COMFYUI_DIR/user/default/workflows/creative-genai-workflows"
+INPUTS_DEST="$COMFYUI_DIR/input"
 mkdir -p "$WORKFLOWS_DEST"
+mkdir -p "$INPUTS_DEST"
 for workflow_dir in "$(dirname "$0")/workflows"/*/; do
   if [ -f "${workflow_dir}workflow.json" ]; then
     module_name="$(basename "$workflow_dir")"
     mkdir -p "$WORKFLOWS_DEST/$module_name"
     cp "${workflow_dir}workflow.json" "$WORKFLOWS_DEST/$module_name/workflow.json"
+    if [ -d "${workflow_dir}input" ]; then
+      cp "${workflow_dir}input/"* "$INPUTS_DEST/" 2>/dev/null || true
+    fi
   fi
 done
 echo ""
 echo "Workflows copied to: $WORKFLOWS_DEST"
+echo "Sample inputs copied to: $INPUTS_DEST"
 
 # --- Offer to install Ollama if module 01 or all selected ---
 NEEDS_OLLAMA=0
