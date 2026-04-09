@@ -129,7 +129,6 @@ if not defined MODULES (
     echo    10       Playblast to Video       ^(~30 GB^)
     echo    bonus-a  Texture Extraction       ^(~8 GB^)
     echo    bonus-b  Texture to PBR           ^(~12 GB^)
-    echo    10  Playblast to Video       ^(~30 GB^)
     echo.
     echo  Enter module numbers ^(e.g. 02,03,08^), "all", or press Enter to skip:
     echo.

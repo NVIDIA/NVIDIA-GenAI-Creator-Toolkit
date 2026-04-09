@@ -59,11 +59,22 @@ User Instructions -> Prompt Enhancement Agent -> Text Encoding -> Image
 
 ## Ollama Setup
 
-This workflow requires [Ollama](https://ollama.com) for the Gemma 3 LLM:
+This workflow requires [Ollama](https://ollama.com) for the Gemma 3 LLM.
+
+**The install script handles this automatically.** When you run `install.bat` (Windows) or `install.sh` (Linux) with module 01 selected, it will:
+1. Detect whether Ollama is already installed
+2. Offer to download and run the Ollama installer if not found
+3. Offer to pull the `gemma3` model (~5 GB) once Ollama is ready
+
+If you skipped this step during install or need to set up Ollama manually:
 
 ```bash
-ollama pull gemma3:latest
+# 1. Download and install Ollama from https://ollama.com
+# 2. Pull the Gemma 3 model
+ollama pull gemma3
 ```
+
+Ollama runs as a background service. Once installed, it starts automatically and ComfyUI connects to it via the comfyui-ollama node.
 
 ## How to Use
 
