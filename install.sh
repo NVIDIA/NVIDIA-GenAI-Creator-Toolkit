@@ -218,7 +218,10 @@ for workflow_dir in "$(dirname "$0")/workflows"/*/; do
   if [ -f "${workflow_dir}workflow.json" ]; then
     module_name="$(basename "$workflow_dir")"
     mkdir -p "$WORKFLOWS_DEST/$module_name"
-    cp "${workflow_dir}workflow.json" "$WORKFLOWS_DEST/$module_name/workflow.json"
+    cp "${workflow_dir}workflow.json" "$WORKFLOWS_DEST/$module_name/$module_name.json"
+    if [ -f "${workflow_dir}videoprep.json" ]; then
+      cp "${workflow_dir}videoprep.json" "$WORKFLOWS_DEST/$module_name/${module_name}-videoprep.json"
+    fi
     if [ -d "${workflow_dir}input" ]; then
       cp "${workflow_dir}input/"* "$INPUTS_DEST/" 2>/dev/null || true
     fi

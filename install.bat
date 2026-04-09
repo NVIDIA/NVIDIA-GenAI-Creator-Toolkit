@@ -240,7 +240,10 @@ for /d %%D in ("%~dp0workflows\*") do (
   if exist "%%D\workflow.json" (
     set "MODULE_NAME=%%~nxD"
     if not exist "%WORKFLOWS_DEST%\!MODULE_NAME!" mkdir "%WORKFLOWS_DEST%\!MODULE_NAME!"
-    copy /y "%%D\workflow.json" "%WORKFLOWS_DEST%\!MODULE_NAME!\workflow.json" > nul
+    copy /y "%%D\workflow.json" "%WORKFLOWS_DEST%\!MODULE_NAME!\!MODULE_NAME!.json" > nul
+    if exist "%%D\videoprep.json" (
+      copy /y "%%D\videoprep.json" "%WORKFLOWS_DEST%\!MODULE_NAME!\!MODULE_NAME!-videoprep.json" > nul
+    )
     if exist "%%D\input\" (
       copy /y "%%D\input\*" "%INPUTS_DEST%\" > nul
     )
