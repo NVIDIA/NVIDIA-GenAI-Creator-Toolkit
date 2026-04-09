@@ -26,14 +26,21 @@ See [REQUIREMENTS.md](REQUIREMENTS.md) for full details.
 
 ## Quick Start
 
+> **New to ComfyUI?** ComfyUI is a node-based generative AI interface — you connect model components visually to build pipelines. Think of it like a visual programming tool for AI. Each workflow in this repo is a pre-built pipeline you load and run.
+
 ```bash
+# 0. Install ComfyUI first (if you haven't already)
+#    Windows: download the portable release — https://github.com/comfyanonymous/ComfyUI/releases
+#    Linux:   see REQUIREMENTS.md for step-by-step setup
+#    Then launch ComfyUI and confirm it opens at http://127.0.0.1:8188
+
 # 1. Clone this repo
 git clone https://github.com/NVIDIA/Creative-GenAI-Workflows
 cd Creative-GenAI-Workflows
 
-# 2. Install custom nodes (need ComfyUI first? see REQUIREMENTS.md in this folder)
+# 2. Install custom nodes and download models
+#    The script will ask which modules you want, download models, and offer to launch ComfyUI.
 #    Path = the folder containing main.py
-#    The script will walk you through downloading models and launching ComfyUI.
 # Windows — run from Command Prompt (cmd.exe), NOT Git Bash:
 install.bat C:\path\to\ComfyUI
 # Linux:

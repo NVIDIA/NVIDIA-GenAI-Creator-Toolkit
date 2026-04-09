@@ -9,7 +9,7 @@
 | Storage | 50GB free | 200GB+ free (models accumulate) |
 | Platform | Windows 11 x86_64, Linux x86_64 | Windows 11, Linux x86_64 |
 
-**NVFP4 quantization** (Modules 01, 08, 09, 10): Requires RTX 50 series (Blackwell) GPU.
+**NVFP4 quantization** is an optional performance optimization available on RTX 50 series (Blackwell) GPUs. All modules run without it on RTX 30/40 series.
 
 **RTX Spark / ARM64**: Modules 01–08 are compatible. Module 09 and 10 (Wan2.2) require x86_64.
 
@@ -36,6 +36,8 @@ git clone https://github.com/comfyanonymous/ComfyUI
 cd ComfyUI
 
 # Create and activate a virtual environment (required on Linux)
+# If this fails with "ensurepip not available", install the venv package first:
+#   sudo apt install python3-venv   (or: sudo apt install python3.12-venv)
 python3 -m venv venv
 source venv/bin/activate
 
@@ -53,7 +55,7 @@ pip install huggingface_hub
 **System packages (Ubuntu/Debian):**
 
 ```bash
-sudo apt install git git-lfs ffmpeg libgl1 libglib2.0-0
+sudo apt install git git-lfs ffmpeg libgl1 libglib2.0-0 python3-venv
 ```
 
 > `ffmpeg` is required by ComfyUI-VideoHelperSuite for video output. On Windows, it is bundled automatically.
@@ -176,7 +178,7 @@ Modules 02–06 and Bonus A all share the same Qwen model stack (~30 GB total). 
 
 Modules 09–10 (Wan2.2) and 08 (Trellis2) have the largest individual downloads (28 GB and 20 GB respectively) — save those for when you're ready to commit.
 
-Module 07 (Panorama to HDRI) requires EV LoRAs only available through the NVIDIA DLI course — skip it unless you have course access.
+Modules 09–10 (Wan2.2) and 08 (Trellis2) have the largest individual downloads — save those for when you're ready to commit.
 
 ---
 
@@ -198,7 +200,7 @@ On ComfyUI Portable: `python_embeded\python.exe -m pip install huggingface_hub`
 **ComfyUI shows "Failed to import" or missing node errors**
 1. Restart ComfyUI after running `install.bat` / `install.sh`
 2. If errors persist, open ComfyUI Manager → Install Missing Custom Nodes
-3. For `ComfyUI-TextureAlchemy` specifically, ensure it was cloned from the `Sandbox` branch — the Manager installs the wrong branch by default
+3. For `ComfyUI-TextureAlchemy` specifically, ensure it was cloned from the `Sandbox` branch of [amtarr/ComfyUI-TextureAlchemy](https://github.com/amtarr/ComfyUI-TextureAlchemy) — the Manager installs the wrong branch by default
 
 **VRAM out of memory (OOM) during generation**
 - Close other GPU applications (browsers with hardware acceleration, games, other AI tools)
