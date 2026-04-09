@@ -250,9 +250,9 @@ for /d %%D in ("%~dp0workflows\*") do (
 )
 REM --- Patch model paths in workflow JSONs for Windows (forward slash -> backslash) ---
 REM ComfyUI on Windows lists models with backslashes; the JSONs were authored on Linux.
-for /r "%WORKFLOWS_DEST%" %%F in (*.json) do (
-    powershell -NoProfile -Command "$f='%%F'; $c=Get-Content $f -Raw; $c=$c -replace '\"([a-z]+)/([^\"]+\.(safetensors|pth|ckpt|pt))\"','\"$1\$2\"'; Set-Content $f $c"
-)
+REM Uses Python (already detected above) instead of PowerShell-in-for-loop to avoid
+REM cmd.exe misreading regex parentheses as for-loop closers.
+"!PYTHON!" -c "import re,sys,pathlib; d=pathlib.Path(sys.argv[1]); [f.write_text(re.sub(r'\"([a-z]+)/([^\"]+\.(safetensors|pth|ckpt|pt))\"', lambda m: m.group().replace('/', chr(92)), f.read_text('utf-8')), 'utf-8') for f in d.rglob('*.json')]" "%WORKFLOWS_DEST%"
 echo.
 echo Workflows copied to: %WORKFLOWS_DEST%
 echo Sample inputs copied to: %INPUTS_DEST%
