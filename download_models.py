@@ -54,6 +54,8 @@ class ModelSpec:
     rename_to: Optional[str] = None
     # If True, download the whole repo (no single filename) into dest_subdir.
     full_repo: bool = False
+    # Optional git revision / commit hash to pin the download to.
+    revision: Optional[str] = None
 
 
 @dataclass
@@ -102,16 +104,9 @@ QWEN_LIGHTNING_8STEP = ModelSpec(
     size="500 MB",
 )
 
-OBJECT_REMOVER_LORA = ModelSpec(
-    name="Object Remover LoRA",
-    repo="lightx2v/Qwen-Image-Edit-Object-Remover",
-    filename="Qwen-Image-Edit-2511-Object-Remover.safetensors",
-    dest_subdir="models/loras",
-    size="500 MB",
-)
-
-LOTUS_DEPTH = ModelSpec(
-    name="Lotus Depth",
+# Lotus Depth G — used by bonus-b
+LOTUS_DEPTH_G = ModelSpec(
+    name="Lotus Depth G",
     repo="Kijai/lotus-comfyui",
     filename="lotus-depth-g-v2-1-disparity-fp16.safetensors",
     dest_subdir="models/diffusion_models/lotus",
@@ -125,6 +120,22 @@ LOTUS_VAE = ModelSpec(
     dest_subdir="models/vae",
     size="~300 MB",
     rename_to="LotusVAE.safetensors",
+)
+
+WAN_VAE = ModelSpec(
+    name="Wan 2.1 VAE",
+    repo="Comfy-Org/Wan_2.1_ComfyUI_repackaged",
+    filename="split_files/vae/wan_2.1_vae.safetensors",
+    dest_subdir="models/vae",
+    size="~250 MB",
+)
+
+WAN_TEXT_ENCODER = ModelSpec(
+    name="UMT5 XXL FP16 Text Encoder",
+    repo="Comfy-Org/Wan_2.1_ComfyUI_repackaged",
+    filename="split_files/text_encoders/umt5_xxl_fp16.safetensors",
+    dest_subdir="models/text_encoders",
+    size="~11 GB",
 )
 
 
@@ -148,8 +159,6 @@ def build_module_catalogue() -> dict:
             "Module 01 uses Ollama for the Gemma3 LLM. "
             "Run: ollama pull gemma3"
         ),
-        # The 4 HF models below exist but are listed for reference only;
-        # the module is intentionally skipped per course design.
         models=[
             ModelSpec(
                 name="Qwen Image 2512 BF16",
@@ -159,17 +168,11 @@ def build_module_catalogue() -> dict:
                 size="13.5 GB",
             ),
             QWEN_TEXT_ENCODER,
+            QWEN_VAE,
             ModelSpec(
-                name="Qwen Image VAE (2512 variant)",
-                repo="Comfy-Org/Qwen-Image_ComfyUI",
-                filename="split_files/vae/qwen_image_vae.safetensors",
-                dest_subdir="models/vae/qwen",
-                size="170 MB",
-            ),
-            ModelSpec(
-                name="Qwen Lightning 8-step FP32 LoRA",
+                name="Qwen Lightning 4-step FP32 LoRA",
                 repo="lightx2v/Qwen-Image-2512-Lightning",
-                filename="Qwen-Image-2512-Lightning-8steps-V1.0-fp32.safetensors",
+                filename="Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors",
                 dest_subdir="models/loras/qwen",
                 size="1 GB",
             ),
@@ -188,7 +191,20 @@ def build_module_catalogue() -> dict:
                 dest_subdir="models/diffusion_models/qwen",
                 size="13.5 GB",
             ),
-            QWEN_TEXT_ENCODER,
+            ModelSpec(
+                name="Qwen 2.5 VL 7B Text Encoder",
+                repo="Comfy-Org/HunyuanVideo_1.5_repackaged",
+                filename="split_files/text_encoders/qwen_2.5_vl_7b.safetensors",
+                dest_subdir="models/text_encoders/qwen",
+                size="14.5 GB",
+            ),
+            ModelSpec(
+                name="Qwen 2.5 VL 7B FP8 Text Encoder",
+                repo="Comfy-Org/HunyuanVideo_1.5_repackaged",
+                filename="split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors",
+                dest_subdir="models/text_encoders/qwen",
+                size="~9 GB",
+            ),
             ModelSpec(
                 name="Qwen Image Layered VAE",
                 repo="Comfy-Org/Qwen-Image-Layered_ComfyUI",
@@ -197,9 +213,9 @@ def build_module_catalogue() -> dict:
                 size="170 MB",
             ),
             ModelSpec(
-                name="Qwen Lightning 8-step LoRA (V2.0)",
-                repo="lightx2v/Qwen-Image-Lightning",
-                filename="Qwen-Image-Lightning-8steps-V2.0.safetensors",
+                name="Qwen Edit Lightning 4-step BF16 LoRA",
+                repo="lightx2v/Qwen-Image-Edit-2511-Lightning",
+                filename="Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
                 dest_subdir="models/loras/qwen",
                 size="500 MB",
             ),
@@ -215,7 +231,13 @@ def build_module_catalogue() -> dict:
             QWEN_TEXT_ENCODER,
             QWEN_VAE,
             QWEN_LIGHTNING_8STEP,
-            OBJECT_REMOVER_LORA,
+            ModelSpec(
+                name="Object Remover LoRA",
+                repo="prithivMLmods/Qwen-Image-Edit-2511-Object-Remover",
+                filename="Qwen-Image-Edit-2511-Object-Remover.safetensors",
+                dest_subdir="models/loras/qwen",
+                size="~230 MB",
+            ),
         ],
     )
 
@@ -243,15 +265,15 @@ def build_module_catalogue() -> dict:
             ModelSpec(
                 name="Qwen Sharp Gaussian Splat LoRA",
                 repo="dx8152/Qwen-Image-Edit-2511-Gaussian-Splash",
-                filename="Qwen2511SharpGaussianSplat.safetensors",
+                filename="高斯泼溅-Sharp.safetensors",
                 dest_subdir="models/loras",
-                size="500 MB",
+                size="~230 MB",
+                rename_to="Qwen2511SharpGaussianSplat.safetensors",
             ),
         ],
     )
 
     # ── Module 06 — Equirectangular Outpainting ──────────────────────────────
-    # The MikMumpitz 360 LoRA is a DLI course asset — no public download.
     catalogue["06"] = ModuleSpec(
         label="Module 06",
         name="Equirectangular Outpainting",
@@ -260,18 +282,25 @@ def build_module_catalogue() -> dict:
             QWEN_TEXT_ENCODER,
             QWEN_VAE,
             QWEN_LIGHTNING_8STEP,
-            OBJECT_REMOVER_LORA,
-        ],
-        manual_notes=[
-            "Module 06 also requires the MikMumpitz 360 LoRA.",
-            "This is a DLI course asset and is not publicly downloadable.",
-            "Enroll in NVIDIA DLI course DLIT81948 to access it.",
-            "Place it manually at: models/loras/  (filename: MikMumpitz360.safetensors or as distributed).",
+            ModelSpec(
+                name="Object Remover LoRA",
+                repo="Kutches/Qw2",
+                filename="Qwen-Image-Edit-2511-Object-Remover.safetensors",
+                dest_subdir="models/loras/qwen",
+                size="~230 MB",
+            ),
+            ModelSpec(
+                name="MikMumpitz 360 LoRA",
+                repo="TheMindExpansionNetwork/special-loras",
+                filename="251018_MICKMUMPITZ_QWEN-EDIT_360_03.safetensors",
+                dest_subdir="models/loras/qwen",
+                size="~280 MB",
+                rename_to="MikMumpitz360.safetensors",
+            ),
         ],
     )
 
     # ── Module 07 — Panorama to HDRI ────────────────────────────────────────
-    # EV LoRAs are DLI-gated; Flux models are public.
     catalogue["07"] = ModuleSpec(
         label="Module 07",
         name="Panorama to HDRI",
@@ -280,44 +309,70 @@ def build_module_catalogue() -> dict:
                 name="Flux Dev Kontext FP8",
                 repo="Comfy-Org/flux1-kontext-dev_ComfyUI",
                 filename="split_files/diffusion_models/flux1-dev-kontext_fp8_scaled.safetensors",
-                dest_subdir="models/diffusion_models",
+                dest_subdir="models/diffusion_models/flux",
                 size="11.9 GB",
             ),
             ModelSpec(
                 name="CLIP-L / ViT-L-14",
-                repo="comfyanonymous/flux_text_encoders",
+                repo="zer0int/CLIP-GmP-ViT-L-14",
                 filename="ViT-L-14-TEXT-detail-improved-hiT-GmP-HF.safetensors",
-                dest_subdir="models/text_encoders",
-                size="250 MB",
+                dest_subdir="models/text_encoders/flux",
+                size="~900 MB",
             ),
             ModelSpec(
                 name="T5-XXL FP16",
                 repo="comfyanonymous/flux_text_encoders",
                 filename="t5xxl_fp16.safetensors",
-                dest_subdir="models/text_encoders",
+                dest_subdir="models/text_encoders/flux",
                 size="9.8 GB",
             ),
             ModelSpec(
                 name="Flux VAE",
-                repo="black-forest-labs/FLUX.1-dev",
+                repo="SicariusSicariiStuff/FLUX.1-dev",
                 filename="ae.safetensors",
-                dest_subdir="models/vae",
+                dest_subdir="models/vae/flux",
                 size="340 MB",
             ),
             ModelSpec(
-                name="Flux Turbo LoRA",
-                repo="jasperai/Flux.1-dev-FastPass",
-                filename="Flux1DevTurbo.safetensors",
-                dest_subdir="models/loras",
-                size="500 MB",
+                name="Flux Dev (Turbo base)",
+                repo="camenduru/FLUX.1-dev",
+                filename="flux1-dev.safetensors",
+                dest_subdir="models/loras/flux",
+                size="~24 GB",
+                rename_to="Flux1DevTurbo.safetensors",
             ),
-        ],
-        manual_notes=[
-            "Module 07 EV LoRAs (EV +4, +2, -2, -4) are DLI course assets.",
-            "They are NOT publicly downloadable — enroll in NVIDIA DLI course DLIT81948.",
-            "Place them manually at: models/loras/  once you have lab access.",
-            "Note: Flux.1-dev requires a HuggingFace login (run: huggingface-cli login).",
-            "Note: Flux.1-dev is subject to the Black Forest Labs Non-Commercial License.",
+            ModelSpec(
+                name="EV -4 LoRA",
+                repo="Sumitc13/Flux-Kontext-exposure-control-LoRAs",
+                filename="ev-4.safetensors",
+                dest_subdir="models/loras/flux",
+                size="~330 MB",
+                rename_to="evminus4.safetensors",
+            ),
+            ModelSpec(
+                name="EV -2 LoRA",
+                repo="Sumitc13/Flux-Kontext-exposure-control-LoRAs",
+                filename="ev-2.safetensors",
+                dest_subdir="models/loras/flux",
+                size="~330 MB",
+                rename_to="evminus2.safetensors",
+            ),
+            ModelSpec(
+                name="EV +2 LoRA",
+                repo="Sumitc13/Flux-Kontext-exposure-control-LoRAs",
+                filename="ev+2.safetensors",
+                dest_subdir="models/loras/flux",
+                size="~330 MB",
+                rename_to="evplus2.safetensors",
+            ),
+            ModelSpec(
+                name="EV +4 LoRA",
+                repo="Sumitc13/Flux-Kontext-exposure-control-LoRAs",
+                filename="ev+4.safetensors",
+                dest_subdir="models/loras/flux",
+                size="~330 MB",
+                rename_to="evplus4.safetensors",
+            ),
         ],
     )
 
@@ -329,7 +384,7 @@ def build_module_catalogue() -> dict:
             ModelSpec(
                 name="Trellis2 (JeffreyXiang/TRELLIS-image-large)",
                 repo="JeffreyXiang/TRELLIS-image-large",
-                filename="",               # full repo download
+                filename="",
                 dest_subdir="models/trellis2",
                 size="15–20 GB",
                 full_repo=True,
@@ -342,38 +397,65 @@ def build_module_catalogue() -> dict:
         label="Module 09",
         name="Cutout Animation to Video (Wan TTM)",
         models=[
+            WAN_VAE,
+            WAN_TEXT_ENCODER,
             ModelSpec(
-                name="Wan2.2 I2V 480P (full repo)",
-                repo="Wan-AI/Wan2.2-I2V-14B-480P",
-                filename="",
-                dest_subdir="models/video/wan",
-                size="~28 GB (includes text encoder + VAE)",
-                full_repo=True,
-            ),
-            QWEN_EDIT_DIFFUSION,
-            QWEN_TEXT_ENCODER,
-            QWEN_VAE,
-            ModelSpec(
-                name="Qwen Edit Lightning 4-step BF16 LoRA",
-                repo="lightx2v/Qwen-Image-Edit-2511-Lightning",
-                filename="Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
-                dest_subdir="models/loras/qwen",
-                size="500 MB",
+                name="Wan2.2 I2V A14B HIGH BF16",
+                repo="Kijai/WanVideo_comfy",
+                filename="Wan2_2-I2V-A14B-HIGH_bf16.safetensors",
+                dest_subdir="models/diffusion_models",
+                size="~28 GB",
             ),
             ModelSpec(
-                name="Qwen Flymy Realism LoRA",
-                repo="flymy-ai/qwen-image-realism-lora",
-                filename="flymy_realism.safetensors",
-                dest_subdir="models/loras/qwen",
-                size="500 MB",
-                rename_to="Qwen-flymy_realism.safetensors",
+                name="Wan2.2 I2V A14B LOW BF16",
+                repo="Kijai/WanVideo_comfy",
+                filename="Wan2_2-I2V-A14B-LOW_bf16.safetensors",
+                dest_subdir="models/diffusion_models",
+                size="~28 GB",
             ),
             ModelSpec(
-                name="SAM2 Hiera Tiny",
-                repo="Kijai/sam2-safetensors",
-                filename="sam2_hiera_tiny.safetensors",
-                dest_subdir="models/sam2",
-                size="~150 MB",
+                name="Wan2.2 Pusa V1 HIGH LoRA",
+                repo="Kijai/WanVideo_comfy",
+                filename="Pusa/Wan22_PusaV1_lora_HIGH_resized_dynamic_avg_rank_98_bf16.safetensors",
+                dest_subdir="models/loras",
+                size="~950 MB",
+                revision="090d264d1fd6f4f36921f62ddddfe3d43b1cb5f6",
+            ),
+            ModelSpec(
+                name="Wan2.2 Pusa V1 LOW LoRA",
+                repo="Kijai/WanVideo_comfy",
+                filename="Pusa/Wan22_PusaV1_lora_LOW_resized_dynamic_avg_rank_98_bf16.safetensors",
+                dest_subdir="models/loras",
+                size="~970 MB",
+            ),
+            ModelSpec(
+                name="Wan2.2 Fun A14B InP HIGH HPS LoRA",
+                repo="alibaba-pai/Wan2.2-Fun-Reward-LoRAs",
+                filename="Wan2.2-Fun-A14B-InP-high-noise-HPS2.1.safetensors",
+                dest_subdir="models/loras",
+                size="~860 MB",
+            ),
+            ModelSpec(
+                name="Wan2.2 Fun A14B InP LOW HPS LoRA",
+                repo="alibaba-pai/Wan2.2-Fun-Reward-LoRAs",
+                filename="Wan2.2-Fun-A14B-InP-low-noise-HPS2.1.safetensors",
+                dest_subdir="models/loras",
+                size="~860 MB",
+            ),
+            ModelSpec(
+                name="Wan2.2 I2V A14B Distill 4-step LoRA",
+                repo="lightx2v/Wan2.2-Distill-Models",
+                filename="wan2.2_i2v_A14b_high_noise_lightx2v_4step.safetensors",
+                dest_subdir="models/loras",
+                size="~28 GB",
+                rename_to="wan2.2_i2v_A14b_high_noise_lora_rank64_lightx2v_4step.safetensors",
+            ),
+            ModelSpec(
+                name="Wan2.2 A14B T2V LOW Lightning LoRA",
+                repo="Kijai/WanVideo_comfy",
+                filename="LoRAs/Wan22-Lightning/Wan22_A14B_T2V_LOW_Lightning_4steps_lora_250928_rank64_fp16.safetensors",
+                dest_subdir="models/loras",
+                size="~615 MB",
             ),
         ],
     )
@@ -383,16 +465,67 @@ def build_module_catalogue() -> dict:
         label="Module 10",
         name="Playblast to Video (Wan VACE)",
         models=[
+            WAN_VAE,
+            WAN_TEXT_ENCODER,
             ModelSpec(
-                name="Wan2.2 Fun VACE (full repo)",
-                repo="Wan-AI/Wan2.2-Fun-14B-VACE",
-                filename="",
-                dest_subdir="models/video/wan",
-                size="~28 GB (includes text encoder + VAE)",
-                full_repo=True,
+                name="Wan2.2 T2V High Noise 14B FP16",
+                repo="Comfy-Org/Wan_2.2_ComfyUI_Repackaged",
+                filename="split_files/diffusion_models/wan2.2_t2v_high_noise_14B_fp16.safetensors",
+                dest_subdir="models/diffusion_models",
+                size="~28 GB",
             ),
-            LOTUS_DEPTH,
-            LOTUS_VAE,
+            ModelSpec(
+                name="Wan2.2 T2V Low Noise 14B FP16",
+                repo="Comfy-Org/Wan_2.2_ComfyUI_Repackaged",
+                filename="split_files/diffusion_models/wan2.2_t2v_low_noise_14B_fp16.safetensors",
+                dest_subdir="models/diffusion_models",
+                size="~28 GB",
+            ),
+            ModelSpec(
+                name="Wan2.2 VACE Fun A14B High Noise",
+                repo="alibaba-pai/Wan2.2-VACE-Fun-A14B",
+                filename="high_noise_model/diffusion_pytorch_model.safetensors",
+                dest_subdir="models/diffusion_models",
+                size="~37 GB",
+                rename_to="Wan2.2-VACE-Fun-A14B_high_noise_model.safetensors",
+            ),
+            ModelSpec(
+                name="Wan2.2 VACE Fun A14B Low Noise",
+                repo="alibaba-pai/Wan2.2-VACE-Fun-A14B",
+                filename="low_noise_model/diffusion_pytorch_model.safetensors",
+                dest_subdir="models/diffusion_models",
+                size="~37 GB",
+                rename_to="Wan2.2-VACE-Fun-A14B_low_noise_model.safetensors",
+            ),
+            ModelSpec(
+                name="Lotus Depth D v1.1 FP16",
+                repo="Kijai/lotus-comfyui",
+                filename="lotus-depth-d-v-1-1-fp16.safetensors",
+                dest_subdir="models/diffusion_models",
+                size="~1.7 GB",
+            ),
+            ModelSpec(
+                name="SD VAE ft-mse",
+                repo="stabilityai/sd-vae-ft-mse-original",
+                filename="vae-ft-mse-840000-ema-pruned.safetensors",
+                dest_subdir="models/vae",
+                size="~335 MB",
+            ),
+            ModelSpec(
+                name="Wan2.1 T2V 14B Lightning LoRA",
+                repo="Kijai/WanVideo_comfy",
+                filename="Wan21_T2V_14B_lightx2v_cfg_step_distill_lora_rank32.safetensors",
+                dest_subdir="models/loras",
+                size="~315 MB",
+                revision="1d87de611cd3be0c10bf8e21fa965038018693e7",
+            ),
+            ModelSpec(
+                name="4x-ClearRealityV1 Upscaler",
+                repo="skbhadra/ClearRealityV1",
+                filename="4x-ClearRealityV1.pth",
+                dest_subdir="models/upscale_models",
+                size="~9 MB",
+            ),
         ],
     )
 
@@ -424,7 +557,7 @@ def build_module_catalogue() -> dict:
             QWEN_TEXT_ENCODER,
             QWEN_VAE,
             QWEN_LIGHTNING_8STEP,
-            LOTUS_DEPTH,
+            LOTUS_DEPTH_G,
             ModelSpec(
                 name="Lotus Normal G",
                 repo="Kijai/lotus-comfyui",
@@ -462,7 +595,8 @@ def build_module_catalogue() -> dict:
 # Download logic
 # ---------------------------------------------------------------------------
 
-def hf_download_file(repo: str, filename: str, local_dir: Path) -> bool:
+def hf_download_file(repo: str, filename: str, local_dir: Path,
+                     revision: Optional[str] = None) -> bool:
     """
     Download a single file from a HuggingFace repo using the Python API.
     Moves the file to a flat location in local_dir (strips repo subdirectories).
@@ -474,6 +608,7 @@ def hf_download_file(repo: str, filename: str, local_dir: Path) -> bool:
             repo_id=repo,
             filename=filename,
             local_dir=str(local_dir),
+            revision=revision if revision else None,
         )
         # hf_hub_download preserves the repo's directory structure inside
         # local_dir (e.g. split_files/diffusion_models/foo.safetensors).
@@ -564,7 +699,7 @@ def download_model(comfyui_root: Path, model: ModelSpec) -> str:
     print(f"    Size:        {model.size}")
     print(f"    Destination: {dest_dir}")
 
-    ok = hf_download_file(model.repo, model.filename, dest_dir)
+    ok = hf_download_file(model.repo, model.filename, dest_dir, revision=model.revision)
     if not ok:
         print(f"  [FAILED] huggingface-cli exited with error for {model.name}")
         return "failed"
@@ -754,7 +889,6 @@ def main() -> None:
     else:
         print("HuggingFace: not logged in — downloads may be slower or rate-limited.")
         print("  To log in: huggingface-cli login")
-        print("  (Required for Flux models in Module 07)")
         print()
 
     catalogue = build_module_catalogue()
