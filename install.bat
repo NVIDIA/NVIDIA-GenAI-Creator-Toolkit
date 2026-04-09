@@ -249,6 +249,11 @@ for /d %%D in ("%~dp0workflows\*") do (
     )
   )
 )
+REM --- Patch model paths in workflow JSONs for Windows (forward slash -> backslash) ---
+REM ComfyUI on Windows lists models with backslashes; the JSONs were authored on Linux.
+for /r "%WORKFLOWS_DEST%" %%F in (*.json) do (
+    powershell -NoProfile -Command "$f='%%F'; $c=Get-Content $f -Raw; $c=$c -replace '\"([a-z]+)/([^\"]+\.(safetensors|pth|ckpt|pt))\"','\"$1\$2\"'; Set-Content $f $c"
+)
 echo.
 echo Workflows copied to: %WORKFLOWS_DEST%
 echo Sample inputs copied to: %INPUTS_DEST%
