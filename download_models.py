@@ -284,7 +284,7 @@ def build_module_catalogue() -> dict:
             QWEN_LIGHTNING_8STEP,
             ModelSpec(
                 name="Object Remover LoRA",
-                repo="Kutches/Qw2",
+                repo="prithivMLmods/Qwen-Image-Edit-2511-Object-Remover",
                 filename="Qwen-Image-Edit-2511-Object-Remover.safetensors",
                 dest_subdir="models/loras/qwen",
                 size="~230 MB",
@@ -292,7 +292,7 @@ def build_module_catalogue() -> dict:
             ModelSpec(
                 name="MikMumpitz 360 LoRA",
                 repo="TheMindExpansionNetwork/special-loras",
-                filename="251018_mickmumpitz_qwen-edit_360_03.safetensors",
+                filename="251018_MICKMUMPITZ_QWEN-EDIT_360_03.safetensors",
                 dest_subdir="models/loras/qwen",
                 size="~280 MB",
                 rename_to="MikMumpitz360.safetensors",

@@ -9,7 +9,7 @@ VRAM: 12–16 GB
 | Qwen 2.5 VL 7B Text Encoder | 14.5 GB | `ComfyUI/models/text_encoders/qwen/` | `Qwen/Qwen2.5-VL-7B` |
 | Qwen Image VAE | 170 MB | `ComfyUI/models/vae/qwen/` | bundled |
 | Qwen Lightning 8-step LoRA | 500 MB | `ComfyUI/models/loras/qwen/` | bundled |
-| MikMumpitz 360 LoRA | 500 MB | `ComfyUI/models/loras/` | DLI course asset — conditions output for correct equirectangular spherical perspective |
-| Object Remover LoRA | 500 MB | `ComfyUI/models/loras/` | `lightx2v/Qwen-Image-Edit-Object-Remover` — reused from Module 03 for seam removal |
+| MikMumpitz 360 LoRA | 282 MB | `ComfyUI/models/loras/qwen/` | `TheMindExpansionNetwork/special-loras` — conditions output for correct equirectangular spherical perspective |
+| Object Remover LoRA | 230 MB | `ComfyUI/models/loras/qwen/` | `prithivMLmods/Qwen-Image-Edit-2511-Object-Remover` — reused from Module 03 for seam removal |
 
 > The MikMumpitz 360 LoRA is the key ingredient here — without it, outpainting doesn't produce a correct equirectangular projection.

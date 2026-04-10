@@ -42,9 +42,7 @@ Input Image -> Pad for Outpainting -> LoRA -> Diffusion Model -> Inpainting -> S
 | `qwen_image_vae.safetensors` | VAE | 242 MB |
 | `Qwen-Image-Lightning-8steps-V2.0.safetensors` | LoRA | 1.58 GB |
 | `Qwen-Image-Edit-2511-Object-Remover.safetensors` | LoRA | 225 MB |
-| `251018_MICKMUMPITZ_QWEN-EDIT_360_03.safetensors` | LoRA (DLI course asset) | 282 MB |
-
-> **Note:** The MikMumpitz 360 LoRA is a DLI course asset. Enroll in [NVIDIA DLI course DLIT81948](https://www.nvidia.com/en-us/on-demand/session/gtc26-dlit81948/) to access it. Place manually at `models/loras/`.
+| `251018_MICKMUMPITZ_QWEN-EDIT_360_03.safetensors` | LoRA | 282 MB |
 
 ## Required Custom Nodes
 
