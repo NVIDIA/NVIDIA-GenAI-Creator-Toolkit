@@ -197,6 +197,7 @@ if module_selected "09"; then
   install_node "ComfyUI_essentials" "https://github.com/cubiq/ComfyUI_essentials"
   install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch"
   install_node "comfyui-sam2" "https://github.com/neverbiasu/ComfyUI-SAM2"
+  install_node "ComfyUI-SAM3" "https://github.com/PozzettiAndrea/ComfyUI-SAM3"
   install_node "ComfyUI-VideoHelperSuite" "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
   install_node "ComfyUI-Impact-Pack" "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
   install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use"

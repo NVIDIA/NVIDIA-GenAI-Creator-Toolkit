@@ -458,6 +458,13 @@ def build_module_catalogue() -> dict:
                 size="~615 MB",
             ),
             ModelSpec(
+                name="SAM3 Model",
+                repo="1038lab/sam3",
+                filename="sam3.pt",
+                dest_subdir="models/sam3",
+                size="~2.4 GB",
+            ),
+            ModelSpec(
                 name="Qwen Flymy Realism LoRA",
                 repo="flymy-ai/qwen-image-realism-lora",
                 filename="flymy_realism.safetensors",

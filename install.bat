@@ -245,6 +245,7 @@ if !DO_INSTALL!==1 (
     call :install_node "ComfyUI_essentials" "https://github.com/cubiq/ComfyUI_essentials" ""
     call :install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch" ""
     call :install_node "comfyui-sam2" "https://github.com/neverbiasu/ComfyUI-SAM2" ""
+    call :install_node "ComfyUI-SAM3" "https://github.com/PozzettiAndrea/ComfyUI-SAM3" ""
     call :install_node "ComfyUI-VideoHelperSuite" "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite" ""
     call :install_node "ComfyUI-Impact-Pack" "https://github.com/ltdrdata/ComfyUI-Impact-Pack" ""
     call :install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use" ""
