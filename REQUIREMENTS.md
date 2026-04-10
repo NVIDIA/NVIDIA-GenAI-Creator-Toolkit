@@ -241,3 +241,10 @@ The workflow references node types that aren't installed. Run `install.bat` / `i
 
 **Module 09: first workflow run produces no video**
 Module 09 requires two workflows in sequence: run `videoprep.json` first to prepare inputs, then `workflow.json` for generation. See the Module 09 README for the full two-step process.
+
+**Modules 09–10: `TritonMissing` error during generation**
+Triton is not available in ComfyUI Portable's embedded Python on Windows. The error looks like:
+```
+torch._inductor.exc.TritonMissing: Cannot find a working triton installation.
+```
+**Fix:** In the `WanVideoSampler` node, set **`torch_compile_args`** to disabled / off. The workflow runs correctly without torch compilation — generation speed is unaffected for most GPUs.
