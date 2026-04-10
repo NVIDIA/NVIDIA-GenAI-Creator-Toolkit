@@ -888,6 +888,16 @@ Examples:
 def main() -> None:
     args = parse_args()
 
+    # Warn if run directly — install.bat / install.sh also installs custom nodes.
+    # Running this script alone skips node installation.
+    if sys.stdout.isatty():
+        print()
+        print("NOTE: download_models.py only downloads model weights.")
+        print("      To install custom nodes AND download models in one step, use:")
+        print("        Windows: install.bat C:\\path\\to\\ComfyUI --modules <modules>")
+        print("        Linux:   bash install.sh /path/to/ComfyUI --modules <modules>")
+        print()
+
     comfyui_root = Path(args.comfyui).expanduser().resolve()
     if not comfyui_root.exists():
         print(f"[ERROR] ComfyUI root does not exist: {comfyui_root}", file=sys.stderr)
