@@ -1332,7 +1332,7 @@
         "Node name for S&R": "LoraLoaderModelOnly"
       },
       "widgets_values": [
-        "qwen/251018_MICKMUMPITZ_QWEN-EDIT_360_03.safetensors",
+        "qwen/MikMumpitz360.safetensors",
         1
       ]
     },

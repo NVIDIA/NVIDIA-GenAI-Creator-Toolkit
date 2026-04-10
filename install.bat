@@ -193,6 +193,15 @@ if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-GeometryPack" "https://github.com/PozzettiAndrea/ComfyUI-GeometryPack" ""
 )
 
+REM --- Module 06: Equirectangular Outpainting ---
+set DO_INSTALL=0
+echo ,!MODULES!, | findstr /i ",06," > nul 2>&1 && set DO_INSTALL=1
+if /i "!MODULES!"=="all" set DO_INSTALL=1
+if !DO_INSTALL!==1 (
+    call :install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use" ""
+    call :install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch" ""
+)
+
 REM --- Module 07: Panorama to HDRI ---
 set DO_INSTALL=0
 echo ,!MODULES!, | findstr /i ",07," > nul 2>&1 && set DO_INSTALL=1

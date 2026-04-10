@@ -172,6 +172,12 @@ if module_selected "04" || module_selected "05"; then
   install_node "ComfyUI-GeometryPack" "https://github.com/PozzettiAndrea/ComfyUI-GeometryPack"
 fi
 
+# --- Module 06: Equirectangular Outpainting ---
+if module_selected "06"; then
+  install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use"
+  install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch"
+fi
+
 # --- Module 07: Panorama to HDRI ---
 if module_selected "07"; then
   install_node "Luminance-Stack-Processor" "https://github.com/sumitchatterjee13/Luminance-Stack-Processor"
