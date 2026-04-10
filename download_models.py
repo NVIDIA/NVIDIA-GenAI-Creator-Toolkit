@@ -457,6 +457,14 @@ def build_module_catalogue() -> dict:
                 dest_subdir="models/loras",
                 size="~615 MB",
             ),
+            ModelSpec(
+                name="Qwen Flymy Realism LoRA",
+                repo="flymy-ai/qwen-image-realism-lora",
+                filename="flymy_realism.safetensors",
+                dest_subdir="models/loras",
+                size="~500 MB",
+                rename_to="Qwen-flymy_realism.safetensors",
+            ),
         ],
     )
 
