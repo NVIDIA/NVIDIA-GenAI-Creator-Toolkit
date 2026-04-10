@@ -4,10 +4,12 @@
 
 | Node Pack | Repo | Key Nodes |
 |-----------|------|-----------|
-| ComfyUI-TextureAlchemy | [amtarr/ComfyUI-TextureAlchemy](https://github.com/amtarr/ComfyUI-TextureAlchemy) (branch: `Sandbox`) | `LuminanceStackProcessor5Stops`, `SaveImageOpenEXR`, `AutoContrastLevels` |
+| ComfyUI-TextureAlchemy | [amtarr/ComfyUI-TextureAlchemy](https://github.com/amtarr/ComfyUI-TextureAlchemy) (branch: `Sandbox`) | `LuminanceStackProcessor5Stops`, `AutoContrastLevels` |
+| Luminance-Stack-Processor | [sumitchatterjee13/Luminance-Stack-Processor](https://github.com/sumitchatterjee13/Luminance-Stack-Processor) | `LuminanceStackProcessor5Stops` |
+| ComfyUI-Marigold | [kijai/ComfyUI-Marigold](https://github.com/kijai/ComfyUI-Marigold) | `SaveImageOpenEXR` |
 
 - `LuminanceStackProcessor5Stops` — merges 5 exposure images into HDR using the Debevec algorithm
-- `SaveImageOpenEXR` — exports 32-bit EXR / HDRI file
+- `SaveImageOpenEXR` — exports 32-bit EXR / HDRI file (provided by ComfyUI-Marigold)
 - `AutoContrastLevels` — automatic histogram adjustment per exposure pass
 
 **Manual TextureAlchemy install (Sandbox branch):**

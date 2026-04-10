@@ -208,6 +208,7 @@ echo ,!MODULES!, | findstr /i ",07," > nul 2>&1 && set DO_INSTALL=1
 if /i "!MODULES!"=="all" set DO_INSTALL=1
 if !DO_INSTALL!==1 (
     call :install_node "Luminance-Stack-Processor" "https://github.com/sumitchatterjee13/Luminance-Stack-Processor" ""
+    call :install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold" ""
 )
 
 REM --- Module 08: Trellis2 3D ---

@@ -181,6 +181,7 @@ fi
 # --- Module 07: Panorama to HDRI ---
 if module_selected "07"; then
   install_node "Luminance-Stack-Processor" "https://github.com/sumitchatterjee13/Luminance-Stack-Processor"
+  install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold"
 fi
 
 # --- Module 08: Trellis2 3D ---
