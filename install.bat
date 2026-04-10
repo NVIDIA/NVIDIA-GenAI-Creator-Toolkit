@@ -52,6 +52,9 @@ goto parse_args
 :done_parse
 if not defined COMFYUI_DIR set COMFYUI_DIR=%cd%
 
+REM Strip trailing backslash (causes quoting issues when path is passed to Python)
+if "%COMFYUI_DIR:~-1%"=="\" set "COMFYUI_DIR=%COMFYUI_DIR:~0,-1%"
+
 echo ComfyUI path: %COMFYUI_DIR%
 echo.
 
