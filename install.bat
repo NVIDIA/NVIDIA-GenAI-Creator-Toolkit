@@ -262,6 +262,8 @@ if !DO_INSTALL!==1 (
     call :install_node "radiance" "https://github.com/fxtdstudios/radiance" ""
     call :install_node "ComfyUI-Impact-Pack" "https://github.com/ltdrdata/ComfyUI-Impact-Pack" ""
     call :install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus" ""
+    call :install_node "ComfyUI-post-processing-nodes" "https://github.com/EllangoK/ComfyUI-post-processing-nodes" ""
+    call :install_node "ComfyUI-VideoUpscale_WithModel" "https://github.com/ShmuelRonen/ComfyUI-VideoUpscale_WithModel" ""
 )
 
 REM --- Copy workflow JSON files and sample inputs into ComfyUI ---

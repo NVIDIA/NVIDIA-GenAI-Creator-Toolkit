@@ -104,6 +104,14 @@ zsq_prompt
 https://github.com/windfancy/zsq_prompt
 License: MIT
 
+ComfyUI-post-processing-nodes
+https://github.com/EllangoK/ComfyUI-post-processing-nodes
+License: GPL-3.0
+
+ComfyUI-VideoUpscale_WithModel
+https://github.com/ShmuelRonen/ComfyUI-VideoUpscale_WithModel
+License: MIT
+
 -------------------------------------------------------------------------------
 
 MODELS

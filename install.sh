@@ -210,11 +210,9 @@ if module_selected "10"; then
   install_node "cg-use-everywhere" "https://github.com/chrisgoringe/cg-use-everywhere"
   install_node "radiance" "https://github.com/fxtdstudios/radiance"
   install_node "ComfyUI-Impact-Pack" "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
-fi
-
-# --- Modules 10 + Bonus B: Lotus ---
-if module_selected "10"; then
   install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus"
+  install_node "ComfyUI-post-processing-nodes" "https://github.com/EllangoK/ComfyUI-post-processing-nodes"
+  install_node "ComfyUI-VideoUpscale_WithModel" "https://github.com/ShmuelRonen/ComfyUI-VideoUpscale_WithModel"
 fi
 
 # --- Bonus B: Texture to PBR ---
