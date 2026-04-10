@@ -150,15 +150,15 @@ def build_module_catalogue() -> dict:
     """
     catalogue = {}
 
-    # ── Module 01 — skipped (Ollama/Gemma3) ────────────────────────────────
+    # ── Module 01 — LLM Prompt Enhancer ────────────────────────────────────
     catalogue["01"] = ModuleSpec(
         label="Module 01",
         name="LLM Prompt Enhancer",
-        skip=True,
-        skip_reason=(
-            "Module 01 uses Ollama for the Gemma3 LLM. "
-            "Run: ollama pull gemma3"
-        ),
+        manual_notes=[
+            "Also requires Ollama + Gemma3 LLM (not a HuggingFace download).",
+            "Install Ollama: https://ollama.com/download",
+            "Then run: ollama pull gemma3",
+        ],
         models=[
             ModelSpec(
                 name="Qwen Image 2512 BF16",
