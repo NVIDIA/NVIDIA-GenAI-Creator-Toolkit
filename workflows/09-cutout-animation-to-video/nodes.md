@@ -17,6 +17,14 @@ Two workflows are included: `videoprep.json` (run first) and `workflow.json` (TT
 
 ## TTM workflow (`workflow.json`)
 
-Reuses the same node packs as VideoPrep — no additional installs required.
+| Node Pack | Repo | Purpose |
+|-----------|------|---------|
+| ComfyUI-WanVideoWrapper | [kijai/ComfyUI-WanVideoWrapper](https://github.com/kijai/ComfyUI-WanVideoWrapper) | Wan2.2 VACE video sampler, model loader, decoder |
+| ComfyUI-KJNodes | [kijai/ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes) | Utility nodes |
+| ComfyUI-Impact-Pack | [ltdrdata/ComfyUI-Impact-Pack](https://github.com/ltdrdata/ComfyUI-Impact-Pack) | `ImpactSwitch` (conditional routing) |
+| ComfyUI-VideoHelperSuite | [Kosinkadink/ComfyUI-VideoHelperSuite](https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite) | Video I/O |
+| ComfyUI_essentials | [cubiq/ComfyUI_essentials](https://github.com/cubiq/ComfyUI_essentials) | Utility nodes |
+| ComfyUI-Easy-Use | [yolain/ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use) | Utility nodes |
+| ComfyUI-Custom-Scripts | [pythongosssss/ComfyUI-Custom-Scripts](https://github.com/pythongosssss/ComfyUI-Custom-Scripts) | `StringFunction\|pysssss` |
 
 **Run VideoPrep first.** It generates the first frame, last frame, trajectory video, and subject mask that `workflow.json` requires as inputs.

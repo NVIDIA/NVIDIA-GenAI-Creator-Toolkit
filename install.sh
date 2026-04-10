@@ -201,6 +201,8 @@ if module_selected "09"; then
   install_node "ComfyUI-VideoHelperSuite" "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
   install_node "ComfyUI-Impact-Pack" "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
   install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use"
+  install_node "ComfyUI-WanVideoWrapper" "https://github.com/kijai/ComfyUI-WanVideoWrapper"
+  install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes"
 fi
 
 # --- Module 10: Playblast to Video ---

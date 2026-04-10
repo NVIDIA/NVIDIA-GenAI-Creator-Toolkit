@@ -242,6 +242,16 @@ The workflow references node types that aren't installed. Run `install.bat` / `i
 **Module 09: first workflow run produces no video**
 Module 09 requires two workflows in sequence: run `videoprep.json` first to prepare inputs, then `workflow.json` for generation. See the Module 09 README for the full two-step process.
 
+**Module 09: `ComfyUI-Impact-Pack` shows "IMPORT FAILED" in ComfyUI Manager**
+Impact Pack requires `ultralytics` and `onnxruntime`, which can fail to install on ComfyUI Portable's embedded Python. Fix:
+```
+python_embeded\python.exe -m pip install ultralytics onnxruntime
+```
+Then restart ComfyUI. If `onnxruntime` conflicts with `onnxruntime-gpu`, install the GPU variant instead:
+```
+python_embeded\python.exe -m pip install ultralytics onnxruntime-gpu
+```
+
 **Modules 09–10: `TritonMissing` error during generation**
 Triton is not available in ComfyUI Portable's embedded Python on Windows. The error looks like:
 ```
