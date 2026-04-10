@@ -203,6 +203,7 @@ if /i "!MODULES!"=="all" set DO_INSTALL=1
 if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use" ""
     call :install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch" ""
+    call :install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes" ""
 )
 
 REM --- Module 07: Panorama to HDRI ---

@@ -176,6 +176,7 @@ fi
 if module_selected "06"; then
   install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use"
   install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch"
+  install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes"
 fi
 
 # --- Module 07: Panorama to HDRI ---
