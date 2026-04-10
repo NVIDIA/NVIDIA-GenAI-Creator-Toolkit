@@ -175,6 +175,14 @@ if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-TextureAlchemy" "https://github.com/amtarr/ComfyUI-TextureAlchemy" "Sandbox"
 )
 
+REM --- Module 03: Targeted Inpainting ---
+set DO_INSTALL=0
+echo ,!MODULES!, | findstr /i ",03," > nul 2>&1 && set DO_INSTALL=1
+if /i "!MODULES!"=="all" set DO_INSTALL=1
+if !DO_INSTALL!==1 (
+    call :install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch" ""
+)
+
 REM --- Modules 04 + 05: Gaussian Splat ---
 set DO_INSTALL=0
 echo ,!MODULES!, | findstr /i ",04," > nul 2>&1 && set DO_INSTALL=1

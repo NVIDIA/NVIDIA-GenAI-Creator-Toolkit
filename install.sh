@@ -161,6 +161,11 @@ if module_selected "02" || module_selected "03" || module_selected "04" || \
   install_node "ComfyUI-TextureAlchemy" "https://github.com/amtarr/ComfyUI-TextureAlchemy" "Sandbox"
 fi
 
+# --- Module 03: Targeted Inpainting ---
+if module_selected "03"; then
+  install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch"
+fi
+
 # --- Modules 04 + 05: Gaussian Splat ---
 if module_selected "04" || module_selected "05"; then
   install_node "ComfyUI-Sharp" "https://github.com/PozzettiAndrea/ComfyUI-Sharp"

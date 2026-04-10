@@ -233,10 +233,10 @@ def build_module_catalogue() -> dict:
             QWEN_LIGHTNING_8STEP,
             ModelSpec(
                 name="Object Remover LoRA",
-                repo="prithivMLmods/Qwen-Image-Edit-2511-Object-Remover",
+                repo="lightx2v/Qwen-Image-Edit-Object-Remover",
                 filename="Qwen-Image-Edit-2511-Object-Remover.safetensors",
                 dest_subdir="models/loras/qwen",
-                size="~230 MB",
+                size="~500 MB",
             ),
         ],
     )
