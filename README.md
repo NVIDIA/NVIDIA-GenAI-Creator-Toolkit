@@ -30,7 +30,8 @@ See [REQUIREMENTS.md](REQUIREMENTS.md) for full details.
 
 ```bash
 # 0. Install ComfyUI first (if you haven't already)
-#    Windows: download the portable release — https://github.com/comfyanonymous/ComfyUI/releases
+#    Windows: download and install from https://www.comfy.org/download
+#             (use the desktop app — it handles Python, CUDA, and updates automatically)
 #    Linux:   see REQUIREMENTS.md for step-by-step setup
 #    Then launch ComfyUI and confirm it opens at http://127.0.0.1:8188
 
