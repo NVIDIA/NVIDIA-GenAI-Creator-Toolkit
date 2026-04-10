@@ -20,7 +20,7 @@ def patch_dir(directory):
     patched_count = 0
     for f in pathlib.Path(directory).rglob("*.json"):
         text = f.read_text(encoding="utf-8")
-        result = PATTERN.sub(lambda m: m.group().replace("/", "\\"), text)
+        result = PATTERN.sub(lambda m: m.group().replace("/", "\\\\"), text)
         if result != text:
             f.write_text(result, encoding="utf-8")
             patched_count += 1
