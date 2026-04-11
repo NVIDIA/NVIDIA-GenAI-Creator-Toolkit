@@ -396,6 +396,12 @@ def build_module_catalogue() -> dict:
                 dest_subdir="models/facebook/dinov3-vitl16-pretrain-lvd1689m",
                 size="~1 GB",
                 full_repo=True,
+                manual_notes=[
+                    "This is a gated model — requires a HuggingFace account with Meta's",
+                    "data agreement accepted at:",
+                    "  https://huggingface.co/facebook/dinov3-vitl16-pretrain-lvd1689m",
+                    "Then log in before downloading: huggingface-cli login",
+                ],
             ),
             ModelSpec(
                 name="TRELLIS-image-large (shape decoder)",
