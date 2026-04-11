@@ -116,8 +116,8 @@
             "cameraType": "perspective"
           }
         },
-        "Last Time Model File": "/app/comfyui/output/trellis2_20260217_135618.glb",
-        "Resource Folder": "comfyui/output",
+        "Last Time Model File": "",
+        "Resource Folder": "output",
         "Scene Config": {
           "showGrid": true,
           "backgroundColor": "#282828",
@@ -133,7 +133,7 @@
         }
       },
       "widgets_values": [
-        "/app/comfyui/output/trellis2_20260217_135618.glb",
+        "",
         ""
       ]
     },

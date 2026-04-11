@@ -220,8 +220,7 @@ set DO_INSTALL=0
 echo ,!MODULES!, | findstr /i ",08," > nul 2>&1 && set DO_INSTALL=1
 if /i "!MODULES!"=="all" set DO_INSTALL=1
 if !DO_INSTALL!==1 (
-    call :install_node "ComfyUI-Trellis2" "https://github.com/visualbruno/ComfyUI-Trellis2" ""
-    call :install_node "zsq_prompt" "https://github.com/windfancy/zsq_prompt" ""
+    call :install_node "ComfyUI-TRELLIS2" "https://github.com/PozzettiAndrea/ComfyUI-TRELLIS2" ""
 
     REM Install pre-built CUDA wheels — avoids needing MSVC compiler on Windows Portable
     echo.
@@ -232,10 +231,10 @@ if !DO_INSTALL!==1 (
 
     if "!TRELLIS_TORCH!"=="unsupported" (
         echo           [WARN] PyTorch 2.7 or 2.8 not detected. Install TRELLIS2 wheels manually from:
-        echo                  !NODES_DIR!\ComfyUI-Trellis2\wheels\Windows\
+        echo                  !NODES_DIR!\ComfyUI-TRELLIS2\wheels\Windows\
     ) else (
         echo           Installing TRELLIS2 pre-built wheels ^(PyTorch !TRELLIS_TORCH!^)...
-        "!PYTHON!" -c "import glob,subprocess,sys; whl=glob.glob(sys.argv[1]); [subprocess.run([sys.executable,'-m','pip','install','-q','--no-warn-script-location',w],check=False) for w in whl]; print(f'           Installed {len(whl)} TRELLIS2 wheel(s).')" "!NODES_DIR!\ComfyUI-Trellis2\wheels\Windows\Torch!TRELLIS_TORCH!\*.whl"
+        "!PYTHON!" -c "import glob,subprocess,sys; whl=glob.glob(sys.argv[1]); [subprocess.run([sys.executable,'-m','pip','install','-q','--no-warn-script-location',w],check=False) for w in whl]; print(f'           Installed {len(whl)} TRELLIS2 wheel(s).')" "!NODES_DIR!\ComfyUI-TRELLIS2\wheels\Windows\Torch!TRELLIS_TORCH!\*.whl"
     )
 )
 

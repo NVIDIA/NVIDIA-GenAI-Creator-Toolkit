@@ -36,8 +36,8 @@ ComfyUI-GeometryPack
 https://github.com/PozzettiAndrea/ComfyUI-GeometryPack
 License: GPL-3.0-or-later
 
-ComfyUI-Trellis2
-https://github.com/visualbruno/ComfyUI-Trellis2
+ComfyUI-TRELLIS2
+https://github.com/PozzettiAndrea/ComfyUI-TRELLIS2
 License: MIT
 
 comfy_nv_video_prep
@@ -98,10 +98,6 @@ License: GPL-3.0
 
 Luminance-Stack-Processor
 https://github.com/sumitchatterjee13/Luminance-Stack-Processor
-License: MIT
-
-zsq_prompt
-https://github.com/windfancy/zsq_prompt
 License: MIT
 
 ComfyUI-post-processing-nodes

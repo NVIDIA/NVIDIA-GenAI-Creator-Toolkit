@@ -2,7 +2,7 @@
 
 | Node Pack | Repo | Key Nodes |
 |-----------|------|-----------|
-| ComfyUI-Trellis2 | [visualbruno/ComfyUI-Trellis2](https://github.com/visualbruno/ComfyUI-Trellis2) | `LoadTrellis2Models`, `Trellis2GetConditioning`, `Trellis2ImageToShape`, `Trellis2ShapeToTexturedMesh`, `Trellis2ExportGLB`, `Preview3D` |
+| ComfyUI-TRELLIS2 | [PozzettiAndrea/ComfyUI-TRELLIS2](https://github.com/PozzettiAndrea/ComfyUI-TRELLIS2) | `LoadTrellis2Models`, `Trellis2GetConditioning`, `Trellis2ImageToShape`, `Trellis2ShapeToTexturedMesh`, `Trellis2ExportGLB`, `Preview3D` |
 
 ComfyUI-Trellis2 requires pre-built CUDA wheels for its dependencies. The install script handles this automatically for PyTorch 2.7 and 2.8. If installing manually:
 

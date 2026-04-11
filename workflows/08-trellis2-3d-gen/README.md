@@ -31,7 +31,16 @@ Image -> Trellis2 -> 3D Model with PBR Materials
 
 ## Required Models
 
-The Trellis2 model (~16.2 GB) downloads automatically when the ComfyUI-TRELLIS2 node is installed.
+The Trellis2 model (~16.2 GB) must be pre-downloaded before running the workflow:
+
+```bash
+huggingface-cli download JeffreyXiang/TRELLIS-image-large --local-dir ComfyUI/models/trellis2
+```
+
+Or use `download_models.py`:
+```bash
+python download_models.py --comfyui C:\path\to\ComfyUI --modules 08
+```
 
 ## Required Custom Nodes
 

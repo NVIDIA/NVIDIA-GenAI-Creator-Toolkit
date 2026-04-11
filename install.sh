@@ -187,8 +187,7 @@ fi
 
 # --- Module 08: Trellis2 3D ---
 if module_selected "08"; then
-  install_node "ComfyUI-Trellis2" "https://github.com/visualbruno/ComfyUI-Trellis2"
-  install_node "zsq_prompt" "https://github.com/windfancy/zsq_prompt"
+  install_node "ComfyUI-TRELLIS2" "https://github.com/PozzettiAndrea/ComfyUI-TRELLIS2"
 fi
 
 # --- Module 09: Cutout Animation ---
