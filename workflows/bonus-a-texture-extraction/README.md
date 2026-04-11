@@ -30,7 +30,7 @@ Image -> VLM -> Segmentation/Masking -> LoRA -> Diffusion Model -> Output Textur
 |-------------|-------|
 | **VRAM (Minimum)** | 16 GB |
 | **VRAM (Recommended)** | 24 GB |
-| **Custom Nodes** | 1 package |
+| **Custom Nodes** | 4 packages |
 | **Models** | 5 files |
 
 ## Required Models
@@ -45,6 +45,9 @@ Image -> VLM -> Segmentation/Masking -> LoRA -> Diffusion Model -> Output Textur
 
 ## Required Custom Nodes
 
+- [ComfyUI-TextureAlchemy](https://github.com/amtarr/ComfyUI-TextureAlchemy) (Sandbox branch)
+- [ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use)
+- [ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes)
 - [ComfyUI-Inpaint-CropAndStitch](https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch)
 
 ## Sample Input

@@ -156,7 +156,8 @@ fi
 
 # --- Modules 02-07, Bonus A+B: TextureAlchemy ---
 if module_selected "02" || module_selected "03" || module_selected "04" || \
-   module_selected "05" || module_selected "06" || module_selected "07"; then
+   module_selected "05" || module_selected "06" || module_selected "07" || \
+   module_selected "bonus-a" || module_selected "bonus-b"; then
   install_node "ComfyUI-TextureAlchemy" "https://github.com/amtarr/ComfyUI-TextureAlchemy" "Sandbox"
 fi
 
@@ -216,8 +217,17 @@ if module_selected "10"; then
   install_node "ComfyUI-VideoUpscale_WithModel" "https://github.com/ShmuelRonen/ComfyUI-VideoUpscale_WithModel"
 fi
 
+# --- Bonus A: Texture Extraction ---
+if module_selected "bonus-a"; then
+  install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use"
+  install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch"
+  install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes"
+fi
+
 # --- Bonus B: Texture to PBR ---
 if module_selected "bonus-b"; then
+  install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use"
+  install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus"
   install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold"
 fi
 

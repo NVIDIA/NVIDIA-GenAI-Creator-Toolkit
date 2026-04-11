@@ -173,6 +173,8 @@ echo ,!MODULES!, | findstr /i ",04," > nul 2>&1 && set DO_INSTALL=1
 echo ,!MODULES!, | findstr /i ",05," > nul 2>&1 && set DO_INSTALL=1
 echo ,!MODULES!, | findstr /i ",06," > nul 2>&1 && set DO_INSTALL=1
 echo ,!MODULES!, | findstr /i ",07," > nul 2>&1 && set DO_INSTALL=1
+echo ,!MODULES!, | findstr /i ",bonus-a," > nul 2>&1 && set DO_INSTALL=1
+echo ,!MODULES!, | findstr /i ",bonus-b," > nul 2>&1 && set DO_INSTALL=1
 if /i "!MODULES!"=="all" set DO_INSTALL=1
 if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-TextureAlchemy" "https://github.com/amtarr/ComfyUI-TextureAlchemy" "Sandbox"
@@ -269,6 +271,26 @@ if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus" ""
     call :install_node "ComfyUI-post-processing-nodes" "https://github.com/EllangoK/ComfyUI-post-processing-nodes" ""
     call :install_node "ComfyUI-VideoUpscale_WithModel" "https://github.com/ShmuelRonen/ComfyUI-VideoUpscale_WithModel" ""
+)
+
+REM --- Bonus A: Texture Extraction ---
+set DO_INSTALL=0
+echo ,!MODULES!, | findstr /i ",bonus-a," > nul 2>&1 && set DO_INSTALL=1
+if /i "!MODULES!"=="all" set DO_INSTALL=1
+if !DO_INSTALL!==1 (
+    call :install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use" ""
+    call :install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch" ""
+    call :install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes" ""
+)
+
+REM --- Bonus B: Texture to PBR ---
+set DO_INSTALL=0
+echo ,!MODULES!, | findstr /i ",bonus-b," > nul 2>&1 && set DO_INSTALL=1
+if /i "!MODULES!"=="all" set DO_INSTALL=1
+if !DO_INSTALL!==1 (
+    call :install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use" ""
+    call :install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus" ""
+    call :install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold" ""
 )
 
 REM --- Copy workflow JSON files and sample inputs into ComfyUI ---

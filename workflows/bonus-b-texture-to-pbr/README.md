@@ -30,7 +30,7 @@ Input Texture -> Lotus Depth -> Lotus Height -> Marigold Appearance -> Marigold 
 |-------------|-------|
 | **VRAM (Minimum)** | 16 GB |
 | **VRAM (Recommended)** | 24 GB |
-| **Custom Nodes** | 3 packages |
+| **Custom Nodes** | 4 packages |
 | **Models** | 4 files + Marigold (auto-downloaded) |
 
 ## Required Models
@@ -47,6 +47,7 @@ Input Texture -> Lotus Depth -> Lotus Height -> Marigold Appearance -> Marigold 
 ## Required Custom Nodes
 
 - [ComfyUI-TextureAlchemy](https://github.com/amtarr/ComfyUI-TextureAlchemy) (Sandbox branch)
+- [ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use)
 - [ComfyUI-Lotus](https://github.com/kijai/ComfyUI-Lotus)
 - [ComfyUI-Marigold](https://github.com/kijai/ComfyUI-Marigold)
 
