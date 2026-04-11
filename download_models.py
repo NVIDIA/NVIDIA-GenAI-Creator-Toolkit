@@ -335,8 +335,8 @@ def build_module_catalogue() -> dict:
             ),
             ModelSpec(
                 name="Flux Turbo LoRA",
-                repo="jasperai/Flux.1-dev-FastPass",
-                filename="flux1_dev_fastpass.safetensors",
+                repo="fal/FLUX.2-dev-Turbo",
+                filename="flux.2-turbo-lora.safetensors",
                 dest_subdir="models/loras/flux",
                 size="~500 MB",
                 rename_to="Flux1DevTurbo.safetensors",

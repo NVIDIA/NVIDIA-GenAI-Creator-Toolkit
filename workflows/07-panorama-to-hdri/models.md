@@ -22,7 +22,7 @@ Place in `ComfyUI/models/loras/`
 
 | Model | File | Size | Source | Purpose |
 |-------|------|------|--------|---------|
-| Flux Turbo LoRA | `Flux1DevTurbo.safetensors` | 500 MB | [jasperai/Flux.1-dev-FastPass](https://huggingface.co/jasperai/Flux.1-dev-FastPass) | Fast inference |
+| Flux Turbo LoRA | `Flux1DevTurbo.safetensors` | ~500 MB | [fal/FLUX.2-dev-Turbo](https://huggingface.co/fal/FLUX.2-dev-Turbo) | Fast inference |
 | EV +4 LoRA | *(DLI course asset)* | 500 MB | See note below | Exposure bracket +4 stops |
 | EV +2 LoRA | *(DLI course asset)* | 500 MB | See note below | Exposure bracket +2 stops |
 | EV -2 LoRA | *(DLI course asset)* | 500 MB | See note below | Exposure bracket -2 stops |
