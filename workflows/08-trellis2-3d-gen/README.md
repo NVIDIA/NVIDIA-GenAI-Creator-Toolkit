@@ -44,7 +44,7 @@ python download_models.py --comfyui C:\path\to\ComfyUI --modules 08
 
 ## Required Custom Nodes
 
-- [ComfyUI-TRELLIS2](https://github.com/PozzettiAndrea/ComfyUI-TRELLIS2)
+- [ComfyUI-Trellis2](https://github.com/visualbruno/ComfyUI-Trellis2)
 - [zsq_prompt](https://github.com/windfancy/zsq_prompt)
 
 ## Sample Input
