@@ -37,11 +37,11 @@ Image -> VLM -> Segmentation/Masking -> LoRA -> Diffusion Model -> Output Textur
 
 | Model | Type | Size |
 |-------|------|------|
-| `qwen_image_edit_2511_bf16.safetensors` | Image Edit Model | 38.05 GB |
-| `qwen_2.5_vl_7b.safetensors` | Text Encoder | 15.45 GB |
-| `qwen_image_vae.safetensors` | VAE | 242 MB |
+| `qwen_image_edit_2511_bf16.safetensors` | Image Edit Model | ~41 GB |
+| `qwen_2.5_vl_7b.safetensors` | Text Encoder | ~17 GB |
+| `qwen_image_vae.safetensors` | VAE | ~255 MB |
 | `extract_texture_qwen_image_edit_2509.safetensors` | LoRA | ~500 MB |
-| `Qwen-Image-Lightning-8steps-V2.0.safetensors` | LoRA | 1.58 GB |
+| `Qwen-Image-Lightning-8steps-V2.0.safetensors` | LoRA | ~1.7 GB |
 
 ## Required Custom Nodes
 

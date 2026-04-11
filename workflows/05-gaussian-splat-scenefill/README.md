@@ -37,10 +37,10 @@ Input Image -> LoRA -> Diffusion Process -> Output
 
 | Model | Type | Size |
 |-------|------|------|
-| `qwen_image_edit_2511_bf16.safetensors` | Image Model | 38.05 GB |
-| `qwen_2.5_vl_7b.safetensors` | Text Encoder | 15.45 GB |
-| `qwen_image_vae.safetensors` | VAE | 242 MB |
-| `Qwen-Image-Lightning-8steps-V2.0.safetensors` | LoRA | 1.58 GB |
+| `qwen_image_edit_2511_bf16.safetensors` | Image Model | ~41 GB |
+| `qwen_2.5_vl_7b.safetensors` | Text Encoder | ~17 GB |
+| `qwen_image_vae.safetensors` | VAE | ~255 MB |
+| `Qwen-Image-Lightning-8steps-V2.0.safetensors` | LoRA | ~1.7 GB |
 | `Qwen2511SharpGuassianSplat.safetensors` | LoRA | 225 MB |
 
 ## Required Custom Nodes

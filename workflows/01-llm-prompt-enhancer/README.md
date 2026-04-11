@@ -47,10 +47,10 @@ User Instructions -> Prompt Enhancement Agent -> Text Encoding -> Image
 | Model | Type | Size |
 |-------|------|------|
 | `gemma3:latest` | VLM (via Ollama) | ~5 GB |
-| `qwen_2.5_vl_7b.safetensors` | Text Encoder | 15.45 GB |
-| `qwen_image_vae.safetensors` | VAE | 242 MB |
-| `qwen_image_2512_bf16.safetensors` | Image Model | 38.05 GB |
-| `Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors` | LoRA | 1.58 GB |
+| `qwen_2.5_vl_7b.safetensors` | Text Encoder | ~17 GB |
+| `qwen_image_vae.safetensors` | VAE | ~255 MB |
+| `qwen_image_2512_bf16.safetensors` | Image Model | ~41 GB |
+| `Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors` | LoRA | ~1.7 GB |
 
 ## Required Custom Nodes
 
