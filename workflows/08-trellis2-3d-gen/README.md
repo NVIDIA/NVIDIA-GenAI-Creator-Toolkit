@@ -27,17 +27,18 @@ Image -> Trellis2 -> 3D Model with PBR Materials
 | **VRAM (Minimum)** | 16 GB |
 | **VRAM (Recommended)** | 24 GB |
 | **Custom Nodes** | 2 packages |
-| **Models** | Bundled with ComfyUI-TRELLIS2 |
+| **Models** | 3 files (~20 GB total) |
 
 ## Required Models
 
-The Trellis2 model (~16.2 GB) must be pre-downloaded before running the workflow:
+| Model | Size |
+|-------|------|
+| `microsoft/TRELLIS.2-4B` | ~16 GB |
+| `facebook/dinov3-vitl16-pretrain-lvd1689m` | ~1 GB |
+| `microsoft/TRELLIS-image-large` | ~3 GB |
 
-```bash
-huggingface-cli download JeffreyXiang/TRELLIS-image-large --local-dir ComfyUI/models/trellis2
-```
+Pre-download before running:
 
-Or use `download_models.py`:
 ```bash
 python download_models.py --comfyui C:\path\to\ComfyUI --modules 08
 ```

@@ -1,19 +1,24 @@
 # Models — Module 08: Trellis2 3D Asset Gen
 
-Total storage: 15–20 GB
+Total storage: ~20 GB
 VRAM: 16–24 GB
 
 | Model | Size | Destination | Source |
 |-------|------|-------------|--------|
-| Trellis2 (1536 cascade) | 15–20 GB | `ComfyUI/models/trellis2` (set via `--local-dir` in download command) | `JeffreyXiang/TRELLIS-image-large` |
+| TRELLIS.2-4B | ~16 GB | `ComfyUI/models/microsoft/TRELLIS.2-4B/` | `microsoft/TRELLIS.2-4B` |
+| DINOv3 ViT-L/16 | ~1 GB | `ComfyUI/models/facebook/dinov3-vitl16-pretrain-lvd1689m/` | `facebook/dinov3-vitl16-pretrain-lvd1689m` |
+| TRELLIS-image-large (shape decoder) | ~3 GB | `ComfyUI/models/microsoft/TRELLIS-image-large/` | `microsoft/TRELLIS-image-large` |
 
-Trellis2 includes multiple components:
-- Structured latent diffusion models
-- Texture generation models
-- Shape conditioning models
-
-All components download together via the ComfyUI-TRELLIS2 node's model loader. Pre-download recommended given the size:
+Download all three with:
 
 ```bash
-huggingface-cli download JeffreyXiang/TRELLIS-image-large --local-dir ComfyUI/models/trellis2
+python download_models.py --comfyui C:\path\to\ComfyUI --modules 08
+```
+
+Or manually:
+
+```bash
+huggingface-cli download microsoft/TRELLIS.2-4B --local-dir ComfyUI/models/microsoft/TRELLIS.2-4B
+huggingface-cli download facebook/dinov3-vitl16-pretrain-lvd1689m --local-dir ComfyUI/models/facebook/dinov3-vitl16-pretrain-lvd1689m
+huggingface-cli download microsoft/TRELLIS-image-large --local-dir ComfyUI/models/microsoft/TRELLIS-image-large
 ```
