@@ -1770,7 +1770,7 @@
         }
       },
       "widgets_values": [
-        "qwen_image_vae.safetensors"
+        "qwen/qwen_image_vae.safetensors"
       ],
       "color": "#432",
       "bgcolor": "#653",
@@ -2112,7 +2112,7 @@
         }
       },
       "widgets_values": [
-        "qwen_image_edit_2511_bf16.safetensors",
+        "qwen/qwen_image_edit_2511_bf16.safetensors",
         "default",
         "default",
         false,
@@ -2623,7 +2623,7 @@
         }
       ],
       "properties": {
-        "aux_id": "comfy_nv_video_prep.git",
+        "aux_id": "NVIDIA/comfy_nv_video_prep",
         "ver": "7ad0b9ae6d5acb3b7d726f7cf35f4e4015f66425",
         "Node name for S&R": "VideoPrepPreviewBridgeAdvanced",
         "ue_properties": {
@@ -2695,7 +2695,7 @@
         }
       ],
       "properties": {
-        "aux_id": "comfy_nv_video_prep.git",
+        "aux_id": "NVIDIA/comfy_nv_video_prep",
         "ver": "7ad0b9ae6d5acb3b7d726f7cf35f4e4015f66425",
         "Node name for S&R": "VideoPrepPreviewBridge",
         "ue_properties": {
@@ -2919,7 +2919,7 @@
         }
       },
       "widgets_values": [
-        "qwen_2.5_vl_7b.safetensors",
+        "qwen/qwen_2.5_vl_7b.safetensors",
         "qwen_image",
         "default"
       ],
@@ -2981,7 +2981,7 @@
         }
       ],
       "properties": {
-        "aux_id": "comfy_nv_video_prep.git",
+        "aux_id": "NVIDIA/comfy_nv_video_prep",
         "ver": "7ad0b9ae6d5acb3b7d726f7cf35f4e4015f66425",
         "Node name for S&R": "VideoPrepPreviewBridge",
         "ue_properties": {
@@ -3167,7 +3167,7 @@
         }
       ],
       "properties": {
-        "aux_id": "comfy_nv_video_prep.git",
+        "aux_id": "NVIDIA/comfy_nv_video_prep",
         "ver": "7ad0b9ae6d5acb3b7d726f7cf35f4e4015f66425",
         "Node name for S&R": "VideoPrepPreviewBridgeAdvanced",
         "ue_properties": {
@@ -3602,7 +3602,7 @@
         }
       },
       "widgets_values": [
-        "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+        "qwen/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
         1
       ],
       "color": "#432",
@@ -3961,7 +3961,7 @@
         }
       ],
       "properties": {
-        "aux_id": "comfy_nv_video_prep.git",
+        "aux_id": "NVIDIA/comfy_nv_video_prep",
         "ver": "unknown",
         "Node name for S&R": "VideoPrepTTMComposeAnimate",
         "ue_properties": {
@@ -4742,7 +4742,7 @@
         }
       ],
       "properties": {
-        "aux_id": "comfy_nv_video_prep.git",
+        "aux_id": "NVIDIA/comfy_nv_video_prep",
         "ver": "7ad0b9ae6d5acb3b7d726f7cf35f4e4015f66425",
         "Node name for S&R": "VideoPrepInteractiveCrop",
         "ue_properties": {
@@ -4812,7 +4812,7 @@
         }
       ],
       "properties": {
-        "aux_id": "comfy_nv_video_prep.git",
+        "aux_id": "NVIDIA/comfy_nv_video_prep",
         "ver": "7ad0b9ae6d5acb3b7d726f7cf35f4e4015f66425",
         "Node name for S&R": "VideoPrepPreviewBridge",
         "ue_properties": {
@@ -4922,7 +4922,7 @@
         }
       ],
       "properties": {
-        "aux_id": "comfy_nv_video_prep.git",
+        "aux_id": "NVIDIA/comfy_nv_video_prep",
         "ver": "unknown",
         "Node name for S&R": "VideoPrepTTMInteractiveEditor",
         "ue_properties": {

@@ -77,7 +77,7 @@ QWEN_EDIT_DIFFUSION = ModelSpec(
     repo="Comfy-Org/Qwen-Image-Edit_ComfyUI",
     filename="split_files/diffusion_models/qwen_image_edit_2511_bf16.safetensors",
     dest_subdir="models/diffusion_models/qwen",
-    size="13.5 GB",
+    size="~41 GB",
 )
 
 QWEN_TEXT_ENCODER = ModelSpec(
@@ -85,7 +85,7 @@ QWEN_TEXT_ENCODER = ModelSpec(
     repo="Comfy-Org/Qwen-Image_ComfyUI",
     filename="split_files/text_encoders/qwen_2.5_vl_7b.safetensors",
     dest_subdir="models/text_encoders/qwen",
-    size="14.5 GB",
+    size="~17 GB",
 )
 
 QWEN_VAE = ModelSpec(
@@ -93,7 +93,7 @@ QWEN_VAE = ModelSpec(
     repo="Comfy-Org/Qwen-Image_ComfyUI",
     filename="split_files/vae/qwen_image_vae.safetensors",
     dest_subdir="models/vae/qwen",
-    size="170 MB",
+    size="~255 MB",
 )
 
 QWEN_LIGHTNING_8STEP = ModelSpec(
@@ -101,7 +101,7 @@ QWEN_LIGHTNING_8STEP = ModelSpec(
     repo="lightx2v/Qwen-Image-Lightning",
     filename="Qwen-Image-Lightning-8steps-V2.0.safetensors",
     dest_subdir="models/loras/qwen",
-    size="500 MB",
+    size="~1.7 GB",
 )
 
 # Lotus Depth G — used by bonus-b
@@ -165,7 +165,7 @@ def build_module_catalogue() -> dict:
                 repo="Comfy-Org/Qwen-Image_ComfyUI",
                 filename="split_files/diffusion_models/qwen_image_2512_bf16.safetensors",
                 dest_subdir="models/diffusion_models/qwen",
-                size="13.5 GB",
+                size="~41 GB",
             ),
             QWEN_TEXT_ENCODER,
             QWEN_VAE,
@@ -189,14 +189,14 @@ def build_module_catalogue() -> dict:
                 repo="Comfy-Org/Qwen-Image-Layered_ComfyUI",
                 filename="split_files/diffusion_models/qwen_image_layered_bf16.safetensors",
                 dest_subdir="models/diffusion_models/qwen",
-                size="13.5 GB",
+                size="~41 GB",
             ),
             ModelSpec(
                 name="Qwen 2.5 VL 7B Text Encoder",
                 repo="Comfy-Org/HunyuanVideo_1.5_repackaged",
                 filename="split_files/text_encoders/qwen_2.5_vl_7b.safetensors",
                 dest_subdir="models/text_encoders/qwen",
-                size="14.5 GB",
+                size="~17 GB",
             ),
             ModelSpec(
                 name="Qwen 2.5 VL 7B FP8 Text Encoder",
@@ -210,14 +210,14 @@ def build_module_catalogue() -> dict:
                 repo="Comfy-Org/Qwen-Image-Layered_ComfyUI",
                 filename="split_files/vae/qwen_image_layered_vae.safetensors",
                 dest_subdir="models/vae/qwen",
-                size="170 MB",
+                size="~255 MB",
             ),
             ModelSpec(
                 name="Qwen Edit Lightning 4-step BF16 LoRA",
                 repo="lightx2v/Qwen-Image-Edit-2511-Lightning",
                 filename="Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
                 dest_subdir="models/loras/qwen",
-                size="500 MB",
+                size="~810 MB",
             ),
         ],
     )
@@ -236,7 +236,7 @@ def build_module_catalogue() -> dict:
                 repo="prithivMLmods/Qwen-Image-Edit-2511-Object-Remover",
                 filename="Qwen-Image-Edit-2511-Object-Remover.safetensors",
                 dest_subdir="models/loras/qwen",
-                size="~500 MB",
+                size="~230 MB",
             ),
         ],
     )
@@ -334,11 +334,11 @@ def build_module_catalogue() -> dict:
                 size="340 MB",
             ),
             ModelSpec(
-                name="Flux Dev (Turbo base)",
-                repo="camenduru/FLUX.1-dev",
-                filename="flux1-dev.safetensors",
+                name="Flux Turbo LoRA",
+                repo="jasperai/Flux.1-dev-FastPass",
+                filename="flux1_dev_fastpass.safetensors",
                 dest_subdir="models/loras/flux",
-                size="~24 GB",
+                size="~500 MB",
                 rename_to="Flux1DevTurbo.safetensors",
             ),
             ModelSpec(
@@ -469,7 +469,7 @@ def build_module_catalogue() -> dict:
                 repo="lightx2v/Wan2.2-Distill-Models",
                 filename="wan2.2_i2v_A14b_high_noise_lightx2v_4step.safetensors",
                 dest_subdir="models/loras",
-                size="~28 GB",
+                size="~1.7 GB",
                 rename_to="wan2.2_i2v_A14b_high_noise_lora_rank64_lightx2v_4step.safetensors",
             ),
             ModelSpec(

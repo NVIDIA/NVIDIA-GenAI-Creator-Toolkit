@@ -207,8 +207,6 @@ Modules 02–06 and Bonus A all share the same Qwen model stack (~30 GB total). 
 
 Modules 09–10 (Wan2.2) and 08 (Trellis2) have the largest individual downloads (28 GB and 20 GB respectively) — save those for when you're ready to commit.
 
-Modules 09–10 (Wan2.2) and 08 (Trellis2) have the largest individual downloads — save those for when you're ready to commit.
-
 ---
 
 ## Troubleshooting
