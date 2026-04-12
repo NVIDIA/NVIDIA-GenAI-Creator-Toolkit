@@ -43,6 +43,8 @@ Pre-download before running:
 python download_models.py --comfyui C:\path\to\ComfyUI --modules 08
 ```
 
+> **DINOv3 is a gated model.** Before running the installer, visit [huggingface.co/facebook/dinov3-vitl16-pretrain-lvd1689m](https://huggingface.co/facebook/dinov3-vitl16-pretrain-lvd1689m), log in, and click **Agree and access repository**. Meta approvals are typically granted within 24–48 hours. The installer will prompt you to confirm before attempting the download.
+
 ## Required Custom Nodes
 
 - [ComfyUI-Trellis2](https://github.com/visualbruno/ComfyUI-Trellis2)
@@ -57,6 +59,12 @@ python download_models.py --comfyui C:\path\to\ComfyUI --modules 08
 ## Sample Input
 
 A sample input image is provided in the `input/` folder.
+
+## Installation Notes
+
+- **Python version:** Python 3.11 or 3.12 is required. Python 3.13 is missing pre-built wheels for the Trellis2 CUDA extensions and open3d.
+- **PyTorch version:** The Trellis2 pre-built CUDA wheels require PyTorch 2.8.x due to C++ ABI compatibility. If a newer version is detected, the installer downgrades automatically. All other modules in this collection work correctly on PyTorch 2.8.0.
+- **Windows patches:** The installer automatically patches two upstream compatibility issues — a `transformers` 5+ API change affecting the DINOv3 feature extractor, and a missing `flash_attn` dependency (no pre-built Windows wheel) which falls back to `torch.nn.functional.scaled_dot_product_attention`.
 
 ## How to Use
 
