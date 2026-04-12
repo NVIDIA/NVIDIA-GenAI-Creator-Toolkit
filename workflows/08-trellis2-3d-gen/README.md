@@ -48,6 +48,12 @@ python download_models.py --comfyui C:\path\to\ComfyUI --modules 08
 - [ComfyUI-Trellis2](https://github.com/visualbruno/ComfyUI-Trellis2)
 - [zsq_prompt](https://github.com/windfancy/zsq_prompt)
 
+## Example Output
+
+| Input Image | Output 3D Model |
+|-------------|-----------------|
+| ![](images/08-input.png) | ![](images/08-output.gif) |
+
 ## Sample Input
 
 A sample input image is provided in the `input/` folder.
