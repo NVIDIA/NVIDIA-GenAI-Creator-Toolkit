@@ -73,7 +73,7 @@ if not exist "%COMFYUI_DIR%\main.py" (
 )
 
 REM Detect which Python/pip to use
-REM Priority: Portable embedded Python (same dir or parent) > venv > system pip
+REM Priority: Portable embedded Python (same dir or parent) > venv > conda > system pip
 REM
 REM ComfyUI Portable layout:
 REM   <root>\python_embeded\   <- embedded Python here
@@ -105,11 +105,20 @@ if !PIP_FOUND!==0 if exist "%COMFYUI_DIR%\venv\Scripts\pip.exe" (
     echo Detected venv - using %COMFYUI_DIR%\venv\Scripts\pip.exe
 )
 
+if !PIP_FOUND!==0 if defined CONDA_PREFIX (
+    set "PYTHON=%CONDA_PREFIX%\python.exe"
+    set "PIP=%CONDA_PREFIX%\python.exe -m pip"
+    set PIP_FOUND=1
+    echo Detected active conda env - using %CONDA_PREFIX%\python.exe
+)
+
 if !PIP_FOUND!==0 (
     set PYTHON=python
     set PIP=pip
-    echo WARNING: No venv or embedded Python found. Using system pip.
-    echo          If installs fail, activate your venv first or check your ComfyUI path.
+    echo WARNING: No venv, embedded Python, or active conda env found. Using system pip.
+    echo          Activate your environment first for reliable installs:
+    echo            conda: conda activate ^<env^>
+    echo            venv:  venv\Scripts\activate
 )
 
 REM --- Install ComfyUI requirements (ensures alembic and other deps are present) ---
