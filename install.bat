@@ -343,43 +343,48 @@ set NEEDS_OLLAMA=0
 echo ,!MODULES!, | findstr /i ",01," > nul 2>&1 && set NEEDS_OLLAMA=1
 if /i "!MODULES!"=="all" set NEEDS_OLLAMA=1
 
-if %NEEDS_OLLAMA%==1 (
-    set OLLAMA_FOUND=0
-    for /f "delims=" %%i in ('where ollama 2^>nul') do set OLLAMA_FOUND=1
-    if !OLLAMA_FOUND!==0 (
+if not "!NEEDS_OLLAMA!"=="1" goto skip_ollama
+
+set OLLAMA_FOUND=0
+for /f "delims=" %%i in ('where ollama 2^>nul') do set OLLAMA_FOUND=1
+
+if "!OLLAMA_FOUND!"=="1" goto ollama_check_gemma
+
+echo.
+echo ================================================================
+echo  Module 01 requires Ollama ^(not detected on this machine^)
+echo ================================================================
+echo.
+choice /c YN /m "  Install Ollama now?"
+if not errorlevel 2 (
+    echo.
+    echo  Installing Ollama...
+    powershell -Command "irm https://ollama.com/install.ps1 | iex"
+    echo.
+    choice /c YN /m "  Pull gemma3 model now? (~5 GB)"
+    if not errorlevel 2 (
         echo.
-        echo ================================================================
-        echo  Module 01 requires Ollama ^(not detected on this machine^)
-        echo ================================================================
-        echo.
-        choice /c YN /m "  Install Ollama now?"
-        if not errorlevel 2 (
-            echo.
-            echo  Installing Ollama...
-            powershell -Command "irm https://ollama.com/install.ps1 | iex"
-            echo.
-            choice /c YN /m "  Pull gemma3 model now? (~5 GB)"
-            if not errorlevel 2 (
-                echo.
-                ollama pull gemma3
-            )
-        )
-    ) else (
-        echo.
-        echo  Ollama already installed.
-        set GEMMA_FOUND=0
-        for /f "delims=" %%i in ('ollama list 2^>nul ^| findstr /i "gemma3"') do set GEMMA_FOUND=1
-        if !GEMMA_FOUND!==0 (
-            choice /c YN /m "  Pull gemma3 model now? (~5 GB)"
-            if not errorlevel 2 (
-                echo.
-                ollama pull gemma3
-            )
-        ) else (
-            echo  gemma3 already pulled.
-        )
+        ollama pull gemma3
     )
 )
+goto skip_ollama
+
+:ollama_check_gemma
+echo.
+echo  Ollama already installed.
+set GEMMA_FOUND=0
+for /f "delims=" %%i in ('ollama list 2^>nul ^| findstr /i "gemma3"') do set GEMMA_FOUND=1
+if "!GEMMA_FOUND!"=="1" (
+    echo  gemma3 already pulled.
+) else (
+    choice /c YN /m "  Pull gemma3 model now? (~5 GB)"
+    if not errorlevel 2 (
+        echo.
+        ollama pull gemma3
+    )
+)
+
+:skip_ollama
 
 if /i not "!MODULES!"=="" (
     echo.
