@@ -350,8 +350,9 @@ echo ,!MODULES!, | findstr /i ",01," > nul 2>&1 && set NEEDS_OLLAMA=1
 if /i "!MODULES!"=="all" set NEEDS_OLLAMA=1
 
 if %NEEDS_OLLAMA%==1 (
-    where ollama > nul 2>&1
-    if errorlevel 1 (
+    set OLLAMA_FOUND=0
+    where ollama > nul 2>&1 && set OLLAMA_FOUND=1
+    if !OLLAMA_FOUND!==0 (
         echo.
         echo ================================================================
         echo  Module 01 requires Ollama ^(not detected on this machine^)
@@ -372,8 +373,9 @@ if %NEEDS_OLLAMA%==1 (
     ) else (
         echo.
         echo  Ollama already installed.
-        ollama list | findstr /i "gemma3" > nul 2>&1
-        if errorlevel 1 (
+        set GEMMA_FOUND=0
+        ollama list 2>nul | findstr /i "gemma3" > nul && set GEMMA_FOUND=1
+        if !GEMMA_FOUND!==0 (
             choice /c YN /m "  Pull gemma3 model now? (~5 GB)"
             if not errorlevel 2 (
                 echo.
