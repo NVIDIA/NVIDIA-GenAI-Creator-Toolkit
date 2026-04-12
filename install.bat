@@ -286,6 +286,21 @@ if !DO_INSTALL!==1 (
     )
     call :install_node "ComfyUI-Trellis2" "https://github.com/visualbruno/ComfyUI-Trellis2" ""
 
+    REM Trellis2 pre-built CUDA wheels require PyTorch <= 2.10.x (C++ ABI compatibility).
+    REM If torch 2.11+ is installed, downgrade to 2.10.0+cu128 before installing wheels.
+    REM All other modules in this collection work fine on PyTorch 2.10.0.
+    "!PYTHON!" -c "import torch; v=torch.__version__.split('+')[0].split('.'); exit(0 if (int(v[0]),int(v[1])) <= (2,10) else 1)" > nul 2>&1
+    if errorlevel 1 (
+        echo.
+        echo   [Module 08] PyTorch 2.11+ detected. Trellis2 pre-built CUDA wheels require
+        echo               PyTorch ^<= 2.10.0 due to C++ ABI compatibility. Downgrading to
+        echo               2.10.0+cu128. All other modules remain fully functional.
+        echo.
+        "!PYTHON!" -m pip install -q torch==2.10.0 torchvision==0.25.0 torchaudio==2.10.0 --index-url https://download.pytorch.org/whl/cu128
+        echo   [Module 08] PyTorch downgrade complete.
+        echo.
+    )
+
     REM Install pre-built CUDA wheels — avoids needing MSVC compiler on Windows
     echo.
     echo           Detecting PyTorch version for TRELLIS2 wheel selection...
