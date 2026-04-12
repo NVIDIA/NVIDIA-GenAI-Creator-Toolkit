@@ -102,17 +102,9 @@ if !PIP_FOUND!==0 if exist "%COMFYUI_DIR%\venv\Scripts\python.exe" (
     echo Detected venv - using %COMFYUI_DIR%\venv\Scripts\python.exe
 )
 
-REM ComfyUI Desktop App — uses uv to manage a venv above the resources folder
-if !PIP_FOUND!==0 if exist "!COMFYUI_PARENT!\uv.exe" (
-    for /f "delims=" %%P in ('"!COMFYUI_PARENT!\uv.exe" python find 2^>nul') do set "UV_PYTHON=%%P"
-    if defined UV_PYTHON if exist "!UV_PYTHON!" (
-        set "PYTHON=!UV_PYTHON!"
-        set PIP_FOUND=1
-        echo Detected ComfyUI Desktop App ^(uv^) - using !UV_PYTHON!
-    )
-)
-if !PIP_FOUND!==0 if exist "!COMFYUI_PARENT!\uv" (
-    for /f "delims=" %%P in ('"!COMFYUI_PARENT!\uv" python find 2^>nul') do set "UV_PYTHON=%%P"
+REM ComfyUI Desktop App — uses uv to manage a venv; uv is at resources\uv\win\uv.exe
+if !PIP_FOUND!==0 if exist "!COMFYUI_PARENT!\uv\win\uv.exe" (
+    for /f "delims=" %%P in ('"!COMFYUI_PARENT!\uv\win\uv.exe" python find 2^>nul') do set "UV_PYTHON=%%P"
     if defined UV_PYTHON if exist "!UV_PYTHON!" (
         set "PYTHON=!UV_PYTHON!"
         set PIP_FOUND=1
