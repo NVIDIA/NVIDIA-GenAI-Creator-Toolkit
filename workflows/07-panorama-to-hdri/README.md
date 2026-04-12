@@ -21,7 +21,7 @@ Creating a real HDRI traditionally requires specialized equipment — a mirror b
 ## How It Works
 
 ```
-Panoramic Image -> Five LoRAs -> Five Diffusion Passes -> Luminance Stack -> HDRI (IBL)
+Panoramic Image -> Four LoRAs -> Four Exposure Passes -> Luminance Stack -> HDRI (IBL)
 ```
 
 ## Requirements
@@ -58,6 +58,12 @@ Panoramic Image -> Five LoRAs -> Five Diffusion Passes -> Luminance Stack -> HDR
 - [ComfyUI-WJNodes](https://github.com/807502278/ComfyUI-WJNodes)
 - [ComfyUI-Marigold](https://github.com/kijai/ComfyUI-Marigold)
 - [Luminance-Stack-Processor](https://github.com/sumitchatterjee13/Luminance-Stack-Processor)
+
+## Example Output
+
+| Input Panorama | EV-4 | EV-2 | EV+2 | EV+4 |
+|----------------|------|------|------|------|
+| ![](images/07-input.png) | ![](images/07-output-ev1.png) | ![](images/07-output-ev2.png) | ![](images/07-output-ev3.png) | ![](images/07-output-ev4.png) |
 
 ## Sample Input
 
