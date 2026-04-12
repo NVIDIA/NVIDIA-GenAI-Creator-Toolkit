@@ -142,7 +142,7 @@ if not errorlevel 1 goto skip_torch_check
 echo.
 echo [torch] PyTorch does not have CUDA support. Reinstalling with CUDA (cu128)...
 echo [torch] This may take several minutes (downloading ~2.5 GB)...
-"!PYTHON!" -m pip install --force-reinstall torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128 -q
+"!PYTHON!" -m pip install --force-reinstall torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
 echo [torch] Done. Restart ComfyUI to pick up the new torch.
 
 :skip_torch_check

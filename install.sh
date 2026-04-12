@@ -96,7 +96,7 @@ if nvidia-smi > /dev/null 2>&1; then
     echo ""
     echo "[torch] PyTorch does not have CUDA support. Reinstalling with CUDA (cu128)..."
     echo "[torch] This may take several minutes (downloading ~2.5 GB)..."
-    $PIP install --force-reinstall torch torchvision torchaudio --index-url "https://download.pytorch.org/whl/cu128" -q
+    $PIP install --force-reinstall torch torchvision torchaudio --index-url "https://download.pytorch.org/whl/cu128"
     echo "[torch] Done. Restart ComfyUI to pick up the new torch."
   fi
 fi
