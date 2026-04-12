@@ -487,7 +487,7 @@ def build_module_catalogue() -> dict:
                 repo="1038lab/sam3",
                 filename="sam3.pt",
                 dest_subdir="models/sam3",
-                size="~2.4 GB",
+                size="~3.4 GB",
             ),
             ModelSpec(
                 name="Qwen Flymy Realism LoRA",

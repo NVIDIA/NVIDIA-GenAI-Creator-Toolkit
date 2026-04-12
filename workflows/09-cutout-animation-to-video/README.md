@@ -44,7 +44,7 @@ This module includes two workflow files:
 | `Wan2_2-I2V-A14B-LOW_bf16.safetensors` | Diffusion Model | ~28 GB |
 | `wan2.2_i2v_A14b_high_noise_lora_rank64_lightx2v_4step.safetensors` | Diffusion Model (Distilled) | ~29 GB |
 | `umt5_xxl_fp16.safetensors` | Text Encoder | ~11 GB |
-| `sam3.pt` | Segmentation Model | ~2.4 GB |
+| `sam3.pt` | Segmentation Model | ~3.4 GB |
 | `wan_2.1_vae.safetensors` | VAE | ~250 MB |
 | `Wan22_PusaV1_lora_HIGH_resized_dynamic_avg_rank_98_bf16.safetensors` | LoRA | ~950 MB |
 | `Wan22_PusaV1_lora_LOW_resized_dynamic_avg_rank_98_bf16.safetensors` | LoRA | ~970 MB |
