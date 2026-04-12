@@ -54,7 +54,7 @@ fi
 echo "ComfyUI path: $COMFYUI_DIR"
 echo ""
 
-# Detect venv and use its pip/python, or fall back to system with a warning
+# Detect venv/conda and use its pip/python, or fall back to system with a warning
 if [ -n "${VIRTUAL_ENV:-}" ]; then
   PIP="$VIRTUAL_ENV/bin/pip"
   PYTHON="$VIRTUAL_ENV/bin/python"
@@ -63,11 +63,17 @@ elif [ -f "$COMFYUI_DIR/venv/bin/pip" ]; then
   PIP="$COMFYUI_DIR/venv/bin/pip"
   PYTHON="$COMFYUI_DIR/venv/bin/python"
   echo "Detected venv - using $PIP"
+elif [ -n "${CONDA_PREFIX:-}" ]; then
+  PIP="$CONDA_PREFIX/bin/pip"
+  PYTHON="$CONDA_PREFIX/bin/python"
+  echo "Detected active conda env - using $PYTHON"
 else
   PIP="pip"
   PYTHON="python3"
-  echo "WARNING: No venv detected. If pip installs fail, activate your ComfyUI venv first:"
-  echo "  source $COMFYUI_DIR/venv/bin/activate"
+  echo "WARNING: No venv or active conda env found. Using system pip."
+  echo "  Activate your environment first for reliable installs:"
+  echo "    conda: conda activate <env>"
+  echo "    venv:  source $COMFYUI_DIR/venv/bin/activate"
 fi
 
 # --- Install ComfyUI requirements (ensures alembic and other deps are present) ---
