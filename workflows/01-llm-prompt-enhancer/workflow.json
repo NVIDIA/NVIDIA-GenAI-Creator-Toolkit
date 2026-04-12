@@ -1222,7 +1222,7 @@
         "Node name for S&R": "PrimitiveStringMultiline"
       },
       "widgets_values": [
-        "A panda hugging a GPU"
+        "A knight Chess piece with a unicorn horn on a chessboard"
       ],
       "color": "#232",
       "bgcolor": "#353"
@@ -1311,7 +1311,7 @@
         "Node name for S&R": "easy showAnything"
       },
       "widgets_values": [
-        "A fluffy panda hugging a modern GPU, with a dark grey and silver color scheme. The background is a minimalist, high-tech office setting with blue LED accents. Utilize cinematic lighting, a medium shot, and a shallow depth of field to emphasize the hug. Style: realistic, digital art."
+        "A knight chess piece, intricately detailed with a spiraling unicorn horn, positioned on a classic black and white chessboard. The lighting is soft and diffused, resembling a dimly lit study, with a composition of a medium shot emphasizing the piece's form and texture. The style should be realistic, with a focus on the horn's pearly sheen and the chessboard's polished surface, avoiding any blurry or distorted details."
       ]
     },
     {
