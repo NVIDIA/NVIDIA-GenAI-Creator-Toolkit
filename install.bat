@@ -346,7 +346,8 @@ if /i "!MODULES!"=="all" set NEEDS_OLLAMA=1
 if not "!NEEDS_OLLAMA!"=="1" goto skip_ollama
 
 set OLLAMA_FOUND=0
-for /f "delims=" %%i in ('where ollama 2^>nul') do set OLLAMA_FOUND=1
+if exist "%LOCALAPPDATA%\Programs\Ollama\ollama.exe" set OLLAMA_FOUND=1
+if "!OLLAMA_FOUND!"=="0" for /f "delims=" %%i in ('where ollama 2^>nul') do set OLLAMA_FOUND=1
 
 if "!OLLAMA_FOUND!"=="1" goto ollama_check_gemma
 
