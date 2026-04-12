@@ -52,6 +52,12 @@ Input Image -> Pad for Outpainting -> LoRA -> Diffusion Model -> Inpainting -> S
 - [ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes)
 - [ComfyUI-Inpaint-CropAndStitch](https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch)
 
+## Example Output
+
+| Input Image | Equirectangular Panorama |
+|-------------|--------------------------|
+| ![](images/06-input.png) | ![](images/06-output.png) |
+
 ## Sample Input
 
 A sample input image is provided in the `input/` folder.

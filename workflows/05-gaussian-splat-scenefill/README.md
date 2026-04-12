@@ -47,6 +47,12 @@ Input Image -> LoRA -> Diffusion Process -> Output
 
 - [ComfyUI-Sharp](https://github.com/PozzettiAndrea/ComfyUI-Sharp)
 
+## Example Output
+
+| Input Splat | Filled Output |
+|-------------|---------------|
+| ![](images/05-input.png) | ![](images/05-output.png) |
+
 ## Sample Input
 
 Sample input images are provided in the `input/` folder.
