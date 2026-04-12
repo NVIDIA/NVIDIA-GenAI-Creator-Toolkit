@@ -89,6 +89,8 @@ if [ -f "$COMFYUI_DIR/requirements.txt" ]; then
   echo "Installing ComfyUI requirements..."
   $PIP install -q -r "$COMFYUI_DIR/requirements.txt"
 fi
+# comfyui-frontend-package is required by recent ComfyUI versions but missing from some requirements.txt
+$PIP install -q comfyui-frontend-package
 
 # --- Ensure PyTorch is CUDA-enabled ---
 if nvidia-smi > /dev/null 2>&1; then

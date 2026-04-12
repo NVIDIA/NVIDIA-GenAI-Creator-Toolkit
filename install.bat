@@ -131,6 +131,8 @@ if exist "%COMFYUI_DIR%\requirements.txt" (
     echo Installing ComfyUI requirements...
     "!PYTHON!" -m pip install -q -r "%COMFYUI_DIR%\requirements.txt"
 )
+REM comfyui-frontend-package is required by recent ComfyUI versions but missing from some requirements.txt
+"!PYTHON!" -m pip install -q comfyui-frontend-package
 
 REM --- Ensure PyTorch is CUDA-enabled ---
 nvidia-smi > nul 2>&1
