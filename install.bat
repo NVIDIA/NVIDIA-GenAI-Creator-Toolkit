@@ -341,6 +341,11 @@ if !DO_INSTALL!==1 (
     ) else (
         echo           open3d installed.
     )
+
+    REM Patch Trellis2 image_feature_extractor.py for transformers 5+ compatibility.
+    REM transformers 5+ changed DINOv3ViTModel nesting: .layer -> .model.layer
+    echo           Patching Trellis2 for transformers 5+ compatibility...
+    powershell -Command "(Get-Content \"!NODES_DIR!\ComfyUI-Trellis2\trellis2\modules\image_feature_extractor.py\") -replace 'self\.model\.layer', 'self.model.model.layer' | Set-Content \"!NODES_DIR!\ComfyUI-Trellis2\trellis2\modules\image_feature_extractor.py\""
 )
 
 REM --- Module 09: Cutout Animation ---
