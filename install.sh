@@ -67,10 +67,17 @@ elif [ -n "${CONDA_PREFIX:-}" ]; then
   PIP="$CONDA_PREFIX/bin/pip"
   PYTHON="$CONDA_PREFIX/bin/python"
   echo "Detected active conda env - using $PYTHON"
+elif [ -n "${CONDA_EXE:-}" ]; then
+  CONDA_BASE_PYTHON="$(dirname "$(dirname "$CONDA_EXE")")/bin/python"
+  if [ -f "$CONDA_BASE_PYTHON" ]; then
+    PIP="$CONDA_BASE_PYTHON -m pip"
+    PYTHON="$CONDA_BASE_PYTHON"
+    echo "Detected conda base env - using $PYTHON"
+  fi
 else
   PIP="pip"
   PYTHON="python3"
-  echo "WARNING: No venv or active conda env found. Using system pip."
+  echo "WARNING: No venv or conda env found. Using system pip."
   echo "  Activate your environment first for reliable installs:"
   echo "    conda: conda activate <env>"
   echo "    venv:  source $COMFYUI_DIR/venv/bin/activate"

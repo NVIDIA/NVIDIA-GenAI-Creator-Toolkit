@@ -112,10 +112,20 @@ if !PIP_FOUND!==0 if defined CONDA_PREFIX (
     echo Detected active conda env - using %CONDA_PREFIX%\python.exe
 )
 
+if !PIP_FOUND!==0 if defined CONDA_EXE (
+    for %%I in ("%CONDA_EXE%\..\..\python.exe") do set "CONDA_BASE_PYTHON=%%~fI"
+    if exist "!CONDA_BASE_PYTHON!" (
+        set "PYTHON=!CONDA_BASE_PYTHON!"
+        set "PIP=!CONDA_BASE_PYTHON! -m pip"
+        set PIP_FOUND=1
+        echo Detected conda base env - using !CONDA_BASE_PYTHON!
+    )
+)
+
 if !PIP_FOUND!==0 (
     set PYTHON=python
     set PIP=pip
-    echo WARNING: No venv, embedded Python, or active conda env found. Using system pip.
+    echo WARNING: No venv, embedded Python, or conda env found. Using system pip.
     echo          Activate your environment first for reliable installs:
     echo            conda: conda activate ^<env^>
     echo            venv:  venv\Scripts\activate
