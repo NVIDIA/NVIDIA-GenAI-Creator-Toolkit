@@ -86,28 +86,24 @@ for %%I in ("%COMFYUI_DIR%\..") do set "COMFYUI_PARENT=%%~fI"
 
 if exist "%COMFYUI_DIR%\python_embeded\python.exe" (
     set "PYTHON=%COMFYUI_DIR%\python_embeded\python.exe"
-    set "PIP=%COMFYUI_DIR%\python_embeded\python.exe -m pip"
     set PIP_FOUND=1
     echo Detected ComfyUI Portable - using embedded Python
 )
 
 if !PIP_FOUND!==0 if exist "!COMFYUI_PARENT!\python_embeded\python.exe" (
     set "PYTHON=!COMFYUI_PARENT!\python_embeded\python.exe"
-    set "PIP=!COMFYUI_PARENT!\python_embeded\python.exe -m pip"
     set PIP_FOUND=1
     echo Detected ComfyUI Portable - using embedded Python ^(parent directory^)
 )
 
-if !PIP_FOUND!==0 if exist "%COMFYUI_DIR%\venv\Scripts\pip.exe" (
+if !PIP_FOUND!==0 if exist "%COMFYUI_DIR%\venv\Scripts\python.exe" (
     set "PYTHON=%COMFYUI_DIR%\venv\Scripts\python.exe"
-    set "PIP=%COMFYUI_DIR%\venv\Scripts\pip.exe"
     set PIP_FOUND=1
-    echo Detected venv - using %COMFYUI_DIR%\venv\Scripts\pip.exe
+    echo Detected venv - using %COMFYUI_DIR%\venv\Scripts\python.exe
 )
 
 if !PIP_FOUND!==0 if defined CONDA_PREFIX (
     set "PYTHON=%CONDA_PREFIX%\python.exe"
-    set "PIP=%CONDA_PREFIX%\python.exe -m pip"
     set PIP_FOUND=1
     echo Detected active conda env - using %CONDA_PREFIX%\python.exe
 )
@@ -116,7 +112,6 @@ if !PIP_FOUND!==0 if defined CONDA_EXE (
     for %%I in ("%CONDA_EXE%\..\..\python.exe") do set "CONDA_BASE_PYTHON=%%~fI"
     if exist "!CONDA_BASE_PYTHON!" (
         set "PYTHON=!CONDA_BASE_PYTHON!"
-        set "PIP=!CONDA_BASE_PYTHON! -m pip"
         set PIP_FOUND=1
         echo Detected conda base env - using !CONDA_BASE_PYTHON!
     )
@@ -124,8 +119,7 @@ if !PIP_FOUND!==0 if defined CONDA_EXE (
 
 if !PIP_FOUND!==0 (
     set PYTHON=python
-    set PIP=pip
-    echo WARNING: No venv, embedded Python, or conda env found. Using system pip.
+    echo WARNING: No venv, embedded Python, or conda env found. Using system Python.
     echo          Activate your environment first for reliable installs:
     echo            conda: conda activate ^<env^>
     echo            venv:  venv\Scripts\activate
@@ -135,7 +129,7 @@ REM --- Install ComfyUI requirements (ensures alembic and other deps are present
 if exist "%COMFYUI_DIR%\requirements.txt" (
     echo.
     echo Installing ComfyUI requirements...
-    !PIP! install -q -r "%COMFYUI_DIR%\requirements.txt"
+    "!PYTHON!" -m pip install -q -r "%COMFYUI_DIR%\requirements.txt"
 )
 
 REM --- Ask which modules BEFORE installing nodes ---
@@ -477,7 +471,7 @@ if exist "%NODE_DIR%" (
 
 if exist "%NODE_DIR%\requirements.txt" (
   echo           Installing Python requirements...
-  %PIP% install -q --no-warn-script-location -r "%NODE_DIR%\requirements.txt" > "%TEMP%\comfyui_pip.tmp" 2>&1
+  "%PYTHON%" -m pip install -q --no-warn-script-location -r "%NODE_DIR%\requirements.txt" > "%TEMP%\comfyui_pip.tmp" 2>&1
   if errorlevel 1 (
     echo           [WARN] Some packages failed to install for !NODE_NAME!
     echo                  This is usually OK - ComfyUI Manager resolves missing deps on first run.
