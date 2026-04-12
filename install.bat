@@ -262,6 +262,16 @@ set DO_INSTALL=0
 echo ,!MODULES!, | findstr /i ",08," > nul 2>&1 && set DO_INSTALL=1
 if /i "!MODULES!"=="all" set DO_INSTALL=1
 if !DO_INSTALL!==1 (
+    REM Warn if Python 3.13+ — CUDA wheels and open3d are not yet available for this version
+    "!PYTHON!" -c "import sys; exit(0 if sys.version_info < (3,13) else 1)" > nul 2>&1
+    if errorlevel 1 (
+        echo.
+        echo   [WARN] Module 08 ^(Trellis2^) works best with Python 3.11 or 3.12.
+        echo          You are running Python 3.13, which is missing pre-built wheels
+        echo          for open3d and Trellis2 CUDA extensions. Nodes may fail to load.
+        echo          To fix: create a Python 3.11 or 3.12 conda env and re-run the installer.
+        echo.
+    )
     call :install_node "ComfyUI-Trellis2" "https://github.com/visualbruno/ComfyUI-Trellis2" ""
 
     REM Install pre-built CUDA wheels — avoids needing MSVC compiler on Windows
