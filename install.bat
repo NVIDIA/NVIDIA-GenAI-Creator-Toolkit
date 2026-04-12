@@ -331,27 +331,26 @@ if %NEEDS_OLLAMA%==1 (
         echo  Module 01 requires Ollama ^(not detected on this machine^)
         echo ================================================================
         echo.
-        set /p INSTALL_OLLAMA="  Install Ollama now? (Y/N): "
-        if /i "!INSTALL_OLLAMA!"=="Y" (
-            echo.
-            echo  Downloading Ollama installer...
-            curl -L -o "%TEMP%\OllamaSetup.exe" "https://ollama.com/download/OllamaSetup.exe"
-            echo  Running installer...
-            "%TEMP%\OllamaSetup.exe"
-            echo.
-            set /p PULL_GEMMA="  Pull gemma3 model now? (~5 GB) (Y/N): "
-            if /i "!PULL_GEMMA!"=="Y" (
-                echo.
-                ollama pull gemma3
-            )
-        )
+        choice /c YN /m "  Install Ollama now?"
+        if errorlevel 2 goto skip_ollama_install
+        echo.
+        echo  Downloading Ollama installer...
+        curl -L -o "%TEMP%\OllamaSetup.exe" "https://ollama.com/download/OllamaSetup.exe"
+        echo  Running installer...
+        "%TEMP%\OllamaSetup.exe"
+        echo.
+        choice /c YN /m "  Pull gemma3 model now? (~5 GB)"
+        if errorlevel 2 goto skip_ollama_install
+        echo.
+        ollama pull gemma3
+        :skip_ollama_install
     ) else (
         echo.
         echo  Ollama already installed.
         ollama list | findstr /i "gemma3" > nul 2>&1
         if errorlevel 1 (
-            set /p PULL_GEMMA="  Pull gemma3 model now? (~5 GB) (Y/N): "
-            if /i "!PULL_GEMMA!"=="Y" (
+            choice /c YN /m "  Pull gemma3 model now? (~5 GB)"
+            if not errorlevel 2 (
                 echo.
                 ollama pull gemma3
             )
@@ -387,8 +386,8 @@ echo  ^(already-installed nodes are skipped automatically^)
 echo.
 
 REM Ask user if they want to launch ComfyUI now
-set /p LAUNCH="  Launch ComfyUI now? (Y/N): "
-if /i "!LAUNCH!"=="Y" (
+choice /c YN /m "  Launch ComfyUI now?"
+if not errorlevel 2 (
     if exist "!COMFYUI_PARENT!\run_nvidia_gpu.bat" (
         echo.
         echo  Launching ComfyUI ^(Portable^)...
