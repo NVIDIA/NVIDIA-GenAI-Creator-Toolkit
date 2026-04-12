@@ -346,6 +346,11 @@ if !DO_INSTALL!==1 (
     REM transformers 5+ changed DINOv3ViTModel nesting: .layer -> .model.layer
     echo           Patching Trellis2 for transformers 5+ compatibility...
     "!PYTHON!" -c "f=r'!NODES_DIR!\ComfyUI-Trellis2\trellis2\modules\image_feature_extractor.py'; t=open(f,encoding='utf-8').read(); open(f,'w',encoding='utf-8').write(t.replace('self.model.layer','self.model.model.layer'))"
+
+    REM Patch Trellis2 dense attention for Windows: wrap flash_attn import in try/except
+    REM with torch sdpa fallback (flash_attn has no pre-built Windows wheel).
+    echo           Patching Trellis2 flash_attn for Windows sdpa fallback...
+    "!PYTHON!" "%~dp0patch_flash_attn.py" "!NODES_DIR!\ComfyUI-Trellis2"
 )
 
 REM --- Module 09: Cutout Animation ---
