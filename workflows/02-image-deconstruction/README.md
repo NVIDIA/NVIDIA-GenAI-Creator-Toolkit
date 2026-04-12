@@ -48,7 +48,11 @@ Image -> Qwen Image Layered -> Multiple Deconstructed Layers
 - [ComfyUI-TextureAlchemy](https://github.com/amtarr/ComfyUI-TextureAlchemy) (Sandbox branch)
 - [ComfyUI-WJNodes](https://github.com/807502278/ComfyUI-WJNodes)
 
-## Sample Input
+## Example Output
+
+| Input | Foreground | Background |
+|-------|-----------|------------|
+| ![](images/02-LayeredImage.png) | ![](images/02-Foreground_00001_.png) | ![](images/02-Background_00001_.png) |
 
 A sample input image is provided in the `input/` folder.
 
