@@ -112,6 +112,13 @@ if !PIP_FOUND!==0 (
     echo          If installs fail, activate your venv first or check your ComfyUI path.
 )
 
+REM --- Install ComfyUI requirements (ensures alembic and other deps are present) ---
+if exist "%COMFYUI_DIR%\requirements.txt" (
+    echo.
+    echo Installing ComfyUI requirements...
+    !PIP! install -q -r "%COMFYUI_DIR%\requirements.txt"
+)
+
 REM --- Ask which modules BEFORE installing nodes ---
 if not defined MODULES (
     echo.
