@@ -179,6 +179,7 @@ install_node "ComfyUI-Manager" "https://github.com/ltdrdata/ComfyUI-Manager"
 # --- Modules 01 + 02: Qwen utilities ---
 if module_selected "01" || module_selected "02"; then
   install_node "ComfyUI-WJNodes" "https://github.com/807502278/ComfyUI-WJNodes"
+  $PIP install -q librosa
   install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use"
 fi
 

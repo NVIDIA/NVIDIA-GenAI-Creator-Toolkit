@@ -191,6 +191,7 @@ echo ,!MODULES!, | findstr /i ",02," > nul 2>&1 && set DO_INSTALL=1
 if /i "!MODULES!"=="all" set DO_INSTALL=1
 if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-WJNodes" "https://github.com/807502278/ComfyUI-WJNodes" ""
+    "!PYTHON!" -m pip install -q librosa
     call :install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use" ""
 )
 
