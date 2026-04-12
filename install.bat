@@ -297,7 +297,7 @@ if !DO_INSTALL!==1 (
         echo               include all required packages for Python 3.12^). Downgrading to
         echo               2.8.0+cu128. All other modules remain fully functional.
         echo.
-        "!PYTHON!" -m pip install -q torch==2.8.0 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+        "!PYTHON!" -m pip install -q torch==2.8.0 torchaudio==2.8.0 torchvision --index-url https://download.pytorch.org/whl/cu128
         echo   [Module 08] PyTorch downgrade complete.
         echo.
     )
