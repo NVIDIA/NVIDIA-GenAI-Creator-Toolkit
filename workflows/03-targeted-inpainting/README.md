@@ -53,6 +53,12 @@ Input Image -> Mask -> Model Conditioning -> Diffusion -> Output Image
 
 - [ComfyUI-Inpaint-CropAndStitch](https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch)
 
+## Example Output
+
+| Input | Inpainted Output |
+|-------|-----------------|
+| ![](images/03-input.png) | ![](images/03-output.png) |
+
 ## Sample Input
 
 A sample input image is provided in the `input/` folder.
@@ -60,4 +66,17 @@ A sample input image is provided in the `input/` folder.
 ## How to Use
 
 1. Load `workflow.json` into ComfyUI
-2. Draw a mask over the area to edit and click **Queue Prompt**
+2. In the **Load Image** node, right-click the image thumbnail → **Open in MaskEditor**
+3. Paint over the area you want to change (white = edit, black = keep)
+4. Click **Save** to apply the mask
+5. Set your prompt in the text node (e.g. "Clear this area. Seamlessly fill with the environment.")
+6. Click **Queue Prompt**
+
+> **Why does the result look the same?** If no mask is painted, the model has no target area and outputs the original unchanged. Make sure to paint a mask before queuing.
+
+## Understanding the Outputs
+
+The workflow shows three previews:
+- **Original** — the input image resized to the model's working resolution (1024×1024)
+- **Cropped Image** — the masked region extracted and padded to 1024×1024 for inpainting
+- **New Composite** — the final result with the inpainted patch stitched back into the original
