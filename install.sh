@@ -217,6 +217,8 @@ fi
 if module_selected "07"; then
   install_node "Luminance-Stack-Processor" "https://github.com/sumitchatterjee13/Luminance-Stack-Processor"
   install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold"
+  echo "Patching ComfyUI-Marigold for numpy 2.0 compatibility..."
+  sed -i 's/\.tostring()/.tobytes()/g' "$COMFYUI_DIR/custom_nodes/ComfyUI-Marigold/nodes.py"
 fi
 
 # --- Module 08: Trellis2 3D ---
@@ -263,6 +265,8 @@ if module_selected "bonus-b"; then
   install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use"
   install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus"
   install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold"
+  echo "Patching ComfyUI-Marigold for numpy 2.0 compatibility..."
+  sed -i 's/\.tostring()/.tobytes()/g' "$COMFYUI_DIR/custom_nodes/ComfyUI-Marigold/nodes.py"
 fi
 
 # --- Copy workflow JSON files into ComfyUI ---
