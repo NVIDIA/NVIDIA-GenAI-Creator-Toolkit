@@ -264,19 +264,23 @@ if /i "!MODULES!"=="all" set DO_INSTALL=1
 if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-Trellis2" "https://github.com/visualbruno/ComfyUI-Trellis2" ""
 
-    REM Install pre-built CUDA wheels — avoids needing MSVC compiler on Windows Portable
+    REM Install pre-built CUDA wheels — avoids needing MSVC compiler on Windows
     echo.
     echo           Detecting PyTorch version for TRELLIS2 wheel selection...
-    "!PYTHON!" -c "import torch; v=torch.__version__; print('270' if v.startswith('2.7') else '280' if v.startswith('2.8') else 'unsupported')" > "%TEMP%\trellis_torch.txt" 2>nul
-    set /p TRELLIS_TORCH=<"%TEMP%\trellis_torch.txt"
-    del "%TEMP%\trellis_torch.txt" 2>nul
+    REM Find the highest available wheel folder as fallback
+    set TRELLIS_TORCH=
+    for /d %%D in ("!NODES_DIR!\ComfyUI-Trellis2\wheels\Windows\Torch*") do set TRELLIS_TORCH=%%~nxD
+    REM Prefer exact version match if available
+    "!PYTHON!" -c "import torch,os; v=torch.__version__; short='Torch'+''.join(v.split('.')[:2]).replace('+','').split('+')[0][:3]; base=r'!NODES_DIR!\ComfyUI-Trellis2\wheels\Windows'; exact=os.path.join(base,short); print(short if os.path.isdir(exact) else '')" > "%TEMP%\trellis_exact.txt" 2>nul
+    set /p TRELLIS_EXACT=<"%TEMP%\trellis_exact.txt"
+    del "%TEMP%\trellis_exact.txt" 2>nul
+    if not "!TRELLIS_EXACT!"=="" set TRELLIS_TORCH=!TRELLIS_EXACT!
 
-    if "!TRELLIS_TORCH!"=="unsupported" (
-        echo           [WARN] PyTorch 2.7 or 2.8 not detected. Install TRELLIS2 wheels manually from:
-        echo                  !NODES_DIR!\ComfyUI-Trellis2\wheels\Windows\
+    if "!TRELLIS_TORCH!"=="" (
+        echo           [WARN] No TRELLIS2 wheels found. Install deps manually via ComfyUI Manager.
     ) else (
-        echo           Installing TRELLIS2 pre-built wheels ^(PyTorch !TRELLIS_TORCH!^)...
-        "!PYTHON!" -c "import glob,subprocess,sys; whl=glob.glob(sys.argv[1]); [subprocess.run([sys.executable,'-m','pip','install','-q','--no-warn-script-location',w],check=False) for w in whl]; print(f'           Installed {len(whl)} TRELLIS2 wheel(s).')" "!NODES_DIR!\ComfyUI-Trellis2\wheels\Windows\Torch!TRELLIS_TORCH!\*.whl"
+        echo           Installing TRELLIS2 pre-built wheels ^(!TRELLIS_TORCH!^)...
+        "!PYTHON!" -c "import glob,subprocess,sys; whl=glob.glob(sys.argv[1]); [subprocess.run([sys.executable,'-m','pip','install','-q','--no-warn-script-location',w],check=False) for w in whl]; print(f'           Installed {len(whl)} TRELLIS2 wheel(s).')" "!NODES_DIR!\ComfyUI-Trellis2\wheels\Windows\!TRELLIS_TORCH!\*.whl"
     )
 )
 

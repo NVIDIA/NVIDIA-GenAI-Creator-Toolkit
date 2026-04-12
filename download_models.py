@@ -56,6 +56,8 @@ class ModelSpec:
     full_repo: bool = False
     # Optional git revision / commit hash to pin the download to.
     revision: Optional[str] = None
+    # If set, display this agreement URL and prompt the user to confirm before downloading.
+    requires_agreement: Optional[str] = None
 
 
 @dataclass
@@ -396,6 +398,7 @@ def build_module_catalogue() -> dict:
                 dest_subdir="models/facebook/dinov3-vitl16-pretrain-lvd1689m",
                 size="~1 GB",
                 full_repo=True,
+                requires_agreement="https://huggingface.co/facebook/dinov3-vitl16-pretrain-lvd1689m",
             ),
             ModelSpec(
                 name="TRELLIS-image-large (shape decoder)",
@@ -704,6 +707,22 @@ def download_model(comfyui_root: Path, model: ModelSpec) -> str:
     """
     Download a single model. Returns one of: "downloaded", "skipped", "failed".
     """
+    # ── Agreement gate ─────────────────────────────────────────────────────
+    if model.requires_agreement:
+        print()
+        print(f"  [ACTION REQUIRED] {model.name} requires accepting a data agreement.")
+        print(f"  1. Visit: {model.requires_agreement}")
+        print(f"  2. Log in to HuggingFace and click 'Agree and access repository'")
+        print(f"  3. Then re-run this installer")
+        print()
+        try:
+            answer = input(f"  Have you already accepted the agreement? [y/N]: ").strip().lower()
+        except EOFError:
+            answer = ""
+        if answer != "y":
+            print(f"  Skipping {model.name} — accept the agreement and re-run to download.")
+            return "skipped"
+
     dest_dir = comfyui_root / model.dest_subdir
     dest_dir.mkdir(parents=True, exist_ok=True)
 
