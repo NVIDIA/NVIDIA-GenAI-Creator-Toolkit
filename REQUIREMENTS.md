@@ -98,7 +98,7 @@ python main.py
 
 ### Windows
 
-The recommended path on Windows is the [ComfyUI desktop app](https://www.comfy.org/download), which handles Python, CUDA, and updates automatically. After installing, run `install.bat` pointing at the ComfyUI folder inside the app's data directory.
+The recommended path on Windows is the [ComfyUI desktop app](https://www.comfy.org/download), which handles Python, CUDA, and updates automatically. After installing, run `install.bat` pointing at the folder inside the app that contains `main.py` — it is nested under `resources\ComfyUI` within the app's install location. To find it, run `where /r C:\ main.py` in Command Prompt.
 
 If using a manual install with your own Python:
 

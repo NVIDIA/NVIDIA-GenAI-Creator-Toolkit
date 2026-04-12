@@ -41,12 +41,14 @@ cd Creative-GenAI-Workflows
 
 # 2. Install custom nodes and download models
 #    The script will ask which modules you want, download models, and offer to launch ComfyUI.
-#    Path = the folder containing main.py
+#    Path = the folder containing main.py (see note below if you're unsure)
 # Windows — run from Command Prompt (cmd.exe), NOT Git Bash:
 install.bat C:\path\to\ComfyUI
 # Linux:
 bash install.sh /path/to/ComfyUI
 ```
+
+> **Finding your ComfyUI path:** The script needs the folder that contains `main.py`. If you installed the [ComfyUI Desktop app](https://www.comfy.org/download), that folder is nested inside the app — typically `...\resources\ComfyUI`. To locate it on Windows, run: `where /r C:\ main.py` in Command Prompt.
 
 > **New to this?** Don't download everything at once — see [Recommended Starting Point](REQUIREMENTS.md#recommended-starting-point) in REQUIREMENTS.md for a low-friction first module to try.
 
