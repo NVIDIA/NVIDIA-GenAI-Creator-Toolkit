@@ -40,10 +40,12 @@ git clone https://github.com/NVIDIA/Creative-GenAI-Workflows
 cd Creative-GenAI-Workflows
 
 # 2. Install custom nodes and download models
-#    The script will ask which modules you want, download models, and offer to launch ComfyUI.
-#    Path = the folder containing main.py (see note below if you're unsure)
-# Windows — run from Command Prompt (cmd.exe), NOT Git Bash:
-install.bat C:\path\to\ComfyUI
+#    Pass the folder that contains main.py.
+#    Desktop app users: it's nested under resources\ComfyUI inside the app install.
+#    Not sure? Run in Command Prompt: where /r C:\ main.py
+#
+# Windows (run from Command Prompt, NOT Git Bash or PowerShell):
+install.bat C:\path\to\ComfyUI\resources\ComfyUI
 # Linux:
 bash install.sh /path/to/ComfyUI
 ```
