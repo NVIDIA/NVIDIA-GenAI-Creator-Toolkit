@@ -332,18 +332,19 @@ if %NEEDS_OLLAMA%==1 (
         echo ================================================================
         echo.
         choice /c YN /m "  Install Ollama now?"
-        if errorlevel 2 goto skip_ollama_install
-        echo.
-        echo  Downloading Ollama installer...
-        curl -L -o "%TEMP%\OllamaSetup.exe" "https://ollama.com/download/OllamaSetup.exe"
-        echo  Running installer...
-        "%TEMP%\OllamaSetup.exe"
-        echo.
-        choice /c YN /m "  Pull gemma3 model now? (~5 GB)"
-        if errorlevel 2 goto skip_ollama_install
-        echo.
-        ollama pull gemma3
-        :skip_ollama_install
+        if not errorlevel 2 (
+            echo.
+            echo  Downloading Ollama installer...
+            curl -L -o "%TEMP%\OllamaSetup.exe" "https://ollama.com/download/OllamaSetup.exe"
+            echo  Running installer...
+            "%TEMP%\OllamaSetup.exe"
+            echo.
+            choice /c YN /m "  Pull gemma3 model now? (~5 GB)"
+            if not errorlevel 2 (
+                echo.
+                ollama pull gemma3
+            )
+        )
     ) else (
         echo.
         echo  Ollama already installed.
