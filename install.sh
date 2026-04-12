@@ -264,13 +264,13 @@ if [ "$NEEDS_OLLAMA" = "1" ]; then
     echo " Module 01 requires Ollama (not detected on this machine)"
     echo "================================================================"
     echo ""
-    read -p "  Install Ollama now? (Y/N): " INSTALL_OLLAMA || true
+    read -r -n 1 -p "  Install Ollama now? (Y/N): " INSTALL_OLLAMA < /dev/tty; echo
     if [[ "${INSTALL_OLLAMA,,}" == "y" ]]; then
       echo ""
       echo "  Installing Ollama..."
       curl -fsSL https://ollama.com/install.sh | sh
       echo ""
-      read -p "  Pull gemma3 model now? (~5 GB) (Y/N): " PULL_GEMMA || true
+      read -r -n 1 -p "  Pull gemma3 model now? (~5 GB) (Y/N): " PULL_GEMMA < /dev/tty; echo
       if [[ "${PULL_GEMMA,,}" == "y" ]]; then
         echo ""
         ollama pull gemma3
@@ -280,7 +280,7 @@ if [ "$NEEDS_OLLAMA" = "1" ]; then
     echo ""
     echo "  Ollama already installed."
     if ! ollama list 2>/dev/null | grep -qi "gemma3"; then
-      read -p "  Pull gemma3 model now? (~5 GB) (Y/N): " PULL_GEMMA || true
+      read -r -n 1 -p "  Pull gemma3 model now? (~5 GB) (Y/N): " PULL_GEMMA < /dev/tty; echo
       if [[ "${PULL_GEMMA,,}" == "y" ]]; then
         echo ""
         ollama pull gemma3
@@ -319,7 +319,7 @@ echo "  (already-installed nodes are skipped automatically)"
 echo ""
 
 # --- Offer to launch ComfyUI ---
-read -p "  Launch ComfyUI now? (Y/N): " LAUNCH || true
+read -r -n 1 -p "  Launch ComfyUI now? (Y/N): " LAUNCH < /dev/tty; echo
 if [[ "${LAUNCH,,}" == "y" ]]; then
   if [ -f "$COMFYUI_DIR/venv/bin/activate" ]; then
     echo ""
