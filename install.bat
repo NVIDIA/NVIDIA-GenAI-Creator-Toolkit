@@ -280,7 +280,7 @@ if !DO_INSTALL!==1 (
         echo           [WARN] No TRELLIS2 wheels found. Install deps manually via ComfyUI Manager.
     ) else (
         echo           Installing TRELLIS2 pre-built wheels ^(!TRELLIS_TORCH!^)...
-        "!PYTHON!" -c "import glob,subprocess,sys; whl=glob.glob(sys.argv[1]); [subprocess.run([sys.executable,'-m','pip','install','-q','--no-warn-script-location',w],check=False) for w in whl]; print(f'           Installed {len(whl)} TRELLIS2 wheel(s).')" "!NODES_DIR!\ComfyUI-Trellis2\wheels\Windows\!TRELLIS_TORCH!\*.whl"
+        "!PYTHON!" -c "import glob,subprocess,sys; py=f'cp{sys.version_info.major}{sys.version_info.minor}'; all_whl=glob.glob(sys.argv[1]); whl=[w for w in all_whl if py in w] or all_whl; results=[subprocess.run([sys.executable,'-m','pip','install','-q','--no-warn-script-location',w],capture_output=True) for w in whl]; ok=sum(1 for r in results if r.returncode==0); print(f'           Installed {ok} of {len(whl)} TRELLIS2 wheel(s).')" "!NODES_DIR!\ComfyUI-Trellis2\wheels\Windows\!TRELLIS_TORCH!\*.whl"
     )
 )
 
