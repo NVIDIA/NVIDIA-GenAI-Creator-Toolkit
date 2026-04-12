@@ -265,6 +265,8 @@ if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold" ""
     echo Patching ComfyUI-Marigold for numpy 2.0 compatibility...
     powershell -Command "(Get-Content \"!COMFYUI_DIR!\custom_nodes\ComfyUI-Marigold\nodes.py\") -replace '\.tostring\(\)', '.tobytes()' | Set-Content \"!COMFYUI_DIR!\custom_nodes\ComfyUI-Marigold\nodes.py\""
+    echo           Upgrading diffusers for huggingface_hub compatibility...
+    "!PYTHON!" -m pip install -q --upgrade diffusers
 )
 
 REM --- Module 08: Trellis2 3D ---
@@ -373,6 +375,8 @@ if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold" ""
     echo Patching ComfyUI-Marigold for numpy 2.0 compatibility...
     powershell -Command "(Get-Content \"!COMFYUI_DIR!\custom_nodes\ComfyUI-Marigold\nodes.py\") -replace '\.tostring\(\)', '.tobytes()' | Set-Content \"!COMFYUI_DIR!\custom_nodes\ComfyUI-Marigold\nodes.py\""
+    echo           Upgrading diffusers for huggingface_hub compatibility...
+    "!PYTHON!" -m pip install -q --upgrade diffusers
 )
 
 REM --- Copy workflow JSON files and sample inputs into ComfyUI ---
