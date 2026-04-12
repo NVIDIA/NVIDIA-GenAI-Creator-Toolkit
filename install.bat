@@ -345,7 +345,7 @@ if /i "!MODULES!"=="all" set NEEDS_OLLAMA=1
 
 if %NEEDS_OLLAMA%==1 (
     set OLLAMA_FOUND=0
-    where ollama > nul 2>&1 && set OLLAMA_FOUND=1
+    for /f "delims=" %%i in ('where ollama 2^>nul') do set OLLAMA_FOUND=1
     if !OLLAMA_FOUND!==0 (
         echo.
         echo ================================================================
@@ -368,7 +368,7 @@ if %NEEDS_OLLAMA%==1 (
         echo.
         echo  Ollama already installed.
         set GEMMA_FOUND=0
-        ollama list 2>nul | findstr /i "gemma3" > nul && set GEMMA_FOUND=1
+        for /f "delims=" %%i in ('ollama list 2^>nul ^| findstr /i "gemma3"') do set GEMMA_FOUND=1
         if !GEMMA_FOUND!==0 (
             choice /c YN /m "  Pull gemma3 model now? (~5 GB)"
             if not errorlevel 2 (
