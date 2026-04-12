@@ -42,6 +42,12 @@ The SHARP model (`sharp_2572gikvuh.pt`, ~2.81 GB) downloads automatically when t
 - [ComfyUI-Sharp](https://github.com/PozzettiAndrea/ComfyUI-Sharp)
 - [ComfyUI-GeometryPack](https://github.com/PozzettiAndrea/ComfyUI-GeometryPack)
 
+## Example Output
+
+| Input Image | Gaussian Splat |
+|-------------|---------------|
+| ![](images/04-input.png) | ![](images/04-output.png) |
+
 ## Sample Input
 
 A sample input image is provided in the `input/` folder.
