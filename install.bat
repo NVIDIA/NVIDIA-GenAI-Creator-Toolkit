@@ -282,6 +282,22 @@ if !DO_INSTALL!==1 (
         echo           Installing TRELLIS2 pre-built wheels ^(!TRELLIS_TORCH!^)...
         "!PYTHON!" -c "import glob,subprocess,sys; py=f'cp{sys.version_info.major}{sys.version_info.minor}'; all_whl=glob.glob(sys.argv[1]); whl=[w for w in all_whl if py in w] or all_whl; results=[subprocess.run([sys.executable,'-m','pip','install','-q','--no-warn-script-location',w],capture_output=True) for w in whl]; ok=sum(1 for r in results if r.returncode==0); print(f'           Installed {ok} of {len(whl)} TRELLIS2 wheel(s).')" "!NODES_DIR!\ComfyUI-Trellis2\wheels\Windows\!TRELLIS_TORCH!\*.whl"
     )
+
+    REM open3d has no PyPI wheel for newer Python versions — try prerelease then skip gracefully
+    echo           Installing open3d...
+    "!PYTHON!" -m pip install -q open3d > nul 2>&1
+    if errorlevel 1 (
+        "!PYTHON!" -m pip install -q --pre open3d > nul 2>&1
+        if errorlevel 1 (
+            echo           [WARN] open3d not available for this Python version.
+            echo                  Trellis2 mesh preview may not work. Install manually if needed:
+            echo                  pip install open3d
+        ) else (
+            echo           open3d installed ^(pre-release^).
+        )
+    ) else (
+        echo           open3d installed.
+    )
 )
 
 REM --- Module 09: Cutout Animation ---
