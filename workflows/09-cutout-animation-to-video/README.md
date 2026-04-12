@@ -34,22 +34,24 @@ This module includes two workflow files:
 | **VRAM (Minimum)** | 16 GB |
 | **VRAM (Recommended)** | 24 GB |
 | **Custom Nodes** | 7 packages |
-| **Models** | 10 files (~30 GB) |
+| **Models** | 12 files (~100 GB) |
 
 ## Required Models
 
 | Model | Type | Size |
 |-------|------|------|
-| `Wan2_2-I2V-A14B-HIGH_bf16.safetensors` | Diffusion Model | 26.62 GB |
-| `Wan2_2-I2V-A14B-LOW_bf16.safetensors` | Diffusion Model | 26.62 GB |
-| `wan_2.1_vae.safetensors` | VAE | 242 MB |
-| `umt5_xxl_fp16.safetensors` | Text Encoder | 10.59 GB |
-| `Wan22_PusaV1_lora_HIGH_resized_dynamic_avg_rank_98_bf16.safetensors` | LoRA | 912 MB |
-| `Wan22_PusaV1_lora_LOW_resized_dynamic_avg_rank_98_bf16.safetensors` | LoRA | 923 MB |
-| `Wan2.2-Fun-A14B-InP-high-noise-HPS2.1.safetensors` | LoRA | 819 MB |
-| `Wan2.2-Fun-A14B-InP-low-noise-HPS2.1.safetensors` | LoRA | 819 MB |
-| `wan2.2_i2v_A14b_high_noise_lora_rank64_lightx2v_4step.safetensors` | LoRA | ~500 MB |
-| `Wan22_A14B_T2V_LOW_Lightning_4steps_lora_250928_rank64_fp16.safetensors` | LoRA | 585 MB |
+| `Wan2_2-I2V-A14B-HIGH_bf16.safetensors` | Diffusion Model | ~28 GB |
+| `Wan2_2-I2V-A14B-LOW_bf16.safetensors` | Diffusion Model | ~28 GB |
+| `wan2.2_i2v_A14b_high_noise_lora_rank64_lightx2v_4step.safetensors` | Diffusion Model (Distilled) | ~29 GB |
+| `umt5_xxl_fp16.safetensors` | Text Encoder | ~11 GB |
+| `sam3.pt` | Segmentation Model | ~2.4 GB |
+| `wan_2.1_vae.safetensors` | VAE | ~250 MB |
+| `Wan22_PusaV1_lora_HIGH_resized_dynamic_avg_rank_98_bf16.safetensors` | LoRA | ~950 MB |
+| `Wan22_PusaV1_lora_LOW_resized_dynamic_avg_rank_98_bf16.safetensors` | LoRA | ~970 MB |
+| `Wan2.2-Fun-A14B-InP-high-noise-HPS2.1.safetensors` | LoRA | ~860 MB |
+| `Wan2.2-Fun-A14B-InP-low-noise-HPS2.1.safetensors` | LoRA | ~860 MB |
+| `Wan22_A14B_T2V_LOW_Lightning_4steps_lora_250928_rank64_fp16.safetensors` | LoRA | ~615 MB |
+| `Qwen-flymy_realism.safetensors` | LoRA | ~500 MB |
 
 ## Required Custom Nodes
 

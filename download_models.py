@@ -468,11 +468,11 @@ def build_module_catalogue() -> dict:
                 size="~860 MB",
             ),
             ModelSpec(
-                name="Wan2.2 I2V A14B Distill 4-step LoRA",
+                name="Wan2.2 I2V A14B Distill 4-step (lightx2v)",
                 repo="lightx2v/Wan2.2-Distill-Models",
                 filename="wan2.2_i2v_A14b_high_noise_lightx2v_4step.safetensors",
                 dest_subdir="models/loras",
-                size="~1.7 GB",
+                size="~29 GB",
                 rename_to="wan2.2_i2v_A14b_high_noise_lora_rank64_lightx2v_4step.safetensors",
             ),
             ModelSpec(
