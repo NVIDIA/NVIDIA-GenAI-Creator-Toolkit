@@ -132,6 +132,28 @@ if exist "%COMFYUI_DIR%\requirements.txt" (
     "!PYTHON!" -m pip install -q -r "%COMFYUI_DIR%\requirements.txt"
 )
 
+REM --- Ensure PyTorch is CUDA-enabled ---
+nvidia-smi > nul 2>&1
+if errorlevel 1 goto skip_torch_check
+
+"!PYTHON!" -c "import torch; exit(0 if torch.cuda.is_available() else 1)" > nul 2>&1
+if not errorlevel 1 goto skip_torch_check
+
+echo.
+echo [torch] PyTorch is installed but CUDA is not available. Reinstalling with CUDA support...
+
+REM Detect CUDA version from nvidia-smi and map to PyTorch wheel tag
+"!PYTHON!" -c "import subprocess,re,sys; o=subprocess.run(['nvidia-smi'],capture_output=True,text=True).stdout; m=re.search(r'CUDA Version: ([0-9]+)[.]([0-9]+)',o); v=(int(m.group(1)),int(m.group(2))) if m else (12,8); tag='cu118' if v[0]<12 else 'cu121' if v<(12,4) else 'cu124' if v<(12,6) else 'cu126' if v<(12,8) else 'cu128'; open('%TEMP%\\\\cuda_tag.tmp','w').write(tag)" 2>nul
+set /p CUDA_TAG=< "%TEMP%\cuda_tag.tmp"
+del "%TEMP%\cuda_tag.tmp" 2>nul
+if "!CUDA_TAG!"=="" set CUDA_TAG=cu128
+
+echo [torch] Installing for CUDA !CUDA_TAG! (this may take a few minutes)...
+"!PYTHON!" -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/!CUDA_TAG! -q
+echo [torch] Done.
+
+:skip_torch_check
+
 REM --- Ask which modules BEFORE installing nodes ---
 if not defined MODULES (
     echo.

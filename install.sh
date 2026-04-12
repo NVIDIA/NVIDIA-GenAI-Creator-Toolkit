@@ -90,6 +90,39 @@ if [ -f "$COMFYUI_DIR/requirements.txt" ]; then
   $PIP install -q -r "$COMFYUI_DIR/requirements.txt"
 fi
 
+# --- Ensure PyTorch is CUDA-enabled ---
+if nvidia-smi > /dev/null 2>&1; then
+  if ! $PYTHON -c "import torch; exit(0 if torch.cuda.is_available() else 1)" > /dev/null 2>&1; then
+    echo ""
+    echo "[torch] PyTorch is installed but CUDA is not available. Reinstalling with CUDA support..."
+
+    CUDA_TAG=$($PYTHON -c "
+import subprocess, re, sys
+out = subprocess.run(['nvidia-smi'], capture_output=True, text=True).stdout
+m = re.search(r'CUDA Version: ([0-9]+)[.]([0-9]+)', out)
+if m:
+    v = (int(m.group(1)), int(m.group(2)))
+else:
+    v = (12, 8)
+if v[0] < 12:
+    tag = 'cu118'
+elif v < (12, 4):
+    tag = 'cu121'
+elif v < (12, 6):
+    tag = 'cu124'
+elif v < (12, 8):
+    tag = 'cu126'
+else:
+    tag = 'cu128'
+print(tag)
+" 2>/dev/null || echo "cu128")
+
+    echo "[torch] Installing for CUDA ${CUDA_TAG} (this may take a few minutes)..."
+    $PIP install torch torchvision torchaudio --index-url "https://download.pytorch.org/whl/${CUDA_TAG}" -q
+    echo "[torch] Done."
+  fi
+fi
+
 install_node() {
   local name="$1"
   local repo="$2"
