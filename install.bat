@@ -334,10 +334,8 @@ if %NEEDS_OLLAMA%==1 (
         choice /c YN /m "  Install Ollama now?"
         if not errorlevel 2 (
             echo.
-            echo  Downloading Ollama installer...
-            curl -L -o "%TEMP%\OllamaSetup.exe" "https://ollama.com/download/OllamaSetup.exe"
-            echo  Running installer...
-            "%TEMP%\OllamaSetup.exe"
+            echo  Installing Ollama...
+            powershell -Command "irm https://ollama.com/install.ps1 | iex"
             echo.
             choice /c YN /m "  Pull gemma3 model now? (~5 GB)"
             if not errorlevel 2 (
