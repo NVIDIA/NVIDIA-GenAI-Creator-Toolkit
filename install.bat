@@ -302,6 +302,11 @@ if !DO_INSTALL!==1 (
         echo.
     )
 
+    REM Always ensure torchaudio matches torch 2.8.0 — mismatched torchaudio DLL
+    REM causes WJNodes and ComfyUI built-in audio nodes to fail on import.
+    echo           Ensuring torchaudio 2.8.0 is installed...
+    "!PYTHON!" -m pip install -q torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cu128
+
     REM Install pre-built CUDA wheels — avoids needing MSVC compiler on Windows
     echo.
     echo           Detecting PyTorch version for TRELLIS2 wheel selection...
