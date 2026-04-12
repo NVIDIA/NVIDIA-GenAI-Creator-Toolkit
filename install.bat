@@ -346,8 +346,13 @@ if /i "!MODULES!"=="all" set NEEDS_OLLAMA=1
 if not "!NEEDS_OLLAMA!"=="1" goto skip_ollama
 
 set OLLAMA_FOUND=0
+set "OLLAMA_EXE=ollama"
 ollama --version > nul 2>&1
 if not errorlevel 1 set OLLAMA_FOUND=1
+if "!OLLAMA_FOUND!"=="0" if exist "%LOCALAPPDATA%\Programs\Ollama\ollama.exe" (
+    set OLLAMA_FOUND=1
+    set "OLLAMA_EXE=%LOCALAPPDATA%\Programs\Ollama\ollama.exe"
+)
 
 if "!OLLAMA_FOUND!"=="1" goto ollama_check_gemma
 
@@ -365,7 +370,7 @@ if not errorlevel 2 (
     choice /c YN /m "  Pull gemma3 model now? (~5 GB)"
     if not errorlevel 2 (
         echo.
-        ollama pull gemma3
+        "!OLLAMA_EXE!" pull gemma3
     )
 )
 goto skip_ollama
@@ -374,14 +379,14 @@ goto skip_ollama
 echo.
 echo  Ollama already installed.
 set GEMMA_FOUND=0
-for /f "delims=" %%i in ('ollama list 2^>nul ^| findstr /i "gemma3"') do set GEMMA_FOUND=1
+for /f "delims=" %%i in ('"!OLLAMA_EXE!" list 2^>nul ^| findstr /i "gemma3"') do set GEMMA_FOUND=1
 if "!GEMMA_FOUND!"=="1" (
     echo  gemma3 already pulled.
 ) else (
     choice /c YN /m "  Pull gemma3 model now? (~5 GB)"
     if not errorlevel 2 (
         echo.
-        ollama pull gemma3
+        "!OLLAMA_EXE!" pull gemma3
     )
 )
 
