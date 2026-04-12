@@ -70,6 +70,13 @@ else
   echo "  source $COMFYUI_DIR/venv/bin/activate"
 fi
 
+# --- Install ComfyUI requirements (ensures alembic and other deps are present) ---
+if [ -f "$COMFYUI_DIR/requirements.txt" ]; then
+  echo ""
+  echo "Installing ComfyUI requirements..."
+  $PIP install -q -r "$COMFYUI_DIR/requirements.txt"
+fi
+
 install_node() {
   local name="$1"
   local repo="$2"
