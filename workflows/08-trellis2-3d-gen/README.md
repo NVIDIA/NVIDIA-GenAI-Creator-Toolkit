@@ -2,7 +2,7 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 # 08 — Trellis2 3D Asset Generation
-![](images/preview.png)
+![](images/08-output.gif)
 
 ## Overview
 
