@@ -308,7 +308,7 @@ if !DO_INSTALL!==1 (
     set TRELLIS_TORCH=
     for /d %%D in ("!NODES_DIR!\ComfyUI-Trellis2\wheels\Windows\Torch*") do set TRELLIS_TORCH=%%~nxD
     REM Prefer exact version match if available
-    "!PYTHON!" -c "import torch,os; v=torch.__version__; short='Torch'+''.join(v.split('.')[:2]).replace('+','').split('+')[0][:3]; base=r'!NODES_DIR!\ComfyUI-Trellis2\wheels\Windows'; exact=os.path.join(base,short); print(short if os.path.isdir(exact) else '')" > "%TEMP%\trellis_exact.txt" 2>nul
+    "!PYTHON!" -c "import torch,os; v=torch.__version__.split('+')[0]; short='Torch'+''.join(v.split('.')); base=r'!NODES_DIR!\ComfyUI-Trellis2\wheels\Windows'; exact=os.path.join(base,short); print(short if os.path.isdir(exact) else '')" > "%TEMP%\trellis_exact.txt" 2>nul
     set /p TRELLIS_EXACT=<"%TEMP%\trellis_exact.txt"
     del "%TEMP%\trellis_exact.txt" 2>nul
     if not "!TRELLIS_EXACT!"=="" set TRELLIS_TORCH=!TRELLIS_EXACT!
