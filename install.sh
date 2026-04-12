@@ -87,7 +87,7 @@ fi
 if [ -f "$COMFYUI_DIR/requirements.txt" ]; then
   echo ""
   echo "Installing ComfyUI requirements..."
-  $PIP install -r "$COMFYUI_DIR/requirements.txt"
+  $PIP install -q -r "$COMFYUI_DIR/requirements.txt"
 fi
 
 # --- Ensure PyTorch is CUDA-enabled ---

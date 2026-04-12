@@ -129,7 +129,7 @@ REM --- Install ComfyUI requirements (ensures alembic and other deps are present
 if exist "%COMFYUI_DIR%\requirements.txt" (
     echo.
     echo Installing ComfyUI requirements...
-    "!PYTHON!" -m pip install -r "%COMFYUI_DIR%\requirements.txt"
+    "!PYTHON!" -m pip install -q -r "%COMFYUI_DIR%\requirements.txt"
 )
 
 REM --- Ensure PyTorch is CUDA-enabled ---
