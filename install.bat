@@ -379,7 +379,9 @@ goto skip_ollama
 echo.
 echo  Ollama already installed.
 set GEMMA_FOUND=0
-for /f "delims=" %%i in ('"!OLLAMA_EXE!" list 2^>nul ^| findstr /i "gemma3"') do set GEMMA_FOUND=1
+"!OLLAMA_EXE!" list > "%TEMP%\ollama_list.tmp" 2>nul
+findstr /i "gemma3" "%TEMP%\ollama_list.tmp" > nul 2>&1
+if not errorlevel 1 set GEMMA_FOUND=1
 if "!GEMMA_FOUND!"=="1" (
     echo  gemma3 already pulled.
 ) else (
