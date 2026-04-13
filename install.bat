@@ -143,6 +143,29 @@ if !PIP_FOUND!==0 (
     echo            venv:  venv\Scripts\activate
 )
 
+REM --- Python version check ---
+echo.
+for /f "delims=" %%V in ('"!PYTHON!" -c "import sys; print(f\"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}\")" 2^>nul') do set "PY_VER=%%V"
+for /f "delims=" %%R in ('"!PYTHON!" -c "import sys; print(1 if sys.version_info>=(3,10) else 0)" 2^>nul') do set "PY_OK=%%R"
+echo [check] Python: !PY_VER!
+if "!PY_OK!"=="0" (
+    echo.
+    echo [WARNING] Python !PY_VER! detected. ComfyUI requires Python 3.10 or higher.
+    echo           Your install may have issues. Consider upgrading Python.
+    echo.
+)
+
+REM --- ComfyUI version check ---
+if exist "%COMFYUI_DIR%\comfyui_version.py" (
+    for /f "delims=" %%V in ('"!PYTHON!" -c "import re; f=open(r\"%COMFYUI_DIR%\comfyui_version.py\").read(); print(re.search(r\"__version__\s*=\s*[\x27\"]([^\x27\"]+)[\x27\"]\",f).group(1))" 2^>nul') do set "COMFY_VER=%%V"
+    echo [check] ComfyUI: !COMFY_VER!
+    echo         Tested against: 0.19.x — other versions may work but are not guaranteed.
+) else (
+    echo [check] ComfyUI: version file not found ^(pre-0.19 or non-standard install^)
+    echo [WARNING] Could not detect ComfyUI version. Proceeding anyway.
+)
+echo.
+
 REM --- Install ComfyUI requirements (ensures alembic and other deps are present) ---
 if exist "%COMFYUI_DIR%\requirements.txt" (
     echo.

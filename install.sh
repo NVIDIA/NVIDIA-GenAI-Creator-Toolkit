@@ -83,6 +83,29 @@ else
   echo "    venv:  source $COMFYUI_DIR/venv/bin/activate"
 fi
 
+# --- Python version check ---
+PY_VER=$($PYTHON -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}')" 2>/dev/null)
+PY_OK=$($PYTHON -c "import sys; print(1 if sys.version_info>=(3,10) else 0)" 2>/dev/null)
+echo "[check] Python: $PY_VER"
+if [ "$PY_OK" != "1" ]; then
+  echo ""
+  echo "[WARNING] Python $PY_VER detected. ComfyUI requires Python 3.10 or higher."
+  echo "          Your install may have issues. Consider upgrading Python."
+  echo ""
+fi
+
+# --- ComfyUI version check ---
+if [ -f "$COMFYUI_DIR/comfyui_version.py" ]; then
+  COMFY_VER=$($PYTHON -c "import re; f=open('$COMFYUI_DIR/comfyui_version.py').read(); print(re.search(r'__version__\s*=\s*[\'\"]([\'\".]+)[\'\"]*',f).group(1))" 2>/dev/null || \
+              grep -oP '(?<=__version__ = ["\x27])[^"\']+' "$COMFYUI_DIR/comfyui_version.py")
+  echo "[check] ComfyUI: $COMFY_VER"
+  echo "        Tested against: 0.19.x — other versions may work but are not guaranteed."
+else
+  echo "[check] ComfyUI: version file not found (pre-0.19 or non-standard install)"
+  echo "[WARNING] Could not detect ComfyUI version. Proceeding anyway."
+fi
+echo ""
+
 # --- Install ComfyUI requirements (ensures alembic and other deps are present) ---
 if [ -f "$COMFYUI_DIR/requirements.txt" ]; then
   echo ""
