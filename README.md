@@ -10,7 +10,7 @@ Adapted from NVIDIA's GTC 2026 DLI course [*Create Generative AI Workflows for D
 ![GPU](https://img.shields.io/badge/GPU-NVIDIA%20RTX%20required-76b900)
 ![License](https://img.shields.io/badge/license-Apache%202.0-green)
 
-![](docs/overview.jpg)
+![](docs/overview.png)
 
 ---
 
