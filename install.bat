@@ -281,7 +281,7 @@ if !DO_INSTALL!==1 (
     call :install_node "Luminance-Stack-Processor" "https://github.com/sumitchatterjee13/Luminance-Stack-Processor" ""
     call :install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold" ""
     echo Patching ComfyUI-Marigold for numpy 2.0 compatibility...
-    powershell -Command "(Get-Content \"!COMFYUI_DIR!\custom_nodes\ComfyUI-Marigold\nodes.py\") -replace '\.tostring\(\)', '.tobytes()' | Set-Content \"!COMFYUI_DIR!\custom_nodes\ComfyUI-Marigold\nodes.py\""
+    powershell -Command "(Get-Content \"!NODES_DIR!\ComfyUI-Marigold\nodes.py\") -replace '\.tostring\(\)', '.tobytes()' | Set-Content \"!NODES_DIR!\ComfyUI-Marigold\nodes.py\""
     echo           Upgrading diffusers for huggingface_hub compatibility...
     "!PYTHON!" -m pip install -q --upgrade diffusers
 )
@@ -427,7 +427,7 @@ if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus" ""
     call :install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold" ""
     echo Patching ComfyUI-Marigold for numpy 2.0 compatibility...
-    powershell -Command "(Get-Content \"!COMFYUI_DIR!\custom_nodes\ComfyUI-Marigold\nodes.py\") -replace '\.tostring\(\)', '.tobytes()' | Set-Content \"!COMFYUI_DIR!\custom_nodes\ComfyUI-Marigold\nodes.py\""
+    powershell -Command "(Get-Content \"!NODES_DIR!\ComfyUI-Marigold\nodes.py\") -replace '\.tostring\(\)', '.tobytes()' | Set-Content \"!NODES_DIR!\ComfyUI-Marigold\nodes.py\""
     echo           Upgrading diffusers for huggingface_hub compatibility...
     "!PYTHON!" -m pip install -q --upgrade diffusers
 )
