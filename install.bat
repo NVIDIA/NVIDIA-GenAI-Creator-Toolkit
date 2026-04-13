@@ -59,6 +59,7 @@ echo ComfyUI path: %COMFYUI_DIR%
 echo.
 
 set NODES_DIR=%COMFYUI_DIR%\custom_nodes
+REM Overridden below if ComfyUI Desktop App is detected (DESKTOP_USER_DIR)
 
 if not exist "%COMFYUI_DIR%\main.py" (
   echo ERROR: main.py not found at: %COMFYUI_DIR%
@@ -103,12 +104,19 @@ if !PIP_FOUND!==0 if exist "%COMFYUI_DIR%\venv\Scripts\python.exe" (
 )
 
 REM ComfyUI Desktop App — uses uv to manage a venv; uv is at resources\uv\win\uv.exe
+REM Layout:  <user-data-root>\ComfyUI\resources\ComfyUI  (main.py here)
+REM          <user-data-root>\ComfyUI\resources\uv\      (uv here)
+REM          <user-data-root>\custom_nodes\              (where nodes must go)
+REM          <user-data-root>\models\                    (where models must go)
+REM So the user-data root is two levels above COMFYUI_PARENT (resources\).
 if !PIP_FOUND!==0 if exist "!COMFYUI_PARENT!\uv\win\uv.exe" (
     for /f "delims=" %%P in ('"!COMFYUI_PARENT!\uv\win\uv.exe" python find 2^>nul') do set "UV_PYTHON=%%P"
     if defined UV_PYTHON if exist "!UV_PYTHON!" (
         set "PYTHON=!UV_PYTHON!"
         set PIP_FOUND=1
+        for %%I in ("!COMFYUI_PARENT!\..\..") do set "DESKTOP_USER_DIR=%%~fI"
         echo Detected ComfyUI Desktop App ^(uv^) - using !UV_PYTHON!
+        echo   Desktop user data dir: !DESKTOP_USER_DIR!
     )
 )
 
@@ -185,9 +193,18 @@ if not defined MODULES (
     set /p MODULES="  Modules: "
 )
 
+REM --- Desktop App: redirect custom_nodes and models to user data root ---
+if defined DESKTOP_USER_DIR (
+    set "NODES_DIR=!DESKTOP_USER_DIR!\custom_nodes"
+    set "MODELS_ROOT=!DESKTOP_USER_DIR!"
+    echo   Redirecting installs to Desktop App user data root: !DESKTOP_USER_DIR!
+) else (
+    set "MODELS_ROOT=%COMFYUI_DIR%"
+)
+
 echo.
-echo Installing custom nodes into: %NODES_DIR%
-if not exist "%NODES_DIR%" mkdir "%NODES_DIR%"
+echo Installing custom nodes into: !NODES_DIR!
+if not exist "!NODES_DIR!" mkdir "!NODES_DIR!"
 echo.
 set NODE_COUNT=0
 
@@ -506,7 +523,7 @@ if /i not "!MODULES!"=="" (
     echo  gated models ^(required for Module 07 Flux^):
     echo    huggingface-cli login
     echo.
-    "!PYTHON!" "%~dp0download_models.py" --comfyui "%COMFYUI_DIR%" --modules !MODULES!
+    "!PYTHON!" "%~dp0download_models.py" --comfyui "!MODELS_ROOT!" --modules !MODULES!
 )
 
 echo.
