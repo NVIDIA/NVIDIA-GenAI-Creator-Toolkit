@@ -2,7 +2,7 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 # 09 — Cutout Animation to Video
-![](images/preview.png)
+![](images/preview.gif)
 
 ## Overview
 
