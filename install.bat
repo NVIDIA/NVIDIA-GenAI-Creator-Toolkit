@@ -571,7 +571,13 @@ echo.
 REM Ask user if they want to launch ComfyUI now
 choice /c YN /m "  Launch ComfyUI now?"
 if not errorlevel 2 (
-    if exist "!COMFYUI_PARENT!\run_nvidia_gpu.bat" (
+    if defined DESKTOP_USER_DIR (
+        echo.
+        echo  ComfyUI Desktop App detected.
+        echo  Please launch ComfyUI using the Desktop App icon —
+        echo  it applies the required model and node path configuration.
+        echo  Launching from the command line will not find your models or nodes.
+    ) else if exist "!COMFYUI_PARENT!\run_nvidia_gpu.bat" (
         echo.
         echo  Launching ComfyUI ^(Portable^)...
         pushd "!COMFYUI_PARENT!"
