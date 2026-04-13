@@ -104,11 +104,10 @@ if !PIP_FOUND!==0 if exist "%COMFYUI_DIR%\venv\Scripts\python.exe" (
 )
 
 REM ComfyUI Desktop App — uses uv to manage a venv; uv is at resources\uv\win\uv.exe
-REM Layout:  <user-data-root>\ComfyUI\resources\ComfyUI  (main.py here)
-REM          <user-data-root>\ComfyUI\resources\uv\      (uv here)
-REM          <user-data-root>\custom_nodes\              (where nodes must go)
-REM          <user-data-root>\models\                    (where models must go)
-REM So the user-data root is two levels above COMFYUI_PARENT (resources\).
+REM The Desktop App sets TWO custom_nodes search paths:
+REM   1. <user-data-root>\custom_nodes  (primary — install nodes here)
+REM   2. <ComfyUI-source>\custom_nodes  (must exist or ComfyUI crashes at startup)
+REM The user-data-root is two levels above COMFYUI_PARENT (resources\).
 if !PIP_FOUND!==0 if exist "!COMFYUI_PARENT!\uv\win\uv.exe" (
     for /f "delims=" %%P in ('"!COMFYUI_PARENT!\uv\win\uv.exe" python find 2^>nul') do set "UV_PYTHON=%%P"
     if defined UV_PYTHON if exist "!UV_PYTHON!" (
@@ -216,11 +215,14 @@ if not defined MODULES (
     set /p MODULES="  Modules: "
 )
 
-REM --- Desktop App: redirect custom_nodes and models to user data root ---
+REM --- Desktop App: redirect nodes/models/workflows/inputs to user data root ---
 if defined DESKTOP_USER_DIR (
     set "NODES_DIR=!DESKTOP_USER_DIR!\custom_nodes"
     set "MODELS_ROOT=!DESKTOP_USER_DIR!"
-    echo   Redirecting installs to Desktop App user data root: !DESKTOP_USER_DIR!
+    set "WORKFLOWS_DEST_OVERRIDE=!DESKTOP_USER_DIR!\user\default\workflows\creative-genai-workflows"
+    set "INPUTS_DEST_OVERRIDE=!DESKTOP_USER_DIR!\input"
+    REM ComfyUI also scans the source custom_nodes dir — must exist or it crashes at startup
+    if not exist "%COMFYUI_DIR%\custom_nodes" mkdir "%COMFYUI_DIR%\custom_nodes"
 ) else (
     set "MODELS_ROOT=%COMFYUI_DIR%"
 )
@@ -456,10 +458,9 @@ if !DO_INSTALL!==1 (
 )
 
 REM --- Copy workflow JSON files and sample inputs into ComfyUI ---
-REM Desktop App: workflows and inputs live in the user data root, not resources\ComfyUI
-if defined DESKTOP_USER_DIR (
-    set "WORKFLOWS_DEST=!DESKTOP_USER_DIR!\user\default\workflows\creative-genai-workflows"
-    set "INPUTS_DEST=!DESKTOP_USER_DIR!\input"
+if defined WORKFLOWS_DEST_OVERRIDE (
+    set "WORKFLOWS_DEST=!WORKFLOWS_DEST_OVERRIDE!"
+    set "INPUTS_DEST=!INPUTS_DEST_OVERRIDE!"
 ) else (
     set "WORKFLOWS_DEST=%COMFYUI_DIR%\user\default\workflows\creative-genai-workflows"
     set "INPUTS_DEST=%COMFYUI_DIR%\input"
