@@ -434,10 +434,13 @@ if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes" ""
     call :install_node "cg-use-everywhere" "https://github.com/chrisgoringe/cg-use-everywhere" ""
     call :install_node "radiance" "https://github.com/fxtdstudios/radiance" ""
+    call :install_node "comfyui-rtx-simple" "https://github.com/BetaDoggo/comfyui-rtx-simple" ""
     call :install_node "ComfyUI-Impact-Pack" "https://github.com/ltdrdata/ComfyUI-Impact-Pack" ""
     call :install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus" ""
     call :install_node "ComfyUI-post-processing-nodes" "https://github.com/EllangoK/ComfyUI-post-processing-nodes" ""
     call :install_node "ComfyUI-VideoUpscale_WithModel" "https://github.com/ShmuelRonen/ComfyUI-VideoUpscale_WithModel" ""
+    echo           Installing NVIDIA VFX SDK for RTX Super Resolution...
+    "!PYTHON!" -m pip install -q nvidia-vfx --extra-index-url https://pypi.nvidia.com/
 )
 
 REM --- Bonus A: Texture Extraction ---

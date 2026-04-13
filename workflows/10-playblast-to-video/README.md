@@ -31,7 +31,7 @@ Turn any basic render (flat shading, no textures, simple lighting) that contains
 |-------------|-------|
 | **VRAM (Minimum)** | 16 GB |
 | **VRAM (Recommended)** | 24 GB |
-| **Custom Nodes** | 8 packages |
+| **Custom Nodes** | 9 packages |
 | **Models** | 9 files (~130 GB) |
 
 ## Required Models
@@ -57,6 +57,7 @@ Turn any basic render (flat shading, no textures, simple lighting) that contains
 - [ComfyUI-VideoHelperSuite](https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite)
 - [cg-use-everywhere](https://github.com/chrisgoringe/cg-use-everywhere)
 - [radiance](https://github.com/fxtdstudios/radiance)
+- [comfyui-rtx-simple](https://github.com/BetaDoggo/comfyui-rtx-simple)
 - [ComfyUI-Impact-Pack](https://github.com/ltdrdata/ComfyUI-Impact-Pack)
 
 ## Sample Input
