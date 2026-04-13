@@ -63,6 +63,10 @@ This module includes two workflow files:
 - [ComfyUI_essentials](https://github.com/cubiq/ComfyUI_essentials)
 - [ComfyUI-Impact-Pack](https://github.com/ltdrdata/ComfyUI-Impact-Pack)
 
+## Example Output
+
+<video src="images/09-output.mp4" autoplay loop muted playsinline width="100%"></video>
+
 ## Sample Input
 
 Sample input frames, video, and mask are provided in the `input/` folder.
