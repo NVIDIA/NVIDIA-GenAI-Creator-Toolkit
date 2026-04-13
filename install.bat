@@ -372,8 +372,8 @@ if !DO_INSTALL!==1 (
     REM triton must match PyTorch version for torch.compile/inductor to work.
     REM WanVideoWrapper uses torch.compile — triton 3.3+ removes triton_key which
     REM torch 2.8.0 requires. Pin to 3.2.0 which is compatible with torch 2.8.x.
-    echo           Pinning triton to 3.2.0 for torch.compile compatibility...
-    "!PYTHON!" -m pip install -q triton==3.2.0
+    echo           Pinning triton-windows to 3.2.0 for torch.compile compatibility...
+    "!PYTHON!" -m pip install -q triton-windows==3.2.0.post21
 )
 
 REM --- Module 10: Playblast to Video ---
