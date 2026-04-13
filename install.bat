@@ -369,6 +369,11 @@ if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use" ""
     call :install_node "ComfyUI-WanVideoWrapper" "https://github.com/kijai/ComfyUI-WanVideoWrapper" ""
     call :install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes" ""
+    REM triton-windows must match PyTorch version for torch.compile/inductor to work.
+    REM WanVideoWrapper uses torch.compile — without a compatible triton, inference fails
+    REM with "cannot import name triton_key". Safe to upgrade; only affects modules 09+10.
+    echo           Upgrading triton-windows for torch.compile compatibility...
+    "!PYTHON!" -m pip install -q --upgrade triton-windows
 )
 
 REM --- Module 10: Playblast to Video ---
