@@ -175,6 +175,12 @@ if exist "%COMFYUI_DIR%\requirements.txt" (
 REM comfyui-frontend-package is required by recent ComfyUI versions but missing from some requirements.txt
 "!PYTHON!" -m pip install -q comfyui-frontend-package
 
+REM --- Common dependencies needed by multiple custom nodes ---
+REM opencv-python is required by: radiance, ComfyUI-VideoHelperSuite, ComfyUI-Impact-Pack,
+REM   ComfyUI-Easy-Use, ComfyUI-post-processing-nodes, comfy_nv_video_prep
+echo Installing common node dependencies ^(opencv, accelerate, ollama^)...
+"!PYTHON!" -m pip install -q opencv-python accelerate ollama
+
 REM --- Ensure PyTorch is CUDA-enabled ---
 nvidia-smi > nul 2>&1
 if errorlevel 1 goto skip_torch_check
