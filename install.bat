@@ -144,7 +144,7 @@ if !PIP_FOUND!==0 (
 
 REM --- Python version check ---
 echo.
-for /f "delims=" %%V in ('"!PYTHON!" -c "import sys; print(f\"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}\")" 2^>nul') do set "PY_VER=%%V"
+for /f "delims=" %%V in ('"!PYTHON!" -c "import sys; v=sys.version_info; print(str(v.major)+chr(46)+str(v.minor)+chr(46)+str(v.micro))" 2^>nul') do set "PY_VER=%%V"
 for /f "delims=" %%R in ('"!PYTHON!" -c "import sys; print(1 if sys.version_info>=(3,10) else 0)" 2^>nul') do set "PY_OK=%%R"
 echo [check] Python: !PY_VER!
 if "!PY_OK!"=="0" (
@@ -156,7 +156,7 @@ if "!PY_OK!"=="0" (
 
 REM --- ComfyUI version check ---
 if exist "%COMFYUI_DIR%\comfyui_version.py" (
-    for /f "delims=" %%V in ('"!PYTHON!" -c "import re; f=open(r\"%COMFYUI_DIR%\comfyui_version.py\").read(); print(re.search(r\"__version__\s*=\s*[\x27\"]([^\x27\"]+)[\x27\"]\",f).group(1))" 2^>nul') do set "COMFY_VER=%%V"
+    for /f "delims=" %%V in ('"!PYTHON!" -c "f=open(r\"%COMFYUI_DIR%\comfyui_version.py\").read(); print([l.split()[2].strip(chr(39)+chr(34)) for l in f.splitlines() if chr(95)+chr(95)+chr(118)+chr(101)+chr(114)+chr(115)+chr(105)+chr(111)+chr(110)+chr(95)+chr(95) in l][0])" 2^>nul') do set "COMFY_VER=%%V"
     echo [check] ComfyUI: !COMFY_VER!
     echo         Tested against: 0.19.x — other versions may work but are not guaranteed.
 ) else (
