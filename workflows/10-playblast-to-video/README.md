@@ -32,16 +32,16 @@ Turn any basic render (flat shading, no textures, simple lighting) that contains
 | **VRAM (Minimum)** | 16 GB |
 | **VRAM (Recommended)** | 24 GB |
 | **Custom Nodes** | 8 packages |
-| **Models** | 9 files (~30 GB) |
+| **Models** | 9 files (~130 GB) |
 
 ## Required Models
 
 | Model | Type | Size |
 |-------|------|------|
-| `Wan2.2-VACE-Fun-A14B_high_noise_model.safetensors` | Diffusion Model | 26.62 GB |
-| `Wan2.2-VACE-Fun-A14B_low_noise_model.safetensors` | Diffusion Model | 26.62 GB |
-| `wan2.2_t2v_high_noise_14B_fp16.safetensors` | Diffusion Model | 26.62 GB |
-| `wan2.2_t2v_low_noise_14B_fp16.safetensors` | Diffusion Model | 26.62 GB |
+| `Wan2.2-VACE-Fun-A14B_high_noise_model.safetensors` | Diffusion Model | ~37 GB |
+| `Wan2.2-VACE-Fun-A14B_low_noise_model.safetensors` | Diffusion Model | ~37 GB |
+| `wan2.2_t2v_high_noise_14B_fp16.safetensors` | Diffusion Model | ~28 GB |
+| `wan2.2_t2v_low_noise_14B_fp16.safetensors` | Diffusion Model | ~28 GB |
 | `wan_2.1_vae.safetensors` | VAE | 242 MB |
 | `vae-ft-mse-840000-ema-pruned.safetensors` | VAE | 335 MB |
 | `umt5_xxl_fp16.safetensors` | Text Encoder | 10.59 GB |
