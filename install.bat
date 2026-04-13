@@ -108,13 +108,14 @@ REM The Desktop App sets TWO custom_nodes search paths:
 REM   1. <user-data-root>\custom_nodes  (primary — install nodes here)
 REM   2. <ComfyUI-source>\custom_nodes  (must exist or ComfyUI crashes at startup)
 REM The user-data-root is two levels above COMFYUI_PARENT (resources\).
+REM IMPORTANT: Use the venv from the user-data-root, NOT uv python find (which may
+REM            return a different global venv and send pip installs to the wrong place).
 if !PIP_FOUND!==0 if exist "!COMFYUI_PARENT!\uv\win\uv.exe" (
-    for /f "delims=" %%P in ('"!COMFYUI_PARENT!\uv\win\uv.exe" python find 2^>nul') do set "UV_PYTHON=%%P"
-    if defined UV_PYTHON if exist "!UV_PYTHON!" (
-        set "PYTHON=!UV_PYTHON!"
+    for %%I in ("!COMFYUI_PARENT!\..\..") do set "DESKTOP_USER_DIR=%%~fI"
+    if exist "!DESKTOP_USER_DIR!\.venv\Scripts\python.exe" (
+        set "PYTHON=!DESKTOP_USER_DIR!\.venv\Scripts\python.exe"
         set PIP_FOUND=1
-        for %%I in ("!COMFYUI_PARENT!\..\..") do set "DESKTOP_USER_DIR=%%~fI"
-        echo Detected ComfyUI Desktop App ^(uv^) - using !UV_PYTHON!
+        echo Detected ComfyUI Desktop App - using !DESKTOP_USER_DIR!\.venv\Scripts\python.exe
         echo   Desktop user data dir: !DESKTOP_USER_DIR!
     )
 )
