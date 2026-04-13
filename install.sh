@@ -240,9 +240,10 @@ if module_selected "09"; then
   install_node "ComfyUI-WanVideoWrapper" "https://github.com/kijai/ComfyUI-WanVideoWrapper"
   install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes"
   # triton must match PyTorch for torch.compile/inductor to work.
-  # WanVideoWrapper uses torch.compile — without a compatible triton, inference fails.
-  echo "          Upgrading triton for torch.compile compatibility..."
-  "$PYTHON" -m pip install -q --upgrade triton
+  # WanVideoWrapper uses torch.compile — triton 3.3+ removes triton_key which
+  # torch 2.8.0 requires. Pin to 3.2.0 which is compatible with torch 2.8.x.
+  echo "          Pinning triton to 3.2.0 for torch.compile compatibility..."
+  "$PYTHON" -m pip install -q triton==3.2.0
 fi
 
 # --- Module 10: Playblast to Video ---
