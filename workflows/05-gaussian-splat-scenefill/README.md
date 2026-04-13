@@ -49,9 +49,9 @@ Input Image -> LoRA -> Diffusion Process -> Output
 
 ## Example Output
 
-| Input Splat | Wireframe | Filled Output |
-|-------------|-----------|---------------|
-| ![](images/05-input.png) | ![](images/05-wireframe.png) | ![](images/05-output.png) |
+| Input Splat | Filled Output |
+|-------------|---------------|
+| ![](images/05-input.png) | ![](images/05-output.png) |
 
 ## Sample Input
 
