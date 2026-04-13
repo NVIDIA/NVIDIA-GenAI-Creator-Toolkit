@@ -433,29 +433,35 @@ if !DO_INSTALL!==1 (
 )
 
 REM --- Copy workflow JSON files and sample inputs into ComfyUI ---
-set WORKFLOWS_DEST=%COMFYUI_DIR%\user\default\workflows\creative-genai-workflows
-set INPUTS_DEST=%COMFYUI_DIR%\input
-if not exist "%WORKFLOWS_DEST%" mkdir "%WORKFLOWS_DEST%"
-if not exist "%INPUTS_DEST%" mkdir "%INPUTS_DEST%"
+REM Desktop App: workflows and inputs live in the user data root, not resources\ComfyUI
+if defined DESKTOP_USER_DIR (
+    set "WORKFLOWS_DEST=!DESKTOP_USER_DIR!\user\default\workflows\creative-genai-workflows"
+    set "INPUTS_DEST=!DESKTOP_USER_DIR!\input"
+) else (
+    set "WORKFLOWS_DEST=%COMFYUI_DIR%\user\default\workflows\creative-genai-workflows"
+    set "INPUTS_DEST=%COMFYUI_DIR%\input"
+)
+if not exist "!WORKFLOWS_DEST!" mkdir "!WORKFLOWS_DEST!"
+if not exist "!INPUTS_DEST!" mkdir "!INPUTS_DEST!"
 for /d %%D in ("%~dp0workflows\*") do (
   if exist "%%D\workflow.json" (
     set "MODULE_NAME=%%~nxD"
-    if not exist "%WORKFLOWS_DEST%\!MODULE_NAME!" mkdir "%WORKFLOWS_DEST%\!MODULE_NAME!"
-    copy /y "%%D\workflow.json" "%WORKFLOWS_DEST%\!MODULE_NAME!\!MODULE_NAME!.json" > nul
+    if not exist "!WORKFLOWS_DEST!\!MODULE_NAME!" mkdir "!WORKFLOWS_DEST!\!MODULE_NAME!"
+    copy /y "%%D\workflow.json" "!WORKFLOWS_DEST!\!MODULE_NAME!\!MODULE_NAME!.json" > nul
     if exist "%%D\videoprep.json" (
-      copy /y "%%D\videoprep.json" "%WORKFLOWS_DEST%\!MODULE_NAME!\!MODULE_NAME!-videoprep.json" > nul
+      copy /y "%%D\videoprep.json" "!WORKFLOWS_DEST!\!MODULE_NAME!\!MODULE_NAME!-videoprep.json" > nul
     )
     if exist "%%D\input\" (
-      copy /y "%%D\input\*" "%INPUTS_DEST%\" > nul
+      copy /y "%%D\input\*" "!INPUTS_DEST!\" > nul
     )
   )
 )
 REM --- Patch model paths in workflow JSONs for Windows (forward slash -> backslash) ---
 REM ComfyUI on Windows lists models with backslashes; the JSONs were authored on Linux.
-"!PYTHON!" "%~dp0patch_model_paths.py" "%WORKFLOWS_DEST%"
+"!PYTHON!" "%~dp0patch_model_paths.py" "!WORKFLOWS_DEST!"
 echo.
-echo Workflows copied to: %WORKFLOWS_DEST%
-echo Sample inputs copied to: %INPUTS_DEST%
+echo Workflows copied to: !WORKFLOWS_DEST!
+echo Sample inputs copied to: !INPUTS_DEST!
 
 REM --- Offer to install Ollama if module 01 or all selected ---
 set NEEDS_OLLAMA=0
