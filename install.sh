@@ -158,7 +158,7 @@ if [ -z "$MODULES" ]; then
   echo "   06       Equirectangular Outpaint (~12 GB)"
   echo "   07       Panorama to HDRI         (~24 GB)"
   echo "   08       Trellis2 3D Asset Gen    (~20 GB)"
-  echo "   09       Cutout Animation         (~30 GB)"
+  echo "   09       Cutout Animation         (~100 GB)"
   echo "   10       Playblast to Video       (~30 GB)"
   echo "   bonus-a  Texture Extraction       (~8 GB)"
   echo "   bonus-b  Texture to PBR           (~12 GB)"
@@ -239,6 +239,10 @@ if module_selected "09"; then
   install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use"
   install_node "ComfyUI-WanVideoWrapper" "https://github.com/kijai/ComfyUI-WanVideoWrapper"
   install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes"
+  # triton must match PyTorch for torch.compile/inductor to work.
+  # WanVideoWrapper uses torch.compile — without a compatible triton, inference fails.
+  echo "          Upgrading triton for torch.compile compatibility..."
+  "$PYTHON" -m pip install -q --upgrade triton
 fi
 
 # --- Module 10: Playblast to Video ---
