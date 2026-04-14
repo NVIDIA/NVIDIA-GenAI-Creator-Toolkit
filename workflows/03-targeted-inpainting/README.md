@@ -36,21 +36,21 @@ Input Image -> Mask -> Model Conditioning -> Diffusion -> Output Image
 |-------------|-------|
 | **VRAM (Minimum)** | 16 GB |
 | **VRAM (Recommended)** | 24 GB |
-| **Custom Nodes** | 1 package |
-| **Models** | 5 files |
+| **Custom Nodes** | 2 packages |
+| **Models** | 4 files |
 
 ## Required Models
 
 | Model | Type | Size |
 |-------|------|------|
 | `qwen_image_edit_2511_bf16.safetensors` | Image Edit Model | ~41 GB |
-| `qwen_2.5_vl_7b.safetensors` | Text Encoder | ~17 GB |
+| `qwen_2.5_vl_7b_fp8_scaled.safetensors` | Text Encoder | ~17 GB |
 | `qwen_image_vae.safetensors` | VAE | ~255 MB |
-| `Qwen-Image-Lightning-8steps-V2.0.safetensors` | LoRA | ~1.7 GB |
-| `Qwen-Image-Edit-2511-Object-Remover.safetensors` | LoRA | 225 MB |
+| `Qwen-Image-Edit-Lightning-8steps-V1.0.safetensors` | LoRA | ~1.7 GB |
 
 ## Required Custom Nodes
 
+- [ComfyUI-TextureAlchemy](https://github.com/amtarr/ComfyUI-TextureAlchemy) (branch: `Sandbox`)
 - [ComfyUI-Inpaint-CropAndStitch](https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch)
 
 ## Example Output
@@ -76,7 +76,6 @@ A sample input image is provided in the `input/` folder.
 
 ## Understanding the Outputs
 
-The workflow shows three previews:
-- **Original** — the input image resized to the model's working resolution (1024×1024)
-- **Cropped Image** — the masked region extracted and padded to 1024×1024 for inpainting
-- **New Composite** — the final result with the inpainted patch stitched back into the original
+The workflow shows two outputs:
+- **Preview** — the final result with the inpainted patch stitched back into the original
+- **Image Compare** — side-by-side view of the original and the inpainted result
