@@ -182,7 +182,7 @@ if [ -z "$MODULES" ]; then
   echo "   07       Panorama to HDRI         (~24 GB)"
   echo "   08       Trellis2 3D Asset Gen    (~20 GB)"
   echo "   09       Cutout Animation         (~100 GB)"
-  echo "   10       Playblast to Video       (~30 GB)"
+  echo "   10       Playblast to Video       (~130 GB)"
   echo "   bonus-a  Texture Extraction       (~8 GB)"
   echo "   bonus-b  Texture to PBR           (~12 GB)"
   echo ""
