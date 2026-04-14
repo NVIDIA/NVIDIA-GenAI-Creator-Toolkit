@@ -99,13 +99,13 @@ Every module folder contains:
 
 ```
 workflows/01-llm-prompt-enhancer/
-├── README.md       ← what it does, pipeline, usage instructions
-├── workflow.json   ← drag this into ComfyUI
-├── models.md       ← model names, sizes, download sources
-└── nodes.md        ← required custom nodes and install instructions
+├── README.md                          ← what it does, pipeline, usage instructions
+├── 01-llm-prompt-enhancer.json        ← drag this into ComfyUI
+├── 01-llm-prompt-enhancer-models.md   ← model names, sizes, download sources
+└── 01-llm-prompt-enhancer-nodes.md    ← required custom nodes and install instructions
 ```
 
-Module 09 includes two workflows — run `videoprep.json` first, then `workflow.json`.
+Module 09 includes two workflows — run `09-cutout-animation-to-video-videoprep.json` first, then `09-cutout-animation-to-video.json`.
 
 ---
 
@@ -150,7 +150,7 @@ You only need to download models for the modules you use.
 
 Code and documentation in this repository are licensed under [Apache 2.0](LICENSE).
 
-Model licenses vary — see each module's `models.md` for details. Notable exception: **Flux.1-dev** (Module 07) requires a separate license from Black Forest Labs for commercial use.
+Model licenses vary — see each module's `[module-name]-models.md` for details. Notable exception: **Flux.1-dev** (Module 07) requires a separate license from Black Forest Labs for commercial use.
 
 > **Third-party software notice:** This project will download and install additional third-party open source software projects. Review the license terms of these open source projects before use. See [THIRD-PARTY.txt](THIRD-PARTY.txt) for the full list.
 

@@ -1,8 +1,8 @@
 # Custom Nodes — Module 09: Cutout Animation to Video
 
-Two workflows are included: `videoprep.json` (run first) and `workflow.json` (TTM generation).
+Two workflows are included: `09-cutout-animation-to-video-videoprep.json` (run first) and `09-cutout-animation-to-video.json` (TTM generation).
 
-## VideoPrep workflow (`videoprep.json`)
+## VideoPrep workflow (`09-cutout-animation-to-video-videoprep.json`)
 
 | Node Pack | Repo | Purpose |
 |-----------|------|---------|
@@ -15,7 +15,7 @@ Two workflows are included: `videoprep.json` (run first) and `workflow.json` (TT
 | ComfyUI-SAM3 | [PozzettiAndrea/ComfyUI-SAM3](https://github.com/PozzettiAndrea/ComfyUI-SAM3) | SAM3 segmentation model loader |
 | ComfyUI-VideoHelperSuite | [Kosinkadink/ComfyUI-VideoHelperSuite](https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite) | Video I/O, frame extraction |
 
-## TTM workflow (`workflow.json`)
+## TTM workflow (`09-cutout-animation-to-video.json`)
 
 | Node Pack | Repo | Purpose |
 |-----------|------|---------|
@@ -27,4 +27,4 @@ Two workflows are included: `videoprep.json` (run first) and `workflow.json` (TT
 | ComfyUI-Easy-Use | [yolain/ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use) | Utility nodes |
 | ComfyUI-Custom-Scripts | [pythongosssss/ComfyUI-Custom-Scripts](https://github.com/pythongosssss/ComfyUI-Custom-Scripts) | `StringFunction\|pysssss` |
 
-**Run VideoPrep first.** It generates the first frame, last frame, trajectory video, and subject mask that `workflow.json` requires as inputs.
+**Run VideoPrep first.** It generates the first frame, last frame, trajectory video, and subject mask that `09-cutout-animation-to-video.json` requires as inputs.

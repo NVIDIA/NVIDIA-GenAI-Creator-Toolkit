@@ -24,8 +24,8 @@ First Frame + Last Frame + Mask -> VideoPrep -> Wan2.2 I2V -> Video Output
 
 This module includes two workflow files:
 
-1. **`videoprep.json`** — Run this first. Prepares your input images and mask.
-2. **`workflow.json`** — The main video generation workflow.
+1. **`09-cutout-animation-to-video-videoprep.json`** — Run this first. Prepares your input images and mask.
+2. **`09-cutout-animation-to-video.json`** — The main video generation workflow.
 
 ## Requirements
 
@@ -73,6 +73,6 @@ Sample input frames, video, and mask are provided in the `input/` folder.
 
 ## How to Use
 
-1. Load `videoprep.json` into ComfyUI and run it to prepare your inputs
-2. Load `workflow.json` into ComfyUI
+1. Load `09-cutout-animation-to-video-videoprep.json` into ComfyUI and run it to prepare your inputs
+2. Load `09-cutout-animation-to-video.json` into ComfyUI
 3. Connect your prepared inputs and click **Queue Prompt**

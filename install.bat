@@ -478,12 +478,12 @@ if defined WORKFLOWS_DEST_OVERRIDE (
 if not exist "!WORKFLOWS_DEST!" mkdir "!WORKFLOWS_DEST!"
 if not exist "!INPUTS_DEST!" mkdir "!INPUTS_DEST!"
 for /d %%D in ("%~dp0workflows\*") do (
-  if exist "%%D\workflow.json" (
-    set "MODULE_NAME=%%~nxD"
+  set "MODULE_NAME=%%~nxD"
+  if exist "%%D\!MODULE_NAME!.json" (
     if not exist "!WORKFLOWS_DEST!\!MODULE_NAME!" mkdir "!WORKFLOWS_DEST!\!MODULE_NAME!"
-    copy /y "%%D\workflow.json" "!WORKFLOWS_DEST!\!MODULE_NAME!\!MODULE_NAME!.json" > nul
-    if exist "%%D\videoprep.json" (
-      copy /y "%%D\videoprep.json" "!WORKFLOWS_DEST!\!MODULE_NAME!\!MODULE_NAME!-videoprep.json" > nul
+    copy /y "%%D\!MODULE_NAME!.json" "!WORKFLOWS_DEST!\!MODULE_NAME!\!MODULE_NAME!.json" > nul
+    if exist "%%D\!MODULE_NAME!-videoprep.json" (
+      copy /y "%%D\!MODULE_NAME!-videoprep.json" "!WORKFLOWS_DEST!\!MODULE_NAME!\!MODULE_NAME!-videoprep.json" > nul
     )
     if exist "%%D\input\" (
       copy /y "%%D\input\*" "!INPUTS_DEST!\" > nul

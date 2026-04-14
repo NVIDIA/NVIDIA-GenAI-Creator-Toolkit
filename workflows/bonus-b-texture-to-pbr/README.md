@@ -57,5 +57,5 @@ A sample input image is provided in the `input/` folder. You can also use output
 
 ## How to Use
 
-1. Load `workflow.json` into ComfyUI
+1. Load `bonus-b-texture-to-pbr.json` into ComfyUI
 2. Connect your input texture and click **Queue Prompt**

@@ -67,5 +67,5 @@ Sample render frames and video passes are provided in the `input/` folder.
 ## How to Use
 
 1. Export Depth and Canny passes from your 3D package
-2. Load `workflow.json` into ComfyUI
+2. Load `10-playblast-to-video.json` into ComfyUI
 3. Connect your render passes and style image, then click **Queue Prompt**

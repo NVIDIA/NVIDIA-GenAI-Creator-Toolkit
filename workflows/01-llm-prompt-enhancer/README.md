@@ -78,5 +78,5 @@ Ollama runs as a background service. Once installed, it starts automatically and
 
 ## How to Use
 
-1. Load `workflow.json` into ComfyUI
+1. Load `01-llm-prompt-enhancer.json` into ComfyUI
 2. Configure your prompt and click **Queue Prompt**

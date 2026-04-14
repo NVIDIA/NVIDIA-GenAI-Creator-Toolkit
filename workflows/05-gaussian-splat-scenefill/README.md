@@ -60,5 +60,5 @@ Sample input images are provided in the `input/` folder.
 ## How to Use
 
 1. Complete [Module 04](../04-image-to-gaussian-splat/) first to generate your Gaussian Splat output
-2. Load `workflow.json` into ComfyUI
+2. Load `05-gaussian-splat-scenefill.json` into ComfyUI
 3. Connect your splat output and click **Queue Prompt**

@@ -54,5 +54,5 @@ A sample input image is provided in the `input/` folder.
 
 ## How to Use
 
-1. Load `workflow.json` into ComfyUI
+1. Load `04-image-to-gaussian-splat.json` into ComfyUI
 2. Connect your input image and click **Queue Prompt**

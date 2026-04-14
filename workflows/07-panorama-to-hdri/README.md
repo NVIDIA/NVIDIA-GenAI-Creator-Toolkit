@@ -72,5 +72,5 @@ Run [Module 06](../06-equirectangular-outpainting/) first to generate a panorama
 ## How to Use
 
 1. Complete [Module 06](../06-equirectangular-outpainting/) to generate your panorama
-2. Load `workflow.json` into ComfyUI
+2. Load `07-panorama-to-hdri.json` into ComfyUI
 3. Connect your panorama and click **Queue Prompt**

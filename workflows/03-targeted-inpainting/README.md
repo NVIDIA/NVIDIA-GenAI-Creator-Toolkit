@@ -65,7 +65,7 @@ A sample input image is provided in the `input/` folder.
 
 ## How to Use
 
-1. Load `workflow.json` into ComfyUI
+1. Load `03-targeted-inpainting.json` into ComfyUI
 2. In the **Load Image** node, right-click the image thumbnail → **Open in MaskEditor**
 3. Paint over the area you want to change (white = edit, black = keep)
 4. Click **Save** to apply the mask

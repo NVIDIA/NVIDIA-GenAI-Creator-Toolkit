@@ -303,12 +303,12 @@ INPUTS_DEST="$COMFYUI_DIR/input"
 mkdir -p "$WORKFLOWS_DEST"
 mkdir -p "$INPUTS_DEST"
 for workflow_dir in "$(dirname "$0")/workflows"/*/; do
-  if [ -f "${workflow_dir}workflow.json" ]; then
-    module_name="$(basename "$workflow_dir")"
+  module_name="$(basename "$workflow_dir")"
+  if [ -f "${workflow_dir}${module_name}.json" ]; then
     mkdir -p "$WORKFLOWS_DEST/$module_name"
-    cp "${workflow_dir}workflow.json" "$WORKFLOWS_DEST/$module_name/$module_name.json"
-    if [ -f "${workflow_dir}videoprep.json" ]; then
-      cp "${workflow_dir}videoprep.json" "$WORKFLOWS_DEST/$module_name/${module_name}-videoprep.json"
+    cp "${workflow_dir}${module_name}.json" "$WORKFLOWS_DEST/$module_name/$module_name.json"
+    if [ -f "${workflow_dir}${module_name}-videoprep.json" ]; then
+      cp "${workflow_dir}${module_name}-videoprep.json" "$WORKFLOWS_DEST/$module_name/${module_name}-videoprep.json"
     fi
     if [ -d "${workflow_dir}input" ]; then
       cp "${workflow_dir}input/"* "$INPUTS_DEST/" 2>/dev/null || true

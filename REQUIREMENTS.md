@@ -129,7 +129,7 @@ Open `http://127.0.0.1:8188` in your browser.
 
 ## Custom Nodes
 
-Each workflow lists its required nodes in `nodes.md`. The fastest path is running `install.sh` / `install.bat` from this repo, which installs all node packs at once.
+Each workflow lists its required nodes in its `[module-name]-nodes.md` file. The fastest path is running `install.sh` / `install.bat` from this repo, which installs all node packs at once.
 
 > **Windows users: run `install.bat` from Command Prompt (`cmd.exe`), not Git Bash or PowerShell.**
 > Git Bash does not execute `.bat` files through cmd.exe, so the script will appear to do nothing.
@@ -151,7 +151,7 @@ To install individually via ComfyUI Manager:
 
 ## Models
 
-Most models must be downloaded manually before running a workflow. See each module's `models.md` for exact filenames, sizes, download URLs, and which subfolder of `ComfyUI/models/` to place each file in.
+Most models must be downloaded manually before running a workflow. See each module's `[module-name]-models.md` for exact filenames, sizes, download URLs, and which subfolder of `ComfyUI/models/` to place each file in.
 
 For large models (Wan2.2 ~28 GB, Trellis2 ~20 GB), use `huggingface-cli` to pre-download.
 
@@ -238,7 +238,7 @@ On ComfyUI Portable: `python_embeded\python.exe -m pip install huggingface_hub`
 The workflow references node types that aren't installed. Run `install.bat` / `install.sh` and restart ComfyUI, then reload the workflow.
 
 **Module 09: first workflow run produces no video**
-Module 09 requires two workflows in sequence: run `videoprep.json` first to prepare inputs, then `workflow.json` for generation. See the Module 09 README for the full two-step process.
+Module 09 requires two workflows in sequence: run `09-cutout-animation-to-video-videoprep.json` first to prepare inputs, then `09-cutout-animation-to-video.json` for generation. See the Module 09 README for the full two-step process.
 
 **Module 09: `ComfyUI-Impact-Pack` shows "IMPORT FAILED" in ComfyUI Manager**
 Impact Pack requires `ultralytics` and `onnxruntime`, which can fail to install on ComfyUI Portable's embedded Python. Fix:
