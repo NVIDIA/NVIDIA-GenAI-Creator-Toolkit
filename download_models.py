@@ -98,10 +98,26 @@ QWEN_VAE = ModelSpec(
     size="~255 MB",
 )
 
+QWEN_TEXT_ENCODER_FP8 = ModelSpec(
+    name="Qwen 2.5 VL 7B Text Encoder (FP8)",
+    repo="Comfy-Org/Qwen-Image_ComfyUI",
+    filename="split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors",
+    dest_subdir="models/text_encoders/qwen",
+    size="~9 GB",
+)
+
 QWEN_LIGHTNING_8STEP = ModelSpec(
     name="Qwen Lightning 8-step LoRA",
     repo="lightx2v/Qwen-Image-Lightning",
     filename="Qwen-Image-Lightning-8steps-V2.0.safetensors",
+    dest_subdir="models/loras/qwen",
+    size="~1.7 GB",
+)
+
+QWEN_LIGHTNING_EDIT_8STEP_V1 = ModelSpec(
+    name="Qwen Image Edit Lightning 8-step LoRA V1.0",
+    repo="lightx2v/Qwen-Image-Lightning",
+    filename="Qwen-Image-Edit-Lightning-8steps-V1.0.safetensors",
     dest_subdir="models/loras/qwen",
     size="~1.7 GB",
 )
@@ -230,16 +246,9 @@ def build_module_catalogue() -> dict:
         name="Targeted Inpainting",
         models=[
             QWEN_EDIT_DIFFUSION,
-            QWEN_TEXT_ENCODER,
+            QWEN_TEXT_ENCODER_FP8,
             QWEN_VAE,
-            QWEN_LIGHTNING_8STEP,
-            ModelSpec(
-                name="Object Remover LoRA",
-                repo="prithivMLmods/Qwen-Image-Edit-2511-Object-Remover",
-                filename="Qwen-Image-Edit-2511-Object-Remover.safetensors",
-                dest_subdir="models/loras/qwen",
-                size="~230 MB",
-            ),
+            QWEN_LIGHTNING_EDIT_8STEP_V1,
         ],
     )
 
