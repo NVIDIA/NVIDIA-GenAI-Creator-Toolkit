@@ -40,17 +40,20 @@ git clone https://github.com/NVIDIA/Creative-GenAI-Workflows
 cd Creative-GenAI-Workflows
 
 # 2. Install custom nodes and download models
-#    Pass the folder that contains main.py.
-#    Desktop app users: it's nested under resources\ComfyUI inside the app install.
-#    Not sure? Run in Command Prompt: where /r C:\ main.py
+#    Pass your ComfyUI installation location — the folder you chose during Desktop App setup.
+#    It contains your .venv\, models\, and custom_nodes\ folders.
+#    Not sure where it is? Check Desktop App Settings > Installation Location.
 #
 # Windows (run from Command Prompt, NOT Git Bash or PowerShell):
-install.bat C:\path\to\ComfyUI\resources\ComfyUI
+install.bat C:\path\to\your\installation-location
 # Linux:
 bash install.sh /path/to/ComfyUI
+
+# Portable install — pass the folder containing run_nvidia_gpu.bat:
+install.bat C:\ComfyUI_windows_portable
 ```
 
-> **Finding your ComfyUI path:** The script needs the folder that contains `main.py`. If you installed the [ComfyUI Desktop app](https://www.comfy.org/download), that folder is nested inside the app — typically `...\resources\ComfyUI`. To locate it on Windows, run: `where /r C:\ main.py` in Command Prompt.
+> **Finding your installation location:** For the [ComfyUI Desktop App](https://www.comfy.org/download), this is the folder you chose when setting up the app — it contains your `.venv\`, `models\`, and `custom_nodes\` folders. Check **Settings → Installation Location** inside the app if you're unsure. For Portable, pass the folder with `run_nvidia_gpu.bat`. For a manual install, pass the folder with `main.py`.
 
 > **New to this?** Don't download everything at once — see [Recommended Starting Point](REQUIREMENTS.md#recommended-starting-point) in REQUIREMENTS.md for a low-friction first module to try.
 

@@ -17,12 +17,23 @@ REM
 REM install.bat — ComfyUI custom node installer for comfyui-generative-ai-workflows
 REM
 REM IMPORTANT: Run this from Command Prompt (cmd.exe), NOT from Git Bash or PowerShell.
-REM   cmd.exe:    install.bat C:\path\to\ComfyUI
-REM   PowerShell: cmd /c install.bat C:\path\to\ComfyUI
 REM
-REM Optionally download models immediately after install:
-REM   install.bat C:\path\to\ComfyUI --modules 02,03,08
-REM   install.bat C:\path\to\ComfyUI --modules all
+REM Pass your ComfyUI installation location as the first argument:
+REM
+REM   Desktop App:  install.bat C:\path\to\your\installation-location
+REM                 (the folder you chose during Desktop App setup — contains .venv\, models\, custom_nodes\)
+REM
+REM   Portable:     install.bat C:\ComfyUI_windows_portable
+REM                 (the folder containing run_nvidia_gpu.bat and python_embeded\)
+REM
+REM   Manual:       install.bat C:\path\to\ComfyUI
+REM                 (the folder containing main.py)
+REM
+REM   PowerShell:   cmd /c install.bat C:\path\to\installation-location
+REM
+REM Install specific modules:
+REM   install.bat C:\path\to\installation-location --modules 02,03,08
+REM   install.bat C:\path\to\installation-location --modules all
 
 REM Force UTF-8 output so text is visible in all terminals
 chcp 65001 > nul
@@ -35,8 +46,10 @@ echo  ComfyUI Generative AI Workflows - Node Installer
 echo ================================================================
 echo.
 
-REM Parse arguments: first positional = ComfyUI path, --modules = module list
-set COMFYUI_DIR=
+REM Parse arguments
+REM   First positional arg = ComfyUI installation location (Desktop App) or ComfyUI folder (Portable/Manual)
+REM   --modules = comma-separated module list to install
+set INSTALL_LOCATION=
 set MODULES=
 :parse_args
 if "%~1"=="" goto done_parse
@@ -46,86 +59,75 @@ if /i "%~1"=="--modules" (
     shift /1
     goto parse_args
 )
-if not defined COMFYUI_DIR set COMFYUI_DIR=%~1
+if not defined INSTALL_LOCATION set INSTALL_LOCATION=%~1
 shift /1
 goto parse_args
 :done_parse
-if not defined COMFYUI_DIR set COMFYUI_DIR=%cd%
+if not defined INSTALL_LOCATION set INSTALL_LOCATION=%cd%
 
-REM Strip trailing backslash (causes quoting issues when path is passed to Python)
-if "%COMFYUI_DIR:~-1%"=="\" set "COMFYUI_DIR=%COMFYUI_DIR:~0,-1%"
+REM Strip trailing backslash
+if "%INSTALL_LOCATION:~-1%"=="\" set "INSTALL_LOCATION=%INSTALL_LOCATION:~0,-1%"
 
-echo ComfyUI path: %COMFYUI_DIR%
+echo Installation location: %INSTALL_LOCATION%
 echo.
 
-set NODES_DIR=%COMFYUI_DIR%\custom_nodes
-REM Overridden below if ComfyUI Desktop App is detected (DESKTOP_USER_DIR)
-
-if not exist "%COMFYUI_DIR%\main.py" (
-  echo ERROR: main.py not found at: %COMFYUI_DIR%
-  echo.
-  echo   This script requires the ComfyUI root directory ^(the folder containing main.py^).
-  echo   Pass the path as an argument:
-  echo     install.bat C:\path\to\ComfyUI
-  echo.
-  echo   If using ComfyUI Portable, the root is the folder with run_nvidia_gpu.bat,
-  echo   NOT a subfolder. Example: install.bat C:\ComfyUI_windows_portable
-  exit /b 1
-)
-
-REM Detect which Python/pip to use
-REM Priority: Portable embedded Python (same dir or parent) > venv > conda > system pip
+REM -----------------------------------------------------------------------
+REM Detect install type from what exists in the given path.
 REM
-REM ComfyUI Portable layout:
-REM   <root>\python_embeded\   <- embedded Python here
-REM   <root>\ComfyUI\main.py   <- main.py here (one level down)
-REM Uses !PIP_FOUND! (delayed expansion) to short-circuit once a pip is found.
+REM   Desktop App:  <installation location>\.venv\Scripts\python.exe
+REM                 <installation location>\custom_nodes\
+REM                 <installation location>\models\
+REM
+REM   Portable:     <root>\python_embeded\python.exe  (same dir or parent)
+REM                 <root>\ComfyUI\main.py
+REM
+REM   Manual:       <ComfyUI dir>\main.py
+REM                 <ComfyUI dir>\venv\Scripts\python.exe  (optional)
+REM -----------------------------------------------------------------------
 set PIP_FOUND=0
+set INSTALL_TYPE=unknown
+set COMFYUI_SOURCE_DIR=
+set NODES_DIR=%INSTALL_LOCATION%\custom_nodes
 
-REM Resolve the parent directory as an absolute path so 'if exist' works reliably
-for %%I in ("%COMFYUI_DIR%\..") do set "COMFYUI_PARENT=%%~fI"
+REM Resolve parent directory
+for %%I in ("%INSTALL_LOCATION%\..") do set "INSTALL_PARENT=%%~fI"
 
-if exist "%COMFYUI_DIR%\python_embeded\python.exe" (
-    set "PYTHON=%COMFYUI_DIR%\python_embeded\python.exe"
+REM --- Desktop App: installation location has .venv directly ---
+if !PIP_FOUND!==0 if exist "%INSTALL_LOCATION%\.venv\Scripts\python.exe" (
+    set "PYTHON=%INSTALL_LOCATION%\.venv\Scripts\python.exe"
     set PIP_FOUND=1
-    echo Detected ComfyUI Portable - using embedded Python
+    set INSTALL_TYPE=desktop
+    set "DESKTOP_USER_DIR=%INSTALL_LOCATION%"
+    echo [check] ComfyUI Desktop App installation location detected.
+    echo         Python environment: %INSTALL_LOCATION%\.venv
+    REM Source code may be inside the installation location or in the app bundle
+    if exist "%INSTALL_LOCATION%\resources\ComfyUI\main.py" (
+        set "COMFYUI_SOURCE_DIR=%INSTALL_LOCATION%\resources\ComfyUI"
+    ) else if exist "%INSTALL_LOCATION%\resource\ComfyUI\main.py" (
+        set "COMFYUI_SOURCE_DIR=%INSTALL_LOCATION%\resource\ComfyUI"
+    )
 )
 
-if !PIP_FOUND!==0 if exist "!COMFYUI_PARENT!\python_embeded\python.exe" (
-    set "PYTHON=!COMFYUI_PARENT!\python_embeded\python.exe"
-    set PIP_FOUND=1
-    echo Detected ComfyUI Portable - using embedded Python ^(parent directory^)
-)
-
-if !PIP_FOUND!==0 if exist "%COMFYUI_DIR%\venv\Scripts\python.exe" (
-    set "PYTHON=%COMFYUI_DIR%\venv\Scripts\python.exe"
-    set PIP_FOUND=1
-    echo Detected venv - using %COMFYUI_DIR%\venv\Scripts\python.exe
-)
-
-REM ComfyUI Desktop App — uses uv to manage a venv; uv is at resources\uv\win\uv.exe
-REM The Desktop App sets TWO custom_nodes search paths:
-REM   1. <user-data-root>\custom_nodes  (primary — install nodes here)
-REM   2. <ComfyUI-source>\custom_nodes  (must exist or ComfyUI crashes at startup)
-REM The user-data-root is two levels above COMFYUI_PARENT (resources\).
-REM IMPORTANT: Use the venv from the user-data-root, NOT uv python find (which may
-REM            return a different global venv and send pip installs to the wrong place).
-if !PIP_FOUND!==0 if exist "!COMFYUI_PARENT!\uv\win\uv.exe" (
-    for %%I in ("!COMFYUI_PARENT!\..\..") do set "DESKTOP_USER_DIR=%%~fI"
-    if exist "!DESKTOP_USER_DIR!\.venv\Scripts\python.exe" (
-        set "PYTHON=!DESKTOP_USER_DIR!\.venv\Scripts\python.exe"
-        set PIP_FOUND=1
-        echo Detected ComfyUI Desktop App - using !DESKTOP_USER_DIR!\.venv\Scripts\python.exe
-        echo   Desktop user data dir: !DESKTOP_USER_DIR!
-    ) else (
+REM --- Catch: user passed resource\ComfyUI source dir instead of installation location ---
+if !PIP_FOUND!==0 (
+    echo "!INSTALL_LOCATION!" | findstr /i "\\resource\\ComfyUI" > nul 2>&1
+    if not errorlevel 1 (
         echo.
         echo ================================================================
-        echo  WARNING: ComfyUI Desktop App detected but first-run setup is
-        echo  incomplete. The app venv does not exist yet at:
-        echo    !DESKTOP_USER_DIR!\.venv
+        echo  ERROR: You passed the ComfyUI source folder, not your
+        echo  installation location.
         echo.
-        echo  Please launch the ComfyUI Desktop App and let it finish its
-        echo  initial setup, then re-run this installer.
+        echo  The source folder ^(resource\ComfyUI^) is managed by the app
+        echo  and will be reset on updates. Do not install nodes here.
+        echo.
+        echo  Pass your installation location instead — the folder you chose
+        echo  when setting up ComfyUI Desktop. It contains:
+        echo    .venv\        ^(Python environment^)
+        echo    models\       ^(model files^)
+        echo    custom_nodes\ ^(custom nodes^)
+        echo.
+        echo  Example:
+        echo    install.bat C:\path\to\your\ComfyUI-installation-location
         echo ================================================================
         echo.
         pause
@@ -133,18 +135,56 @@ if !PIP_FOUND!==0 if exist "!COMFYUI_PARENT!\uv\win\uv.exe" (
     )
 )
 
-REM Detect Desktop App path structure without uv.exe (incomplete install)
-if !PIP_FOUND!==0 (
-    echo "!COMFYUI_DIR!" | findstr /i "\\resources\\ComfyUI" > nul 2>&1
-    if not errorlevel 1 (
+REM --- Portable: python_embeded in same dir ---
+if !PIP_FOUND!==0 if exist "%INSTALL_LOCATION%\python_embeded\python.exe" (
+    set "PYTHON=%INSTALL_LOCATION%\python_embeded\python.exe"
+    set PIP_FOUND=1
+    set INSTALL_TYPE=portable
+    echo [check] ComfyUI Portable detected - using embedded Python
+    if exist "%INSTALL_LOCATION%\ComfyUI\main.py" (
+        set "COMFYUI_SOURCE_DIR=%INSTALL_LOCATION%\ComfyUI"
+        set "NODES_DIR=%INSTALL_LOCATION%\ComfyUI\custom_nodes"
+    ) else (
+        set "COMFYUI_SOURCE_DIR=%INSTALL_LOCATION%"
+        set "NODES_DIR=%INSTALL_LOCATION%\custom_nodes"
+    )
+)
+
+REM --- Portable: python_embeded one level up (user passed ComfyUI subfolder) ---
+if !PIP_FOUND!==0 if exist "!INSTALL_PARENT!\python_embeded\python.exe" (
+    set "PYTHON=!INSTALL_PARENT!\python_embeded\python.exe"
+    set PIP_FOUND=1
+    set INSTALL_TYPE=portable
+    set "COMFYUI_SOURCE_DIR=%INSTALL_LOCATION%"
+    echo [check] ComfyUI Portable detected - using embedded Python ^(parent^)
+)
+
+REM --- Manual install: main.py in given dir with optional venv ---
+if !PIP_FOUND!==0 if exist "%INSTALL_LOCATION%\main.py" (
+    set INSTALL_TYPE=manual
+    set "COMFYUI_SOURCE_DIR=%INSTALL_LOCATION%"
+    if exist "%INSTALL_LOCATION%\venv\Scripts\python.exe" (
+        set "PYTHON=%INSTALL_LOCATION%\venv\Scripts\python.exe"
+        set PIP_FOUND=1
+        echo [check] Manual install with venv detected.
+    )
+)
+
+REM --- Desktop App: incomplete first-run (no .venv yet) ---
+if !PIP_FOUND!==0 if !INSTALL_TYPE!==unknown (
+    REM Check if this looks like a Desktop App location without a completed setup
+    if not exist "%INSTALL_LOCATION%\main.py" (
         echo.
         echo ================================================================
-        echo  WARNING: This path looks like a ComfyUI Desktop App install,
-        echo  but the Desktop App does not appear to have finished setting up
-        echo  ^(uv.exe not found at !COMFYUI_PARENT!\uv\win\uv.exe^).
+        echo  WARNING: Could not find a Python environment at:
+        echo    %INSTALL_LOCATION%\.venv
         echo.
-        echo  Please launch the ComfyUI Desktop App first and let it complete
-        echo  its initial setup, then re-run this installer.
+        echo  If this is your ComfyUI Desktop installation location, the app
+        echo  may not have completed its initial setup yet.
+        echo  Launch ComfyUI Desktop and let it finish setup, then re-run.
+        echo.
+        echo  If this is a manual or portable install, make sure you are
+        echo  passing the correct folder ^(the one containing main.py^).
         echo ================================================================
         echo.
         pause
@@ -188,21 +228,25 @@ if "!PY_OK!"=="0" (
 )
 
 REM --- ComfyUI version check ---
-if exist "%COMFYUI_DIR%\comfyui_version.py" (
-    for /f "delims=" %%V in ('"!PYTHON!" -c "f=open(r\"%COMFYUI_DIR%\comfyui_version.py\").read(); print([l.split()[2].strip(chr(39)+chr(34)) for l in f.splitlines() if chr(95)+chr(95)+chr(118)+chr(101)+chr(114)+chr(115)+chr(105)+chr(111)+chr(110)+chr(95)+chr(95) in l][0])" 2^>nul') do set "COMFY_VER=%%V"
-    echo [check] ComfyUI: !COMFY_VER!
-    echo         Tested against: 0.19.x — other versions may work but are not guaranteed.
+if defined COMFYUI_SOURCE_DIR (
+    if exist "!COMFYUI_SOURCE_DIR!\comfyui_version.py" (
+        for /f "delims=" %%V in ('"!PYTHON!" -c "f=open(r\"!COMFYUI_SOURCE_DIR!\comfyui_version.py\").read(); print([l.split()[2].strip(chr(39)+chr(34)) for l in f.splitlines() if chr(95)+chr(95)+chr(118)+chr(101)+chr(114)+chr(115)+chr(105)+chr(111)+chr(110)+chr(95)+chr(95) in l][0])" 2^>nul') do set "COMFY_VER=%%V"
+        echo [check] ComfyUI: !COMFY_VER!
+        echo         Tested against: 0.19.x — other versions may work but are not guaranteed.
+    ) else (
+        echo [check] ComfyUI: version file not found ^(pre-0.19 or non-standard install^)
+    )
 ) else (
-    echo [check] ComfyUI: version file not found ^(pre-0.19 or non-standard install^)
-    echo [WARNING] Could not detect ComfyUI version. Proceeding anyway.
+    echo [check] ComfyUI: source directory not found — skipping version check.
 )
 echo.
 
 REM --- Install ComfyUI requirements (ensures alembic and other deps are present) ---
-if exist "%COMFYUI_DIR%\requirements.txt" (
-    echo.
-    echo Installing ComfyUI requirements...
-    "!PYTHON!" -m pip install -q -r "%COMFYUI_DIR%\requirements.txt"
+if defined COMFYUI_SOURCE_DIR (
+    if exist "!COMFYUI_SOURCE_DIR!\requirements.txt" (
+        echo Installing ComfyUI requirements...
+        "!PYTHON!" -m pip install -q -r "!COMFYUI_SOURCE_DIR!\requirements.txt"
+    )
 )
 REM comfyui-frontend-package is required by recent ComfyUI versions but missing from some requirements.txt
 "!PYTHON!" -m pip install -q comfyui-frontend-package
@@ -254,16 +298,18 @@ if not defined MODULES (
     set /p MODULES="  Modules: "
 )
 
-REM --- Desktop App: redirect nodes/models/workflows/inputs to user data root ---
-if defined DESKTOP_USER_DIR (
+REM --- Desktop App: all content goes into the installation location ---
+if !INSTALL_TYPE!==desktop (
     set "NODES_DIR=!DESKTOP_USER_DIR!\custom_nodes"
     set "MODELS_ROOT=!DESKTOP_USER_DIR!"
     set "WORKFLOWS_DEST_OVERRIDE=!DESKTOP_USER_DIR!\user\default\workflows\creative-genai-workflows"
     set "INPUTS_DEST_OVERRIDE=!DESKTOP_USER_DIR!\input"
-    REM ComfyUI also scans the source custom_nodes dir — must exist or it crashes at startup
-    if not exist "%COMFYUI_DIR%\custom_nodes" mkdir "%COMFYUI_DIR%\custom_nodes"
+    REM If the source dir is known, ensure its custom_nodes folder exists (prevents startup crash)
+    if defined COMFYUI_SOURCE_DIR (
+        if not exist "!COMFYUI_SOURCE_DIR!\custom_nodes" mkdir "!COMFYUI_SOURCE_DIR!\custom_nodes"
+    )
 ) else (
-    set "MODELS_ROOT=%COMFYUI_DIR%"
+    set "MODELS_ROOT=%INSTALL_LOCATION%"
 )
 
 echo.
@@ -508,8 +554,8 @@ if defined WORKFLOWS_DEST_OVERRIDE (
     set "WORKFLOWS_DEST=!WORKFLOWS_DEST_OVERRIDE!"
     set "INPUTS_DEST=!INPUTS_DEST_OVERRIDE!"
 ) else (
-    set "WORKFLOWS_DEST=%COMFYUI_DIR%\user\default\workflows\creative-genai-workflows"
-    set "INPUTS_DEST=%COMFYUI_DIR%\input"
+    set "WORKFLOWS_DEST=%INSTALL_LOCATION%\user\default\workflows\creative-genai-workflows"
+    set "INPUTS_DEST=%INSTALL_LOCATION%\input"
 )
 if not exist "!WORKFLOWS_DEST!" mkdir "!WORKFLOWS_DEST!"
 if not exist "!INPUTS_DEST!" mkdir "!INPUTS_DEST!"
@@ -610,43 +656,41 @@ echo.
 echo  Workflows are pre-loaded in ComfyUI under: Load ^> creative-genai-workflows
 echo.
 echo  To install a different module later, run:
-echo    install.bat %COMFYUI_DIR% --modules 03
+echo    install.bat %INSTALL_LOCATION% --modules 03
 echo  ^(already-installed nodes are skipped automatically^)
 echo.
 
 REM Ask user if they want to launch ComfyUI now
-if defined DESKTOP_USER_DIR (
+if !INSTALL_TYPE!==desktop (
     echo  Launch ComfyUI using the Desktop App icon to load your models and nodes correctly.
     echo.
     goto skip_launch
 )
 choice /c YN /m "  Launch ComfyUI now?"
 if not errorlevel 2 (
-    if exist "!COMFYUI_PARENT!\run_nvidia_gpu.bat" (
+    if exist "!INSTALL_PARENT!\run_nvidia_gpu.bat" (
         echo.
         echo  Launching ComfyUI ^(Portable^)...
-        pushd "!COMFYUI_PARENT!"
+        pushd "!INSTALL_PARENT!"
         start "" "run_nvidia_gpu.bat"
         popd
-    ) else if exist "%COMFYUI_DIR%\run_nvidia_gpu.bat" (
+    ) else if exist "%INSTALL_LOCATION%\run_nvidia_gpu.bat" (
         echo.
         echo  Launching ComfyUI ^(Portable^)...
-        pushd "%COMFYUI_DIR%"
+        pushd "%INSTALL_LOCATION%"
         start "" "run_nvidia_gpu.bat"
         popd
-    ) else if exist "%COMFYUI_DIR%\venv\Scripts\activate.bat" (
+    ) else if exist "%INSTALL_LOCATION%\venv\Scripts\activate.bat" (
         echo.
         echo  Launching ComfyUI ^(venv^)...
-        start cmd /k "cd /d "%COMFYUI_DIR%" && venv\Scripts\activate && python main.py"
-    ) else if defined PYTHON (
+        start cmd /k "cd /d "%INSTALL_LOCATION%" && venv\Scripts\activate && python main.py"
+    ) else if defined COMFYUI_SOURCE_DIR (
         echo.
         echo  Launching ComfyUI...
-        start cmd /k "cd /d "!COMFYUI_DIR!" && "!PYTHON!" main.py"
+        start cmd /k "cd /d "!COMFYUI_SOURCE_DIR!" && "!PYTHON!" main.py"
     ) else (
         echo.
-        echo  Could not detect launch method. Start ComfyUI manually:
-        echo    Portable: run_nvidia_gpu.bat ^(in the portable root folder^)
-        echo    Manual install: venv\Scripts\activate ^&^& python main.py
+        echo  Could not detect launch method. Start ComfyUI manually.
     )
 ) else (
     echo.
