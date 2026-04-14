@@ -117,6 +117,38 @@ if !PIP_FOUND!==0 if exist "!COMFYUI_PARENT!\uv\win\uv.exe" (
         set PIP_FOUND=1
         echo Detected ComfyUI Desktop App - using !DESKTOP_USER_DIR!\.venv\Scripts\python.exe
         echo   Desktop user data dir: !DESKTOP_USER_DIR!
+    ) else (
+        echo.
+        echo ================================================================
+        echo  WARNING: ComfyUI Desktop App detected but first-run setup is
+        echo  incomplete. The app venv does not exist yet at:
+        echo    !DESKTOP_USER_DIR!\.venv
+        echo.
+        echo  Please launch the ComfyUI Desktop App and let it finish its
+        echo  initial setup, then re-run this installer.
+        echo ================================================================
+        echo.
+        pause
+        exit /b 1
+    )
+)
+
+REM Detect Desktop App path structure without uv.exe (incomplete install)
+if !PIP_FOUND!==0 (
+    echo "!COMFYUI_DIR!" | findstr /i "\\resources\\ComfyUI" > nul 2>&1
+    if not errorlevel 1 (
+        echo.
+        echo ================================================================
+        echo  WARNING: This path looks like a ComfyUI Desktop App install,
+        echo  but the Desktop App does not appear to have finished setting up
+        echo  ^(uv.exe not found at !COMFYUI_PARENT!\uv\win\uv.exe^).
+        echo.
+        echo  Please launch the ComfyUI Desktop App first and let it complete
+        echo  its initial setup, then re-run this installer.
+        echo ================================================================
+        echo.
+        pause
+        exit /b 1
     )
 )
 
