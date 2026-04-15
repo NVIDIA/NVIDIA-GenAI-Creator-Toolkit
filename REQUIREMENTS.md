@@ -23,12 +23,12 @@ Requirements below assume single-image or short-video generation at moderate res
 | 02 Image Deconstruction | RTX 4080 (16 GB) ¹ | RTX 4090 (24 GB) | RTX 5090 (32 GB) | ~12 GB | 32 GB |
 | 03 Targeted Inpainting | RTX 4080 (16 GB) ¹ | RTX 4090 (24 GB) | RTX 5090 (32 GB) | ~8 GB ² | 32 GB |
 | 04 Image → Gaussian Splat | RTX 3060 (12 GB) | RTX 4080 (16 GB) | RTX 5090 (32 GB) | ~1 GB | 32 GB |
-| 05 Gaussian Splat SceneFill | RTX 4080 (16 GB) ¹ | RTX 4090 (24 GB) | RTX 5090 (32 GB) | ~8 GB ² | 32 GB |
+| 05 Novel View Synthesis | RTX 4080 (16 GB) ¹ | RTX 4090 (24 GB) | RTX 5090 (32 GB) | ~8 GB ² | 32 GB |
 | 06 Image → Equirectangular | RTX 4080 (16 GB) ¹ | RTX 4090 (24 GB) | RTX 5090 (32 GB) | ~12 GB | 32 GB |
 | 07 Panorama → HDRI | RTX 4080 (16 GB) | RTX 4090 (24 GB) | RTX 5090 (32 GB) | ~25 GB | 32 GB |
-| 08 Trellis2 3D Asset Gen | RTX 3090 (24 GB) | RTX 4090 (24 GB) | RTX 5090 (32 GB) | ~20 GB | 48 GB |
-| 09 Cutout Animation → Video | RTX 4080 (16 GB) ³ | RTX 4090 (24 GB) | RTX 5090 (32 GB) | ~30 GB | 32 GB ⁴ |
-| 10 Playblast → Video | RTX 4090 (24 GB) ⁵ | RTX 5090 (32 GB) | RTX PRO 6000 (96 GB) | ~30 GB | 48 GB |
+| 08 Image to 3D | RTX 3090 (24 GB) | RTX 4090 (24 GB) | RTX 5090 (32 GB) | ~20 GB | 48 GB |
+| 09 Image Cut Out Time to Move| RTX 4080 (16 GB) ³ | RTX 4090 (24 GB) | RTX 5090 (32 GB) | ~30 GB | 32 GB ⁴ |
+| 10 Video to Video | RTX 4090 (24 GB) ⁵ | RTX 5090 (32 GB) | RTX PRO 6000 (96 GB) | ~30 GB | 48 GB |
 | Bonus A Texture Extraction | RTX 4080 (16 GB) ¹ | RTX 4090 (24 GB) | RTX 5090 (32 GB) | ~8 GB ² | 32 GB |
 | Bonus B Texture → PBR | RTX 3060 (12 GB) | RTX 4080 (16 GB) | RTX 5090 (32 GB) | ~12 GB | 32 GB |
 
@@ -238,7 +238,7 @@ On ComfyUI Portable: `python_embeded\python.exe -m pip install huggingface_hub`
 The workflow references node types that aren't installed. Run `install.bat` / `install.sh` and restart ComfyUI, then reload the workflow.
 
 **Module 09: first workflow run produces no video**
-Module 09 requires two workflows in sequence: run `09-cutout-animation-to-video-videoprep.json` first to prepare inputs, then `09-cutout-animation-to-video.json` for generation. See the Module 09 README for the full two-step process.
+Module 09 requires two workflows in sequence: run `09-image-cut-out-time-to-move-videoprep.json` first to prepare inputs, then `09-image-cut-out-time-to-move.json` for generation. See the Module 09 README for the full two-step process.
 
 **Module 09: `ComfyUI-Impact-Pack` shows "IMPORT FAILED" in ComfyUI Manager**
 Impact Pack requires `ultralytics` and `onnxruntime`, which can fail to install on ComfyUI Portable's embedded Python. Fix:

@@ -177,12 +177,12 @@ if [ -z "$MODULES" ]; then
   echo "   02       Image Deconstruction     (~8 GB)"
   echo "   03       Targeted Inpainting      (~8 GB)"
   echo "   04       Image to Gaussian Splat  (~1 GB)"
-  echo "   05       Gaussian Splat SceneFill (~8 GB)"
-  echo "   06       Equirectangular Outpaint (~12 GB)"
+  echo "   05       Novel View Synthesis (~8 GB)"
+  echo "   06       Image to Equirectangular (~12 GB)"
   echo "   07       Panorama to HDRI         (~24 GB)"
-  echo "   08       Trellis2 3D Asset Gen    (~20 GB)"
-  echo "   09       Cutout Animation         (~100 GB)"
-  echo "   10       Playblast to Video       (~130 GB)"
+  echo "   08       Image to 3D    (~20 GB)"
+  echo "   09       Image Cut Out Time to Move         (~100 GB)"
+  echo "   10       Video to Video       (~130 GB)"
   echo "   bonus-a  Texture Extraction       (~8 GB)"
   echo "   bonus-b  Texture to PBR           (~12 GB)"
   echo ""
@@ -229,7 +229,7 @@ if module_selected "04" || module_selected "05"; then
   install_node "ComfyUI-GeometryPack" "https://github.com/PozzettiAndrea/ComfyUI-GeometryPack"
 fi
 
-# --- Module 06: Equirectangular Outpainting ---
+# --- Module 06: Image to Equirectangular ---
 if module_selected "06"; then
   install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use"
   install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch"
@@ -249,7 +249,7 @@ if module_selected "08"; then
   install_node "ComfyUI-Trellis2" "https://github.com/visualbruno/ComfyUI-Trellis2"
 fi
 
-# --- Module 09: Cutout Animation ---
+# --- Module 09: Image Cut Out Time to Move ---
 if module_selected "09"; then
   install_node "comfy_nv_video_prep" "https://github.com/NVIDIA/comfy_nv_video_prep"
   install_node "ComfyUI-Custom-Scripts" "https://github.com/pythongosssss/ComfyUI-Custom-Scripts"
@@ -269,7 +269,7 @@ if module_selected "09"; then
   "$PYTHON" -m pip install -q triton==3.2.0
 fi
 
-# --- Module 10: Playblast to Video ---
+# --- Module 10: Video to Video ---
 if module_selected "10"; then
   install_node "ComfyUI-WanVideoWrapper" "https://github.com/kijai/ComfyUI-WanVideoWrapper"
   install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes"

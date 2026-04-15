@@ -80,12 +80,12 @@ bash install.sh /path/to/ComfyUI --modules 05
 | 02 | [Image Deconstruction](workflows/02-image-deconstruction/) | Qwen Image Layered | Split any image into foreground, midground, and background layers |
 | 03 | [Targeted Inpainting](workflows/03-targeted-inpainting/) | Qwen Image Edit 2511 | Mask-and-patch editing — change only the pixels you select |
 | 04 | [Image → Gaussian Splat](workflows/04-image-to-gaussian-splat/) | SHARP | Convert a 2D image into a navigable 3D Gaussian point cloud |
-| 05 | [Gaussian Splat SceneFill](workflows/05-gaussian-splat-scenefill/) | Qwen Image Edit 2511 + LoRA | Fill occluded areas in Gaussian Splat output for full camera freedom |
-| 06 | [Image → Equirectangular](workflows/06-equirectangular-outpainting/) | Qwen Image Edit 2511 + MikMumpitz 360 LoRA | Turn a single image into a seamless 360° panorama |
+| 05 | [Novel View Synthesis](workflows/05-novel-view-synthesis/) | Qwen Image Edit 2511 + LoRA | Fill occluded areas in Gaussian Splat output for full camera freedom |
+| 06 | [Image → Equirectangular](workflows/06-image-to-equirectangular/) | Qwen Image Edit 2511 + MikMumpitz 360 LoRA | Turn a single image into a seamless 360° panorama |
 | 07 | [Panorama → HDRI](workflows/07-panorama-to-hdri/) | Flux Dev Kontext + Exposure LoRAs | Generate a production-ready HDRI from a panoramic image |
-| 08 | [Trellis2 3D Asset Gen](workflows/08-trellis2-3d-gen/) | Trellis2 | Convert a 2D reference into a textured 3D model with PBR materials |
-| 09 | [Cutout Animation → Video](workflows/09-cutout-animation-to-video/) | Wan2.2 TTM + VideoPrep | Trajectory-controlled video — define exactly when and where motion happens |
-| 10 | [Playblast → Video](workflows/10-playblast-to-video/) | Wan2.2 VACE + Lotus | Transform a basic 3D render into stylized video — depth extracted automatically |
+| 08 | [Image to 3D](workflows/08-image-to-3d/) | Trellis2 | Convert a 2D reference into a textured 3D model with PBR materials |
+| 09 | [Image Cut Out Time to Move](workflows/09-image-cut-out-time-to-move/) | Wan2.2 TTM + VideoPrep | Trajectory-controlled video — define exactly when and where motion happens |
+| 10 | [Video to Video](workflows/10-video-to-video/) | Wan2.2 VACE + Lotus | Transform a basic 3D render into stylized video — depth extracted automatically |
 
 ### Bonus Modules
 
@@ -108,7 +108,7 @@ workflows/01-llm-prompt-enhancer/
 └── 01-llm-prompt-enhancer-nodes.md    ← required custom nodes and install instructions
 ```
 
-Module 09 includes two workflows — run `09-cutout-animation-to-video-videoprep.json` first, then `09-cutout-animation-to-video.json`.
+Module 09 includes two workflows — run `09-image-cut-out-time-to-move-videoprep.json` first, then `09-image-cut-out-time-to-move.json`.
 
 ---
 
@@ -118,13 +118,13 @@ Some modules build on each other:
 
 ```
 04 Image → Gaussian Splat
-└── 05 Gaussian Splat SceneFill
+└── 05 Novel View Synthesis
 
 06 Image → Equirectangular
 └── 07 Panorama → HDRI
 
 VideoPrep (helper)
-└── 09 Cutout Animation → Video
+└── 09 Image Cut Out Time to Move
 
 Bonus A Texture Extraction
 └── Bonus B Texture → PBR

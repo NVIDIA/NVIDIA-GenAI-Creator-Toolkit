@@ -68,5 +68,5 @@ A sample input image is provided in the `input/` folder.
 
 ## How to Use
 
-1. Load `08-trellis2-3d-gen.json` into ComfyUI
+1. Load `08-image-to-3d.json` into ComfyUI
 2. Connect your reference image and click **Queue Prompt**

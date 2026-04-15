@@ -284,12 +284,12 @@ if not defined MODULES (
     echo    02       Image Deconstruction     ^(~8 GB^)
     echo    03       Targeted Inpainting      ^(~8 GB^)
     echo    04       Image to Gaussian Splat  ^(~1 GB^)
-    echo    05       Gaussian Splat SceneFill ^(~8 GB^)
-    echo    06       Equirectangular Outpaint ^(~12 GB^)
+    echo    05       Novel View Synthesis ^(~8 GB^)
+    echo    06       Image to Equirectangular ^(~12 GB^)
     echo    07       Panorama to HDRI         ^(~24 GB^)
-    echo    08       Trellis2 3D Asset Gen    ^(~20 GB^)
-    echo    09       Cutout Animation         ^(~100 GB^)
-    echo    10       Playblast to Video       ^(~130 GB^)
+    echo    08       Image to 3D    ^(~20 GB^)
+    echo    09       Image Cut Out Time to Move         ^(~100 GB^)
+    echo    10       Video to Video       ^(~130 GB^)
     echo    bonus-a  Texture Extraction       ^(~8 GB^)
     echo    bonus-b  Texture to PBR           ^(~12 GB^)
     echo.
@@ -373,7 +373,7 @@ if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-GeometryPack" "https://github.com/PozzettiAndrea/ComfyUI-GeometryPack" ""
 )
 
-REM --- Module 06: Equirectangular Outpainting ---
+REM --- Module 06: Image to Equirectangularing ---
 set DO_INSTALL=0
 echo ,!MODULES!, | findstr /i ",06," > nul 2>&1 && set DO_INSTALL=1
 if /i "!MODULES!"=="all" set DO_INSTALL=1
@@ -480,7 +480,7 @@ if !DO_INSTALL!==1 (
     "!PYTHON!" "%~dp0patch_flash_attn.py" "!NODES_DIR!\ComfyUI-Trellis2"
 )
 
-REM --- Module 09: Cutout Animation ---
+REM --- Module 09: Image Cut Out Time to Move ---
 set DO_INSTALL=0
 echo ,!MODULES!, | findstr /i ",09," > nul 2>&1 && set DO_INSTALL=1
 if /i "!MODULES!"=="all" set DO_INSTALL=1
@@ -503,7 +503,7 @@ if !DO_INSTALL!==1 (
     "!PYTHON!" -m pip install -q triton-windows==3.2.0.post21
 )
 
-REM --- Module 10: Playblast to Video ---
+REM --- Module 10: Video to Video ---
 set DO_INSTALL=0
 echo ,!MODULES!, | findstr /i ",10," > nul 2>&1 && set DO_INSTALL=1
 if /i "!MODULES!"=="all" set DO_INSTALL=1
