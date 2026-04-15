@@ -601,7 +601,7 @@
         "ver": "0.10.0"
       },
       "widgets_values": [
-        "Qwen-Image-Edit-Lightning-8steps-V1.0.safetensors",
+        "qwen/Qwen-Image-Edit-Lightning-8steps-V1.0.safetensors",
         1
       ]
     },
@@ -852,7 +852,7 @@
         "ver": "0.10.0"
       },
       "widgets_values": [
-        "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+        "qwen/qwen_2.5_vl_7b_fp8_scaled.safetensors",
         "qwen_image",
         "default"
       ]
