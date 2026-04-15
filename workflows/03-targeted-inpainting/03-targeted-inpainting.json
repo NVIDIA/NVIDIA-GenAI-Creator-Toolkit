@@ -876,7 +876,7 @@
       "title": "Target Your Changes",
       "properties": {},
       "widgets_values": [
-        "## Editing an Image with the Mask Editor\n\n1. **Load your original image**  \n   Use the *Load Image* node to bring your source image into the workflow.\n\n2. **Open the Mask Editor**  \n   Right‑click the *Load Image* node to open the **Context Menu**, then select **Open Mask Editor**.\n\n3. **Mask the area you want to change**  \n   Paint over the region you want to modify or replace.\n\n4. **Save your mask**  \n   When you're done, click **Save** to apply the mask back into your node graph."
+        "## Editing an Image with the Mask Editor\n\n1. **Load your original image**  \n   Use the *Original Image* node to bring your source image into the workflow.\n\n2. **Open the Mask Editor**  \n   Right‑click the *Original Image* node to open the **Context Menu**, then select **Open in MaskEditor | Image Canvas**.\n\n3. **Mask the area you want to change**  \n   Paint over the region you want to modify or replace.\n\n4. **Save your mask**  \n   When you’re done, click **Save** to apply the mask back into your node graph."
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
