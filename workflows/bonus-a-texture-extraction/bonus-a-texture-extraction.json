@@ -741,7 +741,7 @@
         "ver": "0.10.0"
       },
       "widgets_values": [
-        "Extract the checker board texrure, remove chess pieces, orthographic, seamless"
+        "Extract the forest floor texture including leaves, moss, and dirt, remove any foreground objects, orthographic, seamless"
       ],
       "color": "#232",
       "bgcolor": "#353"
