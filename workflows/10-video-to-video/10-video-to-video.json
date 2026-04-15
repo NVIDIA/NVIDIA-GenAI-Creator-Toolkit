@@ -364,7 +364,7 @@
         }
       },
       "widgets_values": [
-        "\u8272\u8c03\u8273\u4e3d\uff0c\u8fc7\u66dd\uff0c\u9759\u6001\uff0c\u7ec6\u8282\u6a21\u7cca\u4e0d\u6e05\uff0c\u5b57\u5e55\uff0c\u98ce\u683c\uff0c\u4f5c\u54c1\uff0c\u753b\u4f5c\uff0c\u753b\u9762\uff0c\u9759\u6b62\uff0c\u6574\u4f53\u53d1\u7070\uff0c\u6700\u5dee\u8d28\u91cf\uff0c\u4f4e\u8d28\u91cf\uff0cJPEG\u538b\u7f29\u6b8b\u7559\uff0c\u4e11\u964b\u7684\uff0c\u6b8b\u7f3a\u7684\uff0c\u591a\u4f59\u7684\u624b\u6307\uff0c\u753b\u5f97\u4e0d\u597d\u7684\u624b\u90e8\uff0c\u753b\u5f97\u4e0d\u597d\u7684\u8138\u90e8\uff0c\u7578\u5f62\u7684\uff0c\u6bc1\u5bb9\u7684\uff0c\u5f62\u6001\u7578\u5f62\u7684\u80a2\u4f53\uff0c\u624b\u6307\u878d\u5408\uff0c\u9759\u6b62\u4e0d\u52a8\u7684\u753b\u9762\uff0c\u6742\u4e71\u7684\u80cc\u666f\uff0c\u4e09\u6761\u817f\uff0c\u80cc\u666f\u4eba\u5f88\u591a\uff0c\u5012\u7740\u8d70\n\nlow quality, blurry, deformed hands, extra limbs, simplified clothing, cartoonish, low detail, missing accessories"
+        "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，杂乱的背景，三条腿，背景人很多，倒着走\n\nlow quality, blurry, deformed hands, extra limbs, simplified clothing, cartoonish, low detail, missing accessories"
       ],
       "color": "#322",
       "bgcolor": "#533"
@@ -960,6 +960,14 @@
           "shape": 7,
           "type": "VAE",
           "link": null
+        },
+        {
+          "name": "frame_load_cap",
+          "type": "INT",
+          "widget": {
+            "name": "frame_load_cap"
+          },
+          "link": 491
         }
       ],
       "outputs": [
@@ -1011,7 +1019,7 @@
         "force_rate": 0,
         "custom_width": 0,
         "custom_height": 0,
-        "frame_load_cap": 161,
+        "frame_load_cap": 81,
         "skip_first_frames": 0,
         "select_every_nth": 1,
         "format": "Wan",
@@ -1135,54 +1143,54 @@
       ],
       "outputs": [
         {
-          "name": "source_fps\ud83d\udfe8",
+          "name": "source_fps🟨",
           "type": "FLOAT",
           "links": [
             322
           ]
         },
         {
-          "name": "source_frame_count\ud83d\udfe8",
+          "name": "source_frame_count🟨",
           "type": "INT",
           "links": null
         },
         {
-          "name": "source_duration\ud83d\udfe8",
+          "name": "source_duration🟨",
           "type": "FLOAT",
           "links": null
         },
         {
-          "name": "source_width\ud83d\udfe8",
+          "name": "source_width🟨",
           "type": "INT",
           "links": null
         },
         {
-          "name": "source_height\ud83d\udfe8",
+          "name": "source_height🟨",
           "type": "INT",
           "links": null
         },
         {
-          "name": "loaded_fps\ud83d\udfe6",
+          "name": "loaded_fps🟦",
           "type": "FLOAT",
           "links": null
         },
         {
-          "name": "loaded_frame_count\ud83d\udfe6",
+          "name": "loaded_frame_count🟦",
           "type": "INT",
           "links": null
         },
         {
-          "name": "loaded_duration\ud83d\udfe6",
+          "name": "loaded_duration🟦",
           "type": "FLOAT",
           "links": null
         },
         {
-          "name": "loaded_width\ud83d\udfe6",
+          "name": "loaded_width🟦",
           "type": "INT",
           "links": null
         },
         {
-          "name": "loaded_height\ud83d\udfe6",
+          "name": "loaded_height🟦",
           "type": "INT",
           "links": null
         }
@@ -1660,7 +1668,10 @@
           "type": "INT",
           "links": [
             309,
-            330
+            330,
+            491,
+            492,
+            493
           ]
         }
       ],
@@ -1901,6 +1912,14 @@
           "shape": 7,
           "type": "VAE",
           "link": null
+        },
+        {
+          "name": "frame_load_cap",
+          "type": "INT",
+          "widget": {
+            "name": "frame_load_cap"
+          },
+          "link": 492
         }
       ],
       "outputs": [
@@ -1950,7 +1969,7 @@
         "force_rate": 0,
         "custom_width": 0,
         "custom_height": 0,
-        "frame_load_cap": 161,
+        "frame_load_cap": 81,
         "skip_first_frames": 0,
         "select_every_nth": 1,
         "format": "Wan",
@@ -1997,6 +2016,14 @@
           "shape": 7,
           "type": "VAE",
           "link": null
+        },
+        {
+          "name": "frame_load_cap",
+          "type": "INT",
+          "widget": {
+            "name": "frame_load_cap"
+          },
+          "link": 493
         }
       ],
       "outputs": [
@@ -2046,7 +2073,7 @@
         "force_rate": 0,
         "custom_width": 0,
         "custom_height": 0,
-        "frame_load_cap": 161,
+        "frame_load_cap": 81,
         "skip_first_frames": 0,
         "select_every_nth": 1,
         "format": "Wan",
@@ -3059,7 +3086,7 @@
           "color_restricted": 0,
           "widget_ue_connectable": {},
           "title_regex": null,
-          "input_regex": "seed|\u968f\u673a\u79cd",
+          "input_regex": "seed|随机种",
           "group_regex": null,
           "fixed_inputs": true,
           "seed_inputs": true
@@ -6175,6 +6202,30 @@
       250,
       4,
       "FLOAT"
+    ],
+    [
+      491,
+      160,
+      0,
+      218,
+      2,
+      "INT"
+    ],
+    [
+      492,
+      160,
+      0,
+      229,
+      2,
+      "INT"
+    ],
+    [
+      493,
+      160,
+      0,
+      216,
+      2,
+      "INT"
     ]
   ],
   "groups": [
