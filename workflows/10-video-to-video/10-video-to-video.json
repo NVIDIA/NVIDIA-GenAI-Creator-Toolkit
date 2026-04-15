@@ -1703,7 +1703,6 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            357,
             471
           ]
         }
@@ -3991,57 +3990,6 @@
       "bgcolor": "#29699c"
     },
     {
-      "id": 190,
-      "type": "Video_Upscale_With_Model",
-      "pos": [
-        3350.687750707178,
-        -1379.505511947678
-      ],
-      "size": [
-        270,
-        130
-      ],
-      "flags": {},
-      "order": 87,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 357
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            359
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "ShmuelRonen/ComfyUI-VideoUpscale_WithModel",
-        "ver": "1f437040cfd1582e3a04cea144aaccfbf7baf7b6",
-        "Node name for S&R": "Video_Upscale_With_Model",
-        "ue_properties": {
-          "version": "7.0.1",
-          "widget_ue_connectable": {
-            "model_name": true,
-            "upscale_method": true,
-            "factor": true,
-            "device_strategy": true
-          }
-        }
-      },
-      "widgets_values": [
-        "4x-ClearRealityV1.pth",
-        "nearest-exact",
-        2,
-        "auto"
-      ]
-    },
-    {
       "id": 27,
       "type": "WanVideoSampler",
       "pos": [
@@ -5016,112 +4964,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 191,
-      "type": "VHS_VideoCombine",
-      "pos": [
-        3490.1121155685387,
-        -1112.6495708215566
-      ],
-      "size": [
-        770.4075317382812,
-        334
-      ],
-      "flags": {
-        "collapsed": false
-      },
-      "order": 90,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 359
-        },
-        {
-          "name": "audio",
-          "shape": 7,
-          "type": "AUDIO",
-          "link": null
-        },
-        {
-          "name": "meta_batch",
-          "shape": 7,
-          "type": "VHS_BatchManager",
-          "link": null
-        },
-        {
-          "name": "vae",
-          "shape": 7,
-          "type": "VAE",
-          "link": null
-        },
-        {
-          "name": "frame_rate",
-          "type": "FLOAT",
-          "widget": {
-            "name": "frame_rate"
-          },
-          "link": 358
-        },
-        {
-          "name": "filename_prefix",
-          "type": "STRING",
-          "widget": {
-            "name": "filename_prefix"
-          },
-          "link": 383
-        }
-      ],
-      "outputs": [
-        {
-          "name": "Filenames",
-          "type": "VHS_FILENAMES",
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
-        "ver": "0a75c7958fe320efcb052f1d9f8451fd20c730a8",
-        "Node name for S&R": "VHS_VideoCombine",
-        "ue_properties": {
-          "version": "7.0.1",
-          "widget_ue_connectable": {
-            "frame_rate": true,
-            "loop_count": true,
-            "filename_prefix": true,
-            "format": true,
-            "pingpong": true,
-            "save_output": true
-          }
-        }
-      },
-      "widgets_values": {
-        "frame_rate": 16,
-        "loop_count": 0,
-        "filename_prefix": "WanVideo2_2_Fun_VACE/Fun_VACE_UpScaled",
-        "format": "video/h264-mp4",
-        "pix_fmt": "yuv420p",
-        "crf": 19,
-        "save_metadata": true,
-        "trim_to_audio": false,
-        "pingpong": false,
-        "save_output": true,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "filename": "001_WanFunVACE_00015.mp4",
-            "subfolder": "shot_001\\V2VWanFunVACE_Upscaled",
-            "type": "output",
-            "format": "video/h264-mp4",
-            "frame_rate": 24,
-            "workflow": "001_WanFunVACE_00015.png",
-            "fullpath": "C:\\Users\\NVIDIA\\ComfyUI\\ComfyUI_windows_portable\\ComfyUI\\output\\shot_001\\V2VWanFunVACE_Upscaled\\001_WanFunVACE_00015.mp4"
-          }
-        }
-      }
-    },
-    {
       "id": 251,
       "type": "StringFunction|pysssss",
       "pos": [
@@ -5903,30 +5745,6 @@
       "IMAGE"
     ],
     [
-      357,
-      170,
-      0,
-      190,
-      0,
-      "IMAGE"
-    ],
-    [
-      358,
-      169,
-      0,
-      191,
-      4,
-      "FLOAT"
-    ],
-    [
-      359,
-      190,
-      0,
-      191,
-      0,
-      "IMAGE"
-    ],
-    [
       366,
       195,
       0,
@@ -5996,14 +5814,6 @@
       0,
       206,
       1,
-      "STRING"
-    ],
-    [
-      383,
-      206,
-      0,
-      191,
-      5,
       "STRING"
     ],
     [

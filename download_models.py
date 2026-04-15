@@ -264,10 +264,10 @@ def build_module_catalogue() -> dict:
         ],
     )
 
-    # ── Module 05 — Gaussian Splat SceneFill ────────────────────────────────
+    # ── Module 05 — Novel View Synthesis ────────────────────────────────────
     catalogue["05"] = ModuleSpec(
         label="Module 05",
-        name="Gaussian Splat SceneFill",
+        name="Novel View Synthesis",
         models=[
             QWEN_EDIT_DIFFUSION,
             QWEN_TEXT_ENCODER,
@@ -284,10 +284,10 @@ def build_module_catalogue() -> dict:
         ],
     )
 
-    # ── Module 06 — Equirectangular Outpainting ──────────────────────────────
+    # ── Module 06 — Image to Equirectangular ─────────────────────────────────
     catalogue["06"] = ModuleSpec(
         label="Module 06",
-        name="Equirectangular Outpainting",
+        name="Image to Equirectangular",
         models=[
             QWEN_EDIT_DIFFUSION,
             QWEN_TEXT_ENCODER,
@@ -387,10 +387,10 @@ def build_module_catalogue() -> dict:
         ],
     )
 
-    # ── Module 08 — Trellis2 3D Asset Gen ───────────────────────────────────
+    # ── Module 08 — Image to 3D ──────────────────────────────────────────────
     catalogue["08"] = ModuleSpec(
         label="Module 08",
-        name="Trellis2 3D Asset Gen",
+        name="Image to 3D",
         models=[
             ModelSpec(
                 name="TRELLIS.2-4B",
@@ -426,10 +426,10 @@ def build_module_catalogue() -> dict:
         ],
     )
 
-    # ── Module 09 — Cutout Animation to Video ───────────────────────────────
+    # ── Module 09 — Image Cut Out Time to Move ──────────────────────────────
     catalogue["09"] = ModuleSpec(
         label="Module 09",
-        name="Cutout Animation to Video (Wan TTM)",
+        name="Image Cut Out Time to Move",
         models=[
             WAN_VAE,
             WAN_TEXT_ENCODER,
@@ -509,10 +509,10 @@ def build_module_catalogue() -> dict:
         ],
     )
 
-    # ── Module 10 — Playblast to Video ──────────────────────────────────────
+    # ── Module 10 — Video to Video ───────────────────────────────────────────
     catalogue["10"] = ModuleSpec(
         label="Module 10",
-        name="Playblast to Video (Wan VACE)",
+        name="Video to Video",
         models=[
             WAN_VAE,
             WAN_TEXT_ENCODER,

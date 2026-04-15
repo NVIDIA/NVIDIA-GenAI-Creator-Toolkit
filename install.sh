@@ -272,13 +272,15 @@ fi
 # --- Module 10: Video to Video ---
 if module_selected "10"; then
   install_node "ComfyUI-WanVideoWrapper" "https://github.com/kijai/ComfyUI-WanVideoWrapper"
+  install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus"
   install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes"
+  install_node "ComfyUI-Custom-Scripts" "https://github.com/pythongosssss/ComfyUI-Custom-Scripts"
+  install_node "ComfyUI-VideoHelperSuite" "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
+  install_node "comfyui-post-processing-nodes" "https://github.com/EllangoK/ComfyUI-post-processing-nodes"
   install_node "cg-use-everywhere" "https://github.com/chrisgoringe/cg-use-everywhere"
   install_node "radiance" "https://github.com/fxtdstudios/radiance"
+  install_node "comfyui-rtx-simple" "https://github.com/BetaDoggo/comfyui-rtx-simple"
   install_node "ComfyUI-Impact-Pack" "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
-  install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus"
-  install_node "ComfyUI-post-processing-nodes" "https://github.com/EllangoK/ComfyUI-post-processing-nodes"
-  install_node "ComfyUI-VideoUpscale_WithModel" "https://github.com/ShmuelRonen/ComfyUI-VideoUpscale_WithModel"
 fi
 
 # --- Bonus A: Texture Extraction ---

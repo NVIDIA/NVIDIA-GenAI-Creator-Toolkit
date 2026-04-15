@@ -525,6 +525,7 @@ if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes" ""
     call :install_node "ComfyUI-Custom-Scripts" "https://github.com/pythongosssss/ComfyUI-Custom-Scripts" ""
     call :install_node "ComfyUI-VideoHelperSuite" "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite" ""
+    call :install_node "comfyui-post-processing-nodes" "https://github.com/EllangoK/ComfyUI-post-processing-nodes" ""
     call :install_node "cg-use-everywhere" "https://github.com/chrisgoringe/cg-use-everywhere" ""
     call :install_node "radiance" "https://github.com/fxtdstudios/radiance" ""
     call :install_node "comfyui-rtx-simple" "https://github.com/BetaDoggo/comfyui-rtx-simple" ""
