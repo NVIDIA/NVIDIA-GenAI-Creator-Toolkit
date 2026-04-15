@@ -63,7 +63,19 @@ if not defined INSTALL_LOCATION set INSTALL_LOCATION=%~1
 shift /1
 goto parse_args
 :done_parse
-if not defined INSTALL_LOCATION set INSTALL_LOCATION=%cd%
+if not defined INSTALL_LOCATION (
+    echo No installation location specified.
+    echo.
+    echo   Desktop App:  pass the folder you chose during setup ^(.venv\, models\, custom_nodes\^)
+    echo   Portable:     pass the folder with run_nvidia_gpu.bat
+    echo   Manual:       pass the folder with main.py
+    echo.
+    set /p INSTALL_LOCATION="  Enter your ComfyUI installation location: "
+    if not defined INSTALL_LOCATION (
+        echo No path entered. Exiting.
+        exit /b 1
+    )
+)
 
 REM Strip trailing backslash
 if "%INSTALL_LOCATION:~-1%"=="\" set "INSTALL_LOCATION=%INSTALL_LOCATION:~0,-1%"
