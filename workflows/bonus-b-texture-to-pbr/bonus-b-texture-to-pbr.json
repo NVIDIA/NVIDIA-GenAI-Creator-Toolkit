@@ -2379,7 +2379,7 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "We are using Lotus and it is trained on camera space, not world space. This means for orthgraphic world space textures, we can see a gradient shift in our normal and height maps . We can augment this by padding the image first . Ten graphhing back down . Padd percentage determines how much buffer you want . THe bigger the percentage , teh flatter the maps . "
+        "We are using Lotus and it is trained on camera space, not world space. This means for orthographic world space textures, we can see a gradient shift in our normal and height maps. We can augment this by padding the image first, then scaling back down. Pad percentage determines how much buffer you"
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -2402,7 +2402,7 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "We are generating two normals that you can choose or belnd together in the normal map processory. Lotus G is generative and can give more detailed results , but lotus D is much more predicatable . Depending n your pipeline , you make choose to omit one of these processors. "
+        "We are generating two normals that you can choose or blend together in the normal map processor. Lotus G is generative and can give more detailed results, but Lotus D is much more predictable. Depending on your pipeline, you may choose to omit one of these processors."
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -2958,7 +2958,7 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "Westore the size of the original image, to translate back into"
+        "We restore the size of the original image, to translate back into"
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -3120,7 +3120,7 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "Texture should be orthgraphic , if it has visible seams , you can fix it in the end wit hteh Seam Patcher Loop"
+        "Texture should be orthographic. If it has visible seams, you can fix it at the end with the Seam Patcher Loop."
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -3241,7 +3241,7 @@
         "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
-        "X02-SceneInput.png",
+        "bonus-b-forest-floor.png",
         "image"
       ],
       "color": "#232",
