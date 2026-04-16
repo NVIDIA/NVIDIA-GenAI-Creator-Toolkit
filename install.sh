@@ -247,6 +247,15 @@ fi
 # --- Module 08: Trellis2 3D ---
 if module_selected "08"; then
   install_node "ComfyUI-Trellis2" "https://github.com/visualbruno/ComfyUI-Trellis2"
+  # Patch image_feature_extractor.py for transformers compatibility.
+  # DINOv3ViTModel nesting changed across versions (.layer vs .model.layer).
+  # Use getattr fallback so the code works regardless of transformers version.
+  echo "          Patching Trellis2 for transformers compatibility..."
+  FE_PY="$NODES_DIR/ComfyUI-Trellis2/trellis2/modules/image_feature_extractor.py"
+  if [ -f "$FE_PY" ]; then
+    sed -i "s/self\.model\.model\.layer/getattr(self.model,'model',self.model).layer/g" "$FE_PY"
+    sed -i "s/self\.model\.layer/getattr(self.model,'model',self.model).layer/g" "$FE_PY"
+  fi
 fi
 
 # --- Module 09: Image Cut Out Time to Move ---

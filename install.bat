@@ -481,10 +481,11 @@ if !DO_INSTALL!==1 (
         echo           open3d installed.
     )
 
-    REM Patch Trellis2 image_feature_extractor.py for transformers 5+ compatibility.
-    REM transformers 5+ changed DINOv3ViTModel nesting: .layer -> .model.layer
-    echo           Patching Trellis2 for transformers 5+ compatibility...
-    "!PYTHON!" -c "f=r'!NODES_DIR!\ComfyUI-Trellis2\trellis2\modules\image_feature_extractor.py'; t=open(f,encoding='utf-8').read(); open(f,'w',encoding='utf-8').write(t.replace('self.model.layer','self.model.model.layer'))"
+    REM Patch Trellis2 image_feature_extractor.py for transformers compatibility.
+    REM DINOv3ViTModel nesting changed across transformers versions (.layer vs .model.layer).
+    REM Use getattr fallback so the code works regardless of transformers version.
+    echo           Patching Trellis2 for transformers compatibility...
+    "!PYTHON!" -c "f=r'!NODES_DIR!\ComfyUI-Trellis2\trellis2\modules\image_feature_extractor.py'; t=open(f,encoding='utf-8').read(); t=t.replace('self.model.model.layer','getattr(self.model,chr(109)+chr(111)+chr(100)+chr(101)+chr(108),self.model).layer'); t=t.replace('self.model.layer','getattr(self.model,chr(109)+chr(111)+chr(100)+chr(101)+chr(108),self.model).layer'); open(f,'w',encoding='utf-8').write(t)"
 
     REM Patch Trellis2 dense attention for Windows: wrap flash_attn import in try/except
     REM with torch sdpa fallback (flash_attn has no pre-built Windows wheel).
