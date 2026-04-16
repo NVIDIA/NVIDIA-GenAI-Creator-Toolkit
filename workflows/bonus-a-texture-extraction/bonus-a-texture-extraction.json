@@ -704,7 +704,7 @@
         "ver": "0.10.0"
       },
       "widgets_values": [
-        "X01-TextureInput.png",
+        "06-ImageSource.png",
         "image"
       ],
       "color": "#232",
@@ -741,7 +741,7 @@
         "ver": "0.10.0"
       },
       "widgets_values": [
-        "Extract the forest floor texture including leaves, moss, and dirt, remove any foreground objects, orthographic, seamless"
+        "Extract the brown wood and leaf mulch texture as an orthographic and seamless image with minimal repetition."
       ],
       "color": "#232",
       "bgcolor": "#353"
