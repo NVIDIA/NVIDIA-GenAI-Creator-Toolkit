@@ -36,8 +36,8 @@ See [REQUIREMENTS.md](REQUIREMENTS.md) for full details.
 #    Then launch ComfyUI and confirm it opens at http://127.0.0.1:8188
 
 # 1. Clone this repo
-git clone https://github.com/NVIDIA/Creative-GenAI-Workflows
-cd Creative-GenAI-Workflows
+git clone https://github.com/NVIDIA/NVIDIA-Creative-GenAI-Toolkit
+cd NVIDIA-Creative-GenAI-Toolkit
 
 # 2. Install custom nodes and download models
 #    Pass your ComfyUI installation location — the folder you chose during Desktop App setup.

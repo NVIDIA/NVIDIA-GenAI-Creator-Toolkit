@@ -6,9 +6,9 @@
 
 ## How to Get Help
 
-- **Bug reports:** Open a [GitHub Issue](https://github.com/NVIDIA/Creative-GenAI-Workflows/issues) using the Bug Report template.
-- **Feature requests:** Open a [GitHub Issue](https://github.com/NVIDIA/Creative-GenAI-Workflows/issues) using the Feature Request template.
-- **General questions:** Open a [GitHub Issue](https://github.com/NVIDIA/Creative-GenAI-Workflows/issues).
+- **Bug reports:** Open a [GitHub Issue](https://github.com/NVIDIA/NVIDIA-Creative-GenAI-Toolkit/issues) using the Bug Report template.
+- **Feature requests:** Open a [GitHub Issue](https://github.com/NVIDIA/NVIDIA-Creative-GenAI-Toolkit/issues) using the Feature Request template.
+- **General questions:** Open a [GitHub Issue](https://github.com/NVIDIA/NVIDIA-Creative-GenAI-Toolkit/issues).
 
 ## Security Issues
 
