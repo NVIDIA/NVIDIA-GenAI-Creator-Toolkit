@@ -314,8 +314,6 @@ REM --- Desktop App: all content goes into the installation location ---
 if !INSTALL_TYPE!==desktop (
     set "NODES_DIR=!DESKTOP_USER_DIR!\custom_nodes"
     set "MODELS_ROOT=!DESKTOP_USER_DIR!"
-    set "WORKFLOWS_DEST_OVERRIDE=!DESKTOP_USER_DIR!\user\default\workflows\nvidia-genai-creator-toolkit"
-    set "INPUTS_DEST_OVERRIDE=!DESKTOP_USER_DIR!\input"
     REM If the source dir is known, ensure its custom_nodes folder exists (prevents startup crash)
     if defined COMFYUI_SOURCE_DIR (
         if not exist "!COMFYUI_SOURCE_DIR!\custom_nodes" mkdir "!COMFYUI_SOURCE_DIR!\custom_nodes"
@@ -563,42 +561,12 @@ if !DO_INSTALL!==1 (
     "!PYTHON!" -m pip install -q --upgrade diffusers
 )
 
-REM --- Copy workflow JSON files and sample inputs into ComfyUI ---
-if defined WORKFLOWS_DEST_OVERRIDE (
-    set "WORKFLOWS_DEST=!WORKFLOWS_DEST_OVERRIDE!"
-    set "INPUTS_DEST=!INPUTS_DEST_OVERRIDE!"
-) else (
-    set "WORKFLOWS_DEST=%INSTALL_LOCATION%\user\default\workflows\nvidia-genai-creator-toolkit"
-    set "INPUTS_DEST=%INSTALL_LOCATION%\input"
-)
-if not exist "!WORKFLOWS_DEST!" mkdir "!WORKFLOWS_DEST!"
-if not exist "!INPUTS_DEST!" mkdir "!INPUTS_DEST!"
-for /d %%D in ("%~dp0workflows\*") do (
-  set "MODULE_NAME=%%~nxD"
-  if exist "%%D\!MODULE_NAME!.json" (
-    if not exist "!WORKFLOWS_DEST!\!MODULE_NAME!" mkdir "!WORKFLOWS_DEST!\!MODULE_NAME!"
-    copy /y "%%D\!MODULE_NAME!.json" "!WORKFLOWS_DEST!\!MODULE_NAME!\!MODULE_NAME!.json" > nul
-    if exist "%%D\!MODULE_NAME!-videoprep.json" (
-      copy /y "%%D\!MODULE_NAME!-videoprep.json" "!WORKFLOWS_DEST!\!MODULE_NAME!\!MODULE_NAME!-videoprep.json" > nul
-    )
-    if exist "%%D\input\" (
-      copy /y "%%D\input\*" "!INPUTS_DEST!\" > nul
-    )
-  )
-)
-REM --- Patch model paths in workflow JSONs for Windows (forward slash -> backslash) ---
-REM ComfyUI on Windows lists models with backslashes; the JSONs were authored on Linux.
-"!PYTHON!" "%~dp0patch_model_paths.py" "!WORKFLOWS_DEST!"
-echo.
-echo Workflows copied to: !WORKFLOWS_DEST!
-echo Sample inputs copied to: !INPUTS_DEST!
-
 REM --- Install template browser extension ---
 REM Creates a lightweight custom node whose example_workflows\ folder makes all
 REM workflows appear in ComfyUI's template browser under Extensions.
 echo.
 echo Installing template browser extension...
-set "TEMPLATE_NODE=nvidia-genai-creator-toolkit"
+set "TEMPLATE_NODE=NVIDIA-GenAI-Creator-Toolkit"
 set "TEMPLATE_NODE_DIR=!NODES_DIR!\!TEMPLATE_NODE!"
 if not exist "!TEMPLATE_NODE_DIR!" mkdir "!TEMPLATE_NODE_DIR!"
 copy /y "%~dp0custom_node\__init__.py" "!TEMPLATE_NODE_DIR!\__init__.py" > nul
@@ -690,8 +658,7 @@ echo ================================================================
 echo  Installation complete
 echo ================================================================
 echo.
-echo  Workflows are pre-loaded in ComfyUI under: Load ^> nvidia-genai-creator-toolkit
-echo  Workflows also available in template browser:  Extensions ^> nvidia-genai-creator-toolkit
+echo  Workflows available in template browser: Browse Templates ^> Extensions ^> NVIDIA-GenAI-Creator-Toolkit
 echo.
 echo  To install a different module later, run:
 echo    install.bat %INSTALL_LOCATION% --modules 03
