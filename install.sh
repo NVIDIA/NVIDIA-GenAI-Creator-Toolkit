@@ -330,6 +330,28 @@ echo ""
 echo "Workflows copied to: $WORKFLOWS_DEST"
 echo "Sample inputs copied to: $INPUTS_DEST"
 
+# --- Install template browser extension ---
+# Creates a lightweight custom node whose example_workflows/ folder makes all
+# workflows appear in ComfyUI's template browser under Extensions.
+echo ""
+echo "Installing template browser extension..."
+TEMPLATE_NODE="NVIDIA-Creative-GenAI-Workflows"
+TEMPLATE_NODE_DIR="$NODES_DIR/$TEMPLATE_NODE"
+mkdir -p "$TEMPLATE_NODE_DIR/example_workflows"
+cp "$(dirname "$0")/custom_node/__init__.py" "$TEMPLATE_NODE_DIR/__init__.py"
+for workflow_dir in "$(dirname "$0")/workflows"/*/; do
+  module_name="$(basename "$workflow_dir")"
+  if [ -f "${workflow_dir}${module_name}.json" ]; then
+    cp "${workflow_dir}${module_name}.json" "$TEMPLATE_NODE_DIR/example_workflows/${module_name}.json"
+    if [ -f "${workflow_dir}images/preview.png" ]; then
+      cp "${workflow_dir}images/preview.png" "$TEMPLATE_NODE_DIR/example_workflows/${module_name}.jpg"
+    elif [ -f "${workflow_dir}images/preview.gif" ]; then
+      cp "${workflow_dir}images/preview.gif" "$TEMPLATE_NODE_DIR/example_workflows/${module_name}.jpg"
+    fi
+  fi
+done
+echo "  Workflows available in template browser: Extensions > $TEMPLATE_NODE"
+
 # --- Offer to install Ollama if module 01 or all selected ---
 NEEDS_OLLAMA=0
 if module_selected "01"; then NEEDS_OLLAMA=1; fi
@@ -388,7 +410,8 @@ echo "================================================================"
 echo " Installation complete"
 echo "================================================================"
 echo ""
-echo "  Workflows are ready in ComfyUI under: Load > creative-genai-workflows"
+echo "  Workflows are ready in ComfyUI under:   Load > creative-genai-workflows"
+echo "  Workflows also in template browser:     Extensions > NVIDIA-Creative-GenAI-Workflows"
 echo ""
 echo "  To install a different module later, run:"
 echo "    bash install.sh $COMFYUI_DIR --modules 03"

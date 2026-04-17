@@ -593,6 +593,29 @@ echo.
 echo Workflows copied to: !WORKFLOWS_DEST!
 echo Sample inputs copied to: !INPUTS_DEST!
 
+REM --- Install template browser extension ---
+REM Creates a lightweight custom node whose example_workflows\ folder makes all
+REM workflows appear in ComfyUI's template browser under Extensions.
+echo.
+echo Installing template browser extension...
+set "TEMPLATE_NODE=NVIDIA-Creative-GenAI-Workflows"
+set "TEMPLATE_NODE_DIR=!NODES_DIR!\!TEMPLATE_NODE!"
+if not exist "!TEMPLATE_NODE_DIR!" mkdir "!TEMPLATE_NODE_DIR!"
+copy /y "%~dp0custom_node\__init__.py" "!TEMPLATE_NODE_DIR!\__init__.py" > nul
+if not exist "!TEMPLATE_NODE_DIR!\example_workflows" mkdir "!TEMPLATE_NODE_DIR!\example_workflows"
+for /d %%D in ("%~dp0workflows\*") do (
+    set "_MNAME=%%~nxD"
+    if exist "%%D\!_MNAME!.json" (
+        copy /y "%%D\!_MNAME!.json" "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!.json" > nul
+        if exist "%%D\images\preview.png" (
+            copy /y "%%D\images\preview.png" "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!.jpg" > nul
+        ) else if exist "%%D\images\preview.gif" (
+            copy /y "%%D\images\preview.gif" "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!.jpg" > nul
+        )
+    )
+)
+echo   Workflows available in template browser: Extensions ^> !TEMPLATE_NODE!
+
 REM --- Offer to install Ollama if module 01 or all selected ---
 set NEEDS_OLLAMA=0
 echo ,!MODULES!, | findstr /i ",01," > nul 2>&1 && set NEEDS_OLLAMA=1
@@ -668,6 +691,7 @@ echo  Installation complete
 echo ================================================================
 echo.
 echo  Workflows are pre-loaded in ComfyUI under: Load ^> creative-genai-workflows
+echo  Workflows also available in template browser:  Extensions ^> NVIDIA-Creative-GenAI-Workflows
 echo.
 echo  To install a different module later, run:
 echo    install.bat %INSTALL_LOCATION% --modules 03
