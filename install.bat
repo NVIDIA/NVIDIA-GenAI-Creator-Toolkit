@@ -598,7 +598,7 @@ REM Creates a lightweight custom node whose example_workflows\ folder makes all
 REM workflows appear in ComfyUI's template browser under Extensions.
 echo.
 echo Installing template browser extension...
-set "TEMPLATE_NODE=NVIDIA-Creative-GenAI-Workflows"
+set "TEMPLATE_NODE=nvidia-genai-creator-toolkit"
 set "TEMPLATE_NODE_DIR=!NODES_DIR!\!TEMPLATE_NODE!"
 if not exist "!TEMPLATE_NODE_DIR!" mkdir "!TEMPLATE_NODE_DIR!"
 copy /y "%~dp0custom_node\__init__.py" "!TEMPLATE_NODE_DIR!\__init__.py" > nul
@@ -691,7 +691,7 @@ echo  Installation complete
 echo ================================================================
 echo.
 echo  Workflows are pre-loaded in ComfyUI under: Load ^> nvidia-genai-creator-toolkit
-echo  Workflows also available in template browser:  Extensions ^> NVIDIA-Creative-GenAI-Workflows
+echo  Workflows also available in template browser:  Extensions ^> nvidia-genai-creator-toolkit
 echo.
 echo  To install a different module later, run:
 echo    install.bat %INSTALL_LOCATION% --modules 03
