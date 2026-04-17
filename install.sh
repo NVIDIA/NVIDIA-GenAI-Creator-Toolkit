@@ -309,7 +309,7 @@ if module_selected "bonus-b"; then
 fi
 
 # --- Copy workflow JSON files into ComfyUI ---
-WORKFLOWS_DEST="$COMFYUI_DIR/user/default/workflows/creative-genai-workflows"
+WORKFLOWS_DEST="$COMFYUI_DIR/user/default/workflows/nvidia-genai-creator-toolkit"
 INPUTS_DEST="$COMFYUI_DIR/input"
 mkdir -p "$WORKFLOWS_DEST"
 mkdir -p "$INPUTS_DEST"
@@ -410,7 +410,7 @@ echo "================================================================"
 echo " Installation complete"
 echo "================================================================"
 echo ""
-echo "  Workflows are ready in ComfyUI under:   Load > creative-genai-workflows"
+echo "  Workflows are ready in ComfyUI under:   Load > nvidia-genai-creator-toolkit"
 echo "  Workflows also in template browser:     Extensions > NVIDIA-Creative-GenAI-Workflows"
 echo ""
 echo "  To install a different module later, run:"

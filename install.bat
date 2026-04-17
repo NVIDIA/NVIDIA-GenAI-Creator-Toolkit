@@ -314,7 +314,7 @@ REM --- Desktop App: all content goes into the installation location ---
 if !INSTALL_TYPE!==desktop (
     set "NODES_DIR=!DESKTOP_USER_DIR!\custom_nodes"
     set "MODELS_ROOT=!DESKTOP_USER_DIR!"
-    set "WORKFLOWS_DEST_OVERRIDE=!DESKTOP_USER_DIR!\user\default\workflows\creative-genai-workflows"
+    set "WORKFLOWS_DEST_OVERRIDE=!DESKTOP_USER_DIR!\user\default\workflows\nvidia-genai-creator-toolkit"
     set "INPUTS_DEST_OVERRIDE=!DESKTOP_USER_DIR!\input"
     REM If the source dir is known, ensure its custom_nodes folder exists (prevents startup crash)
     if defined COMFYUI_SOURCE_DIR (
@@ -568,7 +568,7 @@ if defined WORKFLOWS_DEST_OVERRIDE (
     set "WORKFLOWS_DEST=!WORKFLOWS_DEST_OVERRIDE!"
     set "INPUTS_DEST=!INPUTS_DEST_OVERRIDE!"
 ) else (
-    set "WORKFLOWS_DEST=%INSTALL_LOCATION%\user\default\workflows\creative-genai-workflows"
+    set "WORKFLOWS_DEST=%INSTALL_LOCATION%\user\default\workflows\nvidia-genai-creator-toolkit"
     set "INPUTS_DEST=%INSTALL_LOCATION%\input"
 )
 if not exist "!WORKFLOWS_DEST!" mkdir "!WORKFLOWS_DEST!"
@@ -690,7 +690,7 @@ echo ================================================================
 echo  Installation complete
 echo ================================================================
 echo.
-echo  Workflows are pre-loaded in ComfyUI under: Load ^> creative-genai-workflows
+echo  Workflows are pre-loaded in ComfyUI under: Load ^> nvidia-genai-creator-toolkit
 echo  Workflows also available in template browser:  Extensions ^> NVIDIA-Creative-GenAI-Workflows
 echo.
 echo  To install a different module later, run:
