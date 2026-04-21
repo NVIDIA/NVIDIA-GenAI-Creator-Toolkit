@@ -97,7 +97,7 @@ fi
 # --- ComfyUI version check ---
 if [ -f "$COMFYUI_DIR/comfyui_version.py" ]; then
   COMFY_VER=$($PYTHON -c "import re; f=open('$COMFYUI_DIR/comfyui_version.py').read(); print(re.search(r'__version__\s*=\s*[\'\"]([\'\".]+)[\'\"]*',f).group(1))" 2>/dev/null || \
-              grep -oP '(?<=__version__ = ["\x27])[^"\']+' "$COMFYUI_DIR/comfyui_version.py")
+              grep -oP "(?<=__version__ = [\"'])[^\"']+" "$COMFYUI_DIR/comfyui_version.py")
   echo "[check] ComfyUI: $COMFY_VER"
   echo "        Tested against: 0.19.x — other versions may work but are not guaranteed."
 else
