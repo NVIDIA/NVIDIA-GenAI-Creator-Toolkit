@@ -783,8 +783,11 @@ def download_model(comfyui_root: Path, model: ModelSpec) -> str:
     print(f"    File:        {model.filename}")
     print(f"    Size:        {model.size}")
     print(f"    Destination: {dest_dir}")
+    print(f"    (Progress bar may not show when output is piped — this is normal. Please wait...)")
 
     ok = hf_download_file(model.repo, model.filename, dest_dir, revision=model.revision)
+    if ok:
+        print(f"    Complete: {model.name}")
     if not ok:
         print(f"  [FAILED] huggingface-cli exited with error for {model.name}")
         return "failed"
