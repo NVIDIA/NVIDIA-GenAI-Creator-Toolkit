@@ -2,12 +2,13 @@
 
 ## Hardware
 
-| Requirement | Minimum | Suggested | Best Performance |
-|-------------|---------|-----------|-----------------|
-| GPU | RTX 4080 (16 GB) | RTX 4090 (24 GB) Windows / RTX 5090 (32 GB) Linux | RTX 5090 (32 GB) / RTX PRO 6000 (96 GB) |
-| System RAM | 32 GB | 48 GB | 64 GB / 192 GB |
-| Storage | 50 GB NVMe SSD | 200 GB NVMe SSD | 500 GB+ NVMe SSD |
-| Platform | Windows 11 x86_64, Linux x86_64 | Windows 11 x86_64 | Windows 11 x86_64 |
+| Requirement | Minimum | Recommended |
+|-------------|---------|-------------|
+| GPU — Windows | RTX 4080 (16 GB) | RTX 5090 (32 GB) |
+| GPU — Linux | RTX 5090 (32 GB) | RTX PRO 6000 (96 GB) |
+| System RAM | 32 GB | 48 GB |
+| Storage | 50 GB NVMe SSD | 200 GB NVMe SSD |
+| Platform | Windows 11 x86_64, Linux x86_64 | — |
 
 **NVFP4 quantization** is an optional performance optimization available on RTX 50 series (Blackwell) GPUs. All modules run without it on RTX 30/40 series.
 
@@ -19,32 +20,30 @@
 
 Requirements below assume single-image or short-video generation at moderate resolution (1024×1024 image or 480p video). Higher resolutions and longer videos require more VRAM.
 
-| Module | Min GPU | Recommended (Windows) | Recommended (Linux) | SSD Space | System RAM |
-|--------|---------|----------------------|---------------------|-----------|------------|
-| 01 LLM Prompt Enhancer | RTX 3060 (12 GB) | RTX 5090 (32 GB) | RTX PRO 6000 (96 GB) | ~5 GB | 32 GB |
-| 02 Image Deconstruction | RTX 4080 (16 GB) ¹ | RTX 5090 (32 GB) | RTX PRO 6000 (96 GB) | ~12 GB | 32 GB |
-| 03 Targeted Inpainting | RTX 4080 (16 GB) ¹ | RTX 5090 (32 GB) | RTX PRO 6000 (96 GB) | ~8 GB ² | 32 GB |
-| 04 Image → Gaussian Splat | RTX 3060 (12 GB) | RTX 5090 (32 GB) | RTX PRO 6000 (96 GB) | ~1 GB | 32 GB |
-| 05 Novel View Synthesis | RTX 4080 (16 GB) ¹ | RTX 5090 (32 GB) | RTX PRO 6000 (96 GB) | ~8 GB ² | 32 GB |
-| 06 Image → Equirectangular | RTX 4080 (16 GB) ¹ | RTX 5090 (32 GB) | RTX PRO 6000 (96 GB) | ~12 GB | 32 GB |
-| 07 Panorama → HDRI | RTX 4080 (16 GB) | RTX 5090 (32 GB) | RTX PRO 6000 (96 GB) | ~25 GB | 32 GB |
-| 08 Image to 3D ⁶ | RTX 3090 (24 GB) | RTX 5090 (32 GB) | Windows only ⁶ | ~20 GB | 48 GB |
-| 09 Image Cut Out Time to Move | RTX 4080 (16 GB) ³ | RTX 5090 (32 GB) | RTX PRO 6000 (96 GB) | ~30 GB | 32 GB ⁴ |
-| 10 Video to Video | RTX 4090 (24 GB) ⁵ | RTX 5090 (32 GB) | RTX PRO 6000 (96 GB) | ~30 GB | 48 GB |
-| Bonus A Texture Extraction | RTX 4080 (16 GB) ¹ | RTX 5090 (32 GB) | RTX PRO 6000 (96 GB) | ~8 GB ² | 32 GB |
-| Bonus B Texture → PBR | RTX 3060 (12 GB) | RTX 5090 (32 GB) | RTX PRO 6000 (96 GB) | ~12 GB | 32 GB |
+| Module | VRAM Required | SSD Space | System RAM |
+|--------|--------------|-----------|------------|
+| 01 LLM Prompt Enhancer | 16 GB (FP8) · 24 GB (BF16) | ~59 GB | 32 GB |
+| 02 Image Deconstruction | 16 GB (FP8) · 24 GB (BF16) | ~59 GB | 32 GB |
+| 03 Targeted Inpainting | 16 GB (FP8) · 24 GB (BF16) | ~60 GB ¹ | 32 GB |
+| 04 Image → Gaussian Splat | 8–12 GB | ~4 GB | 32 GB |
+| 05 Novel View Synthesis | 16 GB (FP8) · 24 GB (BF16) | ~60 GB ¹ | 32 GB |
+| 06 Image → Equirectangular | 16 GB (FP8) · 24 GB (BF16) | ~60 GB ¹ | 32 GB |
+| 07 Panorama → HDRI | 16 GB (FP8) · 24 GB (BF16 Flux) | ~25 GB | 32 GB |
+| 08 Image to 3D ² | 24 GB | ~20 GB | 48 GB |
+| 09 Image Cut Out Time to Move | 16 GB (FP8 + block swap) ³ · 24 GB | ~100 GB standalone · ~41 GB ¹ | 32 GB ⁴ |
+| 10 Video to Video | 24 GB (max CPU offload) ⁵ · 32 GB | ~41 GB standalone · ~31 GB with 09 | 48 GB |
+| Bonus A Texture Extraction | 16 GB (FP8) · 24 GB (BF16) | ~60 GB ¹ | 32 GB |
+| Bonus B Texture → PBR | 16 GB (FP8) · 24 GB (BF16) | ~66 GB ¹ | 32 GB |
 
-¹ FP8 quantized checkpoint required to fit in 16 GB VRAM; BF16 checkpoint needs 24 GB+. Generation will be slower than on 24 GB.
+¹ Shares the Qwen Image Edit 2511 stack (~59 GB: 41 GB diffusion model + 17 GB text encoder + VAE) with modules 03, 05, 06, 09, Bonus A, and Bonus B. If already downloaded for a prior module, only the module-specific LoRA (~0.5–2 GB) is needed.
 
-² Shares the Qwen model stack with other Qwen-based modules (02, 03, 05, 06, Bonus A). If the Qwen stack is already downloaded for a prior module, no additional storage is needed for the models — only the module-specific LoRA (~0.5 GB).
+² **Windows only.** Trellis2's CUDA extensions (cumesh, nvdiffrast) are distributed as pre-built wheels tied to specific PyTorch versions. On Linux, ABI incompatibilities prevent the nodes from loading. Linux support depends on upstream wheel updates from the Trellis2 author.
 
-³ Requires FP8 quantization and KJNodes block-swap (CPU offload) enabled in the workflow. Generation will be slow. 24 GB recommended for practical use.
+³ Requires FP8 quantization and KJNodes block-swap (CPU offload) enabled in the workflow. Generation will be slow on 16 GB. 24 GB recommended for practical use.
 
-⁴ 32 GB RAM is the 2× VRAM baseline for a 16 GB GPU. If using block-swap at 16 GB VRAM, 48 GB is recommended — block-swap offloads model layers to system RAM during generation.
+⁴ If using block-swap at 16 GB VRAM, 48 GB RAM is recommended — block-swap offloads model layers to system RAM during generation.
 
-⁵ Maximum CPU offloading required in ComfyUI-WanVideoWrapper settings. 48 GB RAM is the 2× VRAM baseline for a 24 GB GPU and provides sufficient offloading headroom. Module 10 was developed and tested on A100-class hardware; RTX PRO 6000 is the recommended workstation option for comfortable generation at full resolution.
-
-⁶ **Windows only.** Trellis2's CUDA extensions (cumesh, nvdiffrast) are distributed as pre-built wheels tied to specific PyTorch versions. On Linux, ABI incompatibilities between the available wheels and current PyTorch releases prevent the nodes from loading. Linux support depends on upstream wheel updates from the Trellis2 author.
+⁵ Maximum CPU offloading required in ComfyUI-WanVideoWrapper settings. Module 10 was developed and tested on A100-class hardware; RTX PRO 6000 is the recommended workstation option for comfortable generation at full resolution.
 
 ---
 
