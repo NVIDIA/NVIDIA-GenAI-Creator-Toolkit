@@ -25,9 +25,13 @@ Usage:
 import argparse
 import os
 import sys
+import time
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
+
+_DOWNLOAD_MAX_RETRIES = 3
+_DOWNLOAD_MIN_SIZE = 1024  # files smaller than 1 KB are treated as incomplete
 
 try:
     from huggingface_hub import hf_hub_download, snapshot_download, get_token
@@ -649,28 +653,40 @@ def hf_download_file(repo: str, filename: str, local_dir: Path,
     """
     Download a single file from a HuggingFace repo using the Python API.
     Moves the file to a flat location in local_dir (strips repo subdirectories).
+    Retries up to _DOWNLOAD_MAX_RETRIES times with exponential backoff.
     Returns True on success.
     """
-    try:
-        print(f"    Fetching: {repo} / {filename}")
-        hf_hub_download(
-            repo_id=repo,
-            filename=filename,
-            local_dir=str(local_dir),
-            revision=revision if revision else None,
-        )
-        # hf_hub_download preserves the repo's directory structure inside
-        # local_dir (e.g. split_files/diffusion_models/foo.safetensors).
-        # Move the file to local_dir/foo.safetensors (flat).
-        downloaded = local_dir / filename
-        target = local_dir / Path(filename).name
-        if downloaded != target and downloaded.exists():
-            downloaded.rename(target)
-            _remove_empty_parents(downloaded.parent, local_dir)
-        return True
-    except Exception as e:
-        print(f"    [ERROR] {e}")
-        return False
+    for attempt in range(1, _DOWNLOAD_MAX_RETRIES + 1):
+        try:
+            if attempt > 1:
+                print(f"    Fetching (attempt {attempt}/{_DOWNLOAD_MAX_RETRIES}): {repo} / {filename}")
+            else:
+                print(f"    Fetching: {repo} / {filename}")
+            hf_hub_download(
+                repo_id=repo,
+                filename=filename,
+                local_dir=str(local_dir),
+                revision=revision if revision else None,
+            )
+            # hf_hub_download preserves the repo's directory structure inside
+            # local_dir (e.g. split_files/diffusion_models/foo.safetensors).
+            # Move the file to local_dir/foo.safetensors (flat).
+            downloaded = local_dir / filename
+            target = local_dir / Path(filename).name
+            if downloaded != target and downloaded.exists():
+                downloaded.rename(target)
+                _remove_empty_parents(downloaded.parent, local_dir)
+            return True
+        except Exception as e:
+            print(f"    [ERROR] {e}")
+            if attempt < _DOWNLOAD_MAX_RETRIES:
+                wait = 5 * attempt
+                print(f"    Retrying in {wait}s...")
+                time.sleep(wait)
+            else:
+                print(f"    All {_DOWNLOAD_MAX_RETRIES} attempts failed for {filename}.")
+                return False
+    return False
 
 
 def _remove_empty_parents(path: Path, stop_at: Path) -> None:
@@ -747,8 +763,12 @@ def download_model(comfyui_root: Path, model: ModelSpec) -> str:
     final_path = dest_file_path(comfyui_root, model)
 
     if final_path and final_path.exists():
-        print(f"  [SKIP] Already exists: {final_path.relative_to(comfyui_root)}")
-        return "skipped"
+        if final_path.stat().st_size < _DOWNLOAD_MIN_SIZE:
+            print(f"  [WARN] Incomplete file detected ({final_path.stat().st_size} bytes), re-downloading: {final_path.name}")
+            final_path.unlink()
+        else:
+            print(f"  [SKIP] Already exists: {final_path.relative_to(comfyui_root)}")
+            return "skipped"
 
     # Also check if the pre-rename file already exists (edge case)
     base_name = Path(model.filename).name
