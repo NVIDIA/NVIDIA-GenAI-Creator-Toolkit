@@ -710,6 +710,23 @@ if /i not "!MODULES!"=="" (
     echo    huggingface-cli login
     echo.
     "!PYTHON!" "%~dp0download_models.py" --comfyui "!MODELS_ROOT!" --modules !MODULES!
+    if errorlevel 1 (
+        echo.
+        echo ================================================================
+        echo  [ERROR] One or more model downloads failed after 3 attempts.
+        echo ================================================================
+        echo.
+        echo  This is usually a temporary network or HuggingFace issue.
+        echo  Already-downloaded models will be skipped on retry.
+        echo.
+        echo  To retry, run:
+        echo    install.bat %INSTALL_LOCATION% --modules !MODULES!
+        echo.
+        echo  Do NOT launch ComfyUI until all models are downloaded --
+        echo  workflows will fail to run with missing models.
+        echo.
+        exit /b 1
+    )
 )
 
 echo.

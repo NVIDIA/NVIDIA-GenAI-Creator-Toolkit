@@ -414,6 +414,24 @@ if [ -n "$MODULES" ]; then
   echo ""
   SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
   $PYTHON "$SCRIPT_DIR/download_models.py" --comfyui "$COMFYUI_DIR" --modules "$MODULES"
+  DOWNLOAD_EXIT=$?
+  if [ "$DOWNLOAD_EXIT" != "0" ]; then
+    echo ""
+    echo "================================================================"
+    echo " [ERROR] One or more model downloads failed after 3 attempts."
+    echo "================================================================"
+    echo ""
+    echo "  This is usually a temporary network or HuggingFace issue."
+    echo "  Already-downloaded models will be skipped on retry."
+    echo ""
+    echo "  To retry, run:"
+    echo "    bash install.sh $COMFYUI_DIR --modules $MODULES"
+    echo ""
+    echo "  Do NOT launch ComfyUI until all models are downloaded —"
+    echo "  workflows will fail to run with missing models."
+    echo ""
+    exit 1
+  fi
 fi
 
 echo ""
