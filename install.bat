@@ -561,6 +561,17 @@ if !DO_INSTALL!==1 (
     "!PYTHON!" -m pip install -q --upgrade diffusers
 )
 
+REM --- Copy sample inputs into ComfyUI ---
+set "INPUTS_DEST=%INSTALL_LOCATION%\input"
+if not exist "!INPUTS_DEST!" mkdir "!INPUTS_DEST!"
+for /d %%D in ("%~dp0workflows\*") do (
+  if exist "%%D\input\" (
+    copy /y "%%D\input\*" "!INPUTS_DEST!\" > nul
+  )
+)
+echo Sample inputs copied to: !INPUTS_DEST!
+echo.
+
 REM --- Install template browser extension ---
 REM Creates a lightweight custom node whose example_workflows\ folder makes all
 REM workflows appear in ComfyUI's template browser under Extensions.

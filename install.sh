@@ -309,6 +309,16 @@ if module_selected "bonus-b"; then
 fi
 
 
+# --- Copy sample inputs into ComfyUI ---
+INPUTS_DEST="$COMFYUI_DIR/input"
+mkdir -p "$INPUTS_DEST"
+for workflow_dir in "$(dirname "$0")/workflows"/*/; do
+  if [ -d "${workflow_dir}input" ]; then
+    cp "${workflow_dir}input/"* "$INPUTS_DEST/" 2>/dev/null || true
+  fi
+done
+echo "Sample inputs copied to: $INPUTS_DEST"
+
 # --- Install template browser extension ---
 # Creates a lightweight custom node whose example_workflows/ folder makes all
 # workflows appear in ComfyUI's template browser under Extensions.
