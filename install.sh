@@ -309,6 +309,21 @@ if module_selected "bonus-b"; then
 fi
 
 
+# --- Copy workflow JSONs into ComfyUI Workflows tab ---
+WORKFLOWS_DEST="$COMFYUI_DIR/user/default/workflows/NVIDIA-GenAI-Creator-Toolkit"
+mkdir -p "$WORKFLOWS_DEST"
+for workflow_dir in "$(dirname "$0")/workflows"/*/; do
+  module_name="$(basename "$workflow_dir")"
+  if [ -f "${workflow_dir}${module_name}.json" ]; then
+    mkdir -p "$WORKFLOWS_DEST/$module_name"
+    cp "${workflow_dir}${module_name}.json" "$WORKFLOWS_DEST/$module_name/$module_name.json"
+    if [ -f "${workflow_dir}${module_name}-videoprep.json" ]; then
+      cp "${workflow_dir}${module_name}-videoprep.json" "$WORKFLOWS_DEST/$module_name/${module_name}-videoprep.json"
+    fi
+  fi
+done
+echo "Workflows copied to: $WORKFLOWS_DEST"
+
 # --- Copy sample inputs into ComfyUI ---
 INPUTS_DEST="$COMFYUI_DIR/input"
 mkdir -p "$INPUTS_DEST"

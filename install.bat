@@ -561,6 +561,22 @@ if !DO_INSTALL!==1 (
     "!PYTHON!" -m pip install -q --upgrade diffusers
 )
 
+REM --- Copy workflow JSONs into ComfyUI Workflows tab ---
+set "WORKFLOWS_DEST=%INSTALL_LOCATION%\user\default\workflows\NVIDIA-GenAI-Creator-Toolkit"
+if not exist "!WORKFLOWS_DEST!" mkdir "!WORKFLOWS_DEST!"
+for /d %%D in ("%~dp0workflows\*") do (
+  set "MODULE_NAME=%%~nxD"
+  if exist "%%D\!MODULE_NAME!.json" (
+    if not exist "!WORKFLOWS_DEST!\!MODULE_NAME!" mkdir "!WORKFLOWS_DEST!\!MODULE_NAME!"
+    copy /y "%%D\!MODULE_NAME!.json" "!WORKFLOWS_DEST!\!MODULE_NAME!\!MODULE_NAME!.json" > nul
+    if exist "%%D\!MODULE_NAME!-videoprep.json" (
+      copy /y "%%D\!MODULE_NAME!-videoprep.json" "!WORKFLOWS_DEST!\!MODULE_NAME!\!MODULE_NAME!-videoprep.json" > nul
+    )
+  )
+)
+echo Workflows copied to: !WORKFLOWS_DEST!
+echo.
+
 REM --- Copy sample inputs into ComfyUI ---
 set "INPUTS_DEST=%INSTALL_LOCATION%\input"
 if not exist "!INPUTS_DEST!" mkdir "!INPUTS_DEST!"
