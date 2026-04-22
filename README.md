@@ -16,7 +16,7 @@ Adapted from NVIDIA's GTC 2026 DLI course [*Create Generative AI Workflows for D
 
 ## Requirements
 
-- **GPU:** RTX 4080 (16 GB) minimum; RTX 4090 (24 GB) recommended on Windows; RTX 5090 (32 GB) recommended on Linux
+- **GPU:** RTX 3060 (12 GB) minimum for some modules; RTX 4080 (16 GB) for most; RTX 4090 (24 GB) recommended on Windows; RTX 5090 (32 GB) recommended on Linux
   - **Windows** benefits from NVIDIA weight streaming — models larger than available VRAM are streamed from system RAM, so a 4090 handles most modules comfortably
   - **Linux** does not support weight streaming — the full model must fit in VRAM. A 4090 (24 GB) will OOM on modules that run fine on Windows with the same card. RTX 5090 (32 GB) is the practical minimum for Linux; use `--lowvram` as a workaround on 24 GB cards
 - **OS:** Windows 11 or Linux x86_64
