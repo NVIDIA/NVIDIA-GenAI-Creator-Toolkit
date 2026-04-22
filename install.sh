@@ -246,22 +246,13 @@ fi
 
 # --- Module 08: Trellis2 3D ---
 if module_selected "08"; then
-  install_node "ComfyUI-Trellis2" "https://github.com/visualbruno/ComfyUI-Trellis2"
-  echo "          Installing Trellis2 Python dependencies..."
-  $PIP install -q meshlib requests pymeshlab opencv-python scipy plotly rembg
-  # open3d: try stable first, fall back to pre-release
-  if ! $PIP install -q open3d > /dev/null 2>&1; then
-    $PIP install -q --pre open3d > /dev/null 2>&1 || echo "          [WARN] open3d install failed — mesh preview may not work. Install manually: pip install open3d"
-  fi
-  # Patch image_feature_extractor.py for transformers compatibility.
-  # DINOv3ViTModel nesting changed across versions (.layer vs .model.layer).
-  # Use getattr fallback so the code works regardless of transformers version.
-  echo "          Patching Trellis2 for transformers compatibility..."
-  FE_PY="$NODES_DIR/ComfyUI-Trellis2/trellis2/modules/image_feature_extractor.py"
-  if [ -f "$FE_PY" ]; then
-    sed -i "s/self\.model\.model\.layer/getattr(self.model,'model',self.model).layer/g" "$FE_PY"
-    sed -i "s/self\.model\.layer/getattr(self.model,'model',self.model).layer/g" "$FE_PY"
-  fi
+  echo ""
+  echo "  [Module 08] Trellis2 3D is Windows only."
+  echo "              Trellis2 CUDA extensions (cumesh, nvdiffrast) are pre-built wheels"
+  echo "              tied to specific PyTorch versions. ABI incompatibilities with current"
+  echo "              PyTorch releases on Linux prevent the nodes from loading."
+  echo "              Skipping Module 08 on Linux."
+  echo ""
 fi
 
 # --- Module 09: Image Cut Out Time to Move ---

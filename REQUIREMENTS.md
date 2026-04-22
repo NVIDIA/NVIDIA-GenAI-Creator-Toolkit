@@ -13,7 +13,7 @@
 
 **Windows vs Linux VRAM:** On Windows, NVIDIA weight streaming offloads model layers to system RAM when VRAM is full — a 4090 (24 GB) handles most modules comfortably. On Linux, weight streaming is not available; the full model must fit in VRAM. An RTX 4090 will encounter OOM errors on modules that run fine on Windows with the same GPU. **RTX 5090 (32 GB) is the recommended minimum for Linux.** Use `--lowvram` or `--novram` ComfyUI launch flags as a workaround on 24 GB cards (generation will be slower).
 
-**RTX Spark / ARM64**: Modules 01–08 are compatible. Module 09 and 10 (Wan2.2) require x86_64.
+**RTX Spark / ARM64**: Modules 01–07 and Bonus A/B are compatible. Module 08 (Trellis2) is Windows x86_64 only. Modules 09 and 10 (Wan2.2) require x86_64.
 
 ### Per-Module Requirements
 
@@ -28,7 +28,7 @@ Requirements below assume single-image or short-video generation at moderate res
 | 05 Novel View Synthesis | RTX 4080 (16 GB) ¹ | RTX 4090 (24 GB) | RTX 5090 (32 GB) | ~8 GB ² | 32 GB |
 | 06 Image → Equirectangular | RTX 4080 (16 GB) ¹ | RTX 4090 (24 GB) | RTX 5090 (32 GB) | ~12 GB | 32 GB |
 | 07 Panorama → HDRI | RTX 4080 (16 GB) | RTX 4090 (24 GB) | RTX 5090 (32 GB) | ~25 GB | 32 GB |
-| 08 Image to 3D | RTX 3090 (24 GB) | RTX 4090 (24 GB) | RTX 5090 (32 GB) | ~20 GB | 48 GB |
+| 08 Image to 3D ⁶ | RTX 3090 (24 GB) | RTX 4090 (24 GB) | RTX 5090 (32 GB) | ~20 GB | 48 GB |
 | 09 Image Cut Out Time to Move| RTX 4080 (16 GB) ³ | RTX 4090 (24 GB) | RTX 5090 (32 GB) | ~30 GB | 32 GB ⁴ |
 | 10 Video to Video | RTX 4090 (24 GB) ⁵ | RTX 5090 (32 GB) | RTX PRO 6000 (96 GB) | ~30 GB | 48 GB |
 | Bonus A Texture Extraction | RTX 4080 (16 GB) ¹ | RTX 4090 (24 GB) | RTX 5090 (32 GB) | ~8 GB ² | 32 GB |
@@ -43,6 +43,8 @@ Requirements below assume single-image or short-video generation at moderate res
 ⁴ 32 GB RAM is the 2× VRAM baseline for a 16 GB GPU. If using block-swap at 16 GB VRAM, 48 GB is recommended — block-swap offloads model layers to system RAM during generation.
 
 ⁵ Maximum CPU offloading required in ComfyUI-WanVideoWrapper settings. 48 GB RAM is the 2× VRAM baseline for a 24 GB GPU and provides sufficient offloading headroom. Module 10 was developed and tested on A100-class hardware; RTX PRO 6000 is the recommended workstation option for comfortable generation at full resolution.
+
+⁶ **Windows only.** Trellis2's CUDA extensions (cumesh, nvdiffrast) are distributed as pre-built wheels tied to specific PyTorch versions. On Linux, ABI incompatibilities between the available wheels and current PyTorch releases prevent the nodes from loading. Linux support depends on upstream wheel updates from the Trellis2 author.
 
 ---
 

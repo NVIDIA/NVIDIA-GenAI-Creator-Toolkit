@@ -2,6 +2,8 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 # 08 — Trellis2 3D Asset Generation
+
+> **Windows only.** Trellis2's CUDA extensions are distributed as pre-built wheels tied to specific PyTorch versions. ABI incompatibilities with current PyTorch releases on Linux prevent the nodes from loading. Linux support depends on upstream wheel updates from the Trellis2 author.
 ![](images/08-output.gif)
 
 ## Overview
