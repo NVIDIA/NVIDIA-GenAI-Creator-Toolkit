@@ -4,7 +4,7 @@
 
 | Requirement | Minimum | Suggested | Best Performance |
 |-------------|---------|-----------|-----------------|
-| GPU | RTX 4080 (16 GB VRAM) | RTX 4090 (24 GB VRAM) | RTX 5090 (32 GB) / RTX PRO 6000 (96 GB) |
+| GPU | RTX 3060 (12 GB) — some modules; RTX 4080 (16 GB) — most | RTX 4090 (24 GB) Windows / RTX 5090 (32 GB) Linux | RTX 5090 (32 GB) / RTX PRO 6000 (96 GB) |
 | System RAM | 32 GB | 48 GB | 64 GB / 192 GB |
 | Storage | 50 GB NVMe SSD | 200 GB NVMe SSD | 500 GB+ NVMe SSD |
 | Platform | Windows 11 x86_64, Linux x86_64 | Windows 11 x86_64 | Windows 11 x86_64 |
