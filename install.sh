@@ -247,6 +247,12 @@ fi
 # --- Module 08: Trellis2 3D ---
 if module_selected "08"; then
   install_node "ComfyUI-Trellis2" "https://github.com/visualbruno/ComfyUI-Trellis2"
+  echo "          Installing Trellis2 Python dependencies..."
+  $PIP install -q meshlib requests pymeshlab opencv-python scipy plotly rembg
+  # open3d: try stable first, fall back to pre-release
+  if ! $PIP install -q open3d > /dev/null 2>&1; then
+    $PIP install -q --pre open3d > /dev/null 2>&1 || echo "          [WARN] open3d install failed — mesh preview may not work. Install manually: pip install open3d"
+  fi
   # Patch image_feature_extractor.py for transformers compatibility.
   # DINOv3ViTModel nesting changed across versions (.layer vs .model.layer).
   # Use getattr fallback so the code works regardless of transformers version.

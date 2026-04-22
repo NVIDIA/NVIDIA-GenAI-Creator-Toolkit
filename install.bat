@@ -463,6 +463,10 @@ if !DO_INSTALL!==1 (
         "!PYTHON!" -c "import glob,subprocess,sys; py=f'cp{sys.version_info.major}{sys.version_info.minor}'; all_whl=glob.glob(sys.argv[1]); whl=[w for w in all_whl if py in w] or all_whl; results=[subprocess.run([sys.executable,'-m','pip','install','-q','--no-warn-script-location',w],capture_output=True) for w in whl]; ok=sum(1 for r in results if r.returncode==0); print(f'           Installed {ok} of {len(whl)} TRELLIS2 wheel(s).')" "!NODES_DIR!\ComfyUI-Trellis2\wheels\Windows\!TRELLIS_TORCH!\*.whl"
     )
 
+    REM Install Trellis2 Python dependencies (meshlib etc. may not install via requirements.txt on all setups)
+    echo           Installing Trellis2 Python dependencies...
+    "!PYTHON!" -m pip install -q meshlib requests pymeshlab opencv-python scipy plotly rembg
+
     REM open3d has no PyPI wheel for newer Python versions — try prerelease then skip gracefully
     echo           Installing open3d...
     "!PYTHON!" -m pip install -q open3d > nul 2>&1
