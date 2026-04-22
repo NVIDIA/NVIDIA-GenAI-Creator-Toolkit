@@ -14,7 +14,7 @@ Adapted from NVIDIA's GTC 2026 DLI course [*Create Generative AI Workflows for D
 
 ## Requirements
 
-- **GPU:** RTX 4090 (24 GB) or larger recommended on Windows; RTX 5090 (32 GB) or larger recommended on Linux
+- **GPU:** RTX 5090 (32 GB) or larger recommended on Windows; RTX PRO 6000 (64 GB) recommended on Linux
 - **OS:** Windows 11 or Linux x86_64
 - **Software:** [ComfyUI](https://github.com/comfyanonymous/ComfyUI) + [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager)
 
