@@ -11,6 +11,8 @@
 
 **NVFP4 quantization** is an optional performance optimization available on RTX 50 series (Blackwell) GPUs. All modules run without it on RTX 30/40 series.
 
+**Windows vs Linux VRAM:** On Windows, NVIDIA weight streaming offloads model layers to system RAM when VRAM is full — a 4090 (24 GB) handles most modules comfortably. On Linux, weight streaming is not available; the full model must fit in VRAM. An RTX 4090 will encounter OOM errors on modules that run fine on Windows with the same GPU. **RTX 5090 (32 GB) is the recommended minimum for Linux.** Use `--lowvram` or `--novram` ComfyUI launch flags as a workaround on 24 GB cards (generation will be slower).
+
 **RTX Spark / ARM64**: Modules 01–08 are compatible. Module 09 and 10 (Wan2.2) require x86_64.
 
 ### Per-Module Requirements
@@ -93,8 +95,29 @@ Launch ComfyUI:
 
 ```bash
 source venv/bin/activate   # activate venv if not already active
-python main.py
+python3 main.py --listen
 ```
+
+> **`--listen` is required on headless Linux machines** — without it, ComfyUI only accepts connections from localhost and the browser tunnel will fail.
+
+**Accessing the UI from a remote Windows machine (SSH tunnel):**
+
+In a separate PowerShell window on your Windows machine:
+```powershell
+& "C:\Program Files\Git\usr\bin\ssh.exe" -L 8188:localhost:8188 username@<linux-ip>
+```
+Then open `http://localhost:8188` in your browser. Keep the PowerShell window open — the tunnel stays active as long as the connection is alive.
+
+**Keeping ComfyUI running after SSH disconnect:**
+
+Use `screen` so ComfyUI survives disconnects:
+```bash
+screen -S comfyui
+source ~/ComfyUI/venv/bin/activate
+python3 ~/ComfyUI/main.py --listen
+# Press Ctrl+A, D to detach
+```
+Reattach later with `screen -r comfyui`.
 
 ### Windows
 
