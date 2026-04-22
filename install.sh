@@ -311,11 +311,14 @@ WORKFLOWS_DEST="$COMFYUI_DIR/user/default/workflows/NVIDIA-GenAI-Creator-Toolkit
 mkdir -p "$WORKFLOWS_DEST"
 for workflow_dir in "$(dirname "$0")/workflows"/*/; do
   module_name="$(basename "$workflow_dir")"
-  if [ -f "${workflow_dir}${module_name}.json" ]; then
-    mkdir -p "$WORKFLOWS_DEST/$module_name"
-    cp "${workflow_dir}${module_name}.json" "$WORKFLOWS_DEST/$module_name/$module_name.json"
-    if [ -f "${workflow_dir}${module_name}-videoprep.json" ]; then
-      cp "${workflow_dir}${module_name}-videoprep.json" "$WORKFLOWS_DEST/$module_name/${module_name}-videoprep.json"
+  module_num=$(echo "$module_name" | sed 's/^\(bonus-[ab]\|[0-9][0-9]\)-.*/\1/')
+  if [ -z "$MODULES" ] || module_selected "$module_num"; then
+    if [ -f "${workflow_dir}${module_name}.json" ]; then
+      mkdir -p "$WORKFLOWS_DEST/$module_name"
+      cp "${workflow_dir}${module_name}.json" "$WORKFLOWS_DEST/$module_name/$module_name.json"
+      if [ -f "${workflow_dir}${module_name}-videoprep.json" ]; then
+        cp "${workflow_dir}${module_name}-videoprep.json" "$WORKFLOWS_DEST/$module_name/${module_name}-videoprep.json"
+      fi
     fi
   fi
 done
@@ -325,8 +328,12 @@ echo "Workflows copied to: $WORKFLOWS_DEST"
 INPUTS_DEST="$COMFYUI_DIR/input"
 mkdir -p "$INPUTS_DEST"
 for workflow_dir in "$(dirname "$0")/workflows"/*/; do
-  if [ -d "${workflow_dir}input" ]; then
-    cp "${workflow_dir}input/"* "$INPUTS_DEST/" 2>/dev/null || true
+  module_name="$(basename "$workflow_dir")"
+  module_num=$(echo "$module_name" | sed 's/^\(bonus-[ab]\|[0-9][0-9]\)-.*/\1/')
+  if [ -z "$MODULES" ] || module_selected "$module_num"; then
+    if [ -d "${workflow_dir}input" ]; then
+      cp "${workflow_dir}input/"* "$INPUTS_DEST/" 2>/dev/null || true
+    fi
   fi
 done
 echo "Sample inputs copied to: $INPUTS_DEST"
@@ -342,12 +349,15 @@ mkdir -p "$TEMPLATE_NODE_DIR/example_workflows"
 cp "$(dirname "$0")/custom_node/__init__.py" "$TEMPLATE_NODE_DIR/__init__.py"
 for workflow_dir in "$(dirname "$0")/workflows"/*/; do
   module_name="$(basename "$workflow_dir")"
-  if [ -f "${workflow_dir}${module_name}.json" ]; then
-    cp "${workflow_dir}${module_name}.json" "$TEMPLATE_NODE_DIR/example_workflows/${module_name}.json"
-    if [ -f "${workflow_dir}images/preview.png" ]; then
-      cp "${workflow_dir}images/preview.png" "$TEMPLATE_NODE_DIR/example_workflows/${module_name}.jpg"
-    elif [ -f "${workflow_dir}images/preview.gif" ]; then
-      cp "${workflow_dir}images/preview.gif" "$TEMPLATE_NODE_DIR/example_workflows/${module_name}.jpg"
+  module_num=$(echo "$module_name" | sed 's/^\(bonus-[ab]\|[0-9][0-9]\)-.*/\1/')
+  if [ -z "$MODULES" ] || module_selected "$module_num"; then
+    if [ -f "${workflow_dir}${module_name}.json" ]; then
+      cp "${workflow_dir}${module_name}.json" "$TEMPLATE_NODE_DIR/example_workflows/${module_name}.json"
+      if [ -f "${workflow_dir}images/preview.png" ]; then
+        cp "${workflow_dir}images/preview.png" "$TEMPLATE_NODE_DIR/example_workflows/${module_name}.jpg"
+      elif [ -f "${workflow_dir}images/preview.gif" ]; then
+        cp "${workflow_dir}images/preview.gif" "$TEMPLATE_NODE_DIR/example_workflows/${module_name}.jpg"
+      fi
     fi
   fi
 done

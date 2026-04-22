@@ -570,11 +570,20 @@ set "WORKFLOWS_DEST=%INSTALL_LOCATION%\user\default\workflows\NVIDIA-GenAI-Creat
 if not exist "!WORKFLOWS_DEST!" mkdir "!WORKFLOWS_DEST!"
 for /d %%D in ("%~dp0workflows\*") do (
   set "MODULE_NAME=%%~nxD"
-  if exist "%%D\!MODULE_NAME!.json" (
-    if not exist "!WORKFLOWS_DEST!\!MODULE_NAME!" mkdir "!WORKFLOWS_DEST!\!MODULE_NAME!"
-    copy /y "%%D\!MODULE_NAME!.json" "!WORKFLOWS_DEST!\!MODULE_NAME!\!MODULE_NAME!.json" > nul
-    if exist "%%D\!MODULE_NAME!-videoprep.json" (
-      copy /y "%%D\!MODULE_NAME!-videoprep.json" "!WORKFLOWS_DEST!\!MODULE_NAME!\!MODULE_NAME!-videoprep.json" > nul
+  set "MOD_NUM=!MODULE_NAME:~0,2!"
+  if "!MODULE_NAME:~0,7!"=="bonus-a" set "MOD_NUM=bonus-a"
+  if "!MODULE_NAME:~0,7!"=="bonus-b" set "MOD_NUM=bonus-b"
+  set "COPY_THIS=0"
+  if "!MODULES!"=="" set "COPY_THIS=1"
+  if /i "!MODULES!"=="all" set "COPY_THIS=1"
+  echo ,!MODULES!, | findstr /i ",!MOD_NUM!," > nul 2>&1 && set "COPY_THIS=1"
+  if "!COPY_THIS!"=="1" (
+    if exist "%%D\!MODULE_NAME!.json" (
+      if not exist "!WORKFLOWS_DEST!\!MODULE_NAME!" mkdir "!WORKFLOWS_DEST!\!MODULE_NAME!"
+      copy /y "%%D\!MODULE_NAME!.json" "!WORKFLOWS_DEST!\!MODULE_NAME!\!MODULE_NAME!.json" > nul
+      if exist "%%D\!MODULE_NAME!-videoprep.json" (
+        copy /y "%%D\!MODULE_NAME!-videoprep.json" "!WORKFLOWS_DEST!\!MODULE_NAME!\!MODULE_NAME!-videoprep.json" > nul
+      )
     )
   )
 )
@@ -585,8 +594,18 @@ REM --- Copy sample inputs into ComfyUI ---
 set "INPUTS_DEST=%INSTALL_LOCATION%\input"
 if not exist "!INPUTS_DEST!" mkdir "!INPUTS_DEST!"
 for /d %%D in ("%~dp0workflows\*") do (
-  if exist "%%D\input\" (
-    copy /y "%%D\input\*" "!INPUTS_DEST!\" > nul
+  set "MODULE_NAME=%%~nxD"
+  set "MOD_NUM=!MODULE_NAME:~0,2!"
+  if "!MODULE_NAME:~0,7!"=="bonus-a" set "MOD_NUM=bonus-a"
+  if "!MODULE_NAME:~0,7!"=="bonus-b" set "MOD_NUM=bonus-b"
+  set "COPY_THIS=0"
+  if "!MODULES!"=="" set "COPY_THIS=1"
+  if /i "!MODULES!"=="all" set "COPY_THIS=1"
+  echo ,!MODULES!, | findstr /i ",!MOD_NUM!," > nul 2>&1 && set "COPY_THIS=1"
+  if "!COPY_THIS!"=="1" (
+    if exist "%%D\input\" (
+      copy /y "%%D\input\*" "!INPUTS_DEST!\" > nul
+    )
   )
 )
 echo Sample inputs copied to: !INPUTS_DEST!
@@ -604,12 +623,21 @@ copy /y "%~dp0custom_node\__init__.py" "!TEMPLATE_NODE_DIR!\__init__.py" > nul
 if not exist "!TEMPLATE_NODE_DIR!\example_workflows" mkdir "!TEMPLATE_NODE_DIR!\example_workflows"
 for /d %%D in ("%~dp0workflows\*") do (
     set "_MNAME=%%~nxD"
-    if exist "%%D\!_MNAME!.json" (
-        copy /y "%%D\!_MNAME!.json" "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!.json" > nul
-        if exist "%%D\images\preview.png" (
-            copy /y "%%D\images\preview.png" "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!.jpg" > nul
-        ) else if exist "%%D\images\preview.gif" (
-            copy /y "%%D\images\preview.gif" "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!.jpg" > nul
+    set "MOD_NUM=!_MNAME:~0,2!"
+    if "!_MNAME:~0,7!"=="bonus-a" set "MOD_NUM=bonus-a"
+    if "!_MNAME:~0,7!"=="bonus-b" set "MOD_NUM=bonus-b"
+    set "COPY_THIS=0"
+    if "!MODULES!"=="" set "COPY_THIS=1"
+    if /i "!MODULES!"=="all" set "COPY_THIS=1"
+    echo ,!MODULES!, | findstr /i ",!MOD_NUM!," > nul 2>&1 && set "COPY_THIS=1"
+    if "!COPY_THIS!"=="1" (
+        if exist "%%D\!_MNAME!.json" (
+            copy /y "%%D\!_MNAME!.json" "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!.json" > nul
+            if exist "%%D\images\preview.png" (
+                copy /y "%%D\images\preview.png" "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!.jpg" > nul
+            ) else if exist "%%D\images\preview.gif" (
+                copy /y "%%D\images\preview.gif" "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!.jpg" > nul
+            )
         )
     )
 )
