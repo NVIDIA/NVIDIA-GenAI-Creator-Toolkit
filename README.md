@@ -61,21 +61,18 @@ Press the blue run button in ComfyUI and see your prompt improve!
 
 
 ---
-## Add more modules 
+
+
+
+## The Modules in this Toolkit
 
 Run the same script again with more module numbers. 
-
 ```bash
 # Windows:
 install.bat C:\path\to\ComfyUI --modules 02, 03
 # Linux:
 bash install.sh /path/to/ComfyUI --modules 02, 03
 ```
-
-
-### Core Modules
-> **VRAM — Windows / Linux.** On Windows, NVIDIA weight streaming offloads inactive model layers to system RAM. On Linux, the full model must fit in VRAM. See [REQUIREMENTS.md](REQUIREMENTS.md) for platform details.
-> **Disk** — Per-module figures assume that module installed alone. Many modules share large models (Qwen 41 GB base, encoders); installing all 12 together costs ~450 GB, not the sum of individual figures.
 
 | # | Workflow | Key Model(s) | Min. Rec. Windows / Linux VRAM | Disk Space | What It Does |
 |---|----------|------------|------|--------|-------------|
@@ -97,6 +94,8 @@ bash install.sh /path/to/ComfyUI --modules 02, 03
 | bonus-a | [Texture Extraction](workflows/bonus-a-texture-extraction/) | Qwen Image Edit 2511 + Texture LoRA | 24 / 32 GB | ~60 GB | Extract seamless tileable textures from any image |
 | bonus-b | [Texture → PBR](workflows/bonus-b-texture-to-pbr/) | Lotus + Marigold | 24 / 32 GB | ~10 GB | Generate a full PBR material set (Normal, Height, Albedo, Roughness, Metallic) |
 
+> **VRAM — Windows / Linux.** On Windows, NVIDIA weight streaming offloads inactive model layers to system RAM. On Linux, the full model must fit in VRAM. See [REQUIREMENTS.md](REQUIREMENTS.md) for platform details.
+> **Disk** — Per-module figures assume that module installed alone. Many modules share large models (Qwen 41 GB base, encoders); installing all 12 together costs ~450 GB, not the sum of individual figures.
 ---
 
 ## How Each Module Is Organized
