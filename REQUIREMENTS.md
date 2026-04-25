@@ -1,39 +1,14 @@
-# Requirements
+# Additional Requirements and Information
 
 ## Hardware
 
-| Requirement | Minimum | Recommended |
-|-------------|---------|-------------|
-| GPU — Windows | RTX 4080 (16 GB) | RTX 5090 (32 GB) |
-| GPU — Linux | RTX 5090 (32 GB) | RTX PRO 6000 (96 GB) |
-| System RAM | 32 GB | 48 GB |
-| Storage | 50 GB NVMe SSD | 200 GB NVMe SSD |
-| Platform | Windows 11 x86_64, Linux x86_64 | — |
-
-**NVFP4 quantization** is an optional performance optimization available on RTX 50 series (Blackwell) GPUs. All modules run without it on RTX 40 series.
-
-**Windows vs Linux VRAM:** On Windows, NVIDIA weight streaming offloads model layers to system RAM when VRAM is full — a 4090 (24 GB) handles most modules comfortably. On Linux, weight streaming is not available; the full model must fit in VRAM. An RTX 4090 will encounter OOM errors on modules that run fine on Windows with the same GPU. **RTX 5090 (32 GB) is the recommended minimum for Linux.** Use `--lowvram` or `--novram` ComfyUI launch flags as a workaround on 24 GB cards (generation will be slower).
-
-**RTX Spark / ARM64**: Modules 01–07 and Bonus A/B are compatible. Module 08 (Trellis2) is Windows x86_64 only. Modules 09 and 10 (Wan2.2) require x86_64.
-
-### Per-Module Requirements
-
-Each module's page lists its exact VRAM, SSD space, RAM, generation time, models, custom nodes, and troubleshooting steps.
-
-| Module | Details |
-|--------|---------|
-| 01 LLM Prompt Enhancer | [modules/01-llm-prompt-enhancer.md](modules/01-llm-prompt-enhancer.md) |
-| 02 Image Deconstruction | [modules/02-image-deconstruction.md](modules/02-image-deconstruction.md) |
-| 03 Targeted Inpainting | [modules/03-targeted-inpainting.md](modules/03-targeted-inpainting.md) |
-| 04 Image to Gaussian Splat | [modules/04-image-to-gaussian-splat.md](modules/04-image-to-gaussian-splat.md) |
-| 05 Novel View Synthesis | [modules/05-novel-view-synthesis.md](modules/05-novel-view-synthesis.md) |
-| 06 Image to Equirectangular | [modules/06-image-to-equirectangular.md](modules/06-image-to-equirectangular.md) |
-| 07 Panorama to HDRI | [modules/07-panorama-to-hdri.md](modules/07-panorama-to-hdri.md) |
-| 08 Image to 3D | [modules/08-image-to-3d.md](modules/08-image-to-3d.md) |
-| 09 Image Cut Out Time to Move | [modules/09-image-cut-out-time-to-move.md](modules/09-image-cut-out-time-to-move.md) |
-| 10 Video to Video | [modules/10-video-to-video.md](modules/10-video-to-video.md) |
-| Bonus A — Texture Extraction | [modules/bonus-a-texture-extraction.md](modules/bonus-a-texture-extraction.md) |
-| Bonus B — Texture to PBR | [modules/bonus-b-texture-to-pbr.md](modules/bonus-b-texture-to-pbr.md) |
+| Requirement | Min. Recommended |
+|-------------|-------------|
+| GPU — Windows | RTX 5090 |
+| GPU — Linux | RTX PRO 6000 |
+| System RAM | 3 x GPU VRAM |
+| Storage | 500 GB |
+| Platform | Windows 11 x86_64, Linux x86_64 |
 
 ---
 
@@ -49,9 +24,7 @@ Each module's page lists its exact VRAM, SSD space, RAM, generation time, models
 
 ---
 
-## Installation (ComfyUI + Manager)
-
-### Linux
+## Linux Installation (ComfyUI + Manager)
 
 ```bash
 git clone https://github.com/comfyanonymous/ComfyUI
@@ -117,34 +90,6 @@ python3 ~/ComfyUI/main.py --listen
 ```
 Reattach later with `screen -r comfyui`.
 
-### Windows
-
-The recommended path on Windows is the [ComfyUI desktop app](https://www.comfy.org/download), which handles Python, CUDA, and updates automatically. After installing, run `install.bat` pointing at the folder inside the app that contains `main.py` — it is nested under `resources\ComfyUI` within the app's install location. To find it, run `where /r C:\ main.py` in Command Prompt.
-
-If using a manual install with your own Python:
-
-```bat
-git clone https://github.com/comfyanonymous/ComfyUI
-cd ComfyUI
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-
-cd custom_nodes
-git clone https://github.com/ltdrdata/ComfyUI-Manager
-cd ..
-
-pip install huggingface_hub
-```
-
-Launch ComfyUI:
-
-```bat
-venv\Scripts\activate
-python main.py
-```
-
-Open `http://127.0.0.1:8188` in your browser.
 
 ---
 
@@ -260,26 +205,6 @@ This is expected if custom nodes aren't installed yet. **Do not click "Install" 
 
 **Workflow loads but nodes show as red/missing**
 The workflow references node types that aren't installed. Run `install.bat` / `install.sh` and restart ComfyUI, then reload the workflow.
-
-**Module 09: first workflow run produces no video**
-Module 09 requires two workflows in sequence: run `09-image-cut-out-time-to-move-videoprep.json` first to prepare inputs, then `09-image-cut-out-time-to-move.json` for generation. See the Module 09 README for the full two-step process.
-
-**Module 09: `ComfyUI-Impact-Pack` shows "IMPORT FAILED" in ComfyUI Manager**
-Impact Pack requires `ultralytics` and `onnxruntime`, which can fail to install on ComfyUI Portable's embedded Python. Fix:
-```
-python_embeded\python.exe -m pip install ultralytics onnxruntime
-```
-Then restart ComfyUI. If `onnxruntime` conflicts with `onnxruntime-gpu`, install the GPU variant instead:
-```
-python_embeded\python.exe -m pip install ultralytics onnxruntime-gpu
-```
-
-**Modules 09–10: `TritonMissing` error during generation**
-Triton is not available in ComfyUI Portable's embedded Python on Windows. The error looks like:
-```
-torch._inductor.exc.TritonMissing: Cannot find a working triton installation.
-```
-**Fix:** In the `WanVideoSampler` node, set **`torch_compile_args`** to disabled / off. The workflow runs correctly without torch compilation — generation speed is unaffected for most GPUs.
 
 **ComfyUI starts but browser on a remote machine can't connect**
 By default, ComfyUI only accepts connections from the same machine (`127.0.0.1`). Launch with `--listen` to accept connections from other machines on the network:
