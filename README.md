@@ -27,7 +27,7 @@ See [REQUIREMENTS.md](REQUIREMENTS.md) for full hardware/software details and pe
 
 #### Install ComfyUI first (if you haven't already)
 Windows: download and install the desktop app from https://www.comfy.org/download
-Linux: see REQUIREMENTS.md for step-by-step setup
+Linux: see [REQUIREMENTS.md](REQUIREMENTS.md) for step-by-step setup
 Then launch ComfyUI and confirm it runs, then close comfyUI. 
    
 ```bash
@@ -55,7 +55,7 @@ Press the blue run button in ComfyUI and see your prompt improve!
 
 
 ---
-### Adding more modules 
+## Add more modules 
 
 Run the same script again with more module numbers. Already downloaded models are skipped.
 
@@ -70,7 +70,7 @@ bash install.sh /path/to/ComfyUI --modules 02, 03
 ### Core Modules
 > **VRAM — Windows / Linux.** On Windows, NVIDIA weight streaming offloads inactive model layers to system RAM. On Linux, the full model must fit in VRAM. See [REQUIREMENTS.md](REQUIREMENTS.md) for platform details.
 
-| # | Workflow | Key Model(s) | Rec. Min. Windows / Linux VRAM | What It Does |
+| # | Workflow | Key Model(s) | Min. Rec. Windows / Linux VRAM | What It Does |
 |---|----------|-------------|------|--------------|
 | 01 | [LLM Prompt Enhancer](workflows/01-llm-prompt-enhancer/) | Gemma 3 via Ollama | 24 / 32 GB | Build an AI agent that refines weak prompts into model-ready instructions |
 | 02 | [Image Deconstruction](workflows/02-image-deconstruction/) | Qwen Image Layered | 24 / 32 GB | Split any image into foreground, midground, and background layers |
@@ -85,14 +85,14 @@ bash install.sh /path/to/ComfyUI --modules 02, 03
 
 ### Bonus Modules
 
-| | Workflow | Key Model(s) | Min Windows / Linux VRAM | What It Does |
+| | Workflow | Key Model(s) | Min. Rec. Windows / Linux VRAM | What It Does |
 |--|----------|-------------|------|--------------|
 | bonus-a | [Texture Extraction](workflows/bonus-a-texture-extraction/) | Qwen Image Edit 2511 + Texture LoRA | 24 / 32 GB | Extract seamless tileable textures from any image |
 | bonus-b | [Texture → PBR](workflows/bonus-b-texture-to-pbr/) | Lotus + Marigold | 24 / 32 GB | Generate a full PBR material set (Normal, Height, Albedo, Roughness, Metallic) |
 
 ---
 
-## How Each Workflow Is Organized
+## How Each Module Is Organized
 
 Every module has a page in [`modules/`](modules/) with its requirements, models, custom nodes, and troubleshooting. The workflow folder contains the ComfyUI JSON and usage instructions:
 
