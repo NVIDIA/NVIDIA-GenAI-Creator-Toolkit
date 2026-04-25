@@ -94,14 +94,11 @@ bash install.sh /path/to/ComfyUI --modules 02, 03
 
 ## How Each Module Is Organized
 
-Every module has a page in [`modules/`](modules/) with its requirements, models, custom nodes, and troubleshooting. The workflow folder contains the ComfyUI JSON and usage instructions:
+Every module has a folder in [`workflows/`](workflows/) with a README, the ComfyUI JSON, and sample inputs:
 
 ```
-modules/
-└── 01-llm-prompt-enhancer.md     ← models, nodes, troubleshooting
-
 workflows/01-llm-prompt-enhancer/
-├── README.md                     ← usage instructions and sample inputs
+├── README.md                     ← usage instructions, models, nodes, troubleshooting
 └── 01-llm-prompt-enhancer.json   ← drag this into ComfyUI
 ```
 
@@ -135,7 +132,7 @@ All other modules are fully standalone.
 
 Code and documentation in this repository are licensed under [Apache 2.0](LICENSE).
 
-Model licenses vary — see each module's page in [`modules/`](modules/) for details. Notable exception: **Flux.1-dev** (Module 07) requires a separate license from Black Forest Labs for commercial use.
+Model licenses vary — see each module's README in [`workflows/`](workflows/) for details. Notable exception: **Flux.1-dev** (Module 07) requires a separate license from Black Forest Labs for commercial use.
 
 > **Third-party software notice:** This project will download and install additional third-party open source software projects. Review the license terms of these open source projects before use. See [THIRD-PARTY.txt](THIRD-PARTY.txt) for the full list.
 
