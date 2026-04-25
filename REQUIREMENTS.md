@@ -10,7 +10,7 @@
 | Storage | 50 GB NVMe SSD | 200 GB NVMe SSD |
 | Platform | Windows 11 x86_64, Linux x86_64 | — |
 
-**NVFP4 quantization** is an optional performance optimization available on RTX 50 series (Blackwell) GPUs. All modules run without it on RTX 30/40 series.
+**NVFP4 quantization** is an optional performance optimization available on RTX 50 series (Blackwell) GPUs. All modules run without it on RTX 40 series.
 
 **Windows vs Linux VRAM:** On Windows, NVIDIA weight streaming offloads model layers to system RAM when VRAM is full — a 4090 (24 GB) handles most modules comfortably. On Linux, weight streaming is not available; the full model must fit in VRAM. An RTX 4090 will encounter OOM errors on modules that run fine on Windows with the same GPU. **RTX 5090 (32 GB) is the recommended minimum for Linux.** Use `--lowvram` or `--novram` ComfyUI launch flags as a workaround on 24 GB cards (generation will be slower).
 
@@ -18,32 +18,22 @@
 
 ### Per-Module Requirements
 
-Requirements below assume single-image or short-video generation at moderate resolution (1024×1024 image or 480p video). Higher resolutions and longer videos require more VRAM.
+Each module's page lists its exact VRAM, SSD space, RAM, generation time, models, custom nodes, and troubleshooting steps.
 
-| Module | VRAM Required | SSD Space | System RAM |
-|--------|--------------|-----------|------------|
-| 01 LLM Prompt Enhancer | 16 GB (FP8) · 24 GB (BF16) | ~59 GB | 32 GB |
-| 02 Image Deconstruction | 16 GB (FP8) · 24 GB (BF16) | ~59 GB | 32 GB |
-| 03 Targeted Inpainting | 16 GB (FP8) · 24 GB (BF16) | ~60 GB ¹ | 32 GB |
-| 04 Image → Gaussian Splat | 8–12 GB | ~4 GB | 32 GB |
-| 05 Novel View Synthesis | 16 GB (FP8) · 24 GB (BF16) | ~60 GB ¹ | 32 GB |
-| 06 Image → Equirectangular | 16 GB (FP8) · 24 GB (BF16) | ~60 GB ¹ | 32 GB |
-| 07 Panorama → HDRI | 16 GB (FP8) · 24 GB (BF16 Flux) | ~25 GB | 32 GB |
-| 08 Image to 3D ² | 24 GB | ~20 GB | 48 GB |
-| 09 Image Cut Out Time to Move | 16 GB (FP8 + block swap) ³ · 24 GB | ~100 GB standalone · ~41 GB ¹ | 32 GB ⁴ |
-| 10 Video to Video | 24 GB (max CPU offload) ⁵ · 32 GB | ~41 GB standalone · ~31 GB with 09 | 48 GB |
-| Bonus A Texture Extraction | 16 GB (FP8) · 24 GB (BF16) | ~60 GB ¹ | 32 GB |
-| Bonus B Texture → PBR | 16 GB (FP8) · 24 GB (BF16) | ~66 GB ¹ | 32 GB |
-
-¹ Shares the Qwen Image Edit 2511 stack (~59 GB: 41 GB diffusion model + 17 GB text encoder + VAE) with modules 03, 05, 06, 09, Bonus A, and Bonus B. If already downloaded for a prior module, only the module-specific LoRA (~0.5–2 GB) is needed.
-
-² **Windows only.** Trellis2's CUDA extensions (cumesh, nvdiffrast) are distributed as pre-built wheels tied to specific PyTorch versions. On Linux, ABI incompatibilities prevent the nodes from loading. Linux support depends on upstream wheel updates from the Trellis2 author.
-
-³ Requires FP8 quantization and KJNodes block-swap (CPU offload) enabled in the workflow. Generation will be slow on 16 GB. 24 GB recommended for practical use.
-
-⁴ If using block-swap at 16 GB VRAM, 48 GB RAM is recommended — block-swap offloads model layers to system RAM during generation.
-
-⁵ Maximum CPU offloading required in ComfyUI-WanVideoWrapper settings. Module 10 was developed and tested on A100-class hardware; RTX PRO 6000 is the recommended workstation option for comfortable generation at full resolution.
+| Module | Details |
+|--------|---------|
+| 01 LLM Prompt Enhancer | [modules/01-llm-prompt-enhancer.md](modules/01-llm-prompt-enhancer.md) |
+| 02 Image Deconstruction | [modules/02-image-deconstruction.md](modules/02-image-deconstruction.md) |
+| 03 Targeted Inpainting | [modules/03-targeted-inpainting.md](modules/03-targeted-inpainting.md) |
+| 04 Image to Gaussian Splat | [modules/04-image-to-gaussian-splat.md](modules/04-image-to-gaussian-splat.md) |
+| 05 Novel View Synthesis | [modules/05-novel-view-synthesis.md](modules/05-novel-view-synthesis.md) |
+| 06 Image to Equirectangular | [modules/06-image-to-equirectangular.md](modules/06-image-to-equirectangular.md) |
+| 07 Panorama to HDRI | [modules/07-panorama-to-hdri.md](modules/07-panorama-to-hdri.md) |
+| 08 Image to 3D | [modules/08-image-to-3d.md](modules/08-image-to-3d.md) |
+| 09 Image Cut Out Time to Move | [modules/09-image-cut-out-time-to-move.md](modules/09-image-cut-out-time-to-move.md) |
+| 10 Video to Video | [modules/10-video-to-video.md](modules/10-video-to-video.md) |
+| Bonus A — Texture Extraction | [modules/bonus-a-texture-extraction.md](modules/bonus-a-texture-extraction.md) |
+| Bonus B — Texture to PBR | [modules/bonus-b-texture-to-pbr.md](modules/bonus-b-texture-to-pbr.md) |
 
 ---
 
@@ -52,7 +42,7 @@ Requirements below assume single-image or short-video generation at moderate res
 | Tool | Notes |
 |------|-------|
 | [Git](https://git-scm.com/downloads) | Required — Windows users: install Git for Windows |
-| Python 3.10 or 3.11 | Required |
+| Python 3.10–3.12 | Required — Python 3.13 is not yet supported (Module 08 Trellis2 requires 3.11 or 3.12) |
 | [ComfyUI](https://github.com/comfyanonymous/ComfyUI) | Latest stable |
 | [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager) | Required for custom node installation |
 | `huggingface_hub` | Required for pre-downloading large models (Wan2.2, Trellis2) |
@@ -90,7 +80,14 @@ pip install huggingface_hub
 sudo apt install git git-lfs ffmpeg libgl1 libglib2.0-0 python3-venv
 ```
 
+> On Ubuntu 24.04 (Python 3.12), `python3-venv` may fail with "ensurepip not available". Install the version-specific package instead:
+> ```bash
+> sudo apt install python3.12-venv
+> ```
+
 > `ffmpeg` is required by ComfyUI-VideoHelperSuite for video output. On Windows, it is bundled automatically.
+
+> **CUDA requirement:** ComfyUI requires CUDA 12.x. Ubuntu 24.04 ships with CUDA 12 via the NVIDIA driver package. Verify with `nvidia-smi` — if CUDA Version shows 12.x you're ready. If you installed the driver manually and see CUDA 13+, the installer will downgrade PyTorch to a CUDA 12-compatible build automatically.
 
 Launch ComfyUI:
 
@@ -153,7 +150,7 @@ Open `http://127.0.0.1:8188` in your browser.
 
 ## Custom Nodes
 
-Each workflow lists its required nodes in its `[module-name]-nodes.md` file. The fastest path is running `install.sh` / `install.bat` from this repo, which installs all node packs at once.
+Each module's page (see [Per-Module Requirements](#per-module-requirements) above) lists its required custom nodes. The fastest path is running `install.sh` / `install.bat` from this repo, which installs all node packs at once.
 
 > **Windows users: run `install.bat` from Command Prompt (`cmd.exe`), not Git Bash or PowerShell.**
 > Git Bash does not execute `.bat` files through cmd.exe, so the script will appear to do nothing.
@@ -175,7 +172,7 @@ To install individually via ComfyUI Manager:
 
 ## Models
 
-Most models must be downloaded manually before running a workflow. See each module's `[module-name]-models.md` for exact filenames, sizes, download URLs, and which subfolder of `ComfyUI/models/` to place each file in.
+The `install.bat` / `install.sh` scripts download models automatically as part of installation. If a model is missing after install, re-run the same install command — already-downloaded models are skipped and only missing files are fetched. See each module's page (linked in [Per-Module Requirements](#per-module-requirements) above) for exact filenames, sizes, and download sources.
 
 For large models (Wan2.2 ~28 GB, Trellis2 ~20 GB), use `huggingface-cli` to pre-download.
 
@@ -248,6 +245,9 @@ Git is not installed or not in PATH. Install [Git for Windows](https://git-scm.c
 Install it with your venv active: `pip install huggingface_hub`
 On ComfyUI Portable: `python_embeded\python.exe -m pip install huggingface_hub`
 
+**ComfyUI shows a "Missing Node Packs" dialog when loading a workflow**
+This is expected if custom nodes aren't installed yet. **Do not click "Install" in the dialog for `ComfyUI-TextureAlchemy`** — ComfyUI Manager installs the wrong branch. Run `install.bat` / `install.sh` instead, which installs all required nodes (including the correct Sandbox branch of TextureAlchemy) automatically.
+
 **ComfyUI shows "Failed to import" or missing node errors**
 1. Restart ComfyUI after running `install.bat` / `install.sh`
 2. If errors persist, open ComfyUI Manager → Install Missing Custom Nodes
@@ -258,7 +258,7 @@ On ComfyUI Portable: `python_embeded\python.exe -m pip install huggingface_hub`
 - For Wan2.2 modules (09–10): reduce sequence length — stay under 120 frames for 16 GB VRAM
 - For Trellis2 (08): reduce output resolution
 
-**Workflow loads but all nodes show as red/missing**
+**Workflow loads but nodes show as red/missing**
 The workflow references node types that aren't installed. Run `install.bat` / `install.sh` and restart ComfyUI, then reload the workflow.
 
 **Module 09: first workflow run produces no video**
@@ -280,3 +280,10 @@ Triton is not available in ComfyUI Portable's embedded Python on Windows. The er
 torch._inductor.exc.TritonMissing: Cannot find a working triton installation.
 ```
 **Fix:** In the `WanVideoSampler` node, set **`torch_compile_args`** to disabled / off. The workflow runs correctly without torch compilation — generation speed is unaffected for most GPUs.
+
+**ComfyUI starts but browser on a remote machine can't connect**
+By default, ComfyUI only accepts connections from the same machine (`127.0.0.1`). Launch with `--listen` to accept connections from other machines on the network:
+```bash
+python3 main.py --listen
+```
+Then open `http://<linux-machine-ip>:8188` in your browser, or set up an SSH tunnel — see the SSH tunnel instructions in the [Linux installation section](#linux) above.

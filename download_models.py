@@ -34,7 +34,7 @@ _DOWNLOAD_MAX_RETRIES = 3
 _DOWNLOAD_MIN_SIZE = 1024  # files smaller than 1 KB are treated as incomplete
 
 try:
-    from huggingface_hub import hf_hub_download, snapshot_download, get_token
+    from huggingface_hub import hf_hub_download, snapshot_download, get_token, get_hf_file_metadata, hf_hub_url
 except ImportError:
     print("[ERROR] huggingface_hub is not installed.")
     print("        Run: pip install huggingface_hub")
@@ -343,10 +343,11 @@ def build_module_catalogue() -> dict:
             ),
             ModelSpec(
                 name="Flux VAE",
-                repo="SicariusSicariiStuff/FLUX.1-dev",
+                repo="black-forest-labs/FLUX.1-dev",
                 filename="ae.safetensors",
                 dest_subdir="models/vae/flux",
                 size="340 MB",
+                requires_agreement="https://huggingface.co/black-forest-labs/FLUX.1-dev",
             ),
             ModelSpec(
                 name="Flux Turbo LoRA",
@@ -648,6 +649,16 @@ def build_module_catalogue() -> dict:
 # Download logic
 # ---------------------------------------------------------------------------
 
+def _hf_expected_size(repo: str, filename: str, revision: Optional[str] = None) -> Optional[int]:
+    """Return HF's reported byte count for a single file, or None if unavailable."""
+    try:
+        url = hf_hub_url(repo_id=repo, filename=filename, revision=revision or "main")
+        meta = get_hf_file_metadata(url)
+        return meta.size
+    except Exception:
+        return None
+
+
 def hf_download_file(repo: str, filename: str, local_dir: Path,
                      revision: Optional[str] = None) -> bool:
     """
@@ -702,18 +713,30 @@ def _remove_empty_parents(path: Path, stop_at: Path) -> None:
 def hf_download_repo(repo: str, local_dir: Path) -> bool:
     """
     Download an entire HuggingFace repo using the Python API.
+    Retries up to _DOWNLOAD_MAX_RETRIES times with exponential backoff.
     Returns True on success.
     """
-    try:
-        print(f"    Fetching repo: {repo}")
-        snapshot_download(
-            repo_id=repo,
-            local_dir=str(local_dir),
-        )
-        return True
-    except Exception as e:
-        print(f"    [ERROR] {e}")
-        return False
+    for attempt in range(1, _DOWNLOAD_MAX_RETRIES + 1):
+        try:
+            if attempt > 1:
+                print(f"    Fetching repo (attempt {attempt}/{_DOWNLOAD_MAX_RETRIES}): {repo}")
+            else:
+                print(f"    Fetching repo: {repo}")
+            snapshot_download(
+                repo_id=repo,
+                local_dir=str(local_dir),
+            )
+            return True
+        except Exception as e:
+            print(f"    [ERROR] {e}")
+            if attempt < _DOWNLOAD_MAX_RETRIES:
+                wait = 5 * attempt
+                print(f"    Retrying in {wait}s...")
+                time.sleep(wait)
+            else:
+                print(f"    All {_DOWNLOAD_MAX_RETRIES} attempts failed for repo {repo}.")
+                return False
+    return False
 
 
 def dest_file_path(comfyui_root: Path, model: ModelSpec) -> Optional[Path]:
@@ -763,12 +786,18 @@ def download_model(comfyui_root: Path, model: ModelSpec) -> str:
     final_path = dest_file_path(comfyui_root, model)
 
     if final_path and final_path.exists():
-        if final_path.stat().st_size < _DOWNLOAD_MIN_SIZE:
-            print(f"  [WARN] Incomplete file detected ({final_path.stat().st_size} bytes), re-downloading: {final_path.name}")
+        actual = final_path.stat().st_size
+        if actual < _DOWNLOAD_MIN_SIZE:
+            print(f"  [WARN] Incomplete file ({actual} bytes), re-downloading: {final_path.name}")
             final_path.unlink()
         else:
-            print(f"  [SKIP] Already exists: {final_path.relative_to(comfyui_root)}")
-            return "skipped"
+            expected = _hf_expected_size(model.repo, model.filename, model.revision)
+            if expected is not None and actual != expected:
+                print(f"  [WARN] Size mismatch ({actual:,} of {expected:,} bytes), re-downloading: {final_path.name}")
+                final_path.unlink()
+            else:
+                print(f"  [SKIP] Already exists: {final_path.relative_to(comfyui_root)}")
+                return "skipped"
 
     # Also check if the pre-rename file already exists (edge case)
     base_name = Path(model.filename).name

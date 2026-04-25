@@ -292,7 +292,7 @@ if not defined MODULES (
     echo ================================================================
     echo.
     echo  Available modules:
-    echo    01       LLM Prompt Enhancer      ^(Ollama/Gemma3 — no download needed^)
+    echo    01       LLM Prompt Enhancer      ^(~5 GB, Gemma3 via Ollama^)
     echo    02       Image Deconstruction     ^(~8 GB^)
     echo    03       Targeted Inpainting      ^(~8 GB^)
     echo    04       Image to Gaussian Splat  ^(~1 GB^)
@@ -678,6 +678,18 @@ if not errorlevel 2 (
         "!OLLAMA_EXE!" pull gemma3
     )
 )
+REM Re-check in case Ollama was present but undetected at script start (e.g. not yet in PATH)
+ollama --version > nul 2>&1
+if not errorlevel 1 (
+    set OLLAMA_FOUND=1
+    set "OLLAMA_EXE=ollama"
+    goto ollama_check_gemma
+)
+if exist "%LOCALAPPDATA%\Programs\Ollama\ollama.exe" (
+    set OLLAMA_FOUND=1
+    set "OLLAMA_EXE=%LOCALAPPDATA%\Programs\Ollama\ollama.exe"
+    goto ollama_check_gemma
+)
 goto skip_ollama
 
 :ollama_check_gemma
@@ -702,12 +714,45 @@ if "!GEMMA_FOUND!"=="1" (
 if /i not "!MODULES!"=="" (
     echo.
     echo ================================================================
-    echo  Downloading models for modules: !MODULES!
+    echo  Step: HuggingFace Login
     echo ================================================================
     echo.
-    echo  TIP: Log in to HuggingFace for faster downloads and access to
-    echo  gated models ^(required for Module 07 Flux^):
-    echo    huggingface-cli login
+    echo  HuggingFace login is required for:
+    echo    - Faster, rate-limit-free downloads
+    echo    - Gated models ^(Module 07 Flux.1-dev, Module 08 DINOv3^)
+    echo.
+    set HF_LOGGED_IN=0
+    "!PYTHON!" -c "from huggingface_hub import get_token; exit(0 if get_token() else 1)" > nul 2>&1
+    if not errorlevel 1 (
+        set HF_LOGGED_IN=1
+        echo  Already logged in to HuggingFace.
+    )
+    if "!HF_LOGGED_IN!"=="0" (
+        echo  Not currently logged in.
+        echo.
+        choice /c YN /m "  Log in to HuggingFace now?"
+        if not errorlevel 2 (
+            echo.
+            echo  Running: huggingface-cli login
+            echo  ^(You will be prompted to enter or paste your HuggingFace token.^)
+            echo  Get a token at: https://huggingface.co/settings/tokens
+            echo.
+            for %%F in ("!PYTHON!") do set "PYTHON_DIR=%%~dpF"
+            if exist "!PYTHON_DIR!huggingface-cli.exe" (
+                "!PYTHON_DIR!huggingface-cli.exe" login
+            ) else (
+                echo  huggingface-cli not found. Run manually after install: huggingface-cli login
+            )
+        ) else (
+            echo.
+            echo  Skipping login. Gated model downloads ^(Module 07, 08^) will fail.
+            echo  To log in later: huggingface-cli login
+        )
+    )
+    echo.
+    echo ================================================================
+    echo  Downloading models for modules: !MODULES!
+    echo ================================================================
     echo.
     "!PYTHON!" "%~dp0download_models.py" --comfyui "!MODELS_ROOT!" --modules !MODULES!
     if errorlevel 1 (

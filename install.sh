@@ -173,7 +173,7 @@ if [ -z "$MODULES" ]; then
   echo "================================================================"
   echo ""
   echo "  Available modules:"
-  echo "   01       LLM Prompt Enhancer      (Ollama/Gemma3 — no download needed)"
+  echo "   01       LLM Prompt Enhancer      (~5 GB, Gemma3 via Ollama)"
   echo "   02       Image Deconstruction     (~8 GB)"
   echo "   03       Targeted Inpainting      (~8 GB)"
   echo "   04       Image to Gaussian Splat  (~1 GB)"
@@ -386,6 +386,20 @@ if [ "$NEEDS_OLLAMA" = "1" ]; then
         ollama pull gemma3
       fi
     fi
+    # Re-check in case Ollama was present but undetected at script start (e.g. not yet in PATH)
+    if command -v ollama > /dev/null 2>&1; then
+      echo ""
+      echo "  Ollama detected."
+      if ! ollama list 2>/dev/null | grep -qi "gemma3"; then
+        read -r -n 1 -p "  Pull gemma3 model now? (~5 GB) (Y/N): " PULL_GEMMA < /dev/tty; echo
+        if [[ "${PULL_GEMMA,,}" == "y" ]]; then
+          echo ""
+          ollama pull gemma3
+        fi
+      else
+        echo "  gemma3 already pulled."
+      fi
+    fi
   else
     echo ""
     echo "  Ollama already installed."
@@ -401,16 +415,52 @@ if [ "$NEEDS_OLLAMA" = "1" ]; then
   fi
 fi
 
+# --- HuggingFace login ---
+if [ -n "$MODULES" ]; then
+  echo ""
+  echo "================================================================"
+  echo " Step: HuggingFace Login"
+  echo "================================================================"
+  echo ""
+  echo "  HuggingFace login is required for:"
+  echo "    - Faster, rate-limit-free downloads"
+  echo "    - Gated models (Module 07 Flux.1-dev, Module 08 DINOv3)"
+  echo ""
+  HF_LOGGED_IN=0
+  if $PYTHON -c "from huggingface_hub import get_token; exit(0 if get_token() else 1)" 2>/dev/null; then
+    HF_LOGGED_IN=1
+    echo "  Already logged in to HuggingFace."
+  fi
+  if [ "$HF_LOGGED_IN" = "0" ]; then
+    echo "  Not currently logged in."
+    read -r -n 1 -p "  Log in to HuggingFace now? (Y/N): " DO_HF_LOGIN < /dev/tty; echo
+    if [[ "${DO_HF_LOGIN,,}" == "y" ]]; then
+      echo ""
+      echo "  Running: huggingface-cli login"
+      echo "  (You will be prompted to enter or paste your HuggingFace token.)"
+      echo "  Get a token at: https://huggingface.co/settings/tokens"
+      echo ""
+      HF_CLI_BIN="$(dirname "$PYTHON")/huggingface-cli"
+      if [ -x "$HF_CLI_BIN" ]; then
+        "$HF_CLI_BIN" login < /dev/tty || true
+      else
+        echo "  huggingface-cli not found. Run manually after install: huggingface-cli login"
+      fi
+    else
+      echo ""
+      echo "  Skipping login. Gated model downloads (Module 07, 08) will fail."
+      echo "  To log in later: huggingface-cli login"
+    fi
+  fi
+  echo ""
+fi
+
 # --- Download models ---
 if [ -n "$MODULES" ]; then
   echo ""
   echo "================================================================"
   echo " Downloading models for modules: $MODULES"
   echo "================================================================"
-  echo ""
-  echo "  TIP: Log in to HuggingFace for faster downloads and access to"
-  echo "  gated models (required for Module 07 Flux):"
-  echo "    huggingface-cli login"
   echo ""
   SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
   $PYTHON "$SCRIPT_DIR/download_models.py" --comfyui "$COMFYUI_DIR" --modules "$MODULES"
