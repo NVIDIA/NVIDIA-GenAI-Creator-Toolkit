@@ -19,15 +19,13 @@ Adapted from NVIDIA's GTC 2026 DLI course [*Create Generative AI Workflows for D
 - **Software:** [ComfyUI](https://github.com/comfyanonymous/ComfyUI) + [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager)
 > **New to ComfyUI?** ComfyUI is a node-based generative AI interface — you connect model components visually to build pipelines. Each workflow in this repo is a pre-built pipeline you load and run.
 
-See [REQUIREMENTS.md](REQUIREMENTS.md) for full hardware/software details and per-module VRAM and generation time estimates.
-
 ---
 
 ## Quick Start with Module 01
 
 #### Install ComfyUI first (if you haven't already)
 Windows: download and install the desktop app from https://www.comfy.org/download.  
-Linux: see [REQUIREMENTS.md](REQUIREMENTS.md) for step-by-step setup.  
+Linux: see [LINUX INSTALLATION.md](LINUX INSTALLATION.md) for step-by-step setup.  
 Launch ComfyUI and complete its setup. Close ComfyUI when done. 
 
 #### Clone the GitHub Repo
