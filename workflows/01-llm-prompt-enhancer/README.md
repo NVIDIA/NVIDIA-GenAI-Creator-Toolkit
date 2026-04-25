@@ -32,7 +32,11 @@ This workflow shows you how to build an AI Agent that strengthens and refines te
 ```
 User Instructions -> Prompt Enhancement Agent -> Text Encoding -> Image
 ```
+## How to Use
 
+1. Open `01-llm-prompt-enhancer.json` from the ComfyUI Template Browswer or Workflow Browser
+2. Configure your prompt and click **Queue Prompt**
+   
 ## Requirements
 
 | Requirement | Value |
@@ -75,11 +79,6 @@ ollama pull gemma3
 ```
 
 Ollama runs as a background service. Once installed, it starts automatically and ComfyUI connects to it via the comfyui-ollama node.
-
-## How to Use
-
-1. Load `01-llm-prompt-enhancer.json` into ComfyUI
-2. Configure your prompt and click **Queue Prompt**
 
 ## Troubleshooting
 
