@@ -637,7 +637,7 @@
         "ver": "0.10.0"
       },
       "widgets_values": [
-        "qwen\\qwen_image_vae.safetensors"
+        "qwen/qwen_image_vae.safetensors"
       ]
     },
     {
@@ -670,7 +670,7 @@
         "ver": "0.10.0"
       },
       "widgets_values": [
-        "qwen\\qwen_image_edit_2511_bf16.safetensors",
+        "qwen/qwen_image_edit_2511_bf16.safetensors",
         "default"
       ]
     },

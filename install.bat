@@ -292,18 +292,18 @@ if not defined MODULES (
     echo ================================================================
     echo.
     echo  Available modules:
-    echo    01       LLM Prompt Enhancer      ^(~5 GB, Gemma3 via Ollama^)
-    echo    02       Image Deconstruction     ^(~8 GB^)
-    echo    03       Targeted Inpainting      ^(~8 GB^)
-    echo    04       Image to Gaussian Splat  ^(~1 GB^)
-    echo    05       Novel View Synthesis ^(~8 GB^)
-    echo    06       Image to Equirectangular ^(~12 GB^)
-    echo    07       Panorama to HDRI         ^(~24 GB^)
-    echo    08       Image to 3D    ^(~20 GB^)
-    echo    09       Image Cut Out Time to Move         ^(~100 GB^)
-    echo    10       Video to Video       ^(~130 GB^)
-    echo    bonus-a  Texture Extraction       ^(~8 GB^)
-    echo    bonus-b  Texture to PBR           ^(~12 GB^)
+    echo    01       LLM Prompt Enhancer      ^(~65 GB, Gemma3 via Ollama^)
+    echo    02       Image Deconstruction     ^(~51 GB^)
+    echo    03       Targeted Inpainting      ^(~52 GB^)
+    echo    04       Image to Gaussian Splat  ^(~3 GB^)
+    echo    05       Novel View Synthesis     ^(~60 GB^)
+    echo    06       Image to Equirectangular ^(~61 GB^)
+    echo    07       Panorama to HDRI         ^(~23 GB^)
+    echo    08       Image to 3D              ^(~20 GB^)
+    echo    09       Image Cut Out Time to Move ^(~77 GB^)
+    echo    10       Video to Video           ^(~143 GB^)
+    echo    bonus-a  Texture Extraction       ^(~60 GB^)
+    echo    bonus-b  Texture to PBR           ^(~10 GB^)
     echo.
     echo  Enter module numbers ^(e.g. 02,03,08^), "all", or press Enter to skip:
     echo.
@@ -642,6 +642,14 @@ for /d %%D in ("%~dp0workflows\*") do (
     )
 )
 echo   Workflows available in template browser: Extensions ^> !TEMPLATE_NODE!
+
+REM --- Normalize model path separators to Windows backslash ---
+REM ComfyUI on Windows resolves model paths with backslashes; JSONs authored on
+REM Mac/Linux store forward slashes which cause "model not found" on first load.
+REM This patches the installed copies only — repo files are not modified.
+echo.
+echo Normalizing workflow model paths for Windows...
+"!PYTHON!" "%~dp0normalize_paths_win.py" "!WORKFLOWS_DEST!" "!TEMPLATE_NODE_DIR!\example_workflows"
 
 REM --- Offer to install Ollama if module 01 or all selected ---
 set NEEDS_OLLAMA=0
