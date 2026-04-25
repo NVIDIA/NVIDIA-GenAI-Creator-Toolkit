@@ -13,8 +13,8 @@ Adapted from NVIDIA's GTC 2026 DLI course [*Create Generative AI Workflows for D
 
 ## Requirements
 
-- **GPU:** RTX 5090 (Windows)+ or RTX PRO 6000 (Linux) recommended to run all modules. 
-- **Disk Space:** 450GB for all modules
+- **GPU:** RTX 5090 (Windows)+ or RTX PRO 6000 (Linux) recommended to run all modules. Not all modules require as much VRAM, see the table below for requirements per module.
+- **Disk Space:** 450GB for all modules. See table below for Disk Space requirements per module.
 - **OS:** Windows 11 or Linux x86_64
 - **Software:** [ComfyUI](https://github.com/comfyanonymous/ComfyUI) + [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager)
 
