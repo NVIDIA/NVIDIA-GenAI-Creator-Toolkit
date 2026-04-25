@@ -26,19 +26,20 @@ See [REQUIREMENTS.md](REQUIREMENTS.md) for full hardware/software details and pe
 ## Quick Start with Module 01
 
 #### Install ComfyUI first (if you haven't already)
-Windows: download and install the desktop app from https://www.comfy.org/download
-Linux: see [REQUIREMENTS.md](REQUIREMENTS.md) for step-by-step setup
-Then launch ComfyUI and confirm it runs, then close comfyUI. 
-   
+Windows: download and install the desktop app from https://www.comfy.org/download.  
+Linux: see [REQUIREMENTS.md](REQUIREMENTS.md) for step-by-step setup.  
+Launch ComfyUI and complete its setup. Close ComfyUI when done. 
+
+#### Clone the GitHub Repo
 ```bash
 # Clone this repo
 git clone https://github.com/NVIDIA/NVIDIA-GenAI-Creator-Toolkit
 cd NVIDIA-GenAI-Creator-Toolkit
 ```
 #### Install Module 01
-Pass your ComfyUI installation location — the folder you chose during Desktop App setup.
-It contains your .venv\, models\, and custom_nodes\ folders.
-Not sure where it is? Check Desktop App Settings > Installation Location.
+Pass your ComfyUI installation location — the folder you chose during Desktop App setup.  
+It contains your .venv\, models\, and custom_nodes\ folders.  
+Not sure where it is? Check Desktop App Settings > About > Arguments: --base-directory C:\path\to\your\installation-location
 
 ```bash
 #Windows (Command Prompt):
@@ -47,8 +48,8 @@ install.bat C:\path\to\your\installation-location --modules 01
 bash install.sh /path/to/ComfyUI --modules 01
 ```
 #### Open and Run Module 01's Workflow in ComfyUI
-Start ComfyUI
-Open the Templates window and scroll down to NVIDIA GenAI Creator Toolkit; open module 01
+Start ComfyUI  
+Open the Templates window and scroll down to NVIDIA GenAI Creator Toolkit; open module 01.  
 Press the blue run button in ComfyUI and see your prompt improve! 
 
 > If ComfyUI shows a **Missing Models** dialog, the listed files need to be downloaded before generating. Re-run `install.bat` / `install.sh` — already-downloaded models are skipped and only missing files are fetched.
@@ -57,7 +58,7 @@ Press the blue run button in ComfyUI and see your prompt improve!
 ---
 ## Add more modules 
 
-Run the same script again with more module numbers. Already downloaded models are skipped.
+Run the same script again with more module numbers. 
 
 ```bash
 # Windows:
