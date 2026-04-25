@@ -17,6 +17,7 @@ Adapted from NVIDIA's GTC 2026 DLI course [*Create Generative AI Workflows for D
 - **Disk Space:** 450GB for all modules. See table below for Disk Space requirements per module.
 - **OS:** Windows 11 or Linux x86_64
 - **Software:** [ComfyUI](https://github.com/comfyanonymous/ComfyUI) + [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager)
+> **New to ComfyUI?** ComfyUI is a node-based generative AI interface — you connect model components visually to build pipelines. Each workflow in this repo is a pre-built pipeline you load and run.
 
 See [REQUIREMENTS.md](REQUIREMENTS.md) for full hardware/software details and per-module VRAM and generation time estimates.
 
@@ -24,48 +25,39 @@ See [REQUIREMENTS.md](REQUIREMENTS.md) for full hardware/software details and pe
 
 ## Quick Start with Module 01
 
-> **New to ComfyUI?** ComfyUI is a node-based generative AI interface — you connect model components visually to build pipelines. Each workflow in this repo is a pre-built pipeline you load and run.
-
+#### Install ComfyUI first (if you haven't already)
+Windows: download and install the desktop app from https://www.comfy.org/download
+Linux: see REQUIREMENTS.md for step-by-step setup
+Then launch ComfyUI and confirm it runs, then close comfyUI. 
+   
 ```bash
-# 0. Install ComfyUI first (if you haven't already)
-#    Windows: download and install the desktop app from https://www.comfy.org/download
-#    Linux: see REQUIREMENTS.md for step-by-step setup
-#    Then launch ComfyUI and confirm it opens. 
-
-# 1. Clone this repo
+# Clone this repo
 git clone https://github.com/NVIDIA/NVIDIA-GenAI-Creator-Toolkit
 cd NVIDIA-GenAI-Creator-Toolkit
+```
+#### Install Module 01
+Pass your ComfyUI installation location — the folder you chose during Desktop App setup.
+It contains your .venv\, models\, and custom_nodes\ folders.
+Not sure where it is? Check Desktop App Settings > Installation Location.
 
-# 2. Install and run Module 01
-#    Pass your ComfyUI installation location — the folder you chose during Desktop App setup.
-#    It contains your .venv\, models\, and custom_nodes\ folders.
-#    Not sure where it is? Check Desktop App Settings > Installation Location.
-#
-# Windows (run from Command Prompt):
-#   Pass the installation location you chose when setting up the Desktop App.
-#   Find it in: Desktop App Settings > Installation Location
+```bash
+#Windows (Command Prompt):
 install.bat C:\path\to\your\installation-location --modules 01
-
 # Linux:
 bash install.sh /path/to/ComfyUI --modules 01
 ```
+#### Open and Run Module 01's Workflow in ComfyUI
+Start ComfyUI
+Open the Templates window and scroll down to NVIDIA GenAI Creator Toolkit; open module 01
+Press the blue run button in ComfyUI and see your prompt improve! 
 
-> **Finding your installation location:** This is the folder you chose when setting up the [ComfyUI Desktop App](https://www.comfy.org/download) — it contains your `.venv\`, `models\`, and `custom_nodes\` folders. Check **Settings → Installation Location** inside the app if you're unsure.
+> If ComfyUI shows a **Missing Models** dialog, the listed files need to be downloaded before generating. Re-run `install.bat` / `install.sh` — already-downloaded models are skipped and only missing files are fetched.
 
-
-
----
-
-## Loading a Module Workflow
-
-1. Restart ComfyUI from the Windows Desktop, or on Linux restart the server and Open ComfyUI in your browser (`http://127.0.0.1:8188`)
-2. Open the Templates window and scroll down to NVIDIA GenAI Creator Toolkit; module 01 is there. Open it. 
-3. If ComfyUI shows a **Missing Models** dialog, the listed files need to be downloaded before generating. Re-run `install.bat` / `install.sh` — already-downloaded models are skipped and only missing files are fetched.
 
 ---
 ### Adding more modules 
 
-Run the same script again and add `--modules` and more module numbers. Already installed nodes are skipped automatically.
+Run the same script again with more module numbers. Already downloaded models are skipped.
 
 ```bash
 # Windows:
