@@ -56,3 +56,14 @@ A sample input image is provided in the `input/` folder.
 
 1. Load `04-image-to-gaussian-splat.json` into ComfyUI
 2. Connect your input image and click **Queue Prompt**
+
+## Troubleshooting
+
+### SHARP model not found on first run
+ComfyUI-Sharp downloads SHARP automatically when the workflow runs for the first time. Ensure you have an internet connection. The model caches to the node's directory after download.
+
+### Gaussian Splat viewer not opening
+The 3D viewer requires WebGL. Use a Chromium-based browser (Chrome, Edge). Firefox may require enabling WebGL flags.
+
+### Point cloud is noisy / incorrect geometry
+SHARP performs best on images with clear subject-background separation. Crop tightly to the subject and avoid complex backgrounds.

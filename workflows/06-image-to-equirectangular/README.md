@@ -66,3 +66,14 @@ A sample input image is provided in the `input/` folder.
 
 1. Load `06-image-to-equirectangular.json` into ComfyUI
 2. Connect your input image and click **Queue Prompt**
+
+## Troubleshooting
+
+### Seam visible in panorama
+Use the CropAndStitch node's feather setting to soften the join. A seam feather of 32–64 px typically eliminates the seam at standard panorama widths.
+
+### Left/right edges don't align
+The panorama outpainting requires the input image to be cropped to a 2:1 aspect ratio. Adjust the crop in the workflow before running.
+
+### Object Remover LoRA not loading
+Check that `Qwen-Image-Edit-2511-Object-Remover.safetensors` exists in `models/loras/qwen/`. Re-run `install.bat / install.sh --modules 06` to re-download.

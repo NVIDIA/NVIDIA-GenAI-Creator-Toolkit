@@ -74,3 +74,14 @@ Run [Module 06](../06-equirectangular-outpainting/) first to generate a panorama
 1. Complete [Module 06](../06-equirectangular-outpainting/) to generate your panorama
 2. Load `07-panorama-to-hdri.json` into ComfyUI
 3. Connect your panorama and click **Queue Prompt**
+
+## Troubleshooting
+
+### Flux VAE download fails with 401/403
+The Flux VAE (`ae.safetensors`) is gated. Run `huggingface-cli login` and accept the Black Forest Labs license at https://huggingface.co/black-forest-labs/FLUX.1-dev before re-running the installer.
+
+### ComfyUI-Marigold import error / numpy
+The installer patches Marigold for numpy 2.0 compatibility automatically. If you installed Marigold manually via Manager, apply the patch: in `ComfyUI-Marigold/nodes.py`, replace `.tostring()` with `.tobytes()`.
+
+### Run Module 06 first
+This module expects a panoramic equirectangular image as input. Run Module 06 to generate one, or use your own 2:1 aspect ratio panorama.

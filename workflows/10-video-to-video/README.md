@@ -69,3 +69,17 @@ Sample render frames and video passes are provided in the `input/` folder.
 1. Export Depth and Canny passes from your 3D package
 2. Load `10-video-to-video.json` into ComfyUI
 3. Connect your render passes and style image, then click **Queue Prompt**
+
+## Troubleshooting
+
+### TritonMissing error during generation
+In the `WanVideoSampler` node, set `torch_compile_args` to disabled/off. This is a known limitation of ComfyUI Portable's embedded Python on Windows — Triton is unavailable. Generation speed is unaffected for most GPUs.
+
+### Out of memory on 24 GB VRAM
+Enable maximum CPU offload in the ComfyUI-WanVideoWrapper settings. Module 10 was developed on A100-class hardware; full-resolution generation on 24 GB requires CPU offloading. RTX PRO 6000 (96 GB) is the recommended GPU for comfortable full-resolution generation.
+
+### Depth extraction looks wrong
+Ensure your render exports a proper depth pass (linear depth, not gamma-corrected). Canny/edge pass should use the silhouette render, not the final composite.
+
+### Generation is very slow
+At 24 GB with max CPU offload, expect 10–25 minutes for a short sequence. Use fewer frames or reduce resolution to speed up iteration.

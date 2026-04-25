@@ -80,3 +80,14 @@ Ollama runs as a background service. Once installed, it starts automatically and
 
 1. Load `01-llm-prompt-enhancer.json` into ComfyUI
 2. Configure your prompt and click **Queue Prompt**
+
+## Troubleshooting
+
+### Ollama not detected at startup
+Make sure Ollama is running as a background service (`ollama serve`). On Windows, Ollama starts automatically after install. On Linux, run `ollama serve &` before launching ComfyUI.
+
+### gemma3 not found
+Run `ollama pull gemma3` in a terminal. The model must be pulled before the workflow can use it.
+
+### comfyui-ollama node missing
+Run `install.bat / install.sh --modules 01` to install the Ollama node pack, then restart ComfyUI.

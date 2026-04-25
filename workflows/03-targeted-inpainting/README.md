@@ -79,3 +79,14 @@ A sample input image is provided in the `input/` folder.
 The workflow shows two outputs:
 - **Preview** — the final result with the inpainted patch stitched back into the original
 - **Image Compare** — side-by-side view of the original and the inpainted result
+
+## Troubleshooting
+
+### Inpainting bleeds outside the mask
+Increase mask feather or padding in the CropAndStitch node settings. A small feather (4–8 px) typically produces clean edges.
+
+### ComfyUI-TextureAlchemy nodes missing
+Must be the Sandbox branch. See Module 02 troubleshooting.
+
+### Result looks unchanged
+Make sure the mask is correctly connected to the inpainting node and the mask is non-zero (white = area to change, black = preserve).

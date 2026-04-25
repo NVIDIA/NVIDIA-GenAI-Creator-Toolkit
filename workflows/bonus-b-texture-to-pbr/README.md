@@ -59,3 +59,17 @@ A sample input image is provided in the `input/` folder. You can also use output
 
 1. Load `bonus-b-texture-to-pbr.json` into ComfyUI
 2. Connect your input texture and click **Queue Prompt**
+
+## Troubleshooting
+
+### Install key for --modules
+Use `bonus-b` (not `bonus_b` or `b`). To install both bonus modules together: `--modules bonus-a,bonus-b`.
+
+### Marigold models not found on first run
+Marigold downloads its models automatically from HuggingFace when first used. Ensure you have an internet connection and run the workflow once — it will download ~2–4 GB and cache locally.
+
+### ComfyUI-Marigold import error / numpy
+The installer patches Marigold for numpy 2.0 compatibility. If installed manually via Manager, apply the patch: in `ComfyUI-Marigold/nodes.py`, replace all instances of `.tostring()` with `.tobytes()`.
+
+### Run Bonus A first for best results
+Bonus B is designed to work with seamless tiled textures as input. Running Bonus A → Bonus B gives the cleanest PBR results. You can also use any tileable texture image as input.

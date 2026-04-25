@@ -80,23 +80,23 @@ bash install.sh /path/to/ComfyUI --modules 02, 03
 
 | # | Workflow | Key Model(s) | Min Windows / Linux VRAM | What It Does |
 |---|----------|-------------|------|--------------|
-| 01 | [LLM Prompt Enhancer](modules/01-llm-prompt-enhancer.md) | Gemma 3 via Ollama | 16 / 32 GB | Build an AI agent that refines weak prompts into model-ready instructions |
-| 02 | [Image Deconstruction](modules/02-image-deconstruction.md) | Qwen Image Layered | 16 / 32 GB | Split any image into foreground, midground, and background layers |
-| 03 | [Targeted Inpainting](modules/03-targeted-inpainting.md) | Qwen Image Edit 2511 | 16 / 32 GB | Mask-and-patch editing — change only the pixels you select |
-| 04 | [Image → Gaussian Splat](modules/04-image-to-gaussian-splat.md) | SHARP | 12 GB / 12 GB | Convert a 2D image into a navigable 3D Gaussian point cloud |
-| 05 | [Novel View Synthesis](modules/05-novel-view-synthesis.md) | Qwen Image Edit 2511 + LoRA | 16 / 32 GB | Fill occluded areas in Gaussian Splat output for full camera freedom |
-| 06 | [Image → Equirectangular](modules/06-image-to-equirectangular.md) | Qwen Image Edit 2511 + MikMumpitz 360 LoRA | 16 / 32 GB | Turn a single image into a seamless 360° panorama |
-| 07 | [Panorama → HDRI](modules/07-panorama-to-hdri.md) | Flux Dev Kontext + Exposure LoRAs | 16 / 32 GB | Generate a production-ready HDRI from a panoramic image |
-| 08 | [Image to 3D](modules/08-image-to-3d.md) | Trellis2 | 24 GB / 24 GB | Convert a 2D reference into a textured 3D model with PBR materials |
-| 09 | [Image Cut Out Time to Move](modules/09-image-cut-out-time-to-move.md) | Wan2.2 TTM + VideoPrep | 32 / 48 GB+ | Trajectory-controlled video — define exactly when and where motion happens |
-| 10 | [Video to Video](modules/10-video-to-video.md) | Wan2.2 VACE + Lotus | 32 GB / 48 GB+ | Transform a basic 3D render into stylized video — depth extracted automatically |
+| 01 | [LLM Prompt Enhancer](workflows/01-llm-prompt-enhancer/) | Gemma 3 via Ollama | 16 / 32 GB | Build an AI agent that refines weak prompts into model-ready instructions |
+| 02 | [Image Deconstruction](workflows/02-image-deconstruction/) | Qwen Image Layered | 16 / 32 GB | Split any image into foreground, midground, and background layers |
+| 03 | [Targeted Inpainting](workflows/03-targeted-inpainting/) | Qwen Image Edit 2511 | 16 / 32 GB | Mask-and-patch editing — change only the pixels you select |
+| 04 | [Image → Gaussian Splat](workflows/04-image-to-gaussian-splat/) | SHARP | 12 GB / 12 GB | Convert a 2D image into a navigable 3D Gaussian point cloud |
+| 05 | [Novel View Synthesis](workflows/05-novel-view-synthesis/) | Qwen Image Edit 2511 + LoRA | 16 / 32 GB | Fill occluded areas in Gaussian Splat output for full camera freedom |
+| 06 | [Image → Equirectangular](workflows/06-image-to-equirectangular/) | Qwen Image Edit 2511 + MikMumpitz 360 LoRA | 16 / 32 GB | Turn a single image into a seamless 360° panorama |
+| 07 | [Panorama → HDRI](workflows/07-panorama-to-hdri/) | Flux Dev Kontext + Exposure LoRAs | 16 / 32 GB | Generate a production-ready HDRI from a panoramic image |
+| 08 | [Image to 3D](workflows/08-image-to-3d/) | Trellis2 | 24 GB / 24 GB | Convert a 2D reference into a textured 3D model with PBR materials |
+| 09 | [Image Cut Out Time to Move](workflows/09-image-cut-out-time-to-move/) | Wan2.2 TTM + VideoPrep | 32 / 48 GB+ | Trajectory-controlled video — define exactly when and where motion happens |
+| 10 | [Video to Video](workflows/10-video-to-video/) | Wan2.2 VACE + Lotus | 32 GB / 48 GB+ | Transform a basic 3D render into stylized video — depth extracted automatically |
 
 ### Bonus Modules
 
 | | Workflow | Key Model(s) | Min Windows / Linux VRAM | What It Does |
 |--|----------|-------------|------|--------------|
-| bonus-a | [Texture Extraction](modules/bonus-a-texture-extraction.md) | Qwen Image Edit 2511 + Texture LoRA | 16 / 32 GB | Extract seamless tileable textures from any image |
-| bonus-b | [Texture → PBR](modules/bonus-b-texture-to-pbr.md) | Lotus + Marigold | 16 / 32 GB | Generate a full PBR material set (Normal, Height, Albedo, Roughness, Metallic) |
+| bonus-a | [Texture Extraction](workflows/bonus-a-texture-extraction/) | Qwen Image Edit 2511 + Texture LoRA | 16 / 32 GB | Extract seamless tileable textures from any image |
+| bonus-b | [Texture → PBR](workflows/bonus-b-texture-to-pbr/) | Lotus + Marigold | 16 / 32 GB | Generate a full PBR material set (Normal, Height, Albedo, Roughness, Metallic) |
 
 ---
 

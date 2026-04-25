@@ -76,3 +76,20 @@ Sample input frames, video, and mask are provided in the `input/` folder.
 1. Load `09-image-cut-out-time-to-move-videoprep.json` into ComfyUI and run it to prepare your inputs
 2. Load `09-image-cut-out-time-to-move.json` into ComfyUI
 3. Connect your prepared inputs and click **Queue Prompt**
+
+## Troubleshooting
+
+### Two workflows — run VideoPrep first
+This module requires two workflows in sequence. Run `09-image-cut-out-time-to-move-videoprep.json` first to prepare your first frame, last frame, and mask. Then run `09-image-cut-out-time-to-move.json` for video generation. Skipping VideoPrep causes the main workflow to finish in under 1 second with no output.
+
+### Job finishes in under 1 second with no output
+The video input nodes are empty. Load the VideoPrep outputs (first frame image, last frame image, mask image, and reference video) into the corresponding Load Image / Load Video nodes before queuing. The video loader shows only small red text when empty — easy to miss.
+
+### ComfyUI-Impact-Pack shows IMPORT FAILED
+Impact Pack requires `ultralytics` and `onnxruntime`. On ComfyUI Portable, install manually: `python_embeded\python.exe -m pip install ultralytics onnxruntime`. If `onnxruntime` conflicts with `onnxruntime-gpu`, use: `python_embeded\python.exe -m pip install ultralytics onnxruntime-gpu`. Then restart ComfyUI.
+
+### TritonMissing error during generation
+Triton is not available in ComfyUI Portable's embedded Python on Windows. In the `WanVideoSampler` node, set `torch_compile_args` to disabled/off. Generation speed is unaffected for most GPUs.
+
+### Generation is very slow on 16 GB VRAM
+Enable FP8 quantization and KJNodes block-swap in the workflow. Keep sequences under 24 frames at 480p. 24 GB VRAM is recommended for practical use.

@@ -60,3 +60,11 @@ A sample input image is provided in the `input/` folder.
 
 1. Load `02-image-deconstruction.json` into ComfyUI
 2. Connect your input image and click **Queue Prompt**
+
+## Troubleshooting
+
+### ComfyUI-TextureAlchemy nodes missing
+This node must be installed from the **Sandbox** branch, not main. The install script handles this automatically. If installed manually via Manager, clone with `--branch Sandbox`. Re-install from the correct branch if nodes show as red.
+
+### Output layers look wrong / all black
+Ensure FP8 text encoder is loaded when running on 16 GB VRAM. The BF16 encoder requires 24 GB.
