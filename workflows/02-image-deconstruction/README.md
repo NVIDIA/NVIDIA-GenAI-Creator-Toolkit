@@ -32,6 +32,7 @@ Image -> Qwen Image Layered -> Multiple Deconstructed Layers
 | **VRAM (Recommended)** | 24 GB |
 | **Custom Nodes** | 2 packages |
 | **Models** | 4 files |
+| **Disk Space** | ~51 GB |
 
 ## Required Models
 

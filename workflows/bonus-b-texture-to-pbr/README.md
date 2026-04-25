@@ -32,6 +32,7 @@ Input Texture -> Lotus Depth -> Lotus Height -> Marigold Appearance -> Marigold 
 | **VRAM (Recommended)** | 24 GB |
 | **Custom Nodes** | 4 packages |
 | **Models** | 4 files + Marigold (auto-downloaded) |
+| **Disk Space** | ~10 GB |
 
 ## Required Models
 

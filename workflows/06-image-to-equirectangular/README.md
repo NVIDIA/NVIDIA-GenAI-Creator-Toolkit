@@ -32,6 +32,7 @@ Input Image -> Pad for Outpainting -> LoRA -> Diffusion Model -> Inpainting -> S
 | **VRAM (Recommended)** | 24 GB |
 | **Custom Nodes** | 5 packages |
 | **Models** | 5 files + 1 gated LoRA |
+| **Disk Space** | ~61 GB |
 
 ## Required Models
 

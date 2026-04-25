@@ -32,6 +32,7 @@ Input -> SHARP -> Gaussian Splat -> 3D Output
 | **VRAM (Recommended)** | 12 GB |
 | **Custom Nodes** | 2 packages |
 | **Models** | Bundled with ComfyUI-Sharp |
+| **Disk Space** | ~3 GB |
 
 ## Required Models
 

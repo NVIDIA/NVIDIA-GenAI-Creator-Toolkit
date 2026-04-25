@@ -70,26 +70,27 @@ bash install.sh /path/to/ComfyUI --modules 02, 03
 
 ### Core Modules
 > **VRAM — Windows / Linux.** On Windows, NVIDIA weight streaming offloads inactive model layers to system RAM. On Linux, the full model must fit in VRAM. See [REQUIREMENTS.md](REQUIREMENTS.md) for platform details.
+> **Disk** — Per-module figures assume that module installed alone. Many modules share large models (Qwen 41 GB base, encoders); installing all 12 together costs ~450 GB, not the sum of individual figures.
 
-| # | Workflow | Key Model(s) | Min. Rec. Windows / Linux VRAM | What It Does |
-|---|----------|-------------|------|--------------|
-| 01 | [LLM Prompt Enhancer](workflows/01-llm-prompt-enhancer/) | Gemma 3 via Ollama | 24 / 32 GB | Build an AI agent that refines weak prompts into model-ready instructions |
-| 02 | [Image Deconstruction](workflows/02-image-deconstruction/) | Qwen Image Layered | 24 / 32 GB | Split any image into foreground, midground, and background layers |
-| 03 | [Targeted Inpainting](workflows/03-targeted-inpainting/) | Qwen Image Edit 2511 | 24 / 32 GB | Mask-and-patch editing — change only the pixels you select |
-| 04 | [Image → Gaussian Splat](workflows/04-image-to-gaussian-splat/) | SHARP | 12 / 12 GB | Convert a 2D image into a navigable 3D Gaussian point cloud |
-| 05 | [Novel View Synthesis](workflows/05-novel-view-synthesis/) | Qwen Image Edit 2511 + LoRA | 24 / 32 GB | Fill occluded areas in Gaussian Splat output for full camera freedom |
-| 06 | [Image → Equirectangular](workflows/06-image-to-equirectangular/) | Qwen Image Edit 2511 + MikMumpitz 360 LoRA | 24 / 32 GB | Turn a single image into a seamless 360° panorama |
-| 07 | [Panorama → HDRI](workflows/07-panorama-to-hdri/) | Flux Dev Kontext + Exposure LoRAs | 24 / 32 GB | Generate a production-ready HDRI from a panoramic image |
-| 08 | [Image to 3D](workflows/08-image-to-3d/) | Trellis2 | 24 / 24 GB | Convert a 2D reference into a textured 3D model with PBR materials |
-| 09 | [Image Cut Out Time to Move](workflows/09-image-cut-out-time-to-move/) | Wan2.2 TTM + VideoPrep | 32 / 48 GB+ | Trajectory-controlled video — define exactly when and where motion happens |
-| 10 | [Video to Video](workflows/10-video-to-video/) | Wan2.2 VACE + Lotus | 32 / 48 GB+ | Transform a basic 3D render into stylized video — depth extracted automatically |
+| # | Workflow | Key Model(s) | Min. Rec. Windows / Linux VRAM | Disk | What It Does |
+|---|----------|-------------|------|------|--------------|
+| 01 | [LLM Prompt Enhancer](workflows/01-llm-prompt-enhancer/) | Gemma 3 via Ollama | 24 / 32 GB | ~65 GB | Build an AI agent that refines weak prompts into model-ready instructions |
+| 02 | [Image Deconstruction](workflows/02-image-deconstruction/) | Qwen Image Layered | 24 / 32 GB | ~51 GB | Split any image into foreground, midground, and background layers |
+| 03 | [Targeted Inpainting](workflows/03-targeted-inpainting/) | Qwen Image Edit 2511 | 24 / 32 GB | ~52 GB | Mask-and-patch editing — change only the pixels you select |
+| 04 | [Image → Gaussian Splat](workflows/04-image-to-gaussian-splat/) | SHARP | 12 / 12 GB | ~3 GB | Convert a 2D image into a navigable 3D Gaussian point cloud |
+| 05 | [Novel View Synthesis](workflows/05-novel-view-synthesis/) | Qwen Image Edit 2511 + LoRA | 24 / 32 GB | ~60 GB | Fill occluded areas in Gaussian Splat output for full camera freedom |
+| 06 | [Image → Equirectangular](workflows/06-image-to-equirectangular/) | Qwen Image Edit 2511 + MikMumpitz 360 LoRA | 24 / 32 GB | ~61 GB | Turn a single image into a seamless 360° panorama |
+| 07 | [Panorama → HDRI](workflows/07-panorama-to-hdri/) | Flux Dev Kontext + Exposure LoRAs | 24 / 32 GB | ~23 GB | Generate a production-ready HDRI from a panoramic image |
+| 08 | [Image to 3D](workflows/08-image-to-3d/) | Trellis2 | 24 / 24 GB | ~20 GB | Convert a 2D reference into a textured 3D model with PBR materials |
+| 09 | [Image Cut Out Time to Move](workflows/09-image-cut-out-time-to-move/) | Wan2.2 TTM + VideoPrep | 32 / 48 GB+ | ~77 GB | Trajectory-controlled video — define exactly when and where motion happens |
+| 10 | [Video to Video](workflows/10-video-to-video/) | Wan2.2 VACE + Lotus | 32 / 48 GB+ | ~143 GB | Transform a basic 3D render into stylized video — depth extracted automatically |
 
 ### Bonus Modules
 
-| | Workflow | Key Model(s) | Min. Rec. Windows / Linux VRAM | What It Does |
-|--|----------|-------------|------|--------------|
-| bonus-a | [Texture Extraction](workflows/bonus-a-texture-extraction/) | Qwen Image Edit 2511 + Texture LoRA | 24 / 32 GB | Extract seamless tileable textures from any image |
-| bonus-b | [Texture → PBR](workflows/bonus-b-texture-to-pbr/) | Lotus + Marigold | 24 / 32 GB | Generate a full PBR material set (Normal, Height, Albedo, Roughness, Metallic) |
+| | Workflow | Key Model(s) | Min. Rec. Windows / Linux VRAM | Disk | What It Does |
+|--|----------|-------------|------|------|--------------|
+| bonus-a | [Texture Extraction](workflows/bonus-a-texture-extraction/) | Qwen Image Edit 2511 + Texture LoRA | 24 / 32 GB | ~60 GB | Extract seamless tileable textures from any image |
+| bonus-b | [Texture → PBR](workflows/bonus-b-texture-to-pbr/) | Lotus + Marigold | 24 / 32 GB | ~10 GB | Generate a full PBR material set (Normal, Height, Albedo, Roughness, Metallic) |
 
 ---
 

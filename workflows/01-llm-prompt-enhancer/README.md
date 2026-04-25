@@ -45,6 +45,7 @@ User Instructions -> Prompt Enhancement Agent -> Text Encoding -> Image
 | **VRAM (Recommended)** | 24 GB |
 | **Custom Nodes** | 2 packages |
 | **Models** | 4 files + Ollama |
+| **Disk Space** | ~65 GB |
 
 ## Required Models
 

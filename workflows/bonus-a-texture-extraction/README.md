@@ -32,6 +32,7 @@ Image -> VLM -> Segmentation/Masking -> LoRA -> Diffusion Model -> Output Textur
 | **VRAM (Recommended)** | 24 GB |
 | **Custom Nodes** | 4 packages |
 | **Models** | 5 files |
+| **Disk Space** | ~60 GB |
 
 ## Required Models
 

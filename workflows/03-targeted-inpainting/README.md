@@ -38,6 +38,7 @@ Input Image -> Mask -> Model Conditioning -> Diffusion -> Output Image
 | **VRAM (Recommended)** | 24 GB |
 | **Custom Nodes** | 2 packages |
 | **Models** | 4 files |
+| **Disk Space** | ~52 GB |
 
 ## Required Models
 
