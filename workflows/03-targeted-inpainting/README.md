@@ -44,7 +44,7 @@ Input Image -> Mask -> Model Conditioning -> Diffusion -> Output Image
 | Model | Type | Size |
 |-------|------|------|
 | `qwen_image_edit_2511_bf16.safetensors` | Image Edit Model | ~41 GB |
-| `qwen_2.5_vl_7b_fp8_scaled.safetensors` | Text Encoder | ~17 GB |
+| `qwen_2.5_vl_7b_fp8_scaled.safetensors` | Text Encoder | ~9 GB |
 | `qwen_image_vae.safetensors` | VAE | ~255 MB |
 | `Qwen-Image-Edit-Lightning-8steps-V1.0.safetensors` | LoRA | ~1.7 GB |
 

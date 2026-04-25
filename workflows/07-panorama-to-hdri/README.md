@@ -31,14 +31,13 @@ Panoramic Image -> Four LoRAs -> Four Exposure Passes -> Luminance Stack -> HDRI
 | **VRAM (Minimum)** | 16 GB |
 | **VRAM (Recommended)** | 24 GB |
 | **Custom Nodes** | 4 packages |
-| **Models** | 6 files + 4 gated LoRAs |
+| **Models** | 5 files + 4 gated LoRAs |
 
 ## Required Models
 
 | Model | Type | Size |
 |-------|------|------|
 | `flux1-dev-kontext_fp8_scaled.safetensors` | Image Model | 11.09 GB |
-| `flux1-dev-kontext.safetensors` | Image Model | — |
 | `ViT-L-14-TEXT-detail-improved-hiT-GmP-HF.safetensors` | Text Encoder | 888 MB |
 | `t5xxl_fp16.safetensors` | Text Encoder | 9.12 GB |
 | `ae.safetensors` | VAE | ~340 MB |

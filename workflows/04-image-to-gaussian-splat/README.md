@@ -28,8 +28,8 @@ Input -> SHARP -> Gaussian Splat -> 3D Output
 
 | Requirement | Value |
 |-------------|-------|
-| **VRAM (Minimum)** | 16 GB |
-| **VRAM (Recommended)** | 24 GB |
+| **VRAM (Minimum)** | 12 GB |
+| **VRAM (Recommended)** | 12 GB |
 | **Custom Nodes** | 2 packages |
 | **Models** | Bundled with ComfyUI-Sharp |
 

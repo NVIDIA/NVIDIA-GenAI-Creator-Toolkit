@@ -31,14 +31,13 @@ Image -> Qwen Image Layered -> Multiple Deconstructed Layers
 | **VRAM (Minimum)** | 16 GB |
 | **VRAM (Recommended)** | 24 GB |
 | **Custom Nodes** | 2 packages |
-| **Models** | 5 files |
+| **Models** | 4 files |
 
 ## Required Models
 
 | Model | Type | Size |
 |-------|------|------|
 | `qwen_2.5_vl_7b_fp8_scaled.safetensors` | Text Encoder | 8.74 GB |
-| `qwen_2.5_vl_7b.safetensors` | Text Encoder | ~17 GB |
 | `qwen_image_layered_vae.safetensors` | VAE | ~255 MB |
 | `qwen_image_layered_bf16.safetensors` | Image Model | ~41 GB |
 | `Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors` | LoRA | 810 MB |

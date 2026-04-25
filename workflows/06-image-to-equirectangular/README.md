@@ -42,7 +42,7 @@ Input Image -> Pad for Outpainting -> LoRA -> Diffusion Model -> Inpainting -> S
 | `qwen_image_vae.safetensors` | VAE | ~255 MB |
 | `Qwen-Image-Lightning-8steps-V2.0.safetensors` | LoRA | ~1.7 GB |
 | `Qwen-Image-Edit-2511-Object-Remover.safetensors` | LoRA | 225 MB |
-| `251018_MICKMUMPITZ_QWEN-EDIT_360_03.safetensors` | LoRA | 282 MB |
+| `MikMumpitz360.safetensors` | LoRA | 282 MB |
 
 ## Required Custom Nodes
 
