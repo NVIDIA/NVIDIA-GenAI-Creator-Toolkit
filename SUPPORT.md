@@ -16,7 +16,7 @@ Do **not** file public issues for security vulnerabilities. See [SECURITY.md](SE
 
 ## Response Expectations
 
-We aim to triage new issues within **5 business days**. Response times may vary based on complexity and team availability.
+We aim to triage new issues within **10 business days**. Response times may vary based on complexity and team availability.
 
 ## General Troubleshooting
 
