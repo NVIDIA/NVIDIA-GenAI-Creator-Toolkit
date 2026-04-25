@@ -14,12 +14,10 @@ Adapted from NVIDIA's GTC 2026 DLI course [*Create Generative AI Workflows for D
 ## Requirements
 
 - **GPU:** RTX 5090 (Windows)+ or RTX PRO 6000 (Linux) recommended to run all modules. Not all modules require as much VRAM, see the table below for requirements per module.
-- **Disk Space:** 450GB for all modules. See table below for Disk Space requirements per module.
+- **Disk Space:** 500GB for all modules. See table below for Disk Space requirements per module.
 - **OS:** Windows 11 or Linux x86_64
 - **Software:** [ComfyUI](https://github.com/comfyanonymous/ComfyUI) + [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager)
 > **New to ComfyUI?** ComfyUI is a node-based generative AI interface — you connect model components visually to build pipelines. Each workflow in this repo is a pre-built pipeline you load and run.
-
-See [REQUIREMENTS.md](REQUIREMENTS.md) for full hardware/software details and per-module VRAM and generation time estimates.
 
 ---
 
@@ -27,7 +25,7 @@ See [REQUIREMENTS.md](REQUIREMENTS.md) for full hardware/software details and pe
 
 #### Install ComfyUI first (if you haven't already)
 Windows: download and install the desktop app from https://www.comfy.org/download.  
-Linux: see [REQUIREMENTS.md](REQUIREMENTS.md) for step-by-step setup.  
+Linux: see [LINUX INSTALLATION.md](LINUX INSTALLATION.md) for step-by-step setup.  
 Launch ComfyUI and complete its setup. Close ComfyUI when done. 
 
 #### Clone the GitHub Repo
@@ -50,17 +48,23 @@ bash install.sh /path/to/ComfyUI --modules 01
 #### Open and Run Module 01's Workflow in ComfyUI
 Start ComfyUI  
 Open the Templates window and scroll down to NVIDIA GenAI Creator Toolkit; open module 01.  
-![](docs/template.png) ![](docs/resultmodule01.png)
+  
+![ComfyUI Template Browser](docs/template.png)  
+
 Press the blue run button in ComfyUI and see your prompt improve! 
+  
+![Result from Module 01](docs/resultmodule01.png)  
 
 > If ComfyUI shows a **Missing Models** dialog, the listed files need to be downloaded before generating. Re-run `install.bat` / `install.sh` — already-downloaded models are skipped and only missing files are fetched.
 
 
 ---
-## Add more modules 
+
+
+
+## The Modules in this Toolkit
 
 Run the same script again with more module numbers. 
-
 ```bash
 # Windows:
 install.bat C:\path\to\ComfyUI --modules 02, 03
@@ -68,13 +72,8 @@ install.bat C:\path\to\ComfyUI --modules 02, 03
 bash install.sh /path/to/ComfyUI --modules 02, 03
 ```
 
-
-### Core Modules
-> **VRAM — Windows / Linux.** On Windows, NVIDIA weight streaming offloads inactive model layers to system RAM. On Linux, the full model must fit in VRAM. See [REQUIREMENTS.md](REQUIREMENTS.md) for platform details.
-> **Disk** — Per-module figures assume that module installed alone. Many modules share large models (Qwen 41 GB base, encoders); installing all 12 together costs ~450 GB, not the sum of individual figures.
-
-| # | Workflow | Key Model(s) | Min. Rec. Windows / Linux VRAM | Disk | What It Does |
-|---|----------|-------------|------|------|--------------|
+| # | Workflow | Key Model(s) | Min. Rec. Windows / Linux VRAM | Disk Space | What It Does |
+|---|----------|------------|------|--------|-------------|
 | 01 | [LLM Prompt Enhancer](workflows/01-llm-prompt-enhancer/) | Gemma 3 via Ollama | 24 / 32 GB | ~65 GB | Build an AI agent that refines weak prompts into model-ready instructions |
 | 02 | [Image Deconstruction](workflows/02-image-deconstruction/) | Qwen Image Layered | 24 / 32 GB | ~51 GB | Split any image into foreground, midground, and background layers |
 | 03 | [Targeted Inpainting](workflows/03-targeted-inpainting/) | Qwen Image Edit 2511 | 24 / 32 GB | ~52 GB | Mask-and-patch editing — change only the pixels you select |
@@ -88,11 +87,13 @@ bash install.sh /path/to/ComfyUI --modules 02, 03
 
 ### Bonus Modules
 
-| | Workflow | Key Model(s) | Min. Rec. Windows / Linux VRAM | Disk | What It Does |
-|--|----------|-------------|------|------|--------------|
+| # | Workflow | Key Model(s) | Min. Rec. Windows / Linux VRAM | Disk Space | What It Does |
+|---|----------|------------|------|--------|-------------|
 | bonus-a | [Texture Extraction](workflows/bonus-a-texture-extraction/) | Qwen Image Edit 2511 + Texture LoRA | 24 / 32 GB | ~60 GB | Extract seamless tileable textures from any image |
 | bonus-b | [Texture → PBR](workflows/bonus-b-texture-to-pbr/) | Lotus + Marigold | 24 / 32 GB | ~10 GB | Generate a full PBR material set (Normal, Height, Albedo, Roughness, Metallic) |
 
+> **VRAM — Windows / Linux.** On Windows, NVIDIA weight streaming offloads inactive model layers to system RAM. On Linux, the full model must fit in VRAM. See [REQUIREMENTS.md](REQUIREMENTS.md) for platform details.
+> **Disk** — Per-module figures assume that module installed alone. Many modules share large models (Qwen 41 GB base, encoders); installing all 12 together costs ~450 GB, not the sum of individual figures.
 ---
 
 ## How Each Module Is Organized
