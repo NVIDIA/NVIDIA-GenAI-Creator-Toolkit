@@ -50,6 +50,7 @@ bash install.sh /path/to/ComfyUI --modules 01
 #### Open and Run Module 01's Workflow in ComfyUI
 Start ComfyUI  
 Open the Templates window and scroll down to NVIDIA GenAI Creator Toolkit; open module 01.  
+![](docs/template.png) ![](docs/resultmodule01.png)
 Press the blue run button in ComfyUI and see your prompt improve! 
 
 > If ComfyUI shows a **Missing Models** dialog, the listed files need to be downloaded before generating. Re-run `install.bat` / `install.sh` — already-downloaded models are skipped and only missing files are fetched.
