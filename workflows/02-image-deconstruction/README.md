@@ -59,12 +59,13 @@ A sample input image is provided in the `input/` folder.
 ## How to Use
 
 1. Load `02-image-deconstruction.json` into ComfyUI
-2. Connect your input image and click **Queue Prompt**
+2. If ComfyUI Manager shows a **"Missing Node Packs"** dialog, close it and restart ComfyUI — the nodes are already installed but haven't been loaded yet.
+3. Connect your input image and click **Queue Prompt**
 
 ## Troubleshooting
 
-### ComfyUI-TextureAlchemy nodes missing
-This node must be installed from the **Sandbox** branch, not main. The install script handles this automatically. If installed manually via Manager, clone with `--branch Sandbox`. Re-install from the correct branch if nodes show as red.
+### ComfyUI-TextureAlchemy nodes missing or red
+Restart ComfyUI after running the installer — nodes are scanned at startup. If nodes still show as red after restart, re-run the installer to ensure ComfyUI-TextureAlchemy is present.
 
 ### Output layers look wrong / all black
 Ensure FP8 text encoder is loaded when running on 16 GB VRAM. The BF16 encoder requires 24 GB.
