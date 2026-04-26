@@ -263,11 +263,6 @@ def build_module_catalogue() -> dict:
         label="Module 04",
         name="Image to Gaussian Splat",
         models=[],
-        manual_notes=[
-            "Module 04 uses SHARP, which is bundled with the ComfyUI-Sharp custom node.",
-            "Install the ComfyUI-Sharp node pack and the model downloads automatically.",
-            "No manual model download is required.",
-        ],
     )
 
     # ── Module 05 — Novel View Synthesis ────────────────────────────────────
@@ -636,11 +631,6 @@ def build_module_catalogue() -> dict:
                 dest_subdir="models/upscale_models",
                 size="~65 MB",
             ),
-        ],
-        manual_notes=[
-            "Bonus B also uses Marigold models (Appearance + Light).",
-            "These download automatically on first run via the ComfyUI-Marigold node.",
-            "No manual download required for Marigold.",
         ],
     )
 
