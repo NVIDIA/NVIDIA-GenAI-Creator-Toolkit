@@ -34,6 +34,9 @@ REM
 REM Install specific modules:
 REM   install.bat C:\path\to\installation-location --modules 02,03,08
 REM   install.bat C:\path\to\installation-location --modules all
+REM
+REM Remove model files for a module (frees disk space; shared models are kept):
+REM   install.bat C:\path\to\installation-location --clean --modules 04
 
 REM Force UTF-8 output so text is visible in all terminals
 chcp 65001 > nul
@@ -51,8 +54,14 @@ REM   First positional arg = ComfyUI installation location (Desktop App) or Comf
 REM   --modules = comma-separated module list to install
 set INSTALL_LOCATION=
 set MODULES=
+set CLEAN=0
 :parse_args
 if "%~1"=="" goto done_parse
+if /i "%~1"=="--clean" (
+    set CLEAN=1
+    shift /1
+    goto parse_args
+)
 if /i "%~1"=="--modules" (
     set MODULES=%~2
     shift /1
@@ -300,6 +309,7 @@ echo [torch] Done. Restart ComfyUI to pick up the new torch.
 :skip_torch_check
 
 REM --- Ask which modules BEFORE installing nodes ---
+if !CLEAN!==1 goto skip_module_prompt
 if not defined MODULES (
     echo.
     echo ================================================================
@@ -324,6 +334,7 @@ if not defined MODULES (
     echo.
     set /p MODULES="  Modules: "
 )
+:skip_module_prompt
 
 REM --- Desktop App: all content goes into the installation location ---
 if !INSTALL_TYPE!==desktop (
@@ -342,6 +353,24 @@ echo Installing custom nodes into: !NODES_DIR!
 if not exist "!NODES_DIR!" mkdir "!NODES_DIR!"
 echo.
 set NODE_COUNT=0
+
+REM --- Clean mode: remove model files and exit, skip node install ---
+if !CLEAN!==1 (
+    if not defined MODULES (
+        echo.
+        echo  [ERROR] --clean requires --modules. Specify which modules to clean.
+        echo  Example: install.bat %INSTALL_LOCATION% --clean --modules 04
+        echo.
+        exit /b 1
+    )
+    echo.
+    echo ================================================================
+    echo  Removing model files for modules: !MODULES!
+    echo ================================================================
+    echo.
+    "!PYTHON!" "%~dp0download_models.py" --comfyui "!MODELS_ROOT!" --modules !MODULES! --clean
+    exit /b 0
+)
 
 REM --- Core (always installed) ---
 call :install_node "ComfyUI-Manager" "https://github.com/ltdrdata/ComfyUI-Manager" ""

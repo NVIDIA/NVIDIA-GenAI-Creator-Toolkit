@@ -20,15 +20,20 @@
 #   bash install.sh /path/to/ComfyUI
 #   bash install.sh /path/to/ComfyUI --modules 02,03,08
 #   bash install.sh /path/to/ComfyUI --modules all
+#
+# Remove model files for a module (frees disk space; shared models are kept):
+#   bash install.sh /path/to/ComfyUI --clean --modules 04
 
 set -euo pipefail
 
 # Parse arguments
 COMFYUI_DIR=""
 MODULES=""
+CLEAN=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --modules) MODULES="$2"; shift 2 ;;
+    --clean)   CLEAN=1; shift ;;
     *) if [ -z "$COMFYUI_DIR" ]; then COMFYUI_DIR="$1"; fi; shift ;;
   esac
 done
@@ -43,7 +48,7 @@ echo " ComfyUI Generative AI Workflows - Node Installer"
 echo "================================================================"
 echo ""
 
-if [ ! -f "$COMFYUI_DIR/main.py" ]; then
+if [ "$CLEAN" != "1" ] && [ ! -f "$COMFYUI_DIR/main.py" ]; then
   echo "ERROR: main.py not found at: $COMFYUI_DIR"
   echo ""
   echo "  Pass the ComfyUI root directory (the folder containing main.py):"
@@ -167,7 +172,7 @@ module_selected() {
 }
 
 # --- Ask which modules BEFORE installing nodes ---
-if [ -z "$MODULES" ]; then
+if [ "$CLEAN" != "1" ] && [ -z "$MODULES" ]; then
   echo "================================================================"
   echo " Which modules do you want to install?"
   echo "================================================================"
@@ -195,6 +200,25 @@ echo ""
 echo "Installing custom nodes into: $NODES_DIR"
 mkdir -p "$NODES_DIR"
 echo ""
+
+# --- Clean mode: remove model files and exit, skip node install ---
+if [ "$CLEAN" = "1" ]; then
+  if [ -z "$MODULES" ]; then
+    echo ""
+    echo "[ERROR] --clean requires --modules. Specify which modules to clean."
+    echo "Example: bash install.sh $COMFYUI_DIR --clean --modules 04"
+    echo ""
+    exit 1
+  fi
+  echo ""
+  echo "================================================================"
+  echo " Removing model files for modules: $MODULES"
+  echo "================================================================"
+  echo ""
+  SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+  $PYTHON "$SCRIPT_DIR/download_models.py" --comfyui "$COMFYUI_DIR" --modules "$MODULES" --clean
+  exit 0
+fi
 
 # --- Core (always installed) ---
 install_node "ComfyUI-Manager" "https://github.com/ltdrdata/ComfyUI-Manager"

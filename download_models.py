@@ -836,6 +836,125 @@ def download_model(comfyui_root: Path, model: ModelSpec) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Module clean
+# ---------------------------------------------------------------------------
+
+def clean_modules(comfyui_root: Path, selected_keys: list, catalogue: dict) -> None:
+    """Remove model files that belong exclusively to the selected modules.
+
+    Files shared with other modules are skipped to avoid breaking them.
+    Custom nodes are not removed — they are small and often shared.
+    """
+    other_keys = [k for k in catalogue if k not in selected_keys]
+
+    # Build sets of (dest_subdir, final_filename) for cleaning vs keeping.
+    # Keyed on dest location, not repo URL — two entries writing the same file
+    # on disk will share a key and be treated as shared (correct behavior).
+    def model_key(m: ModelSpec):
+        if m.full_repo:
+            return ("full_repo", m.dest_subdir)
+        name = m.rename_to if m.rename_to else Path(m.filename).name
+        return ("file", m.dest_subdir, name)
+
+    to_clean = set()
+    for key in selected_keys:
+        for m in catalogue[key].models:
+            to_clean.add(model_key(m))
+
+    keep = set()
+    for key in other_keys:
+        for m in catalogue[key].models:
+            keep.add(model_key(m))
+
+    # Build preview list for confirmation prompt
+    preview = []
+    for key in selected_keys:
+        for m in catalogue[key].models:
+            mk = model_key(m)
+            if mk in keep:
+                continue
+            if m.full_repo:
+                target = comfyui_root / m.dest_subdir
+                if target.exists():
+                    preview.append(f"  dir:  {m.dest_subdir}/")
+            else:
+                path = dest_file_path(comfyui_root, m)
+                if path and path.exists():
+                    preview.append(f"  file: {path.relative_to(comfyui_root)}")
+
+    if not preview:
+        print("\n  Nothing to remove — files not found or all shared with other modules.")
+        return
+
+    print(f"\n  The following will be permanently deleted ({len(preview)} item(s)):")
+    for p in preview:
+        print(p)
+    print()
+    try:
+        confirm = input("  Type 'yes' to confirm deletion: ").strip().lower()
+    except EOFError:
+        confirm = ""
+    if confirm != "yes":
+        print("  Aborted — nothing deleted.")
+        return
+    print()
+
+    removed = 0
+    skipped_shared = []
+    not_found = 0
+
+    for key in selected_keys:
+        spec = catalogue[key]
+        print()
+        print("=" * 70)
+        print(f"  Cleaning {spec.label}: {spec.name}")
+        print("=" * 70)
+
+        seen = set()
+        for m in spec.models:
+            mk = model_key(m)
+            if mk in seen:
+                continue
+            seen.add(mk)
+
+            if mk in keep:
+                label = m.dest_subdir if m.full_repo else (m.rename_to or Path(m.filename).name)
+                skipped_shared.append(label)
+                print(f"  [SHARED] Keeping (used by other modules): {label}")
+                continue
+
+            if m.full_repo:
+                target = comfyui_root / m.dest_subdir
+                if target.exists() and target.is_dir():
+                    shutil.rmtree(target)
+                    print(f"  removed dir: {m.dest_subdir}")
+                    removed += 1
+                else:
+                    not_found += 1
+            else:
+                path = dest_file_path(comfyui_root, m)
+                if path and path.exists():
+                    path.unlink()
+                    print(f"  removed: {path.relative_to(comfyui_root)}")
+                    removed += 1
+                else:
+                    not_found += 1
+
+    print()
+    print("=" * 70)
+    print("  CLEAN SUMMARY")
+    print("=" * 70)
+    print(f"\n  {removed} file(s) / dir(s) removed.")
+    if not_found:
+        print(f"  {not_found} not found (already removed or never downloaded).")
+    if skipped_shared:
+        print(f"  {len(skipped_shared)} skipped — shared with other modules:")
+        for label in skipped_shared:
+            print(f"    ~ {label}")
+    print()
+
+
+# ---------------------------------------------------------------------------
 # Ollama detection
 # ---------------------------------------------------------------------------
 
@@ -1022,6 +1141,9 @@ Examples:
 
   # Download bonus modules
   python download_models.py --comfyui /opt/ComfyUI --modules bonus-a,bonus-b
+
+  # Remove model files for a module (shared models are kept)
+  python download_models.py --comfyui /opt/ComfyUI --modules 04 --clean
 """,
     )
     parser.add_argument(
@@ -1037,6 +1159,14 @@ Examples:
         help=(
             "Comma-separated module numbers to download, e.g. '01,02,bonus-a'. "
             "Use 'all' to download everything (default: all)."
+        ),
+    )
+    parser.add_argument(
+        "--clean",
+        action="store_true",
+        help=(
+            "Remove downloaded model files for the specified modules instead of downloading. "
+            "Files shared with other modules are kept. Custom nodes are not removed."
         ),
     )
     return parser.parse_args()
@@ -1064,10 +1194,24 @@ def main() -> None:
         print(f"[ERROR] ComfyUI root does not exist: {comfyui_root}", file=sys.stderr)
         sys.exit(1)
 
+    if args.clean and args.modules == "all":
+        print("[ERROR] --clean requires an explicit --modules list.", file=sys.stderr)
+        print("        Specify which modules to clean, e.g. --modules 04", file=sys.stderr)
+        print("        Use 'all' only intentionally — it removes every downloaded model.", file=sys.stderr)
+        sys.exit(1)
+
     selected_keys = parse_modules(args.modules)
     if not selected_keys:
         print("[ERROR] No valid modules selected.", file=sys.stderr)
         sys.exit(1)
+
+    catalogue = build_module_catalogue()
+
+    if args.clean:
+        print(f"\nComfyUI root : {comfyui_root}")
+        print(f"Clean modules: {', '.join(selected_keys)}")
+        clean_modules(comfyui_root, selected_keys, catalogue)
+        return
 
     # Check HuggingFace login status
     if get_token():
@@ -1076,8 +1220,6 @@ def main() -> None:
         print("HuggingFace: not logged in — downloads may be slower or rate-limited.")
         print("  To log in: huggingface-cli login")
         print()
-
-    catalogue = build_module_catalogue()
 
     summary = {
         "downloaded": [],
