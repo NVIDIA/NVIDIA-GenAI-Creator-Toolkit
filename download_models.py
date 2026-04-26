@@ -24,6 +24,8 @@ Usage:
 
 import argparse
 import os
+import shutil
+import subprocess
 import sys
 import time
 from dataclasses import dataclass, field
@@ -764,7 +766,7 @@ def download_model(comfyui_root: Path, model: ModelSpec) -> str:
         print(f"  3. Then re-run this installer")
         print()
         try:
-            answer = input(f"  Have you already accepted the agreement? [y/N]: ").strip().lower()
+            answer = input(f"  Have you already accepted the agreement? [Y/N]: ").strip().lower()
         except EOFError:
             answer = ""
         if answer != "y":
@@ -844,6 +846,48 @@ def download_model(comfyui_root: Path, model: ModelSpec) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Ollama detection
+# ---------------------------------------------------------------------------
+
+def _detect_ollama() -> tuple[bool, bool]:
+    """Return (ollama_installed, gemma3_pulled).
+
+    Probes PATH first, then the known Windows install path, so detection works
+    even when the Ollama installer hasn't refreshed the current session's PATH.
+    Calls `ollama list` with a 10-second timeout; if the daemon isn't running
+    we can confirm the binary exists but can't confirm the model state.
+    """
+    exe = shutil.which("ollama")
+    if not exe:
+        # Fallback: Windows default install location
+        win_path = os.path.expandvars(r"%LOCALAPPDATA%\Programs\Ollama\ollama.exe")
+        if os.path.exists(win_path):
+            exe = win_path
+
+    if not exe:
+        return False, False
+
+    try:
+        result = subprocess.run(
+            [exe, "list"],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        if result.returncode == 0:
+            gemma3_pulled = any(
+                line.split()[0].startswith("gemma3")
+                for line in result.stdout.splitlines()
+                if line.strip()
+            )
+            return True, gemma3_pulled
+        # Daemon not running — binary exists but model state unknown
+        return True, False
+    except (subprocess.TimeoutExpired, OSError):
+        return True, False
+
+
+# ---------------------------------------------------------------------------
 # Module runner
 # ---------------------------------------------------------------------------
 
@@ -895,15 +939,40 @@ def run_module(comfyui_root: Path, module_key: str, spec: ModuleSpec,
         else:
             summary["failed"].append(entry)
 
-    # Print any manual notes after downloads
+    # Print any manual notes after downloads.
+    # For notes referencing Ollama/Gemma3, check whether they're already
+    # satisfied before adding them to the manual action summary.
     if spec.manual_notes:
-        print()
-        print(f"  Manual action required for {spec.label}:")
-        for note in spec.manual_notes:
-            print(f"    * {note}")
-        summary["manual"].append(
-            f"{spec.label} ({spec.name}): " + " | ".join(spec.manual_notes)
-        )
+        ollama_notes = [n for n in spec.manual_notes
+                        if "ollama" in n.lower() or "gemma3" in n.lower()]
+        other_notes  = [n for n in spec.manual_notes if n not in ollama_notes]
+        remaining = list(other_notes)
+
+        if ollama_notes:
+            ollama_ok, gemma3_ok = _detect_ollama()
+            if ollama_ok:
+                print(f"  Ollama: already installed.")
+            else:
+                print(f"  Ollama: not detected — install from https://ollama.com/download")
+                remaining.append("Install Ollama: https://ollama.com/download")
+            if gemma3_ok:
+                print(f"  Gemma3: already pulled.")
+            elif ollama_ok:
+                print(f"  Gemma3: not pulled — run: ollama pull gemma3")
+                remaining.append("Run: ollama pull gemma3")
+            else:
+                remaining.append("Run: ollama pull gemma3 (after installing Ollama)")
+
+        if remaining:
+            print()
+            print(f"  Manual action required for {spec.label}:")
+            for note in remaining:
+                print(f"    * {note}")
+            summary["manual"].append(
+                f"{spec.label} ({spec.name}): " + " | ".join(remaining)
+            )
+        else:
+            print(f"  {spec.label}: Ollama + Gemma3 already set up.")
 
 
 # ---------------------------------------------------------------------------
