@@ -750,17 +750,18 @@ def download_model(comfyui_root: Path, model: ModelSpec) -> str:
     # ── Agreement gate ─────────────────────────────────────────────────────
     if model.requires_agreement:
         print()
-        print(f"  [ACTION REQUIRED] {model.name} requires accepting a data agreement.")
-        print(f"  1. Visit: {model.requires_agreement}")
+        print(f"  [ACTION REQUIRED] {model.name} requires a HuggingFace data agreement.")
+        print(f"  1. Open in your browser (this installer will wait):")
+        print(f"       {model.requires_agreement}")
         print(f"  2. Log in to HuggingFace and click 'Agree and access repository'")
-        print(f"  3. Then re-run this installer")
+        print(f"  3. Return here and press Y to continue")
         print()
         try:
-            answer = input(f"  Have you already accepted the agreement? [Y/N]: ").strip().lower()
+            answer = input(f"  Press Y once you have accepted, or N to skip: ").strip().lower()
         except EOFError:
             answer = ""
         if answer != "y":
-            print(f"  Skipping {model.name} — accept the agreement and re-run to download.")
+            print(f"  Skipping {model.name} — re-run the installer after accepting to download.")
             return "skipped"
 
     dest_dir = comfyui_root / model.dest_subdir
@@ -1047,6 +1048,8 @@ def run_module(comfyui_root: Path, module_key: str, spec: ModuleSpec,
             summary["skipped"].append(entry)
         else:
             summary["failed"].append(entry)
+            print(f"\n  Aborting remaining downloads for {spec.label} — fix the error above and re-run.")
+            break
 
     # Print any manual notes after downloads.
     # For notes referencing Ollama/Gemma3, check whether they're already
