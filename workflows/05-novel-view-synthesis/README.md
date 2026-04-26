@@ -66,6 +66,9 @@ Sample input images are provided in the `input/` folder.
 
 ## Troubleshooting
 
+### Safetensors or LoRA dropdown is empty
+ComfyUI only scans for model files at startup. Restart ComfyUI after running the installer and the files will appear in all dropdowns.
+
 ### Gaussian Splat LoRA not loading
 The LoRA file has a Chinese filename in the source repo (`高斯泼溅-Sharp.safetensors`) and is renamed to `Qwen2511SharpGaussianSplat.safetensors` by the downloader. If you downloaded manually, rename the file accordingly.
 

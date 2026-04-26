@@ -20,6 +20,9 @@ The model is gated and requires accepting a HuggingFace data agreement. The inst
 
 ## ComfyUI
 
+**A model or LoRA dropdown is empty after install**
+ComfyUI scans for model files at startup. If models were downloaded while ComfyUI was already running, the dropdowns will be empty until you restart. Restart ComfyUI and the files will appear. This is the most common cause of empty safetensors or LoRA dropdowns (notably Module 05).
+
 **ComfyUI shows a "Missing Node Packs" dialog when loading a workflow**
 This is expected if custom nodes aren't installed yet. **Do not click "Install" in the dialog for `ComfyUI-TextureAlchemy`** — ComfyUI Manager installs the wrong branch. Run `install.bat` / `install.sh` instead, which installs all required nodes (including the correct Sandbox branch of TextureAlchemy) automatically.
 
