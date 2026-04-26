@@ -1094,17 +1094,6 @@ def run_module(comfyui_root: Path, module_key: str, spec: ModuleSpec,
 ALL_MODULE_KEYS = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
                    "bonus-a", "bonus-b"]
 
-ALIAS_MAP = {
-    # Accept "bonus_a", "bonusa", "bonus-a", "ba", etc.
-    "bonus_a": "bonus-a",
-    "bonusa":  "bonus-a",
-    "ba":      "bonus-a",
-    "bonus_b": "bonus-b",
-    "bonusb":  "bonus-b",
-    "bb":      "bonus-b",
-}
-
-
 def parse_modules(raw: str) -> list:
     """
     Accept "all" or comma-separated list like "01,02,bonus-a".
@@ -1116,13 +1105,12 @@ def parse_modules(raw: str) -> list:
     keys = []
     for token in raw.split(","):
         token = token.strip().lower()
-        token = ALIAS_MAP.get(token, token)
         # Zero-pad single digits
         if token.isdigit():
             token = token.zfill(2)
         if token not in ALL_MODULE_KEYS:
-            print(f"[WARN] Unknown module '{token}' — skipping.", file=sys.stderr)
-            continue
+            print(f"[ERROR] Unknown module '{token}'. Valid: 01-10, bonus-a, bonus-b", file=sys.stderr)
+            sys.exit(1)
         keys.append(token)
     return keys
 

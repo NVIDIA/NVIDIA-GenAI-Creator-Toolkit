@@ -191,9 +191,24 @@ if [ "$CLEAN" != "1" ] && [ -z "$MODULES" ]; then
   echo "   bonus-a  Texture Extraction       (~60 GB)"
   echo "   bonus-b  Texture to PBR           (~10 GB)"
   echo ""
-  echo "  Enter module numbers (e.g. 02,03,08), \"all\", or press Enter to skip:"
+  echo "  Enter module numbers (e.g. 02,03,bonus-a), \"all\", or press Enter to skip:"
   echo ""
   read -p "  Modules: " MODULES || true
+fi
+
+# --- Validate module names ---
+if [ -n "$MODULES" ] && [ "${MODULES,,}" != "all" ]; then
+  _valid=" 01 02 03 04 05 06 07 08 09 10 bonus-a bonus-b "
+  IFS=',' read -ra _tokens <<< "$MODULES"
+  for _tok in "${_tokens[@]}"; do
+    _tok="${_tok// /}"
+    if [[ "$_valid" != *" $_tok "* ]]; then
+      echo ""
+      echo "[ERROR] Unknown module '$_tok'. Valid: 01-10, bonus-a, bonus-b"
+      echo ""
+      exit 1
+    fi
+  done
 fi
 
 echo ""

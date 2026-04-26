@@ -330,11 +330,22 @@ if not defined MODULES (
     echo    bonus-a  Texture Extraction       ^(~60 GB^)
     echo    bonus-b  Texture to PBR           ^(~10 GB^)
     echo.
-    echo  Enter module numbers ^(e.g. 02,03,08^), "all", or press Enter to skip:
+    echo  Enter module numbers ^(e.g. 02,03,bonus-a^), "all", or press Enter to skip:
     echo.
     set /p MODULES="  Modules: "
 )
 :skip_module_prompt
+
+REM --- Validate module names ---
+if defined MODULES (
+    if /i not "!MODULES!"=="all" (
+        "!PYTHON!" -c "import sys; v={'01','02','03','04','05','06','07','08','09','10','bonus-a','bonus-b'}; bad=[t.strip() for t in sys.argv[1].split(',') if t.strip() and t.strip() not in v]; [print('[ERROR] Unknown module: '+b+'. Valid: 01-10, bonus-a, bonus-b') for b in bad]; sys.exit(len(bad))" "!MODULES!"
+        if errorlevel 1 (
+            echo.
+            exit /b 1
+        )
+    )
+)
 
 REM --- Desktop App: all content goes into the installation location ---
 if !INSTALL_TYPE!==desktop (
