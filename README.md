@@ -23,14 +23,13 @@ Adapted from NVIDIA's GTC 2026 DLI course [*Create Generative AI Workflows for D
 
 ## Quick Start with Module 01
 #### Install ComfyUI first (if you haven't already)
-#####Windows
+##### Windows
 Download and install the desktop app from https://www.comfy.org/download.  
 Launch ComfyUI and complete its setup. Close ComfyUI when done. 
-#####Linux
+##### Linux
 Download and install ComfyUI for Linux from these step-by-step instructions: [LINUX_COMFYUI_INSTALLATION.md](LINUX_COMFYUI_INSTALLATION.md). 
 
 #### Clone the NVIDIA GenAI Creator Toolkit GitHub Repo
-Open a command prompt
 ```bash
 # Clone this repo
 git clone https://github.com/NVIDIA/NVIDIA-GenAI-Creator-Toolkit
