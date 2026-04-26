@@ -38,13 +38,14 @@ Input Image -> Mask -> Model Conditioning -> Diffusion -> Output Image
 | **VRAM (Recommended)** | 24 GB |
 | **Custom Nodes** | 2 packages |
 | **Models** | 4 files |
+| **Disk Space** | ~52 GB |
 
 ## Required Models
 
 | Model | Type | Size |
 |-------|------|------|
 | `qwen_image_edit_2511_bf16.safetensors` | Image Edit Model | ~41 GB |
-| `qwen_2.5_vl_7b_fp8_scaled.safetensors` | Text Encoder | ~17 GB |
+| `qwen_2.5_vl_7b_fp8_scaled.safetensors` | Text Encoder | ~9 GB |
 | `qwen_image_vae.safetensors` | VAE | ~255 MB |
 | `Qwen-Image-Edit-Lightning-8steps-V1.0.safetensors` | LoRA | ~1.7 GB |
 
@@ -79,3 +80,14 @@ A sample input image is provided in the `input/` folder.
 The workflow shows two outputs:
 - **Preview** — the final result with the inpainted patch stitched back into the original
 - **Image Compare** — side-by-side view of the original and the inpainted result
+
+## Troubleshooting
+
+### Inpainting bleeds outside the mask
+Increase mask feather or padding in the CropAndStitch node settings. A small feather (4–8 px) typically produces clean edges.
+
+### ComfyUI-TextureAlchemy nodes missing
+Must be the Sandbox branch. See Module 02 troubleshooting.
+
+### Result looks unchanged
+Make sure the mask is correctly connected to the inpainting node and the mask is non-zero (white = area to change, black = preserve).

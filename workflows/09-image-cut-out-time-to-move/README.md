@@ -34,7 +34,8 @@ This module includes two workflow files:
 | **VRAM (Minimum)** | 16 GB |
 | **VRAM (Recommended)** | 24 GB |
 | **Custom Nodes** | 7 packages |
-| **Models** | 12 files (~100 GB) |
+| **Models** | 12 files |
+| **Disk Space** | ~77 GB |
 
 ## Required Models
 
@@ -42,7 +43,7 @@ This module includes two workflow files:
 |-------|------|------|
 | `Wan2_2-I2V-A14B-HIGH_bf16.safetensors` | Diffusion Model | ~28 GB |
 | `Wan2_2-I2V-A14B-LOW_bf16.safetensors` | Diffusion Model | ~28 GB |
-| `wan2.2_i2v_A14b_high_noise_lora_rank64_lightx2v_4step.safetensors` | Diffusion Model (Distilled) | ~29 GB |
+| `wan2.2_i2v_A14b_high_noise_lora_rank64_lightx2v_4step.safetensors` | LoRA | ~1 GB |
 | `umt5_xxl_fp16.safetensors` | Text Encoder | ~11 GB |
 | `sam3.pt` | Segmentation Model | ~3.4 GB |
 | `wan_2.1_vae.safetensors` | VAE | ~250 MB |
@@ -50,7 +51,7 @@ This module includes two workflow files:
 | `Wan22_PusaV1_lora_LOW_resized_dynamic_avg_rank_98_bf16.safetensors` | LoRA | ~970 MB |
 | `Wan2.2-Fun-A14B-InP-high-noise-HPS2.1.safetensors` | LoRA | ~860 MB |
 | `Wan2.2-Fun-A14B-InP-low-noise-HPS2.1.safetensors` | LoRA | ~860 MB |
-| `Wan22_A14B_T2V_LOW_Lightning_4steps_lora_250928_rank64_fp16.safetensors` | LoRA | ~615 MB |
+| `Wan22_A14B_T2V_LOW_Lightning_4steps_lora_rank64_fp16.safetensors` | LoRA | ~615 MB |
 | `Qwen-flymy_realism.safetensors` | LoRA | ~500 MB |
 
 ## Required Custom Nodes
@@ -76,3 +77,20 @@ Sample input frames, video, and mask are provided in the `input/` folder.
 1. Load `09-image-cut-out-time-to-move-videoprep.json` into ComfyUI and run it to prepare your inputs
 2. Load `09-image-cut-out-time-to-move.json` into ComfyUI
 3. Connect your prepared inputs and click **Queue Prompt**
+
+## Troubleshooting
+
+### Two workflows — run VideoPrep first
+This module requires two workflows in sequence. Run `09-image-cut-out-time-to-move-videoprep.json` first to prepare your first frame, last frame, and mask. Then run `09-image-cut-out-time-to-move.json` for video generation. Skipping VideoPrep causes the main workflow to finish in under 1 second with no output.
+
+### Job finishes in under 1 second with no output
+The video input nodes are empty. Load the VideoPrep outputs (first frame image, last frame image, mask image, and reference video) into the corresponding Load Image / Load Video nodes before queuing. The video loader shows only small red text when empty — easy to miss.
+
+### ComfyUI-Impact-Pack shows IMPORT FAILED
+Impact Pack requires `ultralytics` and `onnxruntime`. On ComfyUI Portable, install manually: `python_embeded\python.exe -m pip install ultralytics onnxruntime`. If `onnxruntime` conflicts with `onnxruntime-gpu`, use: `python_embeded\python.exe -m pip install ultralytics onnxruntime-gpu`. Then restart ComfyUI.
+
+### TritonMissing error during generation
+Triton is not available in ComfyUI Portable's embedded Python on Windows. In the `WanVideoSampler` node, set `torch_compile_args` to disabled/off. Generation speed is unaffected for most GPUs.
+
+### Generation is very slow on 16 GB VRAM
+Enable FP8 quantization and KJNodes block-swap in the workflow. Keep sequences under 24 frames at 480p. 24 GB VRAM is recommended for practical use.

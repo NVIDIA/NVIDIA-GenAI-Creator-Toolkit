@@ -292,18 +292,18 @@ if not defined MODULES (
     echo ================================================================
     echo.
     echo  Available modules:
-    echo    01       LLM Prompt Enhancer      ^(Ollama/Gemma3 — no download needed^)
-    echo    02       Image Deconstruction     ^(~8 GB^)
-    echo    03       Targeted Inpainting      ^(~8 GB^)
-    echo    04       Image to Gaussian Splat  ^(~1 GB^)
-    echo    05       Novel View Synthesis ^(~8 GB^)
-    echo    06       Image to Equirectangular ^(~12 GB^)
-    echo    07       Panorama to HDRI         ^(~24 GB^)
-    echo    08       Image to 3D    ^(~20 GB^)
-    echo    09       Image Cut Out Time to Move         ^(~100 GB^)
-    echo    10       Video to Video       ^(~130 GB^)
-    echo    bonus-a  Texture Extraction       ^(~8 GB^)
-    echo    bonus-b  Texture to PBR           ^(~12 GB^)
+    echo    01       LLM Prompt Enhancer      ^(~65 GB, Gemma3 via Ollama^)
+    echo    02       Image Deconstruction     ^(~51 GB^)
+    echo    03       Targeted Inpainting      ^(~52 GB^)
+    echo    04       Image to Gaussian Splat  ^(~3 GB^)
+    echo    05       Novel View Synthesis     ^(~60 GB^)
+    echo    06       Image to Equirectangular ^(~61 GB^)
+    echo    07       Panorama to HDRI         ^(~23 GB^)
+    echo    08       Image to 3D              ^(~20 GB^)
+    echo    09       Image Cut Out Time to Move ^(~77 GB^)
+    echo    10       Video to Video           ^(~143 GB^)
+    echo    bonus-a  Texture Extraction       ^(~60 GB^)
+    echo    bonus-b  Texture to PBR           ^(~10 GB^)
     echo.
     echo  Enter module numbers ^(e.g. 02,03,08^), "all", or press Enter to skip:
     echo.
@@ -643,6 +643,14 @@ for /d %%D in ("%~dp0workflows\*") do (
 )
 echo   Workflows available in template browser: Extensions ^> !TEMPLATE_NODE!
 
+REM --- Normalize model path separators to Windows backslash ---
+REM ComfyUI on Windows resolves model paths with backslashes; JSONs authored on
+REM Mac/Linux store forward slashes which cause "model not found" on first load.
+REM This patches the installed copies only — repo files are not modified.
+echo.
+echo Normalizing workflow model paths for Windows...
+"!PYTHON!" "%~dp0normalize_paths_win.py" "!WORKFLOWS_DEST!" "!TEMPLATE_NODE_DIR!\example_workflows"
+
 REM --- Offer to install Ollama if module 01 or all selected ---
 set NEEDS_OLLAMA=0
 echo ,!MODULES!, | findstr /i ",01," > nul 2>&1 && set NEEDS_OLLAMA=1
@@ -678,6 +686,18 @@ if not errorlevel 2 (
         "!OLLAMA_EXE!" pull gemma3
     )
 )
+REM Re-check in case Ollama was present but undetected at script start (e.g. not yet in PATH)
+ollama --version > nul 2>&1
+if not errorlevel 1 (
+    set OLLAMA_FOUND=1
+    set "OLLAMA_EXE=ollama"
+    goto ollama_check_gemma
+)
+if exist "%LOCALAPPDATA%\Programs\Ollama\ollama.exe" (
+    set OLLAMA_FOUND=1
+    set "OLLAMA_EXE=%LOCALAPPDATA%\Programs\Ollama\ollama.exe"
+    goto ollama_check_gemma
+)
 goto skip_ollama
 
 :ollama_check_gemma
@@ -702,12 +722,45 @@ if "!GEMMA_FOUND!"=="1" (
 if /i not "!MODULES!"=="" (
     echo.
     echo ================================================================
-    echo  Downloading models for modules: !MODULES!
+    echo  Step: HuggingFace Login
     echo ================================================================
     echo.
-    echo  TIP: Log in to HuggingFace for faster downloads and access to
-    echo  gated models ^(required for Module 07 Flux^):
-    echo    huggingface-cli login
+    echo  HuggingFace login is required for:
+    echo    - Faster, rate-limit-free downloads
+    echo    - Gated models ^(Module 07 Flux.1-dev, Module 08 DINOv3^)
+    echo.
+    set HF_LOGGED_IN=0
+    "!PYTHON!" -c "from huggingface_hub import get_token; exit(0 if get_token() else 1)" > nul 2>&1
+    if not errorlevel 1 (
+        set HF_LOGGED_IN=1
+        echo  Already logged in to HuggingFace.
+    )
+    if "!HF_LOGGED_IN!"=="0" (
+        echo  Not currently logged in.
+        echo.
+        choice /c YN /m "  Log in to HuggingFace now?"
+        if not errorlevel 2 (
+            echo.
+            echo  Running: huggingface-cli login
+            echo  ^(You will be prompted to enter or paste your HuggingFace token.^)
+            echo  Get a token at: https://huggingface.co/settings/tokens
+            echo.
+            for %%F in ("!PYTHON!") do set "PYTHON_DIR=%%~dpF"
+            if exist "!PYTHON_DIR!huggingface-cli.exe" (
+                "!PYTHON_DIR!huggingface-cli.exe" login
+            ) else (
+                echo  huggingface-cli not found. Run manually after install: huggingface-cli login
+            )
+        ) else (
+            echo.
+            echo  Skipping login. Gated model downloads ^(Module 07, 08^) will fail.
+            echo  To log in later: huggingface-cli login
+        )
+    )
+    echo.
+    echo ================================================================
+    echo  Downloading models for modules: !MODULES!
+    echo ================================================================
     echo.
     "!PYTHON!" "%~dp0download_models.py" --comfyui "!MODELS_ROOT!" --modules !MODULES!
     if errorlevel 1 (

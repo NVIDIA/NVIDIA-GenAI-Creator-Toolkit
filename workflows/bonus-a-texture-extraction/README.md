@@ -32,6 +32,7 @@ Image -> VLM -> Segmentation/Masking -> LoRA -> Diffusion Model -> Output Textur
 | **VRAM (Recommended)** | 24 GB |
 | **Custom Nodes** | 4 packages |
 | **Models** | 5 files |
+| **Disk Space** | ~60 GB |
 
 ## Required Models
 
@@ -59,3 +60,14 @@ A sample input image is provided in the `input/` folder.
 1. Load `bonus-a-texture-extraction.json` into ComfyUI
 2. Connect your input image and click **Queue Prompt**
 3. The output texture can be used directly in [Bonus B — Texture to PBR](../bonus-b-texture-to-pbr/)
+
+## Troubleshooting
+
+### Install key for --modules
+Use `bonus-a` (not `bonus_a` or `a`). To install both bonus modules: `--modules bonus-a,bonus-b`.
+
+### Texture has visible seams
+Increase the overlap/feather setting in the CropAndStitch node. A feather of 32–64 px typically eliminates seams for 1024×1024 textures.
+
+### ComfyUI-TextureAlchemy nodes missing
+Must be installed from the Sandbox branch. The install script handles this automatically. If installed manually via Manager, it installs the wrong branch. Re-clone with: `git clone --branch Sandbox https://github.com/amtarr/ComfyUI-TextureAlchemy`

@@ -32,7 +32,11 @@ This workflow shows you how to build an AI Agent that strengthens and refines te
 ```
 User Instructions -> Prompt Enhancement Agent -> Text Encoding -> Image
 ```
+## How to Use
 
+1. Open `01-llm-prompt-enhancer.json` from the ComfyUI Template Browswer or Workflow Browser
+2. Configure your prompt and click **Queue Prompt**
+   
 ## Requirements
 
 | Requirement | Value |
@@ -41,6 +45,7 @@ User Instructions -> Prompt Enhancement Agent -> Text Encoding -> Image
 | **VRAM (Recommended)** | 24 GB |
 | **Custom Nodes** | 2 packages |
 | **Models** | 4 files + Ollama |
+| **Disk Space** | ~65 GB |
 
 ## Required Models
 
@@ -76,7 +81,13 @@ ollama pull gemma3
 
 Ollama runs as a background service. Once installed, it starts automatically and ComfyUI connects to it via the comfyui-ollama node.
 
-## How to Use
+## Troubleshooting
 
-1. Load `01-llm-prompt-enhancer.json` into ComfyUI
-2. Configure your prompt and click **Queue Prompt**
+### Ollama not detected at startup
+Make sure Ollama is running as a background service (`ollama serve`). On Windows, Ollama starts automatically after install. On Linux, run `ollama serve &` before launching ComfyUI.
+
+### gemma3 not found
+Run `ollama pull gemma3` in a terminal. The model must be pulled before the workflow can use it.
+
+### comfyui-ollama node missing
+Run `install.bat / install.sh --modules 01` to install the Ollama node pack, then restart ComfyUI.

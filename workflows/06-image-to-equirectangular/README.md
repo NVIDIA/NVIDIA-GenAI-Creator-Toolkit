@@ -32,6 +32,7 @@ Input Image -> Pad for Outpainting -> LoRA -> Diffusion Model -> Inpainting -> S
 | **VRAM (Recommended)** | 24 GB |
 | **Custom Nodes** | 5 packages |
 | **Models** | 5 files + 1 gated LoRA |
+| **Disk Space** | ~61 GB |
 
 ## Required Models
 
@@ -42,7 +43,7 @@ Input Image -> Pad for Outpainting -> LoRA -> Diffusion Model -> Inpainting -> S
 | `qwen_image_vae.safetensors` | VAE | ~255 MB |
 | `Qwen-Image-Lightning-8steps-V2.0.safetensors` | LoRA | ~1.7 GB |
 | `Qwen-Image-Edit-2511-Object-Remover.safetensors` | LoRA | 225 MB |
-| `251018_MICKMUMPITZ_QWEN-EDIT_360_03.safetensors` | LoRA | 282 MB |
+| `MikMumpitz360.safetensors` | LoRA | 282 MB |
 
 ## Required Custom Nodes
 
@@ -66,3 +67,14 @@ A sample input image is provided in the `input/` folder.
 
 1. Load `06-image-to-equirectangular.json` into ComfyUI
 2. Connect your input image and click **Queue Prompt**
+
+## Troubleshooting
+
+### Seam visible in panorama
+Use the CropAndStitch node's feather setting to soften the join. A seam feather of 32–64 px typically eliminates the seam at standard panorama widths.
+
+### Left/right edges don't align
+The panorama outpainting requires the input image to be cropped to a 2:1 aspect ratio. Adjust the crop in the workflow before running.
+
+### Object Remover LoRA not loading
+Check that `Qwen-Image-Edit-2511-Object-Remover.safetensors` exists in `models/loras/qwen/`. Re-run `install.bat / install.sh --modules 06` to re-download.

@@ -29,7 +29,8 @@ Image -> Trellis2 -> 3D Model with PBR Materials
 | **VRAM (Minimum)** | 16 GB |
 | **VRAM (Recommended)** | 24 GB |
 | **Custom Nodes** | 2 packages |
-| **Models** | 3 files (~20 GB total) |
+| **Models** | 3 files |
+| **Disk Space** | ~20 GB |
 
 ## Required Models
 
@@ -72,3 +73,20 @@ A sample input image is provided in the `input/` folder.
 
 1. Load `08-image-to-3d.json` into ComfyUI
 2. Connect your reference image and click **Queue Prompt**
+
+## Troubleshooting
+
+### DINOv3 download fails — access restricted
+DINOv3 is a gated model. Visit https://huggingface.co/facebook/dinov3-vitl16-pretrain-lvd1689m, log in, and click "Agree and access repository". Meta approvals are typically granted within 24–48 hours. Then re-run the installer.
+
+### Trellis2 nodes fail to load on Linux
+Module 08 is Windows only. The Trellis2 CUDA extension wheels (cumesh, nvdiffrast) are pre-built for specific PyTorch ABI versions that conflict with current Linux PyTorch builds. Linux support depends on upstream wheel updates.
+
+### Python version error — open3d not found
+Python 3.11 or 3.12 is required. Python 3.13 has no pre-built wheels for open3d or the Trellis2 CUDA extensions. Create a Python 3.11 or 3.12 environment and re-run the installer.
+
+### PyTorch version downgraded after install
+Expected. Trellis2 pre-built CUDA wheels require PyTorch 2.8.x due to C++ ABI compatibility. The installer downgrades automatically. All other modules continue to work on PyTorch 2.8.0.
+
+### flash_attn import error
+Expected on Windows — no pre-built Windows wheel exists. The installer patches Trellis2 to fall back to `torch.nn.functional.scaled_dot_product_attention` automatically.

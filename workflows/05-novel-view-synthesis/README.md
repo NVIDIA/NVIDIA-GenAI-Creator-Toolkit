@@ -32,6 +32,7 @@ Input Image -> LoRA -> Diffusion Process -> Output
 | **VRAM (Recommended)** | 24 GB |
 | **Custom Nodes** | 1 package |
 | **Models** | 5 files |
+| **Disk Space** | ~60 GB |
 
 ## Required Models
 
@@ -62,3 +63,14 @@ Sample input images are provided in the `input/` folder.
 1. Complete [Module 04](../04-image-to-gaussian-splat/) first to generate your Gaussian Splat output
 2. Load `05-novel-view-synthesis.json` into ComfyUI
 3. Connect your splat output and click **Queue Prompt**
+
+## Troubleshooting
+
+### Gaussian Splat LoRA not loading
+The LoRA file has a Chinese filename in the source repo (`高斯泼溅-Sharp.safetensors`) and is renamed to `Qwen2511SharpGaussianSplat.safetensors` by the downloader. If you downloaded manually, rename the file accordingly.
+
+### Run Module 04 first
+This module builds on the Gaussian Splat output from Module 04. Run Module 04 first and use its output as input here.
+
+### Occlusion filling has artifacts
+Increase sampler steps or try a different seed. Novel view synthesis is sensitive to the camera angle — stay within ±30° of the original view for best results.
