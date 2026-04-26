@@ -67,9 +67,9 @@ Press the blue run button in ComfyUI and see your prompt improve!
 Run the same script again with more module numbers. 
 ```bash
 # Windows:
-install.bat C:\path\to\ComfyUI --modules 02, 03
+install.bat C:\path\to\ComfyUI --modules 02,03
 # Linux:
-bash install.sh /path/to/ComfyUI --modules 02, 03
+bash install.sh /path/to/ComfyUI --modules 02,03
 ```
 
 | # | Workflow | Key Model(s) | Min. Rec. Windows / Linux VRAM | Disk Space | What It Does |

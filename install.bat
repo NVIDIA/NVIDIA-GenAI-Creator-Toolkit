@@ -59,7 +59,22 @@ if /i "%~1"=="--modules" (
     shift /1
     goto parse_args
 )
-if not defined INSTALL_LOCATION set INSTALL_LOCATION=%~1
+if not defined INSTALL_LOCATION (
+    set INSTALL_LOCATION=%~1
+    shift /1
+    goto parse_args
+)
+REM cmd.exe treats commas as arg delimiters, so --modules 02,03,04 arrives as
+REM separate tokens. Collect any bare non-flag tokens after INSTALL_LOCATION is
+REM set and append them to MODULES.
+if defined MODULES (
+    set "_arg=%~1"
+    if not "!_arg:~0,1!"=="-" (
+        set "MODULES=!MODULES!,!_arg!"
+        shift /1
+        goto parse_args
+    )
+)
 shift /1
 goto parse_args
 :done_parse

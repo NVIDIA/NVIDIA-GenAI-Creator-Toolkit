@@ -374,13 +374,13 @@ if [ "$NEEDS_OLLAMA" = "1" ]; then
     echo " Module 01 requires Ollama (not detected on this machine)"
     echo "================================================================"
     echo ""
-    read -r -n 1 -p "  Install Ollama now? (Y/N): " INSTALL_OLLAMA < /dev/tty; echo
+    read -r -n 1 -p "  Install Ollama now? [Y/N]:" INSTALL_OLLAMA < /dev/tty; echo
     if [[ "${INSTALL_OLLAMA,,}" == "y" ]]; then
       echo ""
       echo "  Installing Ollama..."
       curl -fsSL https://ollama.com/install.sh | sh
       echo ""
-      read -r -n 1 -p "  Pull gemma3 model now? (~5 GB) (Y/N): " PULL_GEMMA < /dev/tty; echo
+      read -r -n 1 -p "  Pull gemma3 model now? (~5 GB) [Y/N]:" PULL_GEMMA < /dev/tty; echo
       if [[ "${PULL_GEMMA,,}" == "y" ]]; then
         echo ""
         ollama pull gemma3
@@ -391,7 +391,7 @@ if [ "$NEEDS_OLLAMA" = "1" ]; then
       echo ""
       echo "  Ollama detected."
       if ! ollama list 2>/dev/null | grep -qi "gemma3"; then
-        read -r -n 1 -p "  Pull gemma3 model now? (~5 GB) (Y/N): " PULL_GEMMA < /dev/tty; echo
+        read -r -n 1 -p "  Pull gemma3 model now? (~5 GB) [Y/N]:" PULL_GEMMA < /dev/tty; echo
         if [[ "${PULL_GEMMA,,}" == "y" ]]; then
           echo ""
           ollama pull gemma3
@@ -404,7 +404,7 @@ if [ "$NEEDS_OLLAMA" = "1" ]; then
     echo ""
     echo "  Ollama already installed."
     if ! ollama list 2>/dev/null | grep -qi "gemma3"; then
-      read -r -n 1 -p "  Pull gemma3 model now? (~5 GB) (Y/N): " PULL_GEMMA < /dev/tty; echo
+      read -r -n 1 -p "  Pull gemma3 model now? (~5 GB) [Y/N]:" PULL_GEMMA < /dev/tty; echo
       if [[ "${PULL_GEMMA,,}" == "y" ]]; then
         echo ""
         ollama pull gemma3
@@ -433,7 +433,7 @@ if [ -n "$MODULES" ]; then
   fi
   if [ "$HF_LOGGED_IN" = "0" ]; then
     echo "  Not currently logged in."
-    read -r -n 1 -p "  Log in to HuggingFace now? (Y/N): " DO_HF_LOGIN < /dev/tty; echo
+    read -r -n 1 -p "  Log in to HuggingFace now? [Y/N]:" DO_HF_LOGIN < /dev/tty; echo
     if [[ "${DO_HF_LOGIN,,}" == "y" ]]; then
       echo ""
       echo "  Running: huggingface-cli login"
@@ -497,7 +497,7 @@ echo "  (already-installed nodes are skipped automatically)"
 echo ""
 
 # --- Offer to launch ComfyUI ---
-read -r -n 1 -p "  Launch ComfyUI now? (Y/N): " LAUNCH < /dev/tty; echo
+read -r -n 1 -p "  Launch ComfyUI now? [Y/N]:" LAUNCH < /dev/tty; echo
 if [[ "${LAUNCH,,}" == "y" ]]; then
   if [ -f "$COMFYUI_DIR/venv/bin/activate" ]; then
     echo ""
