@@ -147,6 +147,12 @@ All other modules are fully standalone.
 
 ---
 
+## Troubleshooting
+
+See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for common issues: install errors, missing nodes, VRAM OOM, remote access, and gated model downloads.
+
+---
+
 ## License
 
 Code and documentation in this repository are licensed under [Apache 2.0](LICENSE).
