@@ -16,7 +16,7 @@ Adapted from NVIDIA's GTC 2026 DLI course [*Create Generative AI Workflows for D
 - **GPU:** RTX 5090 (Windows)+ or RTX PRO 6000 (Linux) recommended to run all modules. Not all modules require as much VRAM, see the table below for requirements per module.
 - **Disk Space:** 500GB for all modules. See table below for Disk Space requirements per module.
 - **OS:** Windows 11 or Linux x86_64
-- **Software:** [ComfyUI](https://github.com/comfyanonymous/ComfyUI) + [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager) + Git
+- **Software:** ComfyUI and Git
 > **New to ComfyUI?** ComfyUI is a node-based generative AI interface — you connect model components visually to build pipelines. Each workflow in this repo is a pre-built pipeline you load and run.
 
 ---
@@ -35,7 +35,8 @@ Download and install ComfyUI for Linux from these step-by-step instructions: [LI
 git clone https://github.com/NVIDIA/NVIDIA-GenAI-Creator-Toolkit
 cd NVIDIA-GenAI-Creator-Toolkit
 ```
-
+>Need Git on Windows? Download from git-scm.com/downloads and run the installer.
+ 
 #### Install Module 01
 Pass your ComfyUI installation location — the folder you chose during Desktop App setup.  
 It contains your .venv\, models\, and custom_nodes\ folders.  
