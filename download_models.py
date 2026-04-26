@@ -820,7 +820,7 @@ def download_model(comfyui_root: Path, model: ModelSpec) -> str:
     if ok:
         print(f"    Complete: {model.name}")
     if not ok:
-        print(f"  [FAILED] huggingface-cli exited with error for {model.name}")
+        print(f"  [FAILED] Download failed for {model.name}")
         return "failed"
 
     # Handle rename
