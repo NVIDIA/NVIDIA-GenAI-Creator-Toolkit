@@ -16,6 +16,9 @@ Adapted from NVIDIA's GTC 2026 DLI course [*Create Generative AI Workflows for D
 - **GPU:** RTX 5090 (Windows)+ or RTX PRO 6000 (Linux) recommended to run all modules. Not all modules require as much VRAM, see the table below for requirements per module.
 - **Disk Space:** 500GB for all modules. See table below for Disk Space requirements per module.
 - **OS:** Windows 11 or Linux x86_64
+- **CUDA:** 12.x (Windows: included with your NVIDIA driver; Linux: verify with `nvidia-smi`)
+- **Python:** 3.10 or newer — 3.11 or 3.12 recommended (Windows Desktop App: bundled; Linux: `python3.12-venv` may be needed, see [LINUX_COMFYUI_INSTALLATION.md](LINUX_COMFYUI_INSTALLATION.md))
+- **HuggingFace account:** Required for model downloads. The installer will prompt you to log in. Modules 07 and 08 also require accepting gated model agreements before downloading.
 - **Software:** ComfyUI and Git
 > **New to ComfyUI?** ComfyUI is a node-based generative AI interface — you connect model components visually to build pipelines. Each workflow in this repo is a pre-built pipeline you load and run.
 
