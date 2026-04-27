@@ -55,9 +55,8 @@ install.bat C:\path\to\your\installation-location --modules 01
 bash install.sh /path/to/your/installation-location --modules 01
 ```
 
-> **Linux:** After the installer finishes, restart ComfyUI to load the new custom nodes. See [Step 3 in LINUX_COMFYUI_INSTALLATION.md](LINUX_COMFYUI_INSTALLATION.md#step-3--launch-comfyui) for restart instructions.
 #### Open and Run Module 01's Workflow in ComfyUI
-Start ComfyUI  
+Start ComfyUI. From Windows open the Desktop app, from Linux see [Step 3 in LINUX_COMFYUI_INSTALLATION.md](LINUX_COMFYUI_INSTALLATION.md#step-3--launch-comfyui)  
 Open the Templates window and scroll down to NVIDIA GenAI Creator Toolkit; open module 01.  
   
 ![ComfyUI Template Browser](docs/template.png)  
