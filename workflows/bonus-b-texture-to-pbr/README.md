@@ -12,17 +12,29 @@ This workflow turns a single texture into a full PBR material set. Use Lotus to 
 
 The leading tool for PBR extraction today is Adobe Substance Sampler, but it lacks key outputs like Metallic maps. This workflow offers a generative alternative — a complete set of PBR textures from a single image, with no specialized hardware or manual capture required.
 
+## Key Features
+
+- **G-Buffer Map Creation:** Smooth, consistent Depth and Height maps via Lotus.
+- **Full PBR Extraction:** Roughness, Metallic, Albedo, and lighting passes via Marigold.
+- **Quality Optimization:** Padding, cropping, and adjustment strategies for correct gradient fidelity.
+
 ## How It Works
 
 ```
 Input Texture -> Lotus Depth -> Lotus Height -> Marigold Appearance -> Marigold Lighting -> PBR Outputs
 ```
 
-## Key Features
+## How to Use
 
-- **G-Buffer Map Creation:** Smooth, consistent Depth and Height maps via Lotus.
-- **Full PBR Extraction:** Roughness, Metallic, Albedo, and lighting passes via Marigold.
-- **Quality Optimization:** Padding, cropping, and adjustment strategies for correct gradient fidelity.
+1. Open `bonus-b-texture-to-pbr` from the ComfyUI Template Browswer or Workflow Browser
+2. Connect your input texture and click **Run**
+
+
+
+## Sample Input
+
+A sample input image is provided in the `input/` folder. You can also use output from [Bonus A — Texture Extraction](../bonus-a-texture-extraction/).
+
 
 ## Requirements
 
@@ -51,15 +63,6 @@ Input Texture -> Lotus Depth -> Lotus Height -> Marigold Appearance -> Marigold 
 - [ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use)
 - [ComfyUI-Lotus](https://github.com/kijai/ComfyUI-Lotus)
 - [ComfyUI-Marigold](https://github.com/kijai/ComfyUI-Marigold)
-
-## Sample Input
-
-A sample input image is provided in the `input/` folder. You can also use output from [Bonus A — Texture Extraction](../bonus-a-texture-extraction/).
-
-## How to Use
-
-1. Load `bonus-b-texture-to-pbr.json` into ComfyUI
-2. Connect your input texture and click **Queue Prompt**
 
 ## Troubleshooting
 
