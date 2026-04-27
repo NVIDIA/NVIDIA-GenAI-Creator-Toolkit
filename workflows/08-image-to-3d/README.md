@@ -21,6 +21,30 @@ This workflow converts image references into usable 3D assets with PBR materials
 ```
 Image -> Trellis2 -> 3D Model with PBR Materials
 ```
+## How to Use
+
+1. Open `08-image-to-3d` from the ComfyUI Template Browswer or Workflow Browser
+2. Connect your reference image and click **Run**
+
+## Sample Input
+
+A sample input image is provided in the `input/` folder.
+
+
+## Example Output
+
+| Input Image | Output 3D Model |
+|-------------|-----------------|
+| ![](images/08-input.png) | ![](images/08-output.gif) |
+
+
+
+## Installation Notes
+
+- **Python version:** Python 3.11 or 3.12 is required. Python 3.13 is missing pre-built wheels for the Trellis2 CUDA extensions and open3d.
+- **PyTorch version:** The Trellis2 pre-built CUDA wheels require PyTorch 2.8.x due to C++ ABI compatibility. If a newer version is detected, the installer downgrades automatically. All other modules in this collection work correctly on PyTorch 2.8.0.
+- **Windows patches:** The installer automatically patches two upstream compatibility issues — a `transformers` 5+ API change affecting the DINOv3 feature extractor, and a missing `flash_attn` dependency (no pre-built Windows wheel) which falls back to `torch.nn.functional.scaled_dot_product_attention`.
+
 
 ## Requirements
 
@@ -53,26 +77,6 @@ python download_models.py --comfyui C:\path\to\ComfyUI --modules 08
 - [ComfyUI-Trellis2](https://github.com/visualbruno/ComfyUI-Trellis2)
 - [zsq_prompt](https://github.com/windfancy/zsq_prompt)
 
-## Example Output
-
-| Input Image | Output 3D Model |
-|-------------|-----------------|
-| ![](images/08-input.png) | ![](images/08-output.gif) |
-
-## Sample Input
-
-A sample input image is provided in the `input/` folder.
-
-## Installation Notes
-
-- **Python version:** Python 3.11 or 3.12 is required. Python 3.13 is missing pre-built wheels for the Trellis2 CUDA extensions and open3d.
-- **PyTorch version:** The Trellis2 pre-built CUDA wheels require PyTorch 2.8.x due to C++ ABI compatibility. If a newer version is detected, the installer downgrades automatically. All other modules in this collection work correctly on PyTorch 2.8.0.
-- **Windows patches:** The installer automatically patches two upstream compatibility issues — a `transformers` 5+ API change affecting the DINOv3 feature extractor, and a missing `flash_attn` dependency (no pre-built Windows wheel) which falls back to `torch.nn.functional.scaled_dot_product_attention`.
-
-## How to Use
-
-1. Load `08-image-to-3d.json` into ComfyUI
-2. Connect your reference image and click **Queue Prompt**
 
 ## Troubleshooting
 
