@@ -25,6 +25,17 @@ Turn any basic render (flat shading, no textures, simple lighting) that contains
 3D Render -> Depth Pass + Canny Pass -> Style Image -> Wan Vid2Vid -> Stylized Video Output
 ```
 
+## How to Use
+
+1. Export Depth and Canny passes from your 3D package
+2. Open `10-video-to-video` from the ComfyUI Template Browswer or Workflow Browser
+3. Connect your render passes and style image, then click **Run**
+
+## Sample Input
+
+Sample render frames and video passes are provided in the `input/` folder.
+
+
 ## Requirements
 
 | Requirement | Value |
@@ -60,16 +71,6 @@ Turn any basic render (flat shading, no textures, simple lighting) that contains
 - [radiance](https://github.com/fxtdstudios/radiance)
 - [comfyui-rtx-simple](https://github.com/BetaDoggo/comfyui-rtx-simple)
 - [ComfyUI-Impact-Pack](https://github.com/ltdrdata/ComfyUI-Impact-Pack)
-
-## Sample Input
-
-Sample render frames and video passes are provided in the `input/` folder.
-
-## How to Use
-
-1. Export Depth and Canny passes from your 3D package
-2. Load `10-video-to-video.json` into ComfyUI
-3. Connect your render passes and style image, then click **Queue Prompt**
 
 ## Troubleshooting
 
