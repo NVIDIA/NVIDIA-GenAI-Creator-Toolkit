@@ -52,7 +52,7 @@ Not sure where it is?
 #Windows
 install.bat C:\path\to\your\installation-location --modules 01
 #Linux
-bash install.sh /path/to/your/installation-location --modules 01
+bash install.sh ~/ComfyUI --modules 01
 ```
 
 #### Open and Run Module 01's Workflow in ComfyUI
