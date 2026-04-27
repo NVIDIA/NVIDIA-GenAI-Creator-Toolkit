@@ -28,8 +28,8 @@ Panoramic Image -> Four LoRAs -> Four Exposure Passes -> Luminance Stack -> HDRI
 
 | Requirement | Value |
 |-------------|-------|
-| **VRAM (Minimum)** | 16 GB |
-| **VRAM (Recommended)** | 24 GB |
+| **VRAM Min. Rec. Windows** | 24 GB |
+| **VRAM Min. Rec. Linux** | 32 GB |
 | **Custom Nodes** | 4 packages |
 | **Models** | 5 files + 4 gated LoRAs |
 | **Disk Space** | ~23 GB |
