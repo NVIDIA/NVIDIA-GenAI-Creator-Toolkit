@@ -28,8 +28,8 @@ Input Image -> LoRA -> Diffusion Process -> Output
 
 | Requirement | Value |
 |-------------|-------|
-| **VRAM (Minimum)** | 16 GB |
-| **VRAM (Recommended)** | 24 GB |
+| **VRAM Min. Rec. Windows** | 24 GB |
+| **VRAM Min. Rec. Linux** | 32 GB |
 | **Custom Nodes** | 1 package |
 | **Models** | 5 files |
 | **Disk Space** | ~60 GB |
