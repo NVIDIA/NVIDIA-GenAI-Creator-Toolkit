@@ -3,13 +3,8 @@
 **System packages (Ubuntu/Debian):**
 
 ```bash
-sudo apt install git git-lfs ffmpeg libgl1 libglib2.0-0 python3-venv
+sudo apt install git git-lfs ffmpeg libgl1 libglib2.0-0 python3.12-venv
 ```
-
-> On Ubuntu 24.04 (Python 3.12), `python3-venv` may fail with "ensurepip not available". Install the version-specific package instead:
-> ```bash
-> sudo apt install python3.12-venv
-> ```
 
 > `ffmpeg` is required by ComfyUI-VideoHelperSuite for video output. On Windows, it is bundled automatically.
 
