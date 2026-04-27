@@ -15,6 +15,7 @@ git clone https://github.com/comfyanonymous/ComfyUI
 cd ComfyUI
 
 # Create and activate a virtual environment (required on Linux)
+# python3 is Python 3.12 on Ubuntu 24.04
 python3 -m venv venv
 source venv/bin/activate
 
