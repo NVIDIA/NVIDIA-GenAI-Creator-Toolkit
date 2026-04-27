@@ -690,6 +690,9 @@ for /d %%D in ("%~dp0workflows\*") do (
             copy /y "%%D\!_MNAME!.json" "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!.json" > nul
             if exist "%%D\!_MNAME!-videoprep.json" (
                 copy /y "%%D\!_MNAME!-videoprep.json" "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!-videoprep.json" > nul
+                if exist "%%D\images\preview-videoprep.jpg" (
+                    copy /y "%%D\images\preview-videoprep.jpg" "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!-videoprep.jpg" > nul
+                )
             )
             if exist "%%D\images\preview.png" (
                 copy /y "%%D\images\preview.png" "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!.jpg" > nul

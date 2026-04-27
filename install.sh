@@ -394,6 +394,9 @@ for workflow_dir in "$(dirname "$0")/workflows"/*/; do
       cp "${workflow_dir}${module_name}.json" "$TEMPLATE_NODE_DIR/example_workflows/${module_name}.json"
       if [ -f "${workflow_dir}${module_name}-videoprep.json" ]; then
         cp "${workflow_dir}${module_name}-videoprep.json" "$TEMPLATE_NODE_DIR/example_workflows/${module_name}-videoprep.json"
+        if [ -f "${workflow_dir}images/preview-videoprep.jpg" ]; then
+          cp "${workflow_dir}images/preview-videoprep.jpg" "$TEMPLATE_NODE_DIR/example_workflows/${module_name}-videoprep.jpg"
+        fi
       fi
       if [ -f "${workflow_dir}images/preview.png" ]; then
         cp "${workflow_dir}images/preview.png" "$TEMPLATE_NODE_DIR/example_workflows/${module_name}.jpg"
