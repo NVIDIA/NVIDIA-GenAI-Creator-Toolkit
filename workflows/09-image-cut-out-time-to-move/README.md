@@ -31,8 +31,8 @@ This module includes two workflow files:
 
 | Requirement | Value |
 |-------------|-------|
-| **VRAM (Minimum)** | 16 GB |
-| **VRAM (Recommended)** | 24 GB |
+| **VRAM Min. Rec. Windows** | 32 GB |
+| **VRAM Min. Rec. Linux** | 48 GB |
 | **Custom Nodes** | 7 packages |
 | **Models** | 12 files |
 | **Disk Space** | ~77 GB |
