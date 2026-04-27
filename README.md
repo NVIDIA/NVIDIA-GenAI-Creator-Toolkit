@@ -49,8 +49,10 @@ Not sure where it is? Check Desktop App Settings > About > Arguments: --base-dir
 #Windows
 install.bat C:\path\to\your\installation-location --modules 01
 #Linux
-bash install.sh /path/to/yout/instalation-location --modules 01
+bash install.sh /path/to/your/installation-location --modules 01
 ```
+
+> **Linux:** After the installer finishes, restart ComfyUI to load the new custom nodes. See [Step 3 in LINUX_COMFYUI_INSTALLATION.md](LINUX_COMFYUI_INSTALLATION.md#step-3--launch-comfyui) for restart instructions.
 #### Open and Run Module 01's Workflow in ComfyUI
 Start ComfyUI  
 Open the Templates window and scroll down to NVIDIA GenAI Creator Toolkit; open module 01.  

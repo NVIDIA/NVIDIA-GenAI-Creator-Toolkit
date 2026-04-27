@@ -58,7 +58,16 @@ source ~/ComfyUI/venv/bin/activate
 python3 ~/ComfyUI/main.py --listen
 ```
 
-Once ComfyUI is running, press **Ctrl+A, D** to detach — ComfyUI stays running in the background and your SSH window is free again. Reattach later with `screen -r comfyui`.
+Once ComfyUI is running, press **Ctrl+A, D** to detach — ComfyUI stays running in the background and your SSH window is free again.
+
+**Restarting ComfyUI** (required after running the workflow installer or installing new modules):
+
+```bash
+screen -r comfyui        # reattach to the running session
+# press Ctrl+C to stop ComfyUI
+python3 ~/ComfyUI/main.py --listen   # start it again
+# press Ctrl+A, D to detach
+```
 
 > **`--listen` is required on headless Linux machines** — without it, ComfyUI only accepts connections from localhost and the browser tunnel will fail.
 
