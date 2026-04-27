@@ -372,6 +372,7 @@ mkdir -p "$WORKFLOWS_DEST"
 for workflow_dir in "$(dirname "$0")/workflows"/*/; do
   module_name="$(basename "$workflow_dir")"
   module_num=$(echo "$module_name" | sed 's/^\(bonus-[ab]\|[0-9][0-9]\)-.*/\1/')
+  [ "$module_num" = "08" ] && continue  # Module 08 is Windows only
   if [ -z "$MODULES" ] || module_selected "$module_num"; then
     if [ -f "${workflow_dir}${module_name}.json" ]; then
       mkdir -p "$WORKFLOWS_DEST/$module_name"
@@ -390,6 +391,7 @@ mkdir -p "$INPUTS_DEST"
 for workflow_dir in "$(dirname "$0")/workflows"/*/; do
   module_name="$(basename "$workflow_dir")"
   module_num=$(echo "$module_name" | sed 's/^\(bonus-[ab]\|[0-9][0-9]\)-.*/\1/')
+  [ "$module_num" = "08" ] && continue  # Module 08 is Windows only
   if [ -z "$MODULES" ] || module_selected "$module_num"; then
     if [ -d "${workflow_dir}input" ]; then
       cp "${workflow_dir}input/"* "$INPUTS_DEST/" 2>/dev/null || true
@@ -410,6 +412,7 @@ cp "$(dirname "$0")/custom_node/__init__.py" "$TEMPLATE_NODE_DIR/__init__.py"
 for workflow_dir in "$(dirname "$0")/workflows"/*/; do
   module_name="$(basename "$workflow_dir")"
   module_num=$(echo "$module_name" | sed 's/^\(bonus-[ab]\|[0-9][0-9]\)-.*/\1/')
+  [ "$module_num" = "08" ] && continue  # Module 08 is Windows only
   if [ -z "$MODULES" ] || module_selected "$module_num"; then
     if [ -f "${workflow_dir}${module_name}.json" ]; then
       cp "${workflow_dir}${module_name}.json" "$TEMPLATE_NODE_DIR/example_workflows/${module_name}.json"
