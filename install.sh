@@ -432,6 +432,18 @@ for workflow_dir in "$(dirname "$0")/workflows"/*/; do
 done
 echo "  Workflows available in template browser: Extensions > $TEMPLATE_NODE"
 
+# --- Write ComfyUI settings: show template browser on next launch ---
+SETTINGS_FILE="$COMFYUI_DIR/user/default/comfy.settings.json"
+mkdir -p "$COMFYUI_DIR/user/default"
+$PYTHON -c "
+import json, os
+f = '$SETTINGS_FILE'
+s = json.load(open(f)) if os.path.isfile(f) else {}
+s['Comfy.TutorialCompleted'] = False
+open(f, 'w').write(json.dumps(s, indent=4))
+"
+echo "  ComfyUI will open the template browser on next launch."
+
 # --- Offer to install Ollama if module 01 or all selected ---
 NEEDS_OLLAMA=0
 if module_selected "01"; then NEEDS_OLLAMA=1; fi

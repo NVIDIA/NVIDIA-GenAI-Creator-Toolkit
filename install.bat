@@ -704,6 +704,12 @@ for /d %%D in ("%~dp0workflows\*") do (
 )
 echo   Workflows available in template browser: Extensions ^> !TEMPLATE_NODE!
 
+REM --- Write ComfyUI settings: show template browser on next launch ---
+set "SETTINGS_FILE=!INSTALL_LOCATION!\user\default\comfy.settings.json"
+if not exist "!INSTALL_LOCATION!\user\default" mkdir "!INSTALL_LOCATION!\user\default"
+"!PYTHON!" -c "import json,os; f=r'!SETTINGS_FILE!'; s=json.load(open(f)) if os.path.isfile(f) else {}; s['Comfy.TutorialCompleted']=False; open(f,'w').write(json.dumps(s,indent=4))"
+echo   ComfyUI will open the template browser on next launch.
+
 REM --- Normalize model path separators to Windows backslash ---
 REM ComfyUI on Windows resolves model paths with backslashes; JSONs authored on
 REM Mac/Linux store forward slashes which cause "model not found" on first load.
