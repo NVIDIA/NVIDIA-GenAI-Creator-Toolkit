@@ -47,7 +47,8 @@ Sample input frames, video, and mask are provided in the `input/` folder.
 ![Module 09 VideoPrep node graph](../../docs/comfyui_workflow_09_videoprep.png)
 
 **Main workflow:**
-![Module 09 node graph](../../docs/comfyui_workflow_09.png)
+![Module 09 node graph](../../docs/comfyui_workflow_09.png)  
+Green box indicates a prompt box.
 
 ## Requirements
 
