@@ -58,9 +58,8 @@ A sample input image is provided in the `input/` folder.
 
 ## How to Use
 
-1. Load `02-image-deconstruction.json` into ComfyUI
-2. If ComfyUI Manager shows a **"Missing Node Packs"** dialog, close it and restart ComfyUI — the nodes are already installed but haven't been loaded yet.
-3. Connect your input image and click **Queue Prompt**
+1. Open `02-image-deconstruction.json` from the ComfyUI Template Browswer or Workflow Browser
+2. Click **Run**
 
 ## Troubleshooting
 
