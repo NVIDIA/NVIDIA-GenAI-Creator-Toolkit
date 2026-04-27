@@ -23,6 +23,18 @@ Extracting individual elements from an image is slow and tedious. Traditional me
 ```
 Image -> Qwen Image Layered -> Multiple Deconstructed Layers
 ```
+## How to Use
+
+1. Open `02-image-deconstruction` from the ComfyUI Template Browswer or Workflow Browser
+2. Click **Run**
+
+## Example Output
+
+| Input | Foreground | Background |
+|-------|-----------|------------|
+| ![](images/02-LayeredImage.png) | ![](images/02-Foreground_00001_.png) | ![](images/02-Background_00001_.png) |
+
+A sample input image is provided in the `input/` folder.
 
 ## Requirements
 
@@ -47,19 +59,6 @@ Image -> Qwen Image Layered -> Multiple Deconstructed Layers
 
 - [ComfyUI-TextureAlchemy](https://github.com/amtarr/ComfyUI-TextureAlchemy) (Sandbox branch)
 - [ComfyUI-WJNodes](https://github.com/807502278/ComfyUI-WJNodes)
-
-## Example Output
-
-| Input | Foreground | Background |
-|-------|-----------|------------|
-| ![](images/02-LayeredImage.png) | ![](images/02-Foreground_00001_.png) | ![](images/02-Background_00001_.png) |
-
-A sample input image is provided in the `input/` folder.
-
-## How to Use
-
-1. Open `02-image-deconstruction.json` from the ComfyUI Template Browswer or Workflow Browser
-2. Click **Run**
 
 ## Troubleshooting
 
