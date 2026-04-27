@@ -118,7 +118,7 @@ Every module has a folder in [`workflows/`](workflows/) with a README, the Comfy
 ```
 workflows/01-llm-prompt-enhancer/
 ├── README.md                     ← usage instructions, models, nodes, troubleshooting
-└── 01-llm-prompt-enhancer.json   ← drag this into ComfyUI
+└── 01-llm-prompt-enhancer.json   ← This is the node graph that is visible in ComfyUI. Open it from the Workflow Panel or Template Browser
 ```
 
 Module 09 includes two workflows — run `09-image-cut-out-time-to-move-videoprep.json` first, then `09-image-cut-out-time-to-move.json`.
