@@ -1,6 +1,6 @@
 # Linux Installation (ComfyUI + Manager)
 
-**System packages (Ubuntu/Debian):**
+**System packages (Ubuntu 24.04):**
 
 ```bash
 sudo apt install git git-lfs ffmpeg libgl1 libglib2.0-0 python3.12-venv
