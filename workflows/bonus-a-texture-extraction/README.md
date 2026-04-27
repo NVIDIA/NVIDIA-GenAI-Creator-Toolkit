@@ -27,8 +27,8 @@ Image -> VLM -> Segmentation/Masking -> LoRA -> Diffusion Model -> Output Textur
 ## How to Use
 
 1. Open `bonus-a-texture-extraction.json` from the ComfyUI Template Browswer or Workflow Browser
-2. Connect your input image and click **Run**
-3. The output texture can be used directly in [Bonus B — Texture to PBR](../bonus-b-texture-to-pbr/)
+3. Connect your input image and click **Run**
+4. The output texture can be used directly in [Bonus B — Texture to PBR](../bonus-b-texture-to-pbr/)
 
 
 ## Sample Input
@@ -36,8 +36,8 @@ Image -> VLM -> Segmentation/Masking -> LoRA -> Diffusion Model -> Output Textur
 A sample input image is provided in the `input/` folder.
 
 ## ComfyUI Canvas
-
-![Bonus A node graph](../../docs/comfyui_workflow_bonus-a.png)
+![Bonus A node graph](../../docs/comfyui_workflow_bonus-a.png)  
+Green box indicates a prompt box.
 
 ## Requirements
 
