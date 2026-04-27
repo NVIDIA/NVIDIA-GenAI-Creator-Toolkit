@@ -502,30 +502,42 @@ fi
 
 # --- Download models ---
 if [ -n "$MODULES" ]; then
-  echo ""
-  echo "================================================================"
-  echo " Downloading models for modules: $MODULES"
-  echo "================================================================"
-  echo ""
-  SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-  $PYTHON "$SCRIPT_DIR/download_models.py" --comfyui "$COMFYUI_DIR" --modules "$MODULES"
-  DOWNLOAD_EXIT=$?
-  if [ "$DOWNLOAD_EXIT" != "0" ]; then
+  # Module 08 (Trellis2) is Windows only — exclude from model downloads on Linux
+  DOWNLOAD_MODULES="$MODULES"
+  if [ "${MODULES,,}" = "all" ]; then
+    DOWNLOAD_MODULES="01,02,03,04,05,06,07,09,10,bonus-a,bonus-b"
+  else
+    DOWNLOAD_MODULES=$(echo "$MODULES" | tr ',' '\n' | grep -v '^08$' | tr '\n' ',' | sed 's/,$//')
+  fi
+
+  if [ -z "$DOWNLOAD_MODULES" ]; then
+    echo "  No models to download (Module 08 is Windows only, skipping on Linux)."
+  else
     echo ""
     echo "================================================================"
-    echo " [ERROR] One or more model downloads failed after 3 attempts."
+    echo " Downloading models for modules: $DOWNLOAD_MODULES"
     echo "================================================================"
     echo ""
-    echo "  This is usually a temporary network or HuggingFace issue."
-    echo "  Already-downloaded models will be skipped on retry."
-    echo ""
-    echo "  To retry, run:"
-    echo "    bash install.sh $COMFYUI_DIR --modules $MODULES"
-    echo ""
-    echo "  Do NOT launch ComfyUI until all models are downloaded —"
-    echo "  workflows will fail to run with missing models."
-    echo ""
-    exit 1
+    SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+    $PYTHON "$SCRIPT_DIR/download_models.py" --comfyui "$COMFYUI_DIR" --modules "$DOWNLOAD_MODULES"
+    DOWNLOAD_EXIT=$?
+    if [ "$DOWNLOAD_EXIT" != "0" ]; then
+      echo ""
+      echo "================================================================"
+      echo " [ERROR] One or more model downloads failed after 3 attempts."
+      echo "================================================================"
+      echo ""
+      echo "  This is usually a temporary network or HuggingFace issue."
+      echo "  Already-downloaded models will be skipped on retry."
+      echo ""
+      echo "  To retry, run:"
+      echo "    bash install.sh $COMFYUI_DIR --modules $MODULES"
+      echo ""
+      echo "  Do NOT launch ComfyUI until all models are downloaded —"
+      echo "  workflows will fail to run with missing models."
+      echo ""
+      exit 1
+    fi
   fi
 fi
 
