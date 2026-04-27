@@ -27,6 +27,21 @@ This module includes two workflow files:
 1. **`09-image-cut-out-time-to-move-videoprep.json`** — Run this first. Prepares your input images and mask.
 2. **`09-image-cut-out-time-to-move.json`** — The main video generation workflow.
 
+## How to Use
+
+1. Open `09-image-cut-out-time-to-move-videoprep` from the ComfyUI Template Browswer or Workflow Browser and run it to prepare your inputs
+2. Click **Run**
+3. Open `09-image-cut-out-time-to-move` from the ComfyUI Template Browswer or Workflow Browser
+4. Connect your prepared inputs and click **Run**
+   
+## Sample Input
+
+Sample input frames, video, and mask are provided in the `input/` folder.
+
+## Example Output
+<video src="images/09-output.mp4" autoplay loop muted playsinline width="100%"></video>
+
+
 ## Requirements
 
 | Requirement | Value |
@@ -63,20 +78,6 @@ This module includes two workflow files:
 - [ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use)
 - [ComfyUI_essentials](https://github.com/cubiq/ComfyUI_essentials)
 - [ComfyUI-Impact-Pack](https://github.com/ltdrdata/ComfyUI-Impact-Pack)
-
-## Example Output
-
-<video src="images/09-output.mp4" autoplay loop muted playsinline width="100%"></video>
-
-## Sample Input
-
-Sample input frames, video, and mask are provided in the `input/` folder.
-
-## How to Use
-
-1. Load `09-image-cut-out-time-to-move-videoprep.json` into ComfyUI and run it to prepare your inputs
-2. Load `09-image-cut-out-time-to-move.json` into ComfyUI
-3. Connect your prepared inputs and click **Queue Prompt**
 
 ## Troubleshooting
 
