@@ -26,8 +26,8 @@ Image -> Trellis2 -> 3D Model with PBR Materials
 
 | Requirement | Value |
 |-------------|-------|
-| **VRAM (Minimum)** | 16 GB |
-| **VRAM (Recommended)** | 24 GB |
+| **VRAM Min. Rec. Windows** | 24 GB |
+| **VRAM Min. Rec. Linux** | 32 GB |
 | **Custom Nodes** | 2 packages |
 | **Models** | 3 files |
 | **Disk Space** | ~20 GB |
