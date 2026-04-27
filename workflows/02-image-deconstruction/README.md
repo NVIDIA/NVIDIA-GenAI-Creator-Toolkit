@@ -38,7 +38,8 @@ A sample input image is provided in the `input/` folder.
 
 ## ComfyUI Canvas
 
-![Module 02 node graph](../../docs/comfyui_workflow_02.png)
+![Module 02 node graph](../../docs/comfyui_workflow_02.png)  
+Green box indicates text prompt.
 
 ## Requirements
 
