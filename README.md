@@ -43,15 +43,16 @@ cd NVIDIA-GenAI-Creator-Toolkit
 #### Install Module 01
 Pass your ComfyUI installation location — the folder you chose during Desktop App setup.  
 It contains your .venv\, models\, and custom_nodes\ folders.  
-Not sure where it is? Check Desktop App Settings > About > Arguments: --base-directory C:\path\to\your\installation-location
-
+Not sure where it is?   
+> **Windows** Check Desktop App Settings > About > Arguments: --base-directory C:\path\to\your\installation-location
+> 
 > **Linux:** Your ComfyUI folder is `~/ComfyUI` if you followed [LINUX_COMFYUI_INSTALLATION.md](LINUX_COMFYUI_INSTALLATION.md).
 
 ```bash
 #Windows
 install.bat C:\path\to\your\installation-location --modules 01
 #Linux
-bash install.sh ~/ComfyUI --modules 01
+bash install.sh /path/to/your/installation-location --modules 01
 ```
 
 > **Linux:** After the installer finishes, restart ComfyUI to load the new custom nodes. See [Step 3 in LINUX_COMFYUI_INSTALLATION.md](LINUX_COMFYUI_INSTALLATION.md#step-3--launch-comfyui) for restart instructions.
