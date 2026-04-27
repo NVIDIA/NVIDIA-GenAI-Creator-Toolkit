@@ -96,9 +96,9 @@ bash install.sh /path/to/ComfyUI --clean --modules 04
 | 05 | [Novel View Synthesis](workflows/05-novel-view-synthesis/) | Qwen Image Edit 2511 + LoRA | 24 / 32 GB | ~60 GB | Fill occluded areas in Gaussian Splat output for full camera freedom |
 | 06 | [Image → Equirectangular](workflows/06-image-to-equirectangular/) | Qwen Image Edit 2511 + MikMumpitz 360 LoRA | 24 / 32 GB | ~61 GB | Turn a single image into a seamless 360° panorama |
 | 07 | [Panorama → HDRI](workflows/07-panorama-to-hdri/) | Flux Dev Kontext + Exposure LoRAs | 24 / 32 GB | ~23 GB | Generate a production-ready HDRI from a panoramic image |
-| 08 | [Image to 3D](workflows/08-image-to-3d/) | Trellis2 | 24 / 24 GB | ~20 GB | Convert a 2D reference into a textured 3D model with PBR materials |
-| 09 | [Image Cut Out Time to Move](workflows/09-image-cut-out-time-to-move/) | Wan2.2 TTM + VideoPrep | 32 / 48 GB+ | ~77 GB | Trajectory-controlled video — define exactly when and where motion happens |
-| 10 | [Video to Video](workflows/10-video-to-video/) | Wan2.2 VACE + Lotus | 32 / 48 GB+ | ~143 GB | Transform a basic 3D render into stylized video — depth extracted automatically |
+| 08 | [Image to 3D](workflows/08-image-to-3d/) | Trellis2 | 24 / 32 GB | ~20 GB | Convert a 2D reference into a textured 3D model with PBR materials |
+| 09 | [Image Cut Out Time to Move](workflows/09-image-cut-out-time-to-move/) | Wan2.2 TTM + VideoPrep | 32 / 48 GB | ~77 GB | Trajectory-controlled video — define exactly when and where motion happens |
+| 10 | [Video to Video](workflows/10-video-to-video/) | Wan2.2 VACE + Lotus | 32 / 48 GB | ~143 GB | Transform a basic 3D render into stylized video — depth extracted automatically |
 
 ### Bonus Modules
 

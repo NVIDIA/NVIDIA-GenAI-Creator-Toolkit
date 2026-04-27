@@ -23,6 +23,24 @@ Creating a real HDRI traditionally requires specialized equipment — a mirror b
 ```
 Panoramic Image -> Four LoRAs -> Four Exposure Passes -> Luminance Stack -> HDRI (IBL)
 ```
+## How to Use
+
+1. Complete [Module 06](../06-equirectangular-outpainting/) to generate your panorama
+2. Open `07-panorama-to-hdri` from the ComfyUI Template Browswer or Workflow Browser
+3. Connect your panorama and click **Run**
+   
+## Sample Input
+
+Run [Module 06](../06-equirectangular-outpainting/) first to generate a panorama, or use a sample from `input/`.
+
+## Example Output
+
+| Input Panorama | EV-4 | EV-2 | EV+2 | EV+4 |
+|----------------|------|------|------|------|
+| ![](images/07-input.png) | ![](images/07-output-ev1.png) | ![](images/07-output-ev2.png) | ![](images/07-output-ev3.png) | ![](images/07-output-ev4.png) |
+
+
+
 
 ## ComfyUI Canvas
 
@@ -32,8 +50,8 @@ Panoramic Image -> Four LoRAs -> Four Exposure Passes -> Luminance Stack -> HDRI
 
 | Requirement | Value |
 |-------------|-------|
-| **VRAM (Minimum)** | 16 GB |
-| **VRAM (Recommended)** | 24 GB |
+| **VRAM Min. Rec. Windows** | 24 GB |
+| **VRAM Min. Rec. Linux** | 32 GB |
 | **Custom Nodes** | 4 packages |
 | **Models** | 5 files + 4 gated LoRAs |
 | **Disk Space** | ~23 GB |
@@ -63,21 +81,6 @@ Panoramic Image -> Four LoRAs -> Four Exposure Passes -> Luminance Stack -> HDRI
 - [ComfyUI-Marigold](https://github.com/kijai/ComfyUI-Marigold)
 - [Luminance-Stack-Processor](https://github.com/sumitchatterjee13/Luminance-Stack-Processor)
 
-## Example Output
-
-| Input Panorama | EV-4 | EV-2 | EV+2 | EV+4 |
-|----------------|------|------|------|------|
-| ![](images/07-input.png) | ![](images/07-output-ev1.png) | ![](images/07-output-ev2.png) | ![](images/07-output-ev3.png) | ![](images/07-output-ev4.png) |
-
-## Sample Input
-
-Run [Module 06](../06-equirectangular-outpainting/) first to generate a panorama, or use a sample from `input/`.
-
-## How to Use
-
-1. Complete [Module 06](../06-equirectangular-outpainting/) to generate your panorama
-2. Load `07-panorama-to-hdri.json` into ComfyUI
-3. Connect your panorama and click **Queue Prompt**
 
 ## Troubleshooting
 

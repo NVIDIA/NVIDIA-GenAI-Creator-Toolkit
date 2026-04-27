@@ -34,8 +34,8 @@ User Instructions -> Prompt Enhancement Agent -> Text Encoding -> Image
 ```
 ## How to Use
 
-1. Open `01-llm-prompt-enhancer.json` from the ComfyUI Template Browswer or Workflow Browser
-2. Configure your prompt and click **Queue Prompt**
+1. Open `01-llm-prompt-enhancer` from the ComfyUI Template Browswer or Workflow Browser
+2. Configure your prompt and click **Run**
 
 ## ComfyUI Canvas
 
@@ -45,8 +45,8 @@ User Instructions -> Prompt Enhancement Agent -> Text Encoding -> Image
 
 | Requirement | Value |
 |-------------|-------|
-| **VRAM (Minimum)** | 16 GB |
-| **VRAM (Recommended)** | 24 GB |
+| **VRAM Min. Rec. Windows** | 24 GB |
+| **VRAM Min. Rec. Linux** | 32 GB |
 | **Custom Nodes** | 2 packages |
 | **Models** | 4 files + Ollama |
 | **Disk Space** | ~65 GB |

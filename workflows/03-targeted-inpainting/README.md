@@ -30,6 +30,34 @@ When paired with Qwen Image Edit 2511, this workflow gives precise control over 
 Input Image -> Mask -> Model Conditioning -> Diffusion -> Output Image
 ```
 
+## How to Use
+
+1. Open `03-targeted-inpainting` from the ComfyUI Template Browswer or Workflow Browser
+2. In the **Load Image** node, right-click the image thumbnail → **Open in MaskEditor**
+3. Paint over the area you want to change (white = edit, black = keep)
+4. Click **Save** to apply the mask
+5. Set your prompt in the text node (e.g. "Clear this area. Seamlessly fill with the environment.")
+6. Click **Run**
+
+> **Why does the result look the same?** If no mask is painted, the model has no target area and outputs the original unchanged. Make sure to paint a mask before queuing.
+
+## Sample Input
+
+A sample input image is provided in the `input/` folder.
+
+## Example Output
+
+| Input | Inpainted Output |
+|-------|-----------------|
+| ![](images/03-input.png) | ![](images/03-output.png) |
+
+
+## Understanding the Outputs
+
+The workflow shows two outputs:
+- **Preview** — the final result with the inpainted patch stitched back into the original
+- **Image Compare** — side-by-side view of the original and the inpainted result
+
 ## ComfyUI Canvas
 
 ![Module 03 node graph](../../docs/comfyui_workflow_03.png)
@@ -38,8 +66,8 @@ Input Image -> Mask -> Model Conditioning -> Diffusion -> Output Image
 
 | Requirement | Value |
 |-------------|-------|
-| **VRAM (Minimum)** | 16 GB |
-| **VRAM (Recommended)** | 24 GB |
+| **VRAM Min. Rec. Windows** | 24 GB |
+| **VRAM Min. Rec. Linux** | 32 GB |
 | **Custom Nodes** | 2 packages |
 | **Models** | 4 files |
 | **Disk Space** | ~52 GB |
@@ -57,33 +85,6 @@ Input Image -> Mask -> Model Conditioning -> Diffusion -> Output Image
 
 - [ComfyUI-TextureAlchemy](https://github.com/amtarr/ComfyUI-TextureAlchemy) (branch: `Sandbox`)
 - [ComfyUI-Inpaint-CropAndStitch](https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch)
-
-## Example Output
-
-| Input | Inpainted Output |
-|-------|-----------------|
-| ![](images/03-input.png) | ![](images/03-output.png) |
-
-## Sample Input
-
-A sample input image is provided in the `input/` folder.
-
-## How to Use
-
-1. Load `03-targeted-inpainting.json` into ComfyUI
-2. In the **Load Image** node, right-click the image thumbnail → **Open in MaskEditor**
-3. Paint over the area you want to change (white = edit, black = keep)
-4. Click **Save** to apply the mask
-5. Set your prompt in the text node (e.g. "Clear this area. Seamlessly fill with the environment.")
-6. Click **Queue Prompt**
-
-> **Why does the result look the same?** If no mask is painted, the model has no target area and outputs the original unchanged. Make sure to paint a mask before queuing.
-
-## Understanding the Outputs
-
-The workflow shows two outputs:
-- **Preview** — the final result with the inpainted patch stitched back into the original
-- **Image Compare** — side-by-side view of the original and the inpainted result
 
 ## Troubleshooting
 

@@ -23,6 +23,23 @@ A single image may capture the right mood, but not the angle or viewpoint you ne
 ```
 Input -> SHARP -> Gaussian Splat -> 3D Output
 ```
+## How to Use
+
+1. Open `04-image-to-gaussian-splat` from the ComfyUI Template Browswer or Workflow Browser
+2. Connect your input image and click **Run**
+   
+## Sample Input
+
+A sample input image is provided in the `input/` folder.
+
+
+## Example Output
+
+| Input Image | Gaussian Splat |
+|-------------|---------------|
+| ![](images/04-input.png) | ![](images/04-output.png) |
+
+
 
 ## ComfyUI Canvas
 
@@ -32,8 +49,8 @@ Input -> SHARP -> Gaussian Splat -> 3D Output
 
 | Requirement | Value |
 |-------------|-------|
-| **VRAM (Minimum)** | 12 GB |
-| **VRAM (Recommended)** | 12 GB |
+| **VRAM Min. Rec. Windows** | 12 GB |
+| **VRAM Min. Rec. Linux** | 12 GB |
 | **Custom Nodes** | 2 packages |
 | **Models** | Bundled with ComfyUI-Sharp |
 | **Disk Space** | ~3 GB |
@@ -46,21 +63,6 @@ The SHARP model (`sharp_2572gikvuh.pt`, ~2.81 GB) downloads automatically when t
 
 - [ComfyUI-Sharp](https://github.com/PozzettiAndrea/ComfyUI-Sharp)
 - [ComfyUI-GeometryPack](https://github.com/PozzettiAndrea/ComfyUI-GeometryPack)
-
-## Example Output
-
-| Input Image | Gaussian Splat |
-|-------------|---------------|
-| ![](images/04-input.png) | ![](images/04-output.png) |
-
-## Sample Input
-
-A sample input image is provided in the `input/` folder.
-
-## How to Use
-
-1. Load `04-image-to-gaussian-splat.json` into ComfyUI
-2. Connect your input image and click **Queue Prompt**
 
 ## Troubleshooting
 

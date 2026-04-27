@@ -23,6 +23,21 @@ Creating extended, seamless panoramas from a single image is challenging and oft
 ```
 Input Image -> Pad for Outpainting -> LoRA -> Diffusion Model -> Inpainting -> Seamless Output
 ```
+## How to Use
+
+1. Open `06-image-to-equirectangular` from the ComfyUI Template Browswer or Workflow Browser
+2. Connect your input image and click **Run**
+
+## Sample Input
+
+A sample input image is provided in the `input/` folder.
+
+## Example Output
+
+| Input Image | Equirectangular Panorama |
+|-------------|--------------------------|
+| ![](images/06-input.png) | ![](images/06-output.png) |
+
 
 ## ComfyUI Canvas
 
@@ -32,8 +47,8 @@ Input Image -> Pad for Outpainting -> LoRA -> Diffusion Model -> Inpainting -> S
 
 | Requirement | Value |
 |-------------|-------|
-| **VRAM (Minimum)** | 16 GB |
-| **VRAM (Recommended)** | 24 GB |
+| **VRAM Min. Rec. Windows** | 24 GB |
+| **VRAM Min. Rec. Linux** | 32 GB |
 | **Custom Nodes** | 5 packages |
 | **Models** | 5 files + 1 gated LoRA |
 | **Disk Space** | ~61 GB |
@@ -56,21 +71,6 @@ Input Image -> Pad for Outpainting -> LoRA -> Diffusion Model -> Inpainting -> S
 - [ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use)
 - [ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes)
 - [ComfyUI-Inpaint-CropAndStitch](https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch)
-
-## Example Output
-
-| Input Image | Equirectangular Panorama |
-|-------------|--------------------------|
-| ![](images/06-input.png) | ![](images/06-output.png) |
-
-## Sample Input
-
-A sample input image is provided in the `input/` folder.
-
-## How to Use
-
-1. Load `06-image-to-equirectangular.json` into ComfyUI
-2. Connect your input image and click **Queue Prompt**
 
 ## Troubleshooting
 

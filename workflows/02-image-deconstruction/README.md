@@ -23,6 +23,18 @@ Extracting individual elements from an image is slow and tedious. Traditional me
 ```
 Image -> Qwen Image Layered -> Multiple Deconstructed Layers
 ```
+## How to Use
+
+1. Open `02-image-deconstruction` from the ComfyUI Template Browswer or Workflow Browser
+2. Click **Run**
+
+## Example Output
+
+| Input | Foreground | Background |
+|-------|-----------|------------|
+| ![](images/02-LayeredImage.png) | ![](images/02-Foreground_00001_.png) | ![](images/02-Background_00001_.png) |
+
+A sample input image is provided in the `input/` folder.
 
 ## ComfyUI Canvas
 
@@ -32,8 +44,8 @@ Image -> Qwen Image Layered -> Multiple Deconstructed Layers
 
 | Requirement | Value |
 |-------------|-------|
-| **VRAM (Minimum)** | 16 GB |
-| **VRAM (Recommended)** | 24 GB |
+| **VRAM Min. Rec. Windows** | 24 GB |
+| **VRAM Min. Rec. Linux** | 32 GB |
 | **Custom Nodes** | 2 packages |
 | **Models** | 4 files |
 | **Disk Space** | ~51 GB |
@@ -51,20 +63,6 @@ Image -> Qwen Image Layered -> Multiple Deconstructed Layers
 
 - [ComfyUI-TextureAlchemy](https://github.com/amtarr/ComfyUI-TextureAlchemy) (Sandbox branch)
 - [ComfyUI-WJNodes](https://github.com/807502278/ComfyUI-WJNodes)
-
-## Example Output
-
-| Input | Foreground | Background |
-|-------|-----------|------------|
-| ![](images/02-LayeredImage.png) | ![](images/02-Foreground_00001_.png) | ![](images/02-Background_00001_.png) |
-
-A sample input image is provided in the `input/` folder.
-
-## How to Use
-
-1. Load `02-image-deconstruction.json` into ComfyUI
-2. If ComfyUI Manager shows a **"Missing Node Packs"** dialog, close it and restart ComfyUI — the nodes are already installed but haven't been loaded yet.
-3. Connect your input image and click **Queue Prompt**
 
 ## Troubleshooting
 

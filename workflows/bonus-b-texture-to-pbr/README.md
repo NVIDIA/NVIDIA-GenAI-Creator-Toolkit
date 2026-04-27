@@ -10,13 +10,7 @@ This workflow turns a single texture into a full PBR material set. Use Lotus to 
 
 ## The Problem It Solves
 
-The leading tool for PBR extraction today is Adobe Substance Sampler, but it lacks key outputs like Metallic maps. This workflow offers a generative alternative — a complete set of PBR textures from a single image, with no specialized hardware or manual capture required.
-
-## How It Works
-
-```
-Input Texture -> Lotus Depth -> Lotus Height -> Marigold Appearance -> Marigold Lighting -> PBR Outputs
-```
+This workflow offers a complete set of PBR textures from a single image, with no specialized hardware or manual capture required.
 
 ## ComfyUI Canvas
 
@@ -28,12 +22,30 @@ Input Texture -> Lotus Depth -> Lotus Height -> Marigold Appearance -> Marigold 
 - **Full PBR Extraction:** Roughness, Metallic, Albedo, and lighting passes via Marigold.
 - **Quality Optimization:** Padding, cropping, and adjustment strategies for correct gradient fidelity.
 
+## How It Works
+
+```
+Input Texture -> Lotus Depth -> Lotus Height -> Marigold Appearance -> Marigold Lighting -> PBR Outputs
+```
+
+## How to Use
+
+1. Open `bonus-b-texture-to-pbr` from the ComfyUI Template Browswer or Workflow Browser
+2. Connect your input texture and click **Run**
+
+
+
+## Sample Input
+
+A sample input image is provided in the `input/` folder. You can also use output from [Bonus A — Texture Extraction](../bonus-a-texture-extraction/).
+
+
 ## Requirements
 
 | Requirement | Value |
 |-------------|-------|
-| **VRAM (Minimum)** | 16 GB |
-| **VRAM (Recommended)** | 24 GB |
+| **VRAM Min. Rec. Windows** | 24 GB |
+| **VRAM Min. Rec. Linux** | 32 GB |
 | **Custom Nodes** | 4 packages |
 | **Models** | 4 files + Marigold (auto-downloaded) |
 | **Disk Space** | ~10 GB |
@@ -55,15 +67,6 @@ Input Texture -> Lotus Depth -> Lotus Height -> Marigold Appearance -> Marigold 
 - [ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use)
 - [ComfyUI-Lotus](https://github.com/kijai/ComfyUI-Lotus)
 - [ComfyUI-Marigold](https://github.com/kijai/ComfyUI-Marigold)
-
-## Sample Input
-
-A sample input image is provided in the `input/` folder. You can also use output from [Bonus A — Texture Extraction](../bonus-a-texture-extraction/).
-
-## How to Use
-
-1. Load `bonus-b-texture-to-pbr.json` into ComfyUI
-2. Connect your input texture and click **Queue Prompt**
 
 ## Troubleshooting
 

@@ -23,6 +23,24 @@ Standard diffusion models struggle with coherent scene structure. Gaussian splat
 ```
 Input Image -> LoRA -> Diffusion Process -> Output
 ```
+## How to Use
+
+1. Complete [Module 04](../04-image-to-gaussian-splat/) first to generate your Gaussian Splat output
+2. Open `05-novel-view-synthesis` from the ComfyUI Template Browswer or Workflow Browser
+3. Connect your splat output and click **Run**
+   
+## Sample Input
+
+Sample input images are provided in the `input/` folder.
+
+## Example Output
+
+| Input Splat | Filled Output |
+|-------------|---------------|
+| ![](images/05-input.png) | ![](images/05-output.png) |
+
+
+
 
 ## ComfyUI Canvas
 
@@ -32,8 +50,8 @@ Input Image -> LoRA -> Diffusion Process -> Output
 
 | Requirement | Value |
 |-------------|-------|
-| **VRAM (Minimum)** | 16 GB |
-| **VRAM (Recommended)** | 24 GB |
+| **VRAM Min. Rec. Windows** | 24 GB |
+| **VRAM Min. Rec. Linux** | 32 GB |
 | **Custom Nodes** | 1 package |
 | **Models** | 5 files |
 | **Disk Space** | ~60 GB |
@@ -51,23 +69,7 @@ Input Image -> LoRA -> Diffusion Process -> Output
 ## Required Custom Nodes
 
 - [ComfyUI-Sharp](https://github.com/PozzettiAndrea/ComfyUI-Sharp)
-
-## Example Output
-
-| Input Splat | Filled Output |
-|-------------|---------------|
-| ![](images/05-input.png) | ![](images/05-output.png) |
-
-## Sample Input
-
-Sample input images are provided in the `input/` folder.
-
-## How to Use
-
-1. Complete [Module 04](../04-image-to-gaussian-splat/) first to generate your Gaussian Splat output
-2. Load `05-novel-view-synthesis.json` into ComfyUI
-3. Connect your splat output and click **Queue Prompt**
-
+  
 ## Troubleshooting
 
 ### Safetensors or LoRA dropdown is empty

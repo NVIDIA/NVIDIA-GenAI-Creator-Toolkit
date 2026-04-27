@@ -24,6 +24,17 @@ Whether you are recreating a material from a 2D reference, generating supporting
 Image -> VLM -> Segmentation/Masking -> LoRA -> Diffusion Model -> Output Texture
 ```
 
+## How to Use
+
+1. Open `bonus-a-texture-extraction.json` from the ComfyUI Template Browswer or Workflow Browser
+2. Connect your input image and click **Run**
+3. The output texture can be used directly in [Bonus B — Texture to PBR](../bonus-b-texture-to-pbr/)
+
+
+## Sample Input
+
+A sample input image is provided in the `input/` folder.
+
 ## ComfyUI Canvas
 
 ![Bonus A node graph](../../docs/comfyui_workflow_bonus-a.png)
@@ -32,8 +43,8 @@ Image -> VLM -> Segmentation/Masking -> LoRA -> Diffusion Model -> Output Textur
 
 | Requirement | Value |
 |-------------|-------|
-| **VRAM (Minimum)** | 16 GB |
-| **VRAM (Recommended)** | 24 GB |
+| **VRAM Min. Rec. Windows** | 24 GB |
+| **VRAM Min. Rec. Linux** | 32 GB |
 | **Custom Nodes** | 4 packages |
 | **Models** | 5 files |
 | **Disk Space** | ~60 GB |
@@ -54,16 +65,6 @@ Image -> VLM -> Segmentation/Masking -> LoRA -> Diffusion Model -> Output Textur
 - [ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use)
 - [ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes)
 - [ComfyUI-Inpaint-CropAndStitch](https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch)
-
-## Sample Input
-
-A sample input image is provided in the `input/` folder.
-
-## How to Use
-
-1. Load `bonus-a-texture-extraction.json` into ComfyUI
-2. Connect your input image and click **Queue Prompt**
-3. The output texture can be used directly in [Bonus B — Texture to PBR](../bonus-b-texture-to-pbr/)
 
 ## Troubleshooting
 
