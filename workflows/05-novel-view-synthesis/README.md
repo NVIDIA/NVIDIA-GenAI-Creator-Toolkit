@@ -65,7 +65,7 @@ Sample input images are provided in the `input/` folder.
 ## Required Custom Nodes
 
 - [ComfyUI-Sharp](https://github.com/PozzettiAndrea/ComfyUI-Sharp)
-- 
+  
 ## Troubleshooting
 
 ### Safetensors or LoRA dropdown is empty
