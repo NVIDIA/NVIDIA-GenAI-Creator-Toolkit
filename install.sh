@@ -59,6 +59,27 @@ fi
 echo "ComfyUI path: $COMFYUI_DIR"
 echo ""
 
+# --- Early exit if every selected module is Linux-incompatible (currently only 08) ---
+if [ -n "$MODULES" ] && [ "${MODULES,,}" != "all" ] && [ "$CLEAN" != "1" ]; then
+  _all_incompatible=1
+  IFS=',' read -ra _compat_tokens <<< "$MODULES"
+  for _tok in "${_compat_tokens[@]}"; do
+    _tok="${_tok// /}"
+    if [ "$_tok" != "08" ]; then
+      _all_incompatible=0
+      break
+    fi
+  done
+  if [ "$_all_incompatible" = "1" ]; then
+    echo "  Module 08 (Image to 3D / Trellis2) is not available on Linux."
+    echo ""
+    echo "  Trellis2 requires pre-built CUDA extensions (cumesh, nvdiffrast)"
+    echo "  that are Windows-only. Nothing was installed."
+    echo ""
+    exit 0
+  fi
+fi
+
 # Detect venv/conda and use its pip/python, or fall back to system with a warning
 if [ -n "${VIRTUAL_ENV:-}" ]; then
   PIP="$VIRTUAL_ENV/bin/pip"
@@ -469,7 +490,7 @@ if [ -n "$MODULES" ]; then
   echo ""
   echo "  HuggingFace login is required for:"
   echo "    - Faster, rate-limit-free downloads"
-  echo "    - Gated models (Module 07 Flux.1-dev, Module 08 DINOv3)"
+  echo "    - Gated models (Module 07 Flux.1-dev)"
   echo ""
   HF_LOGGED_IN=0
   if $PYTHON -c "from huggingface_hub import get_token; exit(0 if get_token() else 1)" 2>/dev/null; then
@@ -493,7 +514,7 @@ if [ -n "$MODULES" ]; then
       fi
     else
       echo ""
-      echo "  Skipping login. Gated model downloads (Module 07, 08) will fail."
+      echo "  Skipping login. Gated model downloads (Module 07) will fail."
       echo "  To log in later: huggingface-cli login"
     fi
   fi
