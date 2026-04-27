@@ -29,8 +29,8 @@ Turn any basic render (flat shading, no textures, simple lighting) that contains
 
 | Requirement | Value |
 |-------------|-------|
-| **VRAM (Minimum)** | 16 GB |
-| **VRAM (Recommended)** | 24 GB |
+| **VRAM Min. Rec. Windows** | 32 GB |
+| **VRAM Min. Rec. Linux** | 48 GB |
 | **Custom Nodes** | 9 packages |
 | **Models** | 9 files |
 | **Disk Space** | ~143 GB |
