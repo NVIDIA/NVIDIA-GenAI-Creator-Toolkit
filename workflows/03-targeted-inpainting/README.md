@@ -59,7 +59,10 @@ The workflow shows two outputs:
 - **Image Compare** — side-by-side view of the original and the inpainted result
 
 ## ComfyUI Canvas
-
+### Masking 
+![comfyui_workflow_03_masking.png](../../docs/comfyui_workflow_03_masking.png)  
+Right click on image to get Mask Editor, draw a mask, then save.  
+### Inpainting with Mask
 ![Module 03 node graph](../../docs/comfyui_workflow_03.png)
 
 ## Requirements
