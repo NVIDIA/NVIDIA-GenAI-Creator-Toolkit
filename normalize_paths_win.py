@@ -13,7 +13,7 @@ import os
 import json
 
 # Known model subdirectory prefixes found in ComfyUI loader widget_values
-MODEL_PREFIXES = ["qwen/", "flux/", "lotus/", "models/sam3/"]
+MODEL_PREFIXES = ["qwen/", "flux/", "lotus/"]
 
 
 def normalize_file(path):

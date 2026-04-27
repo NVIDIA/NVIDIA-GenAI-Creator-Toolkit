@@ -36,7 +36,11 @@ User Instructions -> Prompt Enhancement Agent -> Text Encoding -> Image
 
 1. Open `01-llm-prompt-enhancer.json` from the ComfyUI Template Browswer or Workflow Browser
 2. Configure your prompt and click **Queue Prompt**
-   
+
+## ComfyUI Canvas
+
+![Module 01 node graph](../../docs/comfyui_workflow_01.png)
+
 ## Requirements
 
 | Requirement | Value |

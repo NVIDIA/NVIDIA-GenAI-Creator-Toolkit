@@ -24,6 +24,10 @@ Whether you are recreating a material from a 2D reference, generating supporting
 Image -> VLM -> Segmentation/Masking -> LoRA -> Diffusion Model -> Output Texture
 ```
 
+## ComfyUI Canvas
+
+![Bonus A node graph](../../docs/comfyui_workflow_bonus-a.png)
+
 ## Requirements
 
 | Requirement | Value |

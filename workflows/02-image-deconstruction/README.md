@@ -24,6 +24,10 @@ Extracting individual elements from an image is slow and tedious. Traditional me
 Image -> Qwen Image Layered -> Multiple Deconstructed Layers
 ```
 
+## ComfyUI Canvas
+
+![Module 02 node graph](../../docs/comfyui_workflow_02.png)
+
 ## Requirements
 
 | Requirement | Value |

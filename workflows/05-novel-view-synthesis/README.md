@@ -24,6 +24,10 @@ Standard diffusion models struggle with coherent scene structure. Gaussian splat
 Input Image -> LoRA -> Diffusion Process -> Output
 ```
 
+## ComfyUI Canvas
+
+![Module 05 node graph](../../docs/comfyui_workflow_05.png)
+
 ## Requirements
 
 | Requirement | Value |

@@ -18,6 +18,10 @@ The leading tool for PBR extraction today is Adobe Substance Sampler, but it lac
 Input Texture -> Lotus Depth -> Lotus Height -> Marigold Appearance -> Marigold Lighting -> PBR Outputs
 ```
 
+## ComfyUI Canvas
+
+![Bonus B node graph](../../docs/comfyui_workflow_bonus-b.png)
+
 ## Key Features
 
 - **G-Buffer Map Creation:** Smooth, consistent Depth and Height maps via Lotus.

@@ -24,6 +24,10 @@ A single image may capture the right mood, but not the angle or viewpoint you ne
 Input -> SHARP -> Gaussian Splat -> 3D Output
 ```
 
+## ComfyUI Canvas
+
+![Module 04 node graph](../../docs/comfyui_workflow_04.png)
+
 ## Requirements
 
 | Requirement | Value |

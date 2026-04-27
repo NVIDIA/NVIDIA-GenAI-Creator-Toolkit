@@ -30,6 +30,10 @@ When paired with Qwen Image Edit 2511, this workflow gives precise control over 
 Input Image -> Mask -> Model Conditioning -> Diffusion -> Output Image
 ```
 
+## ComfyUI Canvas
+
+![Module 03 node graph](../../docs/comfyui_workflow_03.png)
+
 ## Requirements
 
 | Requirement | Value |

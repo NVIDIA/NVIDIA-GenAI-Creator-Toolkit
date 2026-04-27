@@ -25,6 +25,10 @@ Turn any basic render (flat shading, no textures, simple lighting) that contains
 3D Render -> Depth Pass + Canny Pass -> Style Image -> Wan Vid2Vid -> Stylized Video Output
 ```
 
+## ComfyUI Canvas
+
+![Module 10 node graph](../../docs/comfyui_workflow_10.png)
+
 ## Requirements
 
 | Requirement | Value |

@@ -27,6 +27,14 @@ This module includes two workflow files:
 1. **`09-image-cut-out-time-to-move-videoprep.json`** — Run this first. Prepares your input images and mask.
 2. **`09-image-cut-out-time-to-move.json`** — The main video generation workflow.
 
+## ComfyUI Canvas
+
+**VideoPrep workflow:**
+![Module 09 VideoPrep node graph](../../docs/comfyui_workflow_09_videoprep.png)
+
+**Main workflow:**
+![Module 09 node graph](../../docs/comfyui_workflow_09.png)
+
 ## Requirements
 
 | Requirement | Value |

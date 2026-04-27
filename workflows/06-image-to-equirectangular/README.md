@@ -24,6 +24,10 @@ Creating extended, seamless panoramas from a single image is challenging and oft
 Input Image -> Pad for Outpainting -> LoRA -> Diffusion Model -> Inpainting -> Seamless Output
 ```
 
+## ComfyUI Canvas
+
+![Module 06 node graph](../../docs/comfyui_workflow_06.png)
+
 ## Requirements
 
 | Requirement | Value |

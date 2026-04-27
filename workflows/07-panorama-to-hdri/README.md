@@ -24,6 +24,10 @@ Creating a real HDRI traditionally requires specialized equipment — a mirror b
 Panoramic Image -> Four LoRAs -> Four Exposure Passes -> Luminance Stack -> HDRI (IBL)
 ```
 
+## ComfyUI Canvas
+
+![Module 07 node graph](../../docs/comfyui_workflow_07.png)
+
 ## Requirements
 
 | Requirement | Value |

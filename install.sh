@@ -392,6 +392,9 @@ for workflow_dir in "$(dirname "$0")/workflows"/*/; do
   if [ -z "$MODULES" ] || module_selected "$module_num"; then
     if [ -f "${workflow_dir}${module_name}.json" ]; then
       cp "${workflow_dir}${module_name}.json" "$TEMPLATE_NODE_DIR/example_workflows/${module_name}.json"
+      if [ -f "${workflow_dir}${module_name}-videoprep.json" ]; then
+        cp "${workflow_dir}${module_name}-videoprep.json" "$TEMPLATE_NODE_DIR/example_workflows/${module_name}-videoprep.json"
+      fi
       if [ -f "${workflow_dir}images/preview.png" ]; then
         cp "${workflow_dir}images/preview.png" "$TEMPLATE_NODE_DIR/example_workflows/${module_name}.jpg"
       elif [ -f "${workflow_dir}images/preview.gif" ]; then

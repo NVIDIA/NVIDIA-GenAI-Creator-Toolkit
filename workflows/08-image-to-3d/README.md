@@ -22,6 +22,10 @@ This workflow converts image references into usable 3D assets with PBR materials
 Image -> Trellis2 -> 3D Model with PBR Materials
 ```
 
+## ComfyUI Canvas
+
+![Module 08 node graph](../../docs/comfyui_workflow_08.png)
+
 ## Requirements
 
 | Requirement | Value |
