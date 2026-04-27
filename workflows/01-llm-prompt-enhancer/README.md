@@ -34,8 +34,8 @@ User Instructions -> Prompt Enhancement Agent -> Text Encoding -> Image
 ```
 ## How to Use
 
-1. Open `01-llm-prompt-enhancer.json` from the ComfyUI Template Browswer or Workflow Browser
-2. Configure your prompt and click **Queue Prompt**
+1. Open `01-llm-prompt-enhancer` from the ComfyUI Template Browswer or Workflow Browser
+2. Configure your prompt and click **Run**
    
 ## Requirements
 
