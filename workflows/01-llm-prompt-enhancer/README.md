@@ -39,7 +39,8 @@ User Instructions -> Prompt Enhancement Agent -> Text Encoding -> Image
 
 ## ComfyUI Canvas
 
-![Module 01 node graph](../../docs/comfyui_workflow_01.png)
+![Module 01 node graph](../../docs/comfyui_workflow_01.png)  
+Green box indicates text prompt.
 
 ## Requirements
 
