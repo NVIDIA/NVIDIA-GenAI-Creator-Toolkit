@@ -46,7 +46,7 @@ Press **Ctrl+A, D** to detach from the screen session — ComfyUI stays running 
 
 **Accessing the UI from a remote Windows machine (SSH tunnel):**
 
-Open a new Command Prompt on your Windows machine and run:
+Open a new PowerShell window on your Windows machine and run:
 
 ```powershell
 & "C:\Program Files\Git\usr\bin\ssh.exe" -L 8188:localhost:8188 username@<linux-ip>
