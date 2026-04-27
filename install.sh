@@ -541,20 +541,20 @@ echo "    bash install.sh $COMFYUI_DIR --modules 03"
 echo "  (already-installed nodes are skipped automatically)"
 echo ""
 
-# --- Offer to launch ComfyUI ---
-read -r -n 1 -p "  Launch ComfyUI now? [Y/N]:" LAUNCH < /dev/tty; echo
-if [[ "${LAUNCH,,}" == "y" ]]; then
-  if [ -f "$COMFYUI_DIR/venv/bin/activate" ]; then
-    echo ""
-    echo "  Launching ComfyUI (venv)..."
-    cd "$COMFYUI_DIR" && source venv/bin/activate && python main.py
-  else
-    echo ""
-    echo "  Could not detect launch method. Start ComfyUI manually:"
-    echo "    source venv/bin/activate && python main.py"
-  fi
-else
-  echo ""
-  echo "  To launch ComfyUI later:"
-  echo "    source venv/bin/activate && python main.py"
-fi
+# --- Restart instructions ---
+echo "  ----------------------------------------------------------------"
+echo "  ComfyUI must be restarted to load the newly installed nodes."
+echo ""
+echo "  If ComfyUI is already running in a screen session:"
+echo "    screen -r comfyui          # reattach"
+echo "    Ctrl+C                     # stop ComfyUI"
+echo "    python3 $COMFYUI_DIR/main.py --listen   # restart"
+echo "    Ctrl+A, D                  # detach"
+echo ""
+echo "  If ComfyUI is not running yet:"
+echo "    screen -S comfyui"
+echo "    source $COMFYUI_DIR/venv/bin/activate"
+echo "    python3 $COMFYUI_DIR/main.py --listen"
+echo "    Ctrl+A, D                  # detach"
+echo "  ----------------------------------------------------------------"
+echo ""
