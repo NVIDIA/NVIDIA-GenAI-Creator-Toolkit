@@ -28,8 +28,8 @@ Input Texture -> Lotus Depth -> Lotus Height -> Marigold Appearance -> Marigold 
 
 | Requirement | Value |
 |-------------|-------|
-| **VRAM (Minimum)** | 16 GB |
-| **VRAM (Recommended)** | 24 GB |
+| **VRAM Min. Rec. Windows** | 24 GB |
+| **VRAM Min. Rec. Linux** | 32 GB |
 | **Custom Nodes** | 4 packages |
 | **Models** | 4 files + Marigold (auto-downloaded) |
 | **Disk Space** | ~10 GB |
