@@ -37,7 +37,8 @@ Sample render frames and video passes are provided in the `input/` folder.
 
 ## ComfyUI Canvas
 
-![Module 10 node graph](../../docs/comfyui_workflow_10.png)
+![Module 10 node graph](../../docs/comfyui_workflow_10.png)  
+Green box indicates a prompt box.
 
 ## Requirements
 
