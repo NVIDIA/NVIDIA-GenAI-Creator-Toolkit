@@ -10,7 +10,7 @@ This workflow turns a single texture into a full PBR material set. Use Lotus to 
 
 ## The Problem It Solves
 
-The leading tool for PBR extraction today is Adobe Substance Sampler, but it lacks key outputs like Metallic maps. This workflow offers a generative alternative — a complete set of PBR textures from a single image, with no specialized hardware or manual capture required.
+This workflow offers a complete set of PBR textures from a single image, with no specialized hardware or manual capture required.
 
 ## Key Features
 
