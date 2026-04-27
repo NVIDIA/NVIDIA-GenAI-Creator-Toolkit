@@ -82,4 +82,10 @@ Open `http://localhost:8188` in your browser.
 
 ---
 
-You can now return to your SSH window and continue with the workflow installer in the main README.
+You can now return to your SSH window. Before continuing with the workflow installer, make sure you are in your home directory:
+
+```bash
+cd ~
+```
+
+Then follow the installer instructions in the main README.
