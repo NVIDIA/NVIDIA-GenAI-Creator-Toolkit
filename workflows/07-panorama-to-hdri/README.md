@@ -4,6 +4,10 @@
 # 07 — Panorama to HDRI
 ![](images/preview.png)
 
+## Required Gated Models  
+
+Module 7 contains a gated model. Flux.1-dev requires a HuggingFace login and acceptance of the [Black Forest Labs license](https://huggingface.co/black-forest-labs/FLUX.1-dev) for commercial use because The Flux VAE (`ae.safetensors`) is gated. The install script will prompt and wait for you to accept their terms. Run `huggingface-cli login` and accept the Black Forest Labs license.
+
 ## Overview
 
 This workflow converts a panoramic equirectangular image into a true HDRI for lighting in 3D engines, VFX, and PBR workflows. We generate multiple exposure stops using a curated library of LoRAs, then combine them using a custom luminance-stacking node system to produce an HDR environment map ready for use as an IBL in Unreal, Cycles, V-Ray, Arnold, and more.
@@ -70,8 +74,6 @@ Run [Module 06](../06-equirectangular-outpainting/) first to generate a panorama
 | `evplus2.safetensors` | LoRA | 328 MB |
 | `evplus4.safetensors` | LoRA | 328 MB |
 
-> **Note:** Flux.1-dev requires a HuggingFace login and acceptance of the [Black Forest Labs license](https://huggingface.co/black-forest-labs/FLUX.1-dev) for commercial use.
-
 ## Required Custom Nodes
 
 - [ComfyUI-TextureAlchemy](https://github.com/amtarr/ComfyUI-TextureAlchemy) (Sandbox branch)
@@ -83,7 +85,7 @@ Run [Module 06](../06-equirectangular-outpainting/) first to generate a panorama
 ## Troubleshooting
 
 ### Flux VAE download fails with 401/403
-The Flux VAE (`ae.safetensors`) is gated. Run `huggingface-cli login` and accept the Black Forest Labs license at https://huggingface.co/black-forest-labs/FLUX.1-dev before re-running the installer.
+The Flux VAE (`ae.safetensors`) is gated. Run `huggingface-cli login` and accept the Black Forest Labs license at https://huggingface.co/black-forest-labs/FLUX.1-dev before or while running the installer.
 
 ### ComfyUI-Marigold import error / numpy
 The installer patches Marigold for numpy 2.0 compatibility automatically. If you installed Marigold manually via Manager, apply the patch: in `ComfyUI-Marigold/nodes.py`, replace `.tostring()` with `.tobytes()`.
