@@ -248,11 +248,29 @@ if [ "$CLEAN" = "1" ]; then
   fi
   echo ""
   echo "================================================================"
-  echo " Removing model files for modules: $MODULES"
+  echo " Removing model files, workflows, and templates for: $MODULES"
   echo "================================================================"
   echo ""
   SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
   $PYTHON "$SCRIPT_DIR/download_models.py" --comfyui "$COMFYUI_DIR" --modules "$MODULES" --clean
+
+  # Remove workflow files and template browser entries for each cleaned module
+  WORKFLOWS_DEST="$COMFYUI_DIR/user/default/workflows/NVIDIA-GenAI-Creator-Toolkit"
+  TEMPLATE_NODE_DIR="$NODES_DIR/NVIDIA-GenAI-Creator-Toolkit"
+  for workflow_dir in "$SCRIPT_DIR/workflows"/*/; do
+    module_name="$(basename "$workflow_dir")"
+    module_num=$(echo "$module_name" | sed 's/^\(bonus-[ab]\|[0-9][0-9]\)-.*/\1/')
+    if module_selected "$module_num"; then
+      # Workflows tab
+      rm -rf "$WORKFLOWS_DEST/$module_name"
+      echo "  Removed workflow: $module_name"
+      # Template browser
+      rm -f "$TEMPLATE_NODE_DIR/example_workflows/$module_name.json"
+      rm -f "$TEMPLATE_NODE_DIR/example_workflows/$module_name.jpg"
+      rm -f "$TEMPLATE_NODE_DIR/example_workflows/$module_name-videoprep.json"
+      rm -f "$TEMPLATE_NODE_DIR/example_workflows/$module_name-videoprep.jpg"
+    fi
+  done
   exit 0
 fi
 

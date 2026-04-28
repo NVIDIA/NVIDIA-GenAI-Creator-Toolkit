@@ -376,10 +376,33 @@ if !CLEAN!==1 (
     )
     echo.
     echo ================================================================
-    echo  Removing model files for modules: !MODULES!
+    echo  Removing model files, workflows, and templates for: !MODULES!
     echo ================================================================
     echo.
     "!PYTHON!" "%~dp0download_models.py" --comfyui "!MODELS_ROOT!" --modules !MODULES! --clean
+
+    REM Remove workflow files and template browser entries for each cleaned module
+    set "WORKFLOWS_DEST=!INSTALL_LOCATION!\user\default\workflows\NVIDIA-GenAI-Creator-Toolkit"
+    set "TEMPLATE_NODE_DIR=!NODES_DIR!\NVIDIA-GenAI-Creator-Toolkit"
+    for /d %%D in ("%~dp0workflows\*") do (
+        set "_MNAME=%%~nxD"
+        set "MOD_NUM=!_MNAME:~0,2!"
+        if "!_MNAME:~0,7!"=="bonus-a" set "MOD_NUM=bonus-a"
+        if "!_MNAME:~0,7!"=="bonus-b" set "MOD_NUM=bonus-b"
+        set "MATCH=0"
+        echo ,!MODULES!, | findstr /i ",!MOD_NUM!," > nul 2>&1 && set "MATCH=1"
+        if /i "!MODULES!"=="all" set "MATCH=1"
+        if "!MATCH!"=="1" (
+            if exist "!WORKFLOWS_DEST!\!_MNAME!" (
+                rd /s /q "!WORKFLOWS_DEST!\!_MNAME!"
+                echo   Removed workflow: !_MNAME!
+            )
+            if exist "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!.json" del /q "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!.json"
+            if exist "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!.jpg"  del /q "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!.jpg"
+            if exist "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!-videoprep.json" del /q "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!-videoprep.json"
+            if exist "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!-videoprep.jpg"  del /q "!TEMPLATE_NODE_DIR!\example_workflows\!_MNAME!-videoprep.jpg"
+        )
+    )
     exit /b 0
 )
 

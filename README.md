@@ -155,7 +155,7 @@ install.bat C:\path\to\ComfyUI --clean --modules 04
 bash install.sh /path/to/ComfyUI --clean --modules 04
 ```
 
-> **What `--clean` removes:** Model files only — custom nodes are left in place. For modules that download a full model repository (e.g. Qwen), the entire model directory is removed. Models shared with other installed modules are automatically kept.
+> **What `--clean` removes:** Model files, workflow files, and template browser entries for the specified modules. Custom nodes are left in place. Models shared with other installed modules are automatically kept.
 >
 > **To restore:** Re-run the installer without `--clean` and already-present nodes are skipped while only the missing models are re-downloaded.
 ---
