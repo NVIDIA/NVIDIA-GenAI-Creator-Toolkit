@@ -6,6 +6,10 @@
 > **Windows only.** Trellis2's CUDA extensions are distributed as pre-built wheels tied to specific PyTorch versions. ABI incompatibilities with current PyTorch releases on Linux prevent the nodes from loading. Linux support depends on upstream wheel updates from the Trellis2 author.
 ![](images/08-output.gif)
 
+## Required Gated Models  
+
+Module 8 contains a gated model. DINOv3 is a gated model. Visit [huggingface.co/facebook/dinov3-vitl16-pretrain-lvd1689m](https://huggingface.co/facebook/dinov3-vitl16-pretrain-lvd1689m), log in, and click **Agree and access repository**. Meta approvals are typically granted within 24–48 hours. The install script will prompt and wait for you to accept their terms. 
+
 ## Overview
 
 This workflow converts image references into usable 3D assets with PBR materials using Trellis2. Generated assets work well as starting meshes, stand-ins for previs, or structural anchors for reframing — especially when combined with Module 04 (Image to Gaussian Splat).
@@ -73,8 +77,6 @@ Pre-download before running:
 ```bash
 python download_models.py --comfyui C:\path\to\ComfyUI --modules 08
 ```
-
-> **DINOv3 is a gated model.** Before running the installer, visit [huggingface.co/facebook/dinov3-vitl16-pretrain-lvd1689m](https://huggingface.co/facebook/dinov3-vitl16-pretrain-lvd1689m), log in, and click **Agree and access repository**. Meta approvals are typically granted within 24–48 hours. The installer will prompt you to confirm before attempting the download.
 
 ## Required Custom Nodes
 
