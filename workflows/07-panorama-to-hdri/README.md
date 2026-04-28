@@ -53,7 +53,7 @@ Run [Module 06](../06-equirectangular-outpainting/) first to generate a panorama
 | **VRAM Min. Rec. Windows** | 24 GB |
 | **VRAM Min. Rec. Linux** | 32 GB |
 | **Custom Nodes** | 4 packages |
-| **Models** | 5 files + 4 gated LoRAs |
+| **Models** | 9 files |
 | **Disk Space** | ~23 GB |
 
 ## Required Models
@@ -65,13 +65,11 @@ Run [Module 06](../06-equirectangular-outpainting/) first to generate a panorama
 | `t5xxl_fp16.safetensors` | Text Encoder | 9.12 GB |
 | `ae.safetensors` | VAE | ~340 MB |
 | `Flux1DevTurbo.safetensors` | LoRA | ~500 MB |
-| `evminus4.safetensors` | LoRA (DLI course asset) | 328 MB |
-| `evminus2.safetensors` | LoRA (DLI course asset) | 328 MB |
-| `evplus2.safetensors` | LoRA (DLI course asset) | 328 MB |
-| `evplus4.safetensors` | LoRA (DLI course asset) | 328 MB |
+| `evminus4.safetensors` | LoRA | 328 MB |
+| `evminus2.safetensors` | LoRA | 328 MB |
+| `evplus2.safetensors` | LoRA | 328 MB |
+| `evplus4.safetensors` | LoRA | 328 MB |
 
-> **Note:** The EV LoRAs are DLI course assets. Enroll in [NVIDIA DLI course DLIT81948](https://www.nvidia.com/en-us/on-demand/session/gtc26-dlit81948/) to access them.
->
 > **Note:** Flux.1-dev requires a HuggingFace login and acceptance of the [Black Forest Labs license](https://huggingface.co/black-forest-labs/FLUX.1-dev) for commercial use.
 
 ## Required Custom Nodes
