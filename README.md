@@ -102,7 +102,13 @@ bash install.sh /path/to/ComfyUI --modules 02,03
 
 > **VRAM — Windows / Linux.** On Windows, NVIDIA weight streaming offloads inactive model layers to system RAM. On Linux, the full model must fit in VRAM. See [LINUX_COMFYUI_INSTALLATION.md](LINUX_COMFYUI_INSTALLATION.md) for platform details.
 > **Disk** — Per-module figures assume that module installed alone. Many modules share large models (Qwen 41 GB base, encoders); installing all 12 together costs ~450 GB, not the sum of individual figures.
-> **Gated models** — Two modules require accepting a license agreement on HuggingFace before the installer can download them: **Module 07** (Flux.1-dev — [Black Forest Labs license](https://huggingface.co/black-forest-labs/FLUX.1-dev)) and **Module 08** (DINOv3 — [Meta license](https://huggingface.co/facebook/dinov3-vitl16-pretrain-lvd1689m), Windows only). The installer will prompt you with the URL if the agreement hasn't been accepted.
+
+---
+
+## Gated models  
+Two modules require accepting a license agreement on HuggingFace before the installer can download them. The installer will prompt you to confirm you've accepted their terms:  
+ - **Module 07** (Flux.1-dev — [Black Forest Labs license](https://huggingface.co/black-forest-labs/FLUX.1-dev))  
+ - **Module 08** (DINOv3 — [Meta license](https://huggingface.co/facebook/dinov3-vitl16-pretrain-lvd1689m), Windows only).
 ---
 
 ## How Each Module Is Organized
