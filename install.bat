@@ -288,10 +288,11 @@ REM comfyui-frontend-package is required by recent ComfyUI versions but missing 
 "!PYTHON!" -m pip install -q comfyui-frontend-package
 
 REM --- Common dependencies needed by multiple custom nodes ---
-REM opencv-python is required by: radiance, ComfyUI-VideoHelperSuite, ComfyUI-Impact-Pack,
-REM   ComfyUI-Easy-Use, ComfyUI-post-processing-nodes, comfy_nv_video_prep
+REM opencv-contrib-python is a superset of opencv-python and satisfies all node deps including
+REM   Luminance-Stack-Processor (module 07), radiance, VideoHelperSuite, Impact-Pack, Easy-Use,
+REM   post-processing-nodes, comfy_nv_video_prep. Using contrib avoids opencv conflict on re-runs.
 echo Installing common node dependencies ^(opencv, accelerate, ollama^)...
-"!PYTHON!" -m pip install -q opencv-python accelerate ollama
+"!PYTHON!" -m pip install -q opencv-contrib-python accelerate ollama
 
 REM --- Ensure PyTorch is CUDA-enabled ---
 nvidia-smi > nul 2>&1
@@ -488,9 +489,6 @@ set DO_INSTALL=0
 echo ,!MODULES!, | findstr /i ",07," > nul 2>&1 && set DO_INSTALL=1
 if /i "!MODULES!"=="all" set DO_INSTALL=1
 if !DO_INSTALL!==1 (
-    REM Luminance-Stack-Processor requires opencv-contrib-python which conflicts with opencv-python
-    "!PYTHON!" -m pip uninstall -q -y opencv-python > nul 2>&1
-    "!PYTHON!" -m pip install -q opencv-contrib-python
     call :install_node "Luminance-Stack-Processor" "https://github.com/sumitchatterjee13/Luminance-Stack-Processor" ""
     call :install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold" ""
     echo Patching ComfyUI-Marigold for numpy 2.0 compatibility...
@@ -560,7 +558,7 @@ if !DO_INSTALL!==1 (
 
     REM Install Trellis2 Python dependencies (meshlib etc. may not install via requirements.txt on all setups)
     echo           Installing Trellis2 Python dependencies...
-    "!PYTHON!" -m pip install -q meshlib requests pymeshlab opencv-python scipy plotly rembg
+    "!PYTHON!" -m pip install -q meshlib requests pymeshlab opencv-contrib-python scipy plotly rembg
 
     REM open3d has no PyPI wheel for newer Python versions — try prerelease then skip gracefully
     echo           Installing open3d...
