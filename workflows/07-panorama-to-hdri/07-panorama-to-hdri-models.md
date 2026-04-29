@@ -38,19 +38,19 @@ Run from the parent directory of your ComfyUI install (the folder containing `Co
 
 ```bash
 # Flux Dev Kontext FP8 diffusion model
-huggingface-cli download Comfy-Org/flux1-kontext-dev_ComfyUI \
+hf download Comfy-Org/flux1-kontext-dev_ComfyUI \
   split_files/diffusion_models/flux1-dev-kontext_fp8_scaled.safetensors \
   --local-dir ComfyUI/models/diffusion_models
 
 # Text encoders
-huggingface-cli download comfyanonymous/flux_text_encoders \
+hf download comfyanonymous/flux_text_encoders \
   ViT-L-14-TEXT-detail-improved-hiT-GmP-HF.safetensors \
   t5xxl_fp16.safetensors \
   --local-dir ComfyUI/models/text_encoders
 
-# Flux VAE (requires HuggingFace login — run: huggingface-cli login)
-huggingface-cli download black-forest-labs/FLUX.1-dev ae.safetensors \
+# Flux VAE (requires HuggingFace login — run: hf login)
+hf download black-forest-labs/FLUX.1-dev ae.safetensors \
   --local-dir ComfyUI/models/vae
 ```
 
-> The `huggingface-cli` download places files in a subdirectory matching the repo path. After downloading the diffusion model, move `flux1-dev-kontext_fp8_scaled.safetensors` out of `split_files/diffusion_models/` directly into `ComfyUI/models/diffusion_models/`.
+> The `hf download` command places files in a subdirectory matching the repo path. After downloading the diffusion model, move `flux1-dev-kontext_fp8_scaled.safetensors` out of `split_files/diffusion_models/` directly into `ComfyUI/models/diffusion_models/`.

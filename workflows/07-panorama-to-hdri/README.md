@@ -6,7 +6,7 @@
 
 ## Required Gated Models  
 
-Module 7 contains a gated model. Flux.1-dev requires a HuggingFace login and acceptance of the [Black Forest Labs license](https://huggingface.co/black-forest-labs/FLUX.1-dev) for commercial use because The Flux VAE (`ae.safetensors`) is gated. The install script will prompt and wait for you to accept their terms. Run `huggingface-cli login` and accept the Black Forest Labs license.
+Module 7 contains a gated model. Flux.1-dev requires a HuggingFace login and acceptance of the [Black Forest Labs license](https://huggingface.co/black-forest-labs/FLUX.1-dev) for commercial use because The Flux VAE (`ae.safetensors`) is gated. The install script will prompt and wait for you to accept their terms. Run `hf login` and accept the Black Forest Labs license.
 
 ## Overview
 
@@ -85,7 +85,7 @@ Run [Module 06](../06-equirectangular-outpainting/) first to generate a panorama
 ## Troubleshooting
 
 ### Flux VAE download fails with 401/403
-The Flux VAE (`ae.safetensors`) is gated. Run `huggingface-cli login` and accept the Black Forest Labs license at https://huggingface.co/black-forest-labs/FLUX.1-dev before or while running the installer.
+The Flux VAE (`ae.safetensors`) is gated. Run `hf login` and accept the Black Forest Labs license at https://huggingface.co/black-forest-labs/FLUX.1-dev before or while running the installer.
 
 ### ComfyUI-Marigold import error / numpy
 The installer patches Marigold for numpy 2.0 compatibility automatically. If you installed Marigold manually via Manager, apply the patch: in `ComfyUI-Marigold/nodes.py`, replace `.tostring()` with `.tobytes()`.

@@ -567,25 +567,32 @@ if [ -n "$MODULES" ]; then
     read -r -n 1 -p "  Log in to HuggingFace now? [Y/N]:" DO_HF_LOGIN < /dev/tty; echo
     if [[ "${DO_HF_LOGIN,,}" == "y" ]]; then
       echo ""
-      echo "  Running: huggingface-cli login"
+      echo "  Running: hf login"
       echo "  (You will be prompted to enter or paste your HuggingFace token.)"
       echo "  Get a token at: https://huggingface.co/settings/tokens"
       echo ""
-      HF_CLI_BIN="$(dirname "$PYTHON")/huggingface-cli"
-      if [ -x "$HF_CLI_BIN" ]; then
+      PYTHON_BIN_DIR="$(dirname "$PYTHON")"
+      if [ -x "$PYTHON_BIN_DIR/hf" ]; then
+        HF_CLI_BIN="$PYTHON_BIN_DIR/hf"
+      elif [ -x "$PYTHON_BIN_DIR/huggingface-cli" ]; then
+        HF_CLI_BIN="$PYTHON_BIN_DIR/huggingface-cli"
+      else
+        HF_CLI_BIN=""
+      fi
+      if [ -n "$HF_CLI_BIN" ]; then
         if ! "$HF_CLI_BIN" login < /dev/tty; then
           echo ""
           echo "  [WARN] HuggingFace login failed or was cancelled."
           echo "         Gated model downloads (Module 07) will fail without a valid token."
-          echo "         To log in later: huggingface-cli login"
+          echo "         To log in later: hf login"
         fi
       else
-        echo "  huggingface-cli not found. Run manually after install: huggingface-cli login"
+        $PYTHON -c "from huggingface_hub.commands.cli import main; import sys; sys.argv=['hf','login']; main()" < /dev/tty || true
       fi
     else
       echo ""
       echo "  Skipping login. Gated model downloads (Module 07) will fail."
-      echo "  To log in later: huggingface-cli login"
+      echo "  To log in later: hf login"
     fi
   fi
   echo ""

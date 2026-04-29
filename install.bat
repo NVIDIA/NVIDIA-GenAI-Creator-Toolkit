@@ -295,10 +295,10 @@ REM --- Common dependencies needed by multiple custom nodes ---
 REM opencv-contrib-python is a superset of opencv-python and satisfies all node deps including
 REM   Luminance-Stack-Processor (module 07), radiance, VideoHelperSuite, Impact-Pack, Easy-Use,
 REM   post-processing-nodes, comfy_nv_video_prep. Using contrib avoids opencv conflict on re-runs.
-REM huggingface_hub[cli] ensures huggingface-cli.exe is present for login and gated downloads
-REM regardless of whether the Desktop App source dir was detected.
-echo Installing common node dependencies ^(opencv, accelerate, ollama, huggingface-cli^)...
-"!PYTHON!" -m pip install -q opencv-contrib-python accelerate ollama "huggingface_hub[cli]"
+REM huggingface_hub ensures the CLI is available for login and gated downloads regardless
+REM of whether the Desktop App source dir was detected.
+echo Installing common node dependencies ^(opencv, accelerate, ollama, huggingface_hub^)...
+"!PYTHON!" -m pip install -q opencv-contrib-python accelerate ollama huggingface_hub
 
 REM --- Ensure PyTorch is CUDA-enabled ---
 nvidia-smi > nul 2>&1
@@ -871,20 +871,22 @@ if /i not "!MODULES!"=="" (
         choice /c YN /m "  Log in to HuggingFace now?"
         if not errorlevel 2 (
             echo.
-            echo  Running: huggingface-cli login
+            echo  Running: hf login
             echo  ^(You will be prompted to enter or paste your HuggingFace token.^)
             echo  Get a token at: https://huggingface.co/settings/tokens
             echo.
             for %%F in ("!PYTHON!") do set "PYTHON_DIR=%%~dpF"
-            if exist "!PYTHON_DIR!huggingface-cli.exe" (
+            if exist "!PYTHON_DIR!hf.exe" (
+                "!PYTHON_DIR!hf.exe" login
+            ) else if exist "!PYTHON_DIR!huggingface-cli.exe" (
                 "!PYTHON_DIR!huggingface-cli.exe" login
             ) else (
-                echo  huggingface-cli not found. Run manually after install: huggingface-cli login
+                "!PYTHON!" -c "from huggingface_hub.commands.cli import main; import sys; sys.argv=['hf','login']; main()"
             )
         ) else (
             echo.
             echo  Skipping login. Gated model downloads ^(Module 07, 08^) will fail.
-            echo  To log in later: huggingface-cli login
+            echo  To log in later: hf login
         )
     )
     echo.

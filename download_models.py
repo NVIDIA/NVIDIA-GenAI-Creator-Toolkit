@@ -424,7 +424,7 @@ def build_module_catalogue() -> dict:
             "DINOv3 is a gated model — requires a HuggingFace account with Meta's",
             "data agreement accepted at:",
             "  https://huggingface.co/facebook/dinov3-vitl16-pretrain-lvd1689m",
-            "Then log in before downloading: huggingface-cli login",
+            "Then log in before downloading: hf login",
         ],
     )
 
@@ -1209,7 +1209,7 @@ def main() -> None:
         print("HuggingFace: logged in (faster downloads enabled)")
     else:
         print("HuggingFace: not logged in — downloads may be slower or rate-limited.")
-        print("  To log in: huggingface-cli login")
+        print("  To log in: hf login")
         print()
 
     summary = {

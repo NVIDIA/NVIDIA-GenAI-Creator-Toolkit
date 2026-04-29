@@ -11,7 +11,7 @@ install.bat C:\path\to\ComfyUI
 **`git` is not recognized**
 Git is not installed or not in PATH. Install [Git for Windows](https://git-scm.com/downloads) and restart your terminal.
 
-**`huggingface-cli` is not found**
+**`hf` is not found** (previously `huggingface-cli`)
 Install it with your venv active: `pip install huggingface_hub`
 On ComfyUI Portable: `python_embeded\python.exe -m pip install huggingface_hub`
 

@@ -42,7 +42,7 @@ cd custom_nodes
 git clone https://github.com/ltdrdata/ComfyUI-Manager
 cd ..
 
-# Install huggingface-cli (needed for large model downloads)
+# Install hf CLI (needed for large model downloads)
 pip install huggingface_hub
 ```
 

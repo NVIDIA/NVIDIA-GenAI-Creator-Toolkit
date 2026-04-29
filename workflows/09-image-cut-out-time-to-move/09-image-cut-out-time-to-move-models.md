@@ -14,7 +14,7 @@ Platform: Windows x86_64 and Linux x86_64 only
 | Wan2.2 VAE | ~1 GB | `ComfyUI/models/video/wan` (bundled with Wan2.2) | bundled with Wan2.2 |
 
 ```bash
-huggingface-cli download Wan-AI/Wan2.2-I2V-14B-480P --local-dir ComfyUI/models/video/wan
+hf download Wan-AI/Wan2.2-I2V-14B-480P --local-dir ComfyUI/models/video/wan
 ```
 
 ## VideoPrep models (prerequisite)
