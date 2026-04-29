@@ -25,8 +25,17 @@ Input -> SHARP -> Gaussian Splat -> 3D Output
 ```
 ## How to Use
 
-1. Open `04-image-to-gaussian-splat` from the ComfyUI Template Browswer or Workflow Browser
+1. Open `04-image-to-gaussian-splat` from the ComfyUI Template Browser or Workflow Browser
 2. Connect your input image and click **Run**
+
+> **If ComfyUI shows a "Missing Node Packs" dialog for `GeomPackPreviewGaussian`:** re-run the installer, then restart ComfyUI.
+> ```bash
+> # Linux
+> bash install.sh /path/to/ComfyUI --modules 04
+> # Windows
+> install.bat C:\path\to\ComfyUI --modules 04
+> ```
+> Already-installed nodes are skipped; only the missing viewer dependencies are added.
    
 ## Sample Input
 
@@ -71,10 +80,17 @@ Both nodes are installed automatically by the installer. You do not need to inst
 ### SHARP model not found on first run
 ComfyUI-Sharp downloads SHARP automatically when the workflow runs for the first time. Ensure you have an internet connection. The model caches to the node's directory after download.
 
-### ComfyUI-GeometryPack fails to load / missing nodes at runtime
-ComfyUI-GeometryPack depends on native C++ packages (`trimesh`, `libigl`, `PyMeshLab`) that occasionally fail during pip install. If nodes show as missing after running the installer:
-1. Open ComfyUI Manager → **Install Missing Custom Nodes**
-2. Search for **ComfyUI-GeometryPack** and reinstall it from there
+### GeomPackPreviewGaussian shows as missing on first load
+The installer handles this automatically — re-running it is the fastest fix:
+```bash
+bash install.sh /path/to/ComfyUI --modules 04   # Linux
+install.bat C:\path\to\ComfyUI --modules 04     # Windows
+```
+Then restart ComfyUI. The node should load.
+
+If it still shows as missing after re-running:
+1. Open **ComfyUI Manager** → **Install Missing Custom Nodes**
+2. Search for **ComfyUI-GeometryPack** and reinstall
 3. Restart ComfyUI
 
 ### Gaussian Splat viewer not opening
