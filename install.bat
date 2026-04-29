@@ -875,7 +875,7 @@ if /i not "!MODULES!"=="" (
             echo  Get a token at: https://huggingface.co/settings/tokens
             echo  Tip: right-click to paste in cmd.exe
             echo.
-            "!PYTHON!" -c "from huggingface_hub import interpreter_login; interpreter_login(add_to_git_credential=False)"
+            "!PYTHON!" -c "from huggingface_hub import login; login(add_to_git_credential=False)"
             if errorlevel 1 (
                 echo.
                 echo  [WARN] HuggingFace login failed or was cancelled.

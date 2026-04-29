@@ -570,17 +570,17 @@ if [ -n "$MODULES" ]; then
       echo "  Enter your HuggingFace token when prompted (input will be hidden)."
       echo "  Get a token at: https://huggingface.co/settings/tokens"
       echo ""
-      if ! $PYTHON -c "from huggingface_hub import interpreter_login; interpreter_login(add_to_git_credential=False)" < /dev/tty; then
+      if ! $PYTHON -c "from huggingface_hub import login; login(add_to_git_credential=False)" < /dev/tty; then
         echo ""
         echo "  [WARN] HuggingFace login failed or was cancelled."
         echo "         Gated model downloads (Module 07) will fail without a valid token."
         echo "         To log in later, run from a terminal with the ComfyUI venv active:"
-        echo "           python -c \"from huggingface_hub import interpreter_login; interpreter_login(add_to_git_credential=False)\""
+        echo "           python -c \"from huggingface_hub import login; login(add_to_git_credential=False)\""
       fi
     else
       echo ""
       echo "  Skipping login. Gated model downloads (Module 07) will fail."
-      echo "  To log in later: python -c \"from huggingface_hub import interpreter_login; interpreter_login(add_to_git_credential=False)\""
+      echo "  To log in later: python -c \"from huggingface_hub import login; login(add_to_git_credential=False)\""
     fi
   fi
   echo ""
