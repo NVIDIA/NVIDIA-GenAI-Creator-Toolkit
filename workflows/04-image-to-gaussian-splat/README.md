@@ -61,6 +61,8 @@ The SHARP model (`sharp_2572gikvuh.pt`, ~2.81 GB) downloads automatically when t
 
 ## Required Custom Nodes
 
+Both nodes are installed automatically by the installer. You do not need to install them manually.
+
 - [ComfyUI-Sharp](https://github.com/PozzettiAndrea/ComfyUI-Sharp)
 - [ComfyUI-GeometryPack](https://github.com/PozzettiAndrea/ComfyUI-GeometryPack)
 
@@ -68,6 +70,12 @@ The SHARP model (`sharp_2572gikvuh.pt`, ~2.81 GB) downloads automatically when t
 
 ### SHARP model not found on first run
 ComfyUI-Sharp downloads SHARP automatically when the workflow runs for the first time. Ensure you have an internet connection. The model caches to the node's directory after download.
+
+### ComfyUI-GeometryPack fails to load / missing nodes at runtime
+ComfyUI-GeometryPack depends on native C++ packages (`trimesh`, `libigl`, `PyMeshLab`) that occasionally fail during pip install. If nodes show as missing after running the installer:
+1. Open ComfyUI Manager → **Install Missing Custom Nodes**
+2. Search for **ComfyUI-GeometryPack** and reinstall it from there
+3. Restart ComfyUI
 
 ### Gaussian Splat viewer not opening
 The 3D viewer requires WebGL. Use a Chromium-based browser (Chrome, Edge). Firefox may require enabling WebGL flags.

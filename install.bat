@@ -425,6 +425,8 @@ set DO_INSTALL=0
 echo ,!MODULES!, | findstr /i ",01," > nul 2>&1 && set DO_INSTALL=1
 if /i "!MODULES!"=="all" set DO_INSTALL=1
 if !DO_INSTALL!==1 (
+    REM comfyui-ollama requirements.txt lists 'dotenv' (wrong package name)
+    "!PYTHON!" -m pip install -q python-dotenv
     call :install_node "comfyui-ollama" "https://github.com/stavsap/comfyui-ollama" ""
 )
 
@@ -459,6 +461,16 @@ if /i "!MODULES!"=="all" set DO_INSTALL=1
 if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-Sharp" "https://github.com/PozzettiAndrea/ComfyUI-Sharp" ""
     call :install_node "ComfyUI-GeometryPack" "https://github.com/PozzettiAndrea/ComfyUI-GeometryPack" ""
+    REM GeometryPack's requirements.txt includes trimesh[easy] which pulls in C++ packages
+    REM (libigl, PyMeshLab, CGAL) that frequently fail silently. Install core viewer packages
+    REM explicitly, then try trimesh with extras and fall back to base if C++ build fails.
+    echo           Installing ComfyUI-GeometryPack viewer dependencies...
+    "!PYTHON!" -m pip install -q "comfy-env>=0.3.35" "comfy-3d-viewers==0.2.41"
+    "!PYTHON!" -m pip install -q "trimesh[easy]>=4.0.0" > nul 2>&1
+    if errorlevel 1 (
+        echo           [NOTE] trimesh C++ extras unavailable -- installing trimesh base.
+        "!PYTHON!" -m pip install -q "trimesh>=4.0.0"
+    )
 )
 
 REM --- Module 06: Image to Equirectangularing ---
@@ -476,10 +488,15 @@ set DO_INSTALL=0
 echo ,!MODULES!, | findstr /i ",07," > nul 2>&1 && set DO_INSTALL=1
 if /i "!MODULES!"=="all" set DO_INSTALL=1
 if !DO_INSTALL!==1 (
+    REM Luminance-Stack-Processor requires opencv-contrib-python which conflicts with opencv-python
+    "!PYTHON!" -m pip uninstall -q -y opencv-python > nul 2>&1
+    "!PYTHON!" -m pip install -q opencv-contrib-python
     call :install_node "Luminance-Stack-Processor" "https://github.com/sumitchatterjee13/Luminance-Stack-Processor" ""
     call :install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold" ""
     echo Patching ComfyUI-Marigold for numpy 2.0 compatibility...
-    powershell -Command "(Get-Content \"!NODES_DIR!\ComfyUI-Marigold\nodes.py\") -replace '\.tostring\(\)', '.tobytes()' | Set-Content \"!NODES_DIR!\ComfyUI-Marigold\nodes.py\""
+    if exist "!NODES_DIR!\ComfyUI-Marigold\nodes.py" (
+        powershell -Command "(Get-Content \"!NODES_DIR!\ComfyUI-Marigold\nodes.py\") -replace '\.tostring\(\)', '.tobytes()' | Set-Content \"!NODES_DIR!\ComfyUI-Marigold\nodes.py\""
+    )
     echo           Upgrading diffusers for huggingface_hub compatibility...
     "!PYTHON!" -m pip install -q --upgrade diffusers
 )
@@ -583,9 +600,21 @@ if !DO_INSTALL!==1 (
     call :install_node "ComfyUI_essentials" "https://github.com/cubiq/ComfyUI_essentials" ""
     call :install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch" ""
     call :install_node "comfyui-sam2" "https://github.com/neverbiasu/ComfyUI-SAM2" ""
+    REM Remove numpy<2 pin to prevent downgrading system numpy and breaking other nodes
+    if exist "!NODES_DIR!\comfyui-sam2\requirements.txt" (
+        "!PYTHON!" -c "import re; f=r'!NODES_DIR!\comfyui-sam2\requirements.txt'; t=open(f,encoding='utf-8').read(); t=re.sub(r'^numpy[<>=!][^\n]*\n','',t,flags=re.MULTILINE); open(f,'w',encoding='utf-8').write(t)" 2>nul
+        "!PYTHON!" -m pip install -q -r "!NODES_DIR!\comfyui-sam2\requirements.txt"
+    )
     call :install_node "ComfyUI-SAM3" "https://github.com/PozzettiAndrea/ComfyUI-SAM3" ""
+    REM Normalize comfy-env across Sharp/GeometryPack/SAM3 version pins
+    "!PYTHON!" -m pip install -q "comfy-env>=0.3.35"
     call :install_node "ComfyUI-VideoHelperSuite" "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite" ""
     call :install_node "ComfyUI-Impact-Pack" "https://github.com/ltdrdata/ComfyUI-Impact-Pack" ""
+    REM Replace git+ SAM2 URL with PyPI package to avoid CUDA compilation from source
+    if exist "!NODES_DIR!\ComfyUI-Impact-Pack\requirements.txt" (
+        "!PYTHON!" -c "import re; f=r'!NODES_DIR!\ComfyUI-Impact-Pack\requirements.txt'; t=open(f,encoding='utf-8').read(); t=re.sub(r'git\+https://github\.com/facebookresearch/sam2\S*','sam2',t); open(f,'w',encoding='utf-8').write(t)" 2>nul
+        "!PYTHON!" -m pip install -q -r "!NODES_DIR!\ComfyUI-Impact-Pack\requirements.txt"
+    )
     call :install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use" ""
     call :install_node "ComfyUI-WanVideoWrapper" "https://github.com/kijai/ComfyUI-WanVideoWrapper" ""
     call :install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes" ""
@@ -611,6 +640,11 @@ if !DO_INSTALL!==1 (
     call :install_node "radiance" "https://github.com/fxtdstudios/radiance" ""
     call :install_node "comfyui-rtx-simple" "https://github.com/BetaDoggo/comfyui-rtx-simple" ""
     call :install_node "ComfyUI-Impact-Pack" "https://github.com/ltdrdata/ComfyUI-Impact-Pack" ""
+    REM Replace git+ SAM2 URL with PyPI package to avoid CUDA compilation from source
+    if exist "!NODES_DIR!\ComfyUI-Impact-Pack\requirements.txt" (
+        "!PYTHON!" -c "import re; f=r'!NODES_DIR!\ComfyUI-Impact-Pack\requirements.txt'; t=open(f,encoding='utf-8').read(); t=re.sub(r'git\+https://github\.com/facebookresearch/sam2\S*','sam2',t); open(f,'w',encoding='utf-8').write(t)" 2>nul
+        "!PYTHON!" -m pip install -q -r "!NODES_DIR!\ComfyUI-Impact-Pack\requirements.txt"
+    )
     echo           Installing NVIDIA VFX SDK for RTX Super Resolution...
     "!PYTHON!" -m pip install -q nvidia-vfx --extra-index-url https://pypi.nvidia.com/ > "%TEMP%\comfyui_pip.tmp" 2>&1
     if errorlevel 1 (
@@ -638,7 +672,9 @@ if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus" ""
     call :install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold" ""
     echo Patching ComfyUI-Marigold for numpy 2.0 compatibility...
-    powershell -Command "(Get-Content \"!NODES_DIR!\ComfyUI-Marigold\nodes.py\") -replace '\.tostring\(\)', '.tobytes()' | Set-Content \"!NODES_DIR!\ComfyUI-Marigold\nodes.py\""
+    if exist "!NODES_DIR!\ComfyUI-Marigold\nodes.py" (
+        powershell -Command "(Get-Content \"!NODES_DIR!\ComfyUI-Marigold\nodes.py\") -replace '\.tostring\(\)', '.tobytes()' | Set-Content \"!NODES_DIR!\ComfyUI-Marigold\nodes.py\""
+    )
     echo           Upgrading diffusers for huggingface_hub compatibility...
     "!PYTHON!" -m pip install -q --upgrade diffusers
 )
@@ -956,7 +992,7 @@ if exist "%NODE_DIR%\requirements.txt" (
   "%PYTHON%" -m pip install -q --no-warn-script-location -r "%NODE_DIR%\requirements.txt" > "%TEMP%\comfyui_pip.tmp" 2>&1
   if errorlevel 1 (
     echo           [WARN] Some packages failed to install for !NODE_NAME!
-    echo                  This is usually OK - ComfyUI Manager resolves missing deps on first run.
+    echo                  Run ComfyUI Manager ^> Install Missing Custom Nodes if nodes fail to load.
     echo                  To see details: type %TEMP%\comfyui_pip.tmp
   )
 )

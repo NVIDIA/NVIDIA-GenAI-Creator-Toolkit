@@ -177,7 +177,7 @@ install_node() {
     pip_log=$(mktemp)
     if ! $PIP install -q --no-warn-script-location -r "$dir/requirements.txt" > "$pip_log" 2>&1; then
       echo "           [WARN] Some packages failed to install for $name"
-      echo "                  This is usually OK - ComfyUI Manager resolves missing deps on first run."
+      echo "                  Run ComfyUI Manager > Install Missing Custom Nodes if nodes fail to load."
       echo "                  To see details: cat $pip_log"
     fi
   fi
@@ -286,6 +286,7 @@ fi
 
 # --- Module 01: LLM Prompt Enhancer ---
 if module_selected "01"; then
+  $PIP install -q python-dotenv  # comfyui-ollama requirements.txt lists 'dotenv' (wrong package name)
   install_node "comfyui-ollama" "https://github.com/stavsap/comfyui-ollama"
 fi
 
@@ -305,6 +306,15 @@ fi
 if module_selected "04" || module_selected "05"; then
   install_node "ComfyUI-Sharp" "https://github.com/PozzettiAndrea/ComfyUI-Sharp"
   install_node "ComfyUI-GeometryPack" "https://github.com/PozzettiAndrea/ComfyUI-GeometryPack"
+  # GeometryPack's requirements.txt includes trimesh[easy] which pulls in C++ packages
+  # (libigl, PyMeshLab, CGAL) that frequently fail silently. Install core viewer packages
+  # explicitly, then try trimesh with extras and fall back to base if C++ build fails.
+  echo "          Installing ComfyUI-GeometryPack viewer dependencies..."
+  $PIP install -q "comfy-env>=0.3.35" "comfy-3d-viewers==0.2.41"
+  if ! $PIP install -q "trimesh[easy]>=4.0.0" 2>/dev/null; then
+    echo "          [NOTE] trimesh C++ extras unavailable — installing trimesh base."
+    $PIP install -q "trimesh>=4.0.0"
+  fi
 fi
 
 # --- Module 06: Image to Equirectangular ---
@@ -319,7 +329,9 @@ if module_selected "07"; then
   install_node "Luminance-Stack-Processor" "https://github.com/sumitchatterjee13/Luminance-Stack-Processor"
   install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold"
   echo "Patching ComfyUI-Marigold for numpy 2.0 compatibility..."
-  sed -i 's/\.tostring()/.tobytes()/g' "$NODES_DIR/ComfyUI-Marigold/nodes.py"
+  if [ -f "$NODES_DIR/ComfyUI-Marigold/nodes.py" ]; then
+    sed -i 's/\.tostring()/.tobytes()/g' "$NODES_DIR/ComfyUI-Marigold/nodes.py"
+  fi
 fi
 
 # --- Module 08: Trellis2 3D ---
@@ -340,9 +352,21 @@ if module_selected "09"; then
   install_node "ComfyUI_essentials" "https://github.com/cubiq/ComfyUI_essentials"
   install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch"
   install_node "comfyui-sam2" "https://github.com/neverbiasu/ComfyUI-SAM2"
+  # Remove numpy<2 pin that would downgrade system numpy and break other nodes
+  if [ -f "$NODES_DIR/comfyui-sam2/requirements.txt" ]; then
+    sed -i '/^numpy[<>=!]/d' "$NODES_DIR/comfyui-sam2/requirements.txt"
+    $PIP install -q -r "$NODES_DIR/comfyui-sam2/requirements.txt"
+  fi
   install_node "ComfyUI-SAM3" "https://github.com/PozzettiAndrea/ComfyUI-SAM3"
+  $PIP install -q "comfy-env>=0.3.35"  # normalize comfy-env across Sharp/GeometryPack/SAM3 version pins
   install_node "ComfyUI-VideoHelperSuite" "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
   install_node "ComfyUI-Impact-Pack" "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
+  # Replace git+ SAM2 URL with PyPI package to avoid CUDA compilation from source
+  if [ -f "$NODES_DIR/ComfyUI-Impact-Pack/requirements.txt" ]; then
+    sed -i 's|git+https://github\.com/facebookresearch/sam2[^[:space:]]*|sam2|g' \
+      "$NODES_DIR/ComfyUI-Impact-Pack/requirements.txt"
+    $PIP install -q -r "$NODES_DIR/ComfyUI-Impact-Pack/requirements.txt"
+  fi
   install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use"
   install_node "ComfyUI-WanVideoWrapper" "https://github.com/kijai/ComfyUI-WanVideoWrapper"
   install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes"
@@ -365,6 +389,12 @@ if module_selected "10"; then
   install_node "radiance" "https://github.com/fxtdstudios/radiance"
   install_node "comfyui-rtx-simple" "https://github.com/BetaDoggo/comfyui-rtx-simple"
   install_node "ComfyUI-Impact-Pack" "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
+  # Replace git+ SAM2 URL with PyPI package to avoid CUDA compilation from source
+  if [ -f "$NODES_DIR/ComfyUI-Impact-Pack/requirements.txt" ]; then
+    sed -i 's|git+https://github\.com/facebookresearch/sam2[^[:space:]]*|sam2|g' \
+      "$NODES_DIR/ComfyUI-Impact-Pack/requirements.txt"
+    $PIP install -q -r "$NODES_DIR/ComfyUI-Impact-Pack/requirements.txt"
+  fi
 fi
 
 # --- Bonus A: Texture Extraction ---
@@ -380,7 +410,9 @@ if module_selected "bonus-b"; then
   install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus"
   install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold"
   echo "Patching ComfyUI-Marigold for numpy 2.0 compatibility..."
-  sed -i 's/\.tostring()/.tobytes()/g' "$NODES_DIR/ComfyUI-Marigold/nodes.py"
+  if [ -f "$NODES_DIR/ComfyUI-Marigold/nodes.py" ]; then
+    sed -i 's/\.tostring()/.tobytes()/g' "$NODES_DIR/ComfyUI-Marigold/nodes.py"
+  fi
 fi
 
 
@@ -541,7 +573,12 @@ if [ -n "$MODULES" ]; then
       echo ""
       HF_CLI_BIN="$(dirname "$PYTHON")/huggingface-cli"
       if [ -x "$HF_CLI_BIN" ]; then
-        "$HF_CLI_BIN" login < /dev/tty || true
+        if ! "$HF_CLI_BIN" login < /dev/tty; then
+          echo ""
+          echo "  [WARN] HuggingFace login failed or was cancelled."
+          echo "         Gated model downloads (Module 07) will fail without a valid token."
+          echo "         To log in later: huggingface-cli login"
+        fi
       else
         echo "  huggingface-cli not found. Run manually after install: huggingface-cli login"
       fi
