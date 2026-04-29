@@ -253,8 +253,12 @@ if !PIP_FOUND!==0 (
 
 REM --- Python version check ---
 echo.
-for /f "delims=" %%V in ('"!PYTHON!" -c "import sys; v=sys.version_info; print(str(v.major)+chr(46)+str(v.minor)+chr(46)+str(v.micro))" 2^>nul') do set "PY_VER=%%V"
-for /f "delims=" %%R in ('"!PYTHON!" -c "import sys; print(1 if sys.version_info>=(3,10) else 0)" 2^>nul') do set "PY_OK=%%R"
+"!PYTHON!" -c "import sys; v=sys.version_info; print(str(v.major)+'.'+str(v.minor)+'.'+str(v.micro))" > "%TEMP%\comfyui_pyver.tmp" 2>nul
+set /p PY_VER=<"%TEMP%\comfyui_pyver.tmp"
+del "%TEMP%\comfyui_pyver.tmp" 2>nul
+"!PYTHON!" -c "import sys; print(1 if sys.version_info>=(3,10) else 0)" > "%TEMP%\comfyui_pyok.tmp" 2>nul
+set /p PY_OK=<"%TEMP%\comfyui_pyok.tmp"
+del "%TEMP%\comfyui_pyok.tmp" 2>nul
 echo [check] Python: !PY_VER!
 if "!PY_OK!"=="0" (
     echo.
@@ -291,8 +295,10 @@ REM --- Common dependencies needed by multiple custom nodes ---
 REM opencv-contrib-python is a superset of opencv-python and satisfies all node deps including
 REM   Luminance-Stack-Processor (module 07), radiance, VideoHelperSuite, Impact-Pack, Easy-Use,
 REM   post-processing-nodes, comfy_nv_video_prep. Using contrib avoids opencv conflict on re-runs.
-echo Installing common node dependencies ^(opencv, accelerate, ollama^)...
-"!PYTHON!" -m pip install -q opencv-contrib-python accelerate ollama
+REM huggingface_hub[cli] ensures huggingface-cli.exe is present for login and gated downloads
+REM regardless of whether the Desktop App source dir was detected.
+echo Installing common node dependencies ^(opencv, accelerate, ollama, huggingface-cli^)...
+"!PYTHON!" -m pip install -q opencv-contrib-python accelerate ollama "huggingface_hub[cli]"
 
 REM --- Ensure PyTorch is CUDA-enabled ---
 nvidia-smi > nul 2>&1
