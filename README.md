@@ -25,12 +25,13 @@ Adapted from NVIDIA's GTC 2026 DLI course [*Create Generative AI Workflows for D
 ---
 
 ## Quick Start with Module 01
-#### Install ComfyUI first (if you haven't already)
+##### Linux
+Follow these step-by-step instructions: [LINUX_COMFYUI_INSTALLATION.md](LINUX_COMFYUI_INSTALLATION.md). 
+
 ##### Windows
 Download and install the desktop app from https://www.comfy.org/download.  
-Launch ComfyUI and complete its setup. Close ComfyUI when done. 
-##### Linux
-Download and install ComfyUI for Linux from these step-by-step instructions: [LINUX_COMFYUI_INSTALLATION.md](LINUX_COMFYUI_INSTALLATION.md). 
+Launch ComfyUI and complete its setup. Close ComfyUI when done.  
+And continue below:
 
 #### Clone the NVIDIA GenAI Creator Toolkit GitHub Repo
 ```bash
@@ -43,20 +44,14 @@ cd NVIDIA-GenAI-Creator-Toolkit
 #### Install Module 01
 Pass your ComfyUI installation location — the folder you chose during Desktop App setup.  
 It contains your .venv\, models\, and custom_nodes\ folders.  
-Not sure where it is?   
-> **Windows** Check Desktop App Settings > About > Arguments: --base-directory C:\path\to\your\installation-location
-> 
-> **Linux:** Your ComfyUI folder is `~/ComfyUI` if you followed [LINUX_COMFYUI_INSTALLATION.md](LINUX_COMFYUI_INSTALLATION.md).
+Not sure where it is? Check Desktop App Settings > About > Arguments: --base-directory C:\path\to\your\installation-location
 
 ```bash
-#Windows
 install.bat C:\path\to\your\installation-location --modules 01
-#Linux
-bash install.sh /path/to/your/installation-location --modules 01
 ```
 
 #### Open and Run Module 01's Workflow in ComfyUI
-Start ComfyUI. From Windows open the Desktop app, from Linux see [Step 3 in LINUX_COMFYUI_INSTALLATION.md](LINUX_COMFYUI_INSTALLATION.md#step-3--launch-comfyui)  
+Start ComfyUI. From Windows open the Desktop app.
 Open the Templates window and scroll down to NVIDIA GenAI Creator Toolkit; open module 01.  
   
 ![ComfyUI Template Browser](docs/template.png)  
@@ -100,7 +95,7 @@ bash install.sh /path/to/ComfyUI --modules 02,03
 | bonus-a | [Texture Extraction](workflows/bonus-a-texture-extraction/) | Qwen Image Edit 2511 + Texture LoRA | 24 / 32 GB | ~60 GB | Extract seamless tileable textures from any image |
 | bonus-b | [Texture → PBR](workflows/bonus-b-texture-to-pbr/) | Lotus + Marigold | 24 / 32 GB | ~10 GB | Generate a full PBR material set (Normal, Height, Albedo, Roughness, Metallic) |
 
-> **VRAM — Windows / Linux.** On Windows, NVIDIA weight streaming offloads inactive model layers to system RAM. On Linux, the full model must fit in VRAM. See [LINUX_COMFYUI_INSTALLATION.md](LINUX_COMFYUI_INSTALLATION.md) for platform details.
+> **VRAM — Windows / Linux.** On Windows, NVIDIA weight streaming offloads inactive model layers to system RAM. On Linux, the full model must fit in VRAM.
 > **Disk** — Per-module figures assume that module installed alone. Many modules share large models (Qwen 41 GB base, encoders); installing all 12 together costs ~450 GB, not the sum of individual figures.
 
 ---
