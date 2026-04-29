@@ -871,15 +871,23 @@ if /i not "!MODULES!"=="" (
         choice /c YN /m "  Log in to HuggingFace now?"
         if not errorlevel 2 (
             echo.
-            echo  Running: hf login
-            echo  ^(You will be prompted to enter or paste your HuggingFace token.^)
+            echo  Enter your HuggingFace token when prompted ^(input will be hidden^).
             echo  Get a token at: https://huggingface.co/settings/tokens
+            echo  Tip: right-click to paste in cmd.exe
             echo.
-            "!PYTHON!" -c "from huggingface_hub.commands.cli import main; import sys; sys.argv=['huggingface-cli','login']; main()"
+            "!PYTHON!" -c "from huggingface_hub import interpreter_login; interpreter_login()"
+            if errorlevel 1 (
+                echo.
+                echo  [WARN] HuggingFace login failed or was cancelled.
+                echo         Gated model downloads ^(Module 07, 08^) will fail without a valid token.
+                echo         To log in later, run from a terminal with the ComfyUI venv active:
+                echo           python -c "from huggingface_hub import interpreter_login; interpreter_login^(^)"
+                echo.
+            )
         ) else (
             echo.
             echo  Skipping login. Gated model downloads ^(Module 07, 08^) will fail.
-            echo  To log in later: hf login
+            echo  To log in later: python -c "from huggingface_hub import interpreter_login; interpreter_login^(^)"
         )
     )
     echo.
