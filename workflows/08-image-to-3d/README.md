@@ -72,11 +72,6 @@ A sample input image is provided in the `input/` folder.
 | `facebook/dinov3-vitl16-pretrain-lvd1689m` | ~1 GB |
 | `microsoft/TRELLIS-image-large` | ~3 GB |
 
-Pre-download before running:
-
-```bash
-python download_models.py --comfyui C:\path\to\ComfyUI --modules 08
-```
 
 ## Required Custom Nodes
 
