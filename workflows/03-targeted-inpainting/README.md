@@ -36,8 +36,9 @@ Input Image -> Mask -> Model Conditioning -> Diffusion -> Output Image
 2. In the **Load Image** node, right-click the image thumbnail → **Open in MaskEditor**
 3. Paint over the area you want to change (white = edit, black = keep)
 4. Click **Save** to apply the mask
-5. Set your prompt in the text node (e.g. "Clear this area. Seamlessly fill with the environment.")
-6. Click **Run**
+5. ![comfyui_workflow_03_masking.png](../../docs/comfyui_workflow_03_masking.png)  
+6. Set your prompt in the text node (e.g. "Clear this area. Seamlessly fill with the environment.")
+7. Click **Run**
 
 > **Why does the result look the same?** If no mask is painted, the model has no target area and outputs the original unchanged. Make sure to paint a mask before queuing.
 
@@ -59,10 +60,6 @@ The workflow shows two outputs:
 - **Image Compare** — side-by-side view of the original and the inpainted result
 
 ## ComfyUI Canvas
-### Masking 
-![comfyui_workflow_03_masking.png](../../docs/comfyui_workflow_03_masking.png)  
-Right click on image to get Mask Editor, draw a mask, then save.  
-### Inpainting with Mask
 ![Module 03 node graph](../../docs/comfyui_workflow_03.png)
 
 ## Requirements
