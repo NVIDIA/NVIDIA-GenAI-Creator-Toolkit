@@ -1,4 +1,4 @@
-# Linux Installation (ComfyUI + Manager)
+# Linux Installation (ComfyUI + Manager + Module 01)
 
 You will need three windows open during setup:
 
@@ -10,7 +10,7 @@ You will need three windows open during setup:
 
 ---
 
-**Step 1 — System packages (Ubuntu 24.04):**
+#### Step 1 — System packages (Ubuntu 24.04):
 
 In your SSH window:
 
@@ -24,7 +24,7 @@ sudo apt install git git-lfs ffmpeg libgl1 libglib2.0-0 python3.12-venv screen
 
 ---
 
-**Step 2 — Install ComfyUI:**
+#### Step 2 — Install ComfyUI:
 
 ```bash
 git clone https://github.com/comfyanonymous/ComfyUI
@@ -48,7 +48,7 @@ pip install huggingface_hub
 
 ---
 
-**Step 3 — Launch ComfyUI:**
+#### Step 3 — Test Launch ComfyUI:
 
 Use `screen` so ComfyUI keeps running if your SSH connection drops:
 
@@ -60,20 +60,11 @@ python3 ~/ComfyUI/main.py --listen
 
 Once ComfyUI is running, press **Ctrl+A, D** to detach — ComfyUI stays running in the background and your SSH window is free again.
 
-**Restarting ComfyUI** (required after running the workflow installer or installing new modules):
-
-```bash
-screen -r comfyui        # reattach to the running session
-# press Ctrl+C to stop ComfyUI
-python3 ~/ComfyUI/main.py --listen   # start it again
-# press Ctrl+A, D to detach
-```
-
 > **`--listen` is required on headless Linux machines** — without it, ComfyUI only accepts connections from localhost and the browser tunnel will fail.
 
 ---
 
-**Step 4 — Open the SSH tunnel:**
+#### Step 4 — Open the SSH tunnel:
 
 Open a new **PowerShell** window on your Windows machine and run:
 
@@ -85,16 +76,52 @@ Keep this PowerShell window open — the tunnel stays active as long as the conn
 
 ---
 
-**Step 5 — Open the UI:**
+#### Step 5 - Open the UI:
 
 Open `http://localhost:8188` in your browser.
 
 ---
 
-You can now return to your SSH window. Before continuing with the workflow installer, make sure you are in your home directory:
-
+#### Step 6 - Clone the NVIDIA GenAI Creator Toolkit GitHub Repo
+Before continuing with the workflow installer, make sure you are in your home directory.
 ```bash
 cd ~
+# Clone this repo
+git clone https://github.com/NVIDIA/NVIDIA-GenAI-Creator-Toolkit
+cd NVIDIA-GenAI-Creator-Toolkit
 ```
 
-Then follow the installer instructions in the main README.
+---
+
+#### Step 7 - Install Module 01
+Pass your ComfyUI installation location - It contains your .venv\, models\, and custom_nodes\ folders.   
+>  Your ComfyUI folder is `~/ComfyUI` if you followed the instructions above.
+
+```bash
+bash install.sh /path/to/your/installation-location --modules 01
+```
+
+---
+
+#### Step 8 - Restarting ComfyUI (required after running the workflow installer or installing new modules):
+
+```bash
+screen -r comfyui        # reattach to the running session
+# press Ctrl+C to stop ComfyUI
+python3 ~/ComfyUI/main.py --listen   # start it again
+# press Ctrl+A, D to detach
+```
+
+---
+
+#### Step 9 - Open and Run Module 01's Workflow in ComfyUI
+Start ComfyUI. Open the Templates window and scroll down to NVIDIA GenAI Creator Toolkit; open module 01.  
+  
+![ComfyUI Template Browser](docs/template.png)  
+
+Press the blue run button in ComfyUI and see your prompt improve! 
+  
+![Result from Module 01](docs/resultmodule01.png)  
+
+
+
