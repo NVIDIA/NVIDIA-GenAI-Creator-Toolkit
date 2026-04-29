@@ -123,5 +123,5 @@ Press the blue run button in ComfyUI and see your prompt improve!
   
 ![Result from Module 01](docs/resultmodule01.png)  
 
-
+Head back to the main [README](README.md) to continue installing other Modules, Clean-up, and more general information. 
 
