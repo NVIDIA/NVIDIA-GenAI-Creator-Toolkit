@@ -571,23 +571,11 @@ if [ -n "$MODULES" ]; then
       echo "  (You will be prompted to enter or paste your HuggingFace token.)"
       echo "  Get a token at: https://huggingface.co/settings/tokens"
       echo ""
-      PYTHON_BIN_DIR="$(dirname "$PYTHON")"
-      if [ -x "$PYTHON_BIN_DIR/hf" ]; then
-        HF_CLI_BIN="$PYTHON_BIN_DIR/hf"
-      elif [ -x "$PYTHON_BIN_DIR/huggingface-cli" ]; then
-        HF_CLI_BIN="$PYTHON_BIN_DIR/huggingface-cli"
-      else
-        HF_CLI_BIN=""
-      fi
-      if [ -n "$HF_CLI_BIN" ]; then
-        if ! "$HF_CLI_BIN" login < /dev/tty; then
-          echo ""
-          echo "  [WARN] HuggingFace login failed or was cancelled."
-          echo "         Gated model downloads (Module 07) will fail without a valid token."
-          echo "         To log in later: hf login"
-        fi
-      else
-        $PYTHON -c "from huggingface_hub.commands.cli import main; import sys; sys.argv=['hf','login']; main()" < /dev/tty || true
+      if ! $PYTHON -c "from huggingface_hub.commands.cli import main; import sys; sys.argv=['huggingface-cli','login']; main()" < /dev/tty; then
+        echo ""
+        echo "  [WARN] HuggingFace login failed or was cancelled."
+        echo "         Gated model downloads (Module 07) will fail without a valid token."
+        echo "         To log in later: hf login"
       fi
     else
       echo ""

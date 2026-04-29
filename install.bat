@@ -875,14 +875,7 @@ if /i not "!MODULES!"=="" (
             echo  ^(You will be prompted to enter or paste your HuggingFace token.^)
             echo  Get a token at: https://huggingface.co/settings/tokens
             echo.
-            for %%F in ("!PYTHON!") do set "PYTHON_DIR=%%~dpF"
-            if exist "!PYTHON_DIR!hf.exe" (
-                "!PYTHON_DIR!hf.exe" login
-            ) else if exist "!PYTHON_DIR!huggingface-cli.exe" (
-                "!PYTHON_DIR!huggingface-cli.exe" login
-            ) else (
-                "!PYTHON!" -c "from huggingface_hub.commands.cli import main; import sys; sys.argv=['hf','login']; main()"
-            )
+            "!PYTHON!" -c "from huggingface_hub.commands.cli import main; import sys; sys.argv=['huggingface-cli','login']; main()"
         ) else (
             echo.
             echo  Skipping login. Gated model downloads ^(Module 07, 08^) will fail.
