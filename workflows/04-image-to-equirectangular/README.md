@@ -73,14 +73,13 @@ Green box indicates a prompt box.
 - [ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes)
 - [ComfyUI-Inpaint-CropAndStitch](https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch)
 
-## MickMumpitz360 LoRA Setup
+## Mickmumpitz360 LoRA Setup
 
-This workflow requires the MickMumpitz 360 LoRA, which is not auto-downloaded by the installer. You must obtain it manually:
+This workflow requires the Mickmumpitz 360 LoRA, which is not auto-downloaded by the installer. You must obtain it manually:
 
 1. Subscribe at [patreon.com/Mickmumpitz](https://www.patreon.com/Mickmumpitz)
 2. Download the 360 LoRA for Qwen Image Edit
-3. Rename the file to `MickMumpitz360.safetensors`
-4. Place it in your ComfyUI install at: `models/loras/qwen/MickMumpitz360.safetensors`
+4. Place it in your ComfyUI install at: `models/loras/qwen/Mickmumpitz360.safetensors`
 
 ## Troubleshooting
 
