@@ -1,4 +1,4 @@
-# Custom Nodes — Module 09: Cutout Animation to Video
+# Custom Nodes — Module 06: Cutout Animation to Video
 
 Two workflows are included: `09-cutout-animation-to-video-videoprep.json` (run first) and `09-cutout-animation-to-video.json` (TTM generation).
 

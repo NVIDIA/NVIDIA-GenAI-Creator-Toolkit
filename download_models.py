@@ -258,36 +258,9 @@ def build_module_catalogue() -> dict:
         ],
     )
 
-    # ── Module 04 — Image to Gaussian Splat ─────────────────────────────────
+    # ── Module 04 — Image to Equirectangular ─────────────────────────────────
     catalogue["04"] = ModuleSpec(
         label="Module 04",
-        name="Image to Gaussian Splat",
-        models=[],
-    )
-
-    # ── Module 05 — Novel View Synthesis ────────────────────────────────────
-    catalogue["05"] = ModuleSpec(
-        label="Module 05",
-        name="Novel View Synthesis",
-        models=[
-            QWEN_EDIT_DIFFUSION,
-            QWEN_TEXT_ENCODER,
-            QWEN_VAE,
-            QWEN_LIGHTNING_8STEP,
-            ModelSpec(
-                name="Qwen Sharp Gaussian Splat LoRA",
-                repo="dx8152/Qwen-Image-Edit-2511-Gaussian-Splash",
-                filename="高斯泼溅-Sharp.safetensors",
-                dest_subdir="models/loras",
-                size="~230 MB",
-                rename_to="Qwen2511SharpGaussianSplat.safetensors",
-            ),
-        ],
-    )
-
-    # ── Module 06 — Image to Equirectangular ─────────────────────────────────
-    catalogue["06"] = ModuleSpec(
-        label="Module 06",
         name="Image to Equirectangular",
         models=[
             QWEN_EDIT_DIFFUSION,
@@ -312,9 +285,9 @@ def build_module_catalogue() -> dict:
         ],
     )
 
-    # ── Module 07 — Panorama to HDRI ────────────────────────────────────────
-    catalogue["07"] = ModuleSpec(
-        label="Module 07",
+    # ── Module 05 — Panorama to HDRI ────────────────────────────────────────
+    catalogue["05"] = ModuleSpec(
+        label="Module 05",
         name="Panorama to HDRI",
         models=[
             ModelSpec(
@@ -389,48 +362,9 @@ def build_module_catalogue() -> dict:
         ],
     )
 
-    # ── Module 08 — Image to 3D ──────────────────────────────────────────────
-    catalogue["08"] = ModuleSpec(
-        label="Module 08",
-        name="Image to 3D",
-        models=[
-            ModelSpec(
-                name="TRELLIS.2-4B",
-                repo="microsoft/TRELLIS.2-4B",
-                filename="",
-                dest_subdir="models/microsoft/TRELLIS.2-4B",
-                size="~16 GB",
-                full_repo=True,
-            ),
-            ModelSpec(
-                name="DINOv3 ViT-L/16",
-                repo="facebook/dinov3-vitl16-pretrain-lvd1689m",
-                filename="",
-                dest_subdir="models/facebook/dinov3-vitl16-pretrain-lvd1689m",
-                size="~1 GB",
-                full_repo=True,
-                requires_agreement="https://huggingface.co/facebook/dinov3-vitl16-pretrain-lvd1689m",
-            ),
-            ModelSpec(
-                name="TRELLIS-image-large (shape decoder)",
-                repo="microsoft/TRELLIS-image-large",
-                filename="",
-                dest_subdir="models/microsoft/TRELLIS-image-large",
-                size="~3 GB",
-                full_repo=True,
-            ),
-        ],
-        manual_notes=[
-            "DINOv3 is a gated model — requires a HuggingFace account with Meta's",
-            "data agreement accepted at:",
-            "  https://huggingface.co/facebook/dinov3-vitl16-pretrain-lvd1689m",
-            "Then log in before downloading: hf login",
-        ],
-    )
-
-    # ── Module 09 — Image Cut Out Time to Move ──────────────────────────────
-    catalogue["09"] = ModuleSpec(
-        label="Module 09",
+    # ── Module 06 — Image Cut Out Time to Move ──────────────────────────────
+    catalogue["06"] = ModuleSpec(
+        label="Module 06",
         name="Image Cut Out Time to Move",
         models=[
             WAN_VAE,
@@ -511,9 +445,9 @@ def build_module_catalogue() -> dict:
         ],
     )
 
-    # ── Module 10 — Video to Video ───────────────────────────────────────────
-    catalogue["10"] = ModuleSpec(
-        label="Module 10",
+    # ── Module 07 — Video to Video ───────────────────────────────────────────
+    catalogue["07"] = ModuleSpec(
+        label="Module 07",
         name="Video to Video",
         models=[
             WAN_VAE,
@@ -577,6 +511,45 @@ def build_module_catalogue() -> dict:
                 dest_subdir="models/upscale_models",
                 size="~9 MB",
             ),
+        ],
+    )
+
+    # ── Module 08 — Image to 3D ──────────────────────────────────────────────
+    catalogue["08"] = ModuleSpec(
+        label="Module 08",
+        name="Image to 3D",
+        models=[
+            ModelSpec(
+                name="TRELLIS.2-4B",
+                repo="microsoft/TRELLIS.2-4B",
+                filename="",
+                dest_subdir="models/microsoft/TRELLIS.2-4B",
+                size="~16 GB",
+                full_repo=True,
+            ),
+            ModelSpec(
+                name="DINOv3 ViT-L/16",
+                repo="facebook/dinov3-vitl16-pretrain-lvd1689m",
+                filename="",
+                dest_subdir="models/facebook/dinov3-vitl16-pretrain-lvd1689m",
+                size="~1 GB",
+                full_repo=True,
+                requires_agreement="https://huggingface.co/facebook/dinov3-vitl16-pretrain-lvd1689m",
+            ),
+            ModelSpec(
+                name="TRELLIS-image-large (shape decoder)",
+                repo="microsoft/TRELLIS-image-large",
+                filename="",
+                dest_subdir="models/microsoft/TRELLIS-image-large",
+                size="~3 GB",
+                full_repo=True,
+            ),
+        ],
+        manual_notes=[
+            "DINOv3 is a gated model — requires a HuggingFace account with Meta's",
+            "data agreement accepted at:",
+            "  https://huggingface.co/facebook/dinov3-vitl16-pretrain-lvd1689m",
+            "Then log in before downloading: hf login",
         ],
     )
 
@@ -1091,7 +1064,7 @@ def run_module(comfyui_root: Path, module_key: str, spec: ModuleSpec,
 # Argument parsing and module selection
 # ---------------------------------------------------------------------------
 
-ALL_MODULE_KEYS = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
+ALL_MODULE_KEYS = ["01", "02", "03", "04", "05", "06", "07", "08",
                    "bonus-a", "bonus-b"]
 
 def parse_modules(raw: str) -> list:
@@ -1109,7 +1082,7 @@ def parse_modules(raw: str) -> list:
         if token.isdigit():
             token = token.zfill(2)
         if token not in ALL_MODULE_KEYS:
-            print(f"[ERROR] Unknown module '{token}'. Valid: 01-10, bonus-a, bonus-b", file=sys.stderr)
+            print(f"[ERROR] Unknown module '{token}'. Valid: 01-08, bonus-a, bonus-b", file=sys.stderr)
             sys.exit(1)
         keys.append(token)
     return keys
@@ -1128,7 +1101,7 @@ Examples:
   python download_models.py --comfyui /opt/ComfyUI --modules 02,03,05
 
   # Download a single module
-  python download_models.py --comfyui /opt/ComfyUI --modules 10
+  python download_models.py --comfyui /opt/ComfyUI --modules 07
 
   # Download bonus modules
   python download_models.py --comfyui /opt/ComfyUI --modules bonus-a,bonus-b

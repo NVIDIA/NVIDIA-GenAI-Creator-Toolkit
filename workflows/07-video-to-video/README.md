@@ -1,7 +1,7 @@
 <!-- SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved. -->
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
-# 10 — Playblast to Video
+# 07 — Playblast to Video
 ![](images/preview.gif)
 
 ## Overview
@@ -28,7 +28,7 @@ Turn any basic render (flat shading, no textures, simple lighting) that contains
 ## How to Use
 
 1. Export Depth and Canny passes from your 3D package
-2. Open `10-video-to-video` from the ComfyUI Template Browswer or Workflow Browser
+2. Open `07-video-to-video` from the ComfyUI Template Browswer or Workflow Browser
 3. Connect your render passes and style image, then click **Run**
 
 ## Sample Input
@@ -37,7 +37,7 @@ Sample render frames and video passes are provided in the `input/` folder.
 
 ## ComfyUI Canvas
 
-![Module 10 node graph](../../docs/comfyui_workflow_10.png)  
+![Module 07 node graph](../../docs/comfyui_workflow_07.png)  
 Green box indicates a prompt box.
 
 ## Requirements
@@ -82,10 +82,13 @@ Green box indicates a prompt box.
 In the `WanVideoSampler` node, set `torch_compile_args` to disabled/off. This is a known limitation of ComfyUI Portable's embedded Python on Windows — Triton is unavailable. Generation speed is unaffected for most GPUs.
 
 ### Out of memory on 24 GB VRAM
-Enable maximum CPU offload in the ComfyUI-WanVideoWrapper settings. Module 10 was developed on A100-class hardware; full-resolution generation on 24 GB requires CPU offloading. RTX PRO 6000 (96 GB) is the recommended GPU for comfortable full-resolution generation.
+Enable maximum CPU offload in the ComfyUI-WanVideoWrapper settings. Module 07 was developed on A100-class hardware; full-resolution generation on 24 GB requires CPU offloading. RTX PRO 6000 (96 GB) is the recommended GPU for comfortable full-resolution generation.
 
 ### Depth extraction looks wrong
 Ensure your render exports a proper depth pass (linear depth, not gamma-corrected). Canny/edge pass should use the silhouette render, not the final composite.
 
 ### Generation is very slow
 At 24 GB with max CPU offload, expect 10–25 minutes for a short sequence. Use fewer frames or reduce resolution to speed up iteration.
+
+### Sampling freezes at 0% — RTX 5090 / Blackwell
+Confirmed failure on RTX 5090 (Blackwell, SM_100) and RTX 6000 Max-Q. The workflow processes input frames through depth extraction and conditioning, stages ~32.6 GB across transformer blocks, then freezes at sampling step 0 with no GPU utilization. This is the same Blackwell CUDA kernel compatibility issue as Module 06 — the model loads but execution stalls at the first sampling call. There is no workaround at this time. Track upstream status at [kijai/ComfyUI-WanVideoWrapper](https://github.com/kijai/ComfyUI-WanVideoWrapper). Ada Lovelace GPUs (RTX 4090, A100, H100) are unaffected.

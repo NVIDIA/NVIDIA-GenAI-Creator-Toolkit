@@ -1,4 +1,4 @@
-# Custom Nodes — Module 10: Playblast to Video
+# Custom Nodes — Module 07: Playblast to Video
 
 | Node Pack | Repo | Key Nodes |
 |-----------|------|-----------|

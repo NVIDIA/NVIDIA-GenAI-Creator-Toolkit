@@ -36,7 +36,7 @@ REM   install.bat C:\path\to\installation-location --modules 02,03,08
 REM   install.bat C:\path\to\installation-location --modules all
 REM
 REM Remove model files for a module (frees disk space; shared models are kept):
-REM   install.bat C:\path\to\installation-location --clean --modules 04
+REM   install.bat C:\path\to\installation-location --clean --modules 06
 
 REM Force UTF-8 output so text is visible in all terminals
 chcp 65001 > nul
@@ -327,13 +327,11 @@ if not defined MODULES (
     echo    01       LLM Prompt Enhancer      ^(~65 GB, Gemma3 via Ollama^)
     echo    02       Image Deconstruction     ^(~51 GB^)
     echo    03       Targeted Inpainting      ^(~52 GB^)
-    echo    04       Image to Gaussian Splat  ^(~3 GB^)
-    echo    05       Novel View Synthesis     ^(~60 GB^)
-    echo    06       Image to Equirectangular ^(~61 GB^)
-    echo    07       Panorama to HDRI         ^(~23 GB^)
+    echo    04       Image to Equirectangular ^(~61 GB^)
+    echo    05       Panorama to HDRI         ^(~23 GB^)
+    echo    06       Image Cut Out Time to Move ^(~77 GB^)
+    echo    07       Video to Video           ^(~143 GB^)
     echo    08       Image to 3D              ^(~20 GB^)
-    echo    09       Image Cut Out Time to Move ^(~77 GB^)
-    echo    10       Video to Video           ^(~143 GB^)
     echo    bonus-a  Texture Extraction       ^(~60 GB^)
     echo    bonus-b  Texture to PBR           ^(~10 GB^)
     echo.
@@ -346,7 +344,7 @@ if not defined MODULES (
 REM --- Validate module names ---
 if defined MODULES (
     if /i not "!MODULES!"=="all" (
-        "!PYTHON!" -c "import sys; v={'01','02','03','04','05','06','07','08','09','10','bonus-a','bonus-b'}; bad=[t.strip() for t in sys.argv[1].split(',') if t.strip() and t.strip() not in v]; [print('[ERROR] Unknown module: '+b+'. Valid: 01-10, bonus-a, bonus-b') for b in bad]; sys.exit(len(bad))" "!MODULES!"
+        "!PYTHON!" -c "import sys; v={'01','02','03','04','05','06','07','08','bonus-a','bonus-b'}; bad=[t.strip() for t in sys.argv[1].split(',') if t.strip() and t.strip() not in v]; [print('[ERROR] Unknown module: '+b+'. Valid: 01-08, bonus-a, bonus-b') for b in bad]; sys.exit(len(bad))" "!MODULES!"
         if errorlevel 1 (
             echo.
             exit /b 1
@@ -377,7 +375,7 @@ if !CLEAN!==1 (
     if not defined MODULES (
         echo.
         echo  [ERROR] --clean requires --modules. Specify which modules to clean.
-        echo  Example: install.bat %INSTALL_LOCATION% --clean --modules 04
+        echo  Example: install.bat %INSTALL_LOCATION% --clean --modules 06
         echo.
         exit /b 1
     )
@@ -437,14 +435,12 @@ if !DO_INSTALL!==1 (
     call :install_node "comfyui-ollama" "https://github.com/stavsap/comfyui-ollama" ""
 )
 
-REM --- Modules 02-07, Bonus A+B: TextureAlchemy ---
+REM --- Modules 02-05, Bonus A+B: TextureAlchemy ---
 set DO_INSTALL=0
 echo ,!MODULES!, | findstr /i ",02," > nul 2>&1 && set DO_INSTALL=1
 echo ,!MODULES!, | findstr /i ",03," > nul 2>&1 && set DO_INSTALL=1
 echo ,!MODULES!, | findstr /i ",04," > nul 2>&1 && set DO_INSTALL=1
 echo ,!MODULES!, | findstr /i ",05," > nul 2>&1 && set DO_INSTALL=1
-echo ,!MODULES!, | findstr /i ",06," > nul 2>&1 && set DO_INSTALL=1
-echo ,!MODULES!, | findstr /i ",07," > nul 2>&1 && set DO_INSTALL=1
 echo ,!MODULES!, | findstr /i ",bonus-a," > nul 2>&1 && set DO_INSTALL=1
 echo ,!MODULES!, | findstr /i ",bonus-b," > nul 2>&1 && set DO_INSTALL=1
 if /i "!MODULES!"=="all" set DO_INSTALL=1
@@ -460,29 +456,9 @@ if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch" ""
 )
 
-REM --- Modules 04 + 05: Gaussian Splat ---
+REM --- Module 04: Image to Equirectangular ---
 set DO_INSTALL=0
 echo ,!MODULES!, | findstr /i ",04," > nul 2>&1 && set DO_INSTALL=1
-echo ,!MODULES!, | findstr /i ",05," > nul 2>&1 && set DO_INSTALL=1
-if /i "!MODULES!"=="all" set DO_INSTALL=1
-if !DO_INSTALL!==1 (
-    call :install_node "ComfyUI-Sharp" "https://github.com/PozzettiAndrea/ComfyUI-Sharp" ""
-    call :install_node "ComfyUI-GeometryPack" "https://github.com/PozzettiAndrea/ComfyUI-GeometryPack" ""
-    REM GeometryPack's requirements.txt includes trimesh[easy] which pulls in C++ packages
-    REM (libigl, PyMeshLab, CGAL) that frequently fail silently. Install core viewer packages
-    REM explicitly, then try trimesh with extras and fall back to base if C++ build fails.
-    echo           Installing ComfyUI-GeometryPack viewer dependencies...
-    "!PYTHON!" -m pip install -q "comfy-env>=0.3.35" "comfy-3d-viewers==0.2.41"
-    "!PYTHON!" -m pip install -q "trimesh[easy]>=4.0.0" > nul 2>&1
-    if errorlevel 1 (
-        echo           [NOTE] trimesh C++ extras unavailable -- installing trimesh base.
-        "!PYTHON!" -m pip install -q "trimesh>=4.0.0"
-    )
-)
-
-REM --- Module 06: Image to Equirectangularing ---
-set DO_INSTALL=0
-echo ,!MODULES!, | findstr /i ",06," > nul 2>&1 && set DO_INSTALL=1
 if /i "!MODULES!"=="all" set DO_INSTALL=1
 if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use" ""
@@ -490,9 +466,9 @@ if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes" ""
 )
 
-REM --- Module 07: Panorama to HDRI ---
+REM --- Module 05: Panorama to HDRI ---
 set DO_INSTALL=0
-echo ,!MODULES!, | findstr /i ",07," > nul 2>&1 && set DO_INSTALL=1
+echo ,!MODULES!, | findstr /i ",05," > nul 2>&1 && set DO_INSTALL=1
 if /i "!MODULES!"=="all" set DO_INSTALL=1
 if !DO_INSTALL!==1 (
     call :install_node "Luminance-Stack-Processor" "https://github.com/sumitchatterjee13/Luminance-Stack-Processor" ""
@@ -522,9 +498,9 @@ if !DO_INSTALL!==1 (
     )
     call :install_node "ComfyUI-Trellis2" "https://github.com/visualbruno/ComfyUI-Trellis2" ""
 
-    REM Trellis2 pre-built CUDA wheels require PyTorch <= 2.10.x (C++ ABI compatibility).
-    REM If torch 2.11+ is installed, downgrade to 2.10.0+cu128 before installing wheels.
-    REM All other modules in this collection work fine on PyTorch 2.10.0.
+    REM Trellis2 pre-built CUDA wheels require PyTorch <= 2.8.x (C++ ABI compatibility).
+    REM If torch 2.9+ is installed, downgrade to 2.8.0+cu128 before installing wheels.
+    REM All other modules in this collection work fine on PyTorch 2.8.0.
     "!PYTHON!" -c "import torch; v=torch.__version__.split('+')[0].split('.'); exit(0 if (int(v[0]),int(v[1])) <= (2,8) else 1)" > nul 2>&1
     if errorlevel 1 (
         echo.
@@ -533,7 +509,20 @@ if !DO_INSTALL!==1 (
         echo               include all required packages for Python 3.12^). Downgrading to
         echo               2.8.0+cu128. All other modules remain fully functional.
         echo.
-        "!PYTHON!" -m pip install -q torch==2.8.0 torchaudio==2.8.0 torchvision --index-url https://download.pytorch.org/whl/cu128
+        "!PYTHON!" -m pip install --no-cache-dir torch==2.8.0 torchaudio==2.8.0 torchvision --index-url https://download.pytorch.org/whl/cu128
+        if errorlevel 1 (
+            echo.
+            echo   [ERROR] PyTorch 2.8.0 downgrade failed. This usually means download.pytorch.org
+            echo           was unreachable ^(VPN, firewall, or network issue^).
+            echo.
+            echo           To fix:
+            echo             1. Check your network connection / VPN and re-run the installer.
+            echo             2. Or pre-download wheels manually:
+            echo                pip download torch==2.8.0 torchaudio==2.8.0 torchvision --index-url https://download.pytorch.org/whl/cu128 -d wheels\
+            echo                pip install --no-index --find-links wheels\ torch==2.8.0 torchaudio==2.8.0 torchvision
+            echo.
+            exit /b 1
+        )
         echo   [Module 08] PyTorch downgrade complete.
         echo.
     )
@@ -541,7 +530,7 @@ if !DO_INSTALL!==1 (
     REM Always ensure torchaudio matches torch 2.8.0 — mismatched torchaudio DLL
     REM causes WJNodes and ComfyUI built-in audio nodes to fail on import.
     echo           Ensuring torchaudio 2.8.0 is installed...
-    "!PYTHON!" -m pip install -q torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cu128
+    "!PYTHON!" -m pip install --no-cache-dir torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cu128
 
     REM Install pre-built CUDA wheels — avoids needing MSVC compiler on Windows
     echo.
@@ -594,9 +583,9 @@ if !DO_INSTALL!==1 (
     "!PYTHON!" "%~dp0patch_flash_attn.py" "!NODES_DIR!\ComfyUI-Trellis2"
 )
 
-REM --- Module 09: Image Cut Out Time to Move ---
+REM --- Module 06: Image Cut Out Time to Move ---
 set DO_INSTALL=0
-echo ,!MODULES!, | findstr /i ",09," > nul 2>&1 && set DO_INSTALL=1
+echo ,!MODULES!, | findstr /i ",06," > nul 2>&1 && set DO_INSTALL=1
 if /i "!MODULES!"=="all" set DO_INSTALL=1
 if !DO_INSTALL!==1 (
     call :install_node "comfy_nv_video_prep" "https://github.com/NVIDIA/comfy_nv_video_prep" ""
@@ -629,9 +618,9 @@ if !DO_INSTALL!==1 (
     "!PYTHON!" -m pip install -q triton-windows==3.2.0.post21
 )
 
-REM --- Module 10: Video to Video ---
+REM --- Module 07: Video to Video ---
 set DO_INSTALL=0
-echo ,!MODULES!, | findstr /i ",10," > nul 2>&1 && set DO_INSTALL=1
+echo ,!MODULES!, | findstr /i ",07," > nul 2>&1 && set DO_INSTALL=1
 if /i "!MODULES!"=="all" set DO_INSTALL=1
 if !DO_INSTALL!==1 (
     call :install_node "ComfyUI-WanVideoWrapper" "https://github.com/kijai/ComfyUI-WanVideoWrapper" ""
@@ -857,7 +846,7 @@ if /i not "!MODULES!"=="" (
     echo.
     echo  HuggingFace login is required for:
     echo    - Faster, rate-limit-free downloads
-    echo    - Gated models ^(Module 07 Flux.1-dev, Module 08 DINOv3^)
+    echo    - Gated models ^(Module 05 Flux.1-dev, Module 08 DINOv3^)
     echo.
     set HF_LOGGED_IN=0
     "!PYTHON!" -c "from huggingface_hub import get_token; exit(0 if get_token() else 1)" > nul 2>&1

@@ -1,4 +1,4 @@
-# Custom Nodes — Module 07: Panorama to HDRI
+# Custom Nodes — Module 05: Panorama to HDRI
 
 > **Important:** Do NOT install `ComfyUI-TextureAlchemy` via ComfyUI Manager — Manager installs the wrong branch. Use the `install.sh` / `install.bat` scripts (recommended), or install it manually with the git command below.
 

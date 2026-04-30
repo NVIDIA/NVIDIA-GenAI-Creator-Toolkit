@@ -1,12 +1,12 @@
 <!-- SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved. -->
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
-# 06 — Image to Equirectangular Panorama
+# 04 — Image to Equirectangular Panorama
 ![](images/preview.png)
 
 ## Overview
 
-This workflow turns a single image into a seamless equirectangular panorama for spherical mapping. Equirectangular images require a very specific perspective, so we combine outpainting with LoRAs to extend the scene correctly, then use targeted inpainting to remove seams. This is also the prerequisite for Module 07 (Panorama to HDRI).
+This workflow turns a single image into a seamless equirectangular panorama for spherical mapping. Equirectangular images require a very specific perspective, so we combine outpainting with LoRAs to extend the scene correctly, then use targeted inpainting to remove seams. This is also the prerequisite for Module 05 (Panorama to HDRI).
 
 ## The Problem It Solves
 
@@ -25,7 +25,7 @@ Input Image -> Pad for Outpainting -> LoRA -> Diffusion Model -> Inpainting -> S
 ```
 ## How to Use
 
-1. Open `06-image-to-equirectangular` from the ComfyUI Template Browswer or Workflow Browser
+1. Open `04-image-to-equirectangular` from the ComfyUI Template Browswer or Workflow Browser
 2. Connect your input image and click **Run**
 
 ## Sample Input
@@ -41,7 +41,7 @@ A sample input image is provided in the `input/` folder.
 
 ## ComfyUI Canvas
 
-![Module 06 node graph](../../docs/comfyui_workflow_06.png)  
+![Module 04 node graph](../../docs/comfyui_workflow_04.png)  
 Green box indicates a prompt box.
 
 ## Requirements
@@ -82,4 +82,4 @@ Use the CropAndStitch node's feather setting to soften the join. A seam feather 
 The panorama outpainting requires the input image to be cropped to a 2:1 aspect ratio. Adjust the crop in the workflow before running.
 
 ### Object Remover LoRA not loading
-Check that `Qwen-Image-Edit-2511-Object-Remover.safetensors` exists in `models/loras/qwen/`. Re-run `install.bat / install.sh --modules 06` to re-download.
+Check that `Qwen-Image-Edit-2511-Object-Remover.safetensors` exists in `models/loras/qwen/`. Re-run `install.bat / install.sh --modules 04` to re-download.

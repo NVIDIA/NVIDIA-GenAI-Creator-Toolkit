@@ -1,4 +1,4 @@
-# Models — Module 07: Panorama to HDRI
+# Models — Module 05: Panorama to HDRI
 
 Total storage: ~24.8 GB
 VRAM: 16–24 GB (highest of all modules)

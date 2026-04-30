@@ -1,4 +1,4 @@
-# Models — Module 09: Cutout Animation to Video (Wan TTM)
+# Models — Module 06: Cutout Animation to Video (Wan TTM)
 
 Pre-download strongly recommended — Wan2.2 is large.
 
@@ -28,4 +28,4 @@ hf download Wan-AI/Wan2.2-I2V-14B-480P --local-dir ComfyUI/models/video/wan
 | Qwen Flymy Realism LoRA | `Qwen-flymy_realism.safetensors` | 500 MB | `ComfyUI/models/loras/qwen/` | [flymy-ai/qwen-image-realism-lora](https://huggingface.co/flymy-ai/qwen-image-realism-lora/resolve/main/flymy_realism.safetensors) — **rename to `Qwen-flymy_realism.safetensors` after download** |
 | SAM2 Hiera Tiny | `sam2_hiera_tiny.safetensors` | ~150 MB | `ComfyUI/models/sam2/` | [Kijai/sam2-safetensors](https://huggingface.co/Kijai/sam2-safetensors/resolve/main/sam2_hiera_tiny.safetensors) |
 
-> The Qwen Image Edit 2511 stack is shared with Modules 03, 05, 06, and Bonus A — download once.
+> The Qwen Image Edit 2511 stack is shared with Modules 03, 04, and Bonus A — download once.

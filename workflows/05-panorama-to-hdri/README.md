@@ -1,12 +1,12 @@
 <!-- SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved. -->
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
-# 07 — Panorama to HDRI
+# 05 — Panorama to HDRI
 ![](images/preview.png)
 
 ## Required Gated Models  
 
-Module 7 contains a gated model. Flux.1-dev requires a HuggingFace login and acceptance of the [Black Forest Labs license](https://huggingface.co/black-forest-labs/FLUX.1-dev) for commercial use because The Flux VAE (`ae.safetensors`) is gated. The install script will prompt and wait for you to accept their terms. Run `hf login` and accept the Black Forest Labs license.
+Module 5 contains a gated model. Flux.1-dev requires a HuggingFace login and acceptance of the [Black Forest Labs license](https://huggingface.co/black-forest-labs/FLUX.1-dev) for commercial use because The Flux VAE (`ae.safetensors`) is gated. The install script will prompt and wait for you to accept their terms. Run `hf login` and accept the Black Forest Labs license.
 
 ## Overview
 
@@ -29,13 +29,13 @@ Panoramic Image -> Four LoRAs -> Four Exposure Passes -> Luminance Stack -> HDRI
 ```
 ## How to Use
 
-1. Complete [Module 06](../06-equirectangular-outpainting/) to generate your panorama
-2. Open `07-panorama-to-hdri` from the ComfyUI Template Browswer or Workflow Browser
+1. Complete [Module 04](../04-image-to-equirectangular/) to generate your panorama
+2. Open `05-panorama-to-hdri` from the ComfyUI Template Browswer or Workflow Browser
 3. Connect your panorama and click **Run**
    
 ## Sample Input
 
-Run [Module 06](../06-equirectangular-outpainting/) first to generate a panorama, or use a sample from `input/`.
+Run [Module 04](../04-image-to-equirectangular/) first to generate a panorama, or use a sample from `input/`.
 
 ## Example Output
 
@@ -48,7 +48,7 @@ Run [Module 06](../06-equirectangular-outpainting/) first to generate a panorama
 
 ## ComfyUI Canvas
 
-![Module 07 node graph](../../docs/comfyui_workflow_07.png)
+![Module 05 node graph](../../docs/comfyui_workflow_05.png)
 
 ## Requirements
 
@@ -90,5 +90,5 @@ The Flux VAE (`ae.safetensors`) is gated. Run `hf login` and accept the Black Fo
 ### ComfyUI-Marigold import error / numpy
 The installer patches Marigold for numpy 2.0 compatibility automatically. If you installed Marigold manually via Manager, apply the patch: in `ComfyUI-Marigold/nodes.py`, replace `.tostring()` with `.tobytes()`.
 
-### Run Module 06 first
-This module expects a panoramic equirectangular image as input. Run Module 06 to generate one, or use your own 2:1 aspect ratio panorama.
+### Run Module 04 first
+This module expects a panoramic equirectangular image as input. Run Module 04 to generate one, or use your own 2:1 aspect ratio panorama.

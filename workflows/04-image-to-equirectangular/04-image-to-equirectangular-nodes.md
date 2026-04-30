@@ -1,4 +1,4 @@
-# Custom Nodes — Module 06: Equirectangular Outpainting
+# Custom Nodes — Module 04: Equirectangular Outpainting
 
 Install via ComfyUI Manager → Install Missing Custom Nodes.
 

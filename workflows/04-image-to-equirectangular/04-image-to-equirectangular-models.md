@@ -1,4 +1,4 @@
-# Models — Module 06: Equirectangular Outpainting
+# Models — Module 04: Equirectangular Outpainting
 
 Total storage: ~29.7 GB
 VRAM: 12–16 GB

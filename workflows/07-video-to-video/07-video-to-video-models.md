@@ -1,4 +1,4 @@
-# Models — Module 10: Playblast to Video (Wan VACE)
+# Models — Module 07: Playblast to Video (Wan VACE)
 
 Pre-download strongly recommended.
 
@@ -26,4 +26,4 @@ hf download Wan-AI/Wan2.2-Fun-14B-VACE --local-dir ComfyUI/models/video/wan
 
 > Lotus runs on the input video frames to extract depth conditioning automatically — you do not need to export a depth pass from your 3D application.
 
-> If you downloaded Wan2.2 for Module 09, the text encoder and VAE are shared. Only the diffusion model differs (VACE variant vs I2V).
+> If you downloaded Wan2.2 for Module 06, the text encoder and VAE are shared. Only the diffusion model differs (VACE variant vs I2V).

@@ -1,7 +1,7 @@
 <!-- SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved. -->
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
-# 09 — Cutout Animation to Video
+# 06 — Cutout Animation to Video
 ![](images/preview.gif)
 
 ## Overview
@@ -24,14 +24,14 @@ First Frame + Last Frame + Mask -> VideoPrep -> Wan2.2 I2V -> Video Output
 
 This module includes two workflow files:
 
-1. **`09-image-cut-out-time-to-move-videoprep.json`** — Run this first. Prepares your input images and mask.
-2. **`09-image-cut-out-time-to-move.json`** — The main video generation workflow.
+1. **`06-image-cut-out-time-to-move-videoprep.json`** — Run this first. Prepares your input images and mask.
+2. **`06-image-cut-out-time-to-move.json`** — The main video generation workflow.
 
 ## How to Use
 
-1. Open `09-image-cut-out-time-to-move-videoprep` from the ComfyUI Template Browswer or Workflow Browser and run it to prepare your inputs
+1. Open `06-image-cut-out-time-to-move-videoprep` from the ComfyUI Template Browswer or Workflow Browser and run it to prepare your inputs
 2. Click **Run**
-3. Open `09-image-cut-out-time-to-move` from the ComfyUI Template Browswer or Workflow Browser
+3. Open `06-image-cut-out-time-to-move` from the ComfyUI Template Browswer or Workflow Browser
 4. Connect your prepared inputs and click **Run**
    
 ## Sample Input
@@ -44,10 +44,10 @@ Sample input frames, video, and mask are provided in the `input/` folder.
 ## ComfyUI Canvas
 
 **VideoPrep workflow:**
-![Module 09 VideoPrep node graph](../../docs/comfyui_workflow_09_videoprep.png)
+![Module 06 VideoPrep node graph](../../docs/comfyui_workflow_06_videoprep.png)
 
 **Main workflow:**
-![Module 09 node graph](../../docs/comfyui_workflow_09.png)  
+![Module 06 node graph](../../docs/comfyui_workflow_06.png)  
 Green box indicates a prompt box.
 
 ## Requirements
@@ -90,7 +90,7 @@ Green box indicates a prompt box.
 ## Troubleshooting
 
 ### Two workflows — run VideoPrep first
-This module requires two workflows in sequence. Run `09-image-cut-out-time-to-move-videoprep.json` first to prepare your first frame, last frame, and mask. Then run `09-image-cut-out-time-to-move.json` for video generation. Skipping VideoPrep causes the main workflow to finish in under 1 second with no output.
+This module requires two workflows in sequence. Run `06-image-cut-out-time-to-move-videoprep.json` first to prepare your first frame, last frame, and mask. Then run `06-image-cut-out-time-to-move.json` for video generation. Skipping VideoPrep causes the main workflow to finish in under 1 second with no output.
 
 ### Job finishes in under 1 second with no output
 The video input nodes are empty. Load the VideoPrep outputs (first frame image, last frame image, mask image, and reference video) into the corresponding Load Image / Load Video nodes before queuing. The video loader shows only small red text when empty — easy to miss.
@@ -103,3 +103,6 @@ Triton is not available in ComfyUI Portable's embedded Python on Windows. In the
 
 ### Generation is very slow on 16 GB VRAM
 Enable FP8 quantization and KJNodes block-swap in the workflow. Keep sequences under 24 frames at 480p. 24 GB VRAM is recommended for practical use.
+
+### Sampling freezes at 0% — RTX 5090 / Blackwell
+Confirmed failure on RTX 5090 (Blackwell, SM_100) and RTX 6000 Max-Q. The workflow progresses normally through frame encoding, scheduler setup, and transformer block swapping (~26–27 GB staged), then freezes at sampling step 0 with no GPU utilization. This is a CUDA kernel compatibility issue between ComfyUI-WanVideoWrapper's attention implementation and Blackwell architecture — the model loads successfully but execution stalls at the first sampling call. There is no workaround at this time. Track upstream status at [kijai/ComfyUI-WanVideoWrapper](https://github.com/kijai/ComfyUI-WanVideoWrapper). Ada Lovelace GPUs (RTX 4090, A100, H100) are unaffected.

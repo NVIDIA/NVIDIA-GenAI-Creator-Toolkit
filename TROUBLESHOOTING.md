@@ -42,6 +42,14 @@ ComfyUI Manager scans loaded node types, not the filesystem. If you just ran the
 **Workflow loads but nodes show as red/missing**
 The workflow references node types that aren't installed. Run `install.bat` / `install.sh` and restart ComfyUI, then reload the workflow.
 
+## Hardware Compatibility — Known Issues
+
+**RTX 5090 (Blackwell / SM_100) — Module 08 stalls at SLAT decoder**
+Trellis2's pre-built CUDA extensions (`cumesh`, `nvdiffrast`) were not compiled for Blackwell. Earlier workflow stages complete successfully; the mesh decoder hangs indefinitely. No workaround — waiting on upstream [ComfyUI-Trellis2](https://github.com/visualbruno/ComfyUI-Trellis2) to publish SM_100 wheels. Ada Lovelace (RTX 4090, RTX 6000 Ada) is unaffected.
+
+**RTX 5090 / RTX 6000 Max-Q — Modules 09 and 10 freeze at sampling 0%**
+Wan2.2 models load and stage correctly (26–39 GB across transformer blocks), then freeze at the first sampling step with no GPU activity. The Wan2.2 attention kernels in [ComfyUI-WanVideoWrapper](https://github.com/kijai/ComfyUI-WanVideoWrapper) do not support Blackwell architecture. No workaround — waiting on upstream support. Ada Lovelace and A100/H100 class GPUs are unaffected.
+
 ## Remote Access
 
 **ComfyUI starts but the browser on a remote machine can't connect**

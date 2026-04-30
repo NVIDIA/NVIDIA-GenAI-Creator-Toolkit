@@ -22,7 +22,7 @@
 #   bash install.sh /path/to/ComfyUI --modules all
 #
 # Remove model files for a module (frees disk space; shared models are kept):
-#   bash install.sh /path/to/ComfyUI --clean --modules 04
+#   bash install.sh /path/to/ComfyUI --clean --modules 06
 
 set -euo pipefail
 
@@ -202,13 +202,13 @@ if [ "$CLEAN" != "1" ] && [ -z "$MODULES" ]; then
   echo "   01       LLM Prompt Enhancer      (~65 GB, Gemma3 via Ollama)"
   echo "   02       Image Deconstruction     (~51 GB)"
   echo "   03       Targeted Inpainting      (~52 GB)"
-  echo "   04       Image to Gaussian Splat  (~3 GB)"
-  echo "   05       Novel View Synthesis     (~60 GB)"
-  echo "   06       Image to Equirectangular (~61 GB)"
-  echo "   07       Panorama to HDRI         (~23 GB)"
+  echo "   04       Image to Equirectangular (~61 GB)"
+  echo "   05       Panorama to HDRI         (~23 GB)"
+  echo "   06       Image Cut Out Time to Move (~77 GB)"
+  echo "   07       Video to Video           (~143 GB)"
   echo "   08       Image to 3D              (~20 GB)"
-  echo "   09       Image Cut Out Time to Move (~77 GB)"
-  echo "   10       Video to Video           (~143 GB)"
+  echo ""
+  echo ""
   echo "   bonus-a  Texture Extraction       (~60 GB)"
   echo "   bonus-b  Texture to PBR           (~10 GB)"
   echo ""
@@ -219,13 +219,13 @@ fi
 
 # --- Validate module names ---
 if [ -n "$MODULES" ] && [ "${MODULES,,}" != "all" ]; then
-  _valid=" 01 02 03 04 05 06 07 08 09 10 bonus-a bonus-b "
+  _valid=" 01 02 03 04 05 06 07 08 bonus-a bonus-b "
   IFS=',' read -ra _tokens <<< "$MODULES"
   for _tok in "${_tokens[@]}"; do
     _tok="${_tok// /}"
     if [[ "$_valid" != *" $_tok "* ]]; then
       echo ""
-      echo "[ERROR] Unknown module '$_tok'. Valid: 01-10, bonus-a, bonus-b"
+      echo "[ERROR] Unknown module '$_tok'. Valid: 01-08, bonus-a, bonus-b"
       echo ""
       exit 1
     fi
@@ -242,7 +242,7 @@ if [ "$CLEAN" = "1" ]; then
   if [ -z "$MODULES" ]; then
     echo ""
     echo "[ERROR] --clean requires --modules. Specify which modules to clean."
-    echo "Example: bash install.sh $COMFYUI_DIR --clean --modules 04"
+    echo "Example: bash install.sh $COMFYUI_DIR --clean --modules 06"
     echo ""
     exit 1
   fi
@@ -290,9 +290,9 @@ if module_selected "01"; then
   install_node "comfyui-ollama" "https://github.com/stavsap/comfyui-ollama"
 fi
 
-# --- Modules 02-07, Bonus A+B: TextureAlchemy ---
+# --- Modules 02-05, Bonus A+B: TextureAlchemy ---
 if module_selected "02" || module_selected "03" || module_selected "04" || \
-   module_selected "05" || module_selected "06" || module_selected "07" || \
+   module_selected "05" || \
    module_selected "bonus-a" || module_selected "bonus-b"; then
   install_node "ComfyUI-TextureAlchemy" "https://github.com/amtarr/ComfyUI-TextureAlchemy" "Sandbox"
 fi
@@ -302,30 +302,15 @@ if module_selected "03"; then
   install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch"
 fi
 
-# --- Modules 04 + 05: Gaussian Splat ---
-if module_selected "04" || module_selected "05"; then
-  install_node "ComfyUI-Sharp" "https://github.com/PozzettiAndrea/ComfyUI-Sharp"
-  install_node "ComfyUI-GeometryPack" "https://github.com/PozzettiAndrea/ComfyUI-GeometryPack"
-  # GeometryPack's requirements.txt includes trimesh[easy] which pulls in C++ packages
-  # (libigl, PyMeshLab, CGAL) that frequently fail silently. Install core viewer packages
-  # explicitly, then try trimesh with extras and fall back to base if C++ build fails.
-  echo "          Installing ComfyUI-GeometryPack viewer dependencies..."
-  $PIP install -q "comfy-env>=0.3.35" "comfy-3d-viewers==0.2.41"
-  if ! $PIP install -q "trimesh[easy]>=4.0.0" 2>/dev/null; then
-    echo "          [NOTE] trimesh C++ extras unavailable — installing trimesh base."
-    $PIP install -q "trimesh>=4.0.0"
-  fi
-fi
-
-# --- Module 06: Image to Equirectangular ---
-if module_selected "06"; then
+# --- Module 04: Image to Equirectangular ---
+if module_selected "04"; then
   install_node "ComfyUI-Easy-Use" "https://github.com/yolain/ComfyUI-Easy-Use"
   install_node "ComfyUI-Inpaint-CropAndStitch" "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch"
   install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes"
 fi
 
-# --- Module 07: Panorama to HDRI ---
-if module_selected "07"; then
+# --- Module 05: Panorama to HDRI ---
+if module_selected "05"; then
   install_node "Luminance-Stack-Processor" "https://github.com/sumitchatterjee13/Luminance-Stack-Processor"
   install_node "ComfyUI-Marigold" "https://github.com/kijai/ComfyUI-Marigold"
   echo "Patching ComfyUI-Marigold for numpy 2.0 compatibility..."
@@ -345,8 +330,8 @@ if module_selected "08"; then
   echo ""
 fi
 
-# --- Module 09: Image Cut Out Time to Move ---
-if module_selected "09"; then
+# --- Module 06: Image Cut Out Time to Move ---
+if module_selected "06"; then
   install_node "comfy_nv_video_prep" "https://github.com/NVIDIA/comfy_nv_video_prep"
   install_node "ComfyUI-Custom-Scripts" "https://github.com/pythongosssss/ComfyUI-Custom-Scripts"
   install_node "ComfyUI_essentials" "https://github.com/cubiq/ComfyUI_essentials"
@@ -377,8 +362,8 @@ if module_selected "09"; then
   "$PYTHON" -m pip install -q triton==3.2.0
 fi
 
-# --- Module 10: Video to Video ---
-if module_selected "10"; then
+# --- Module 07: Video to Video ---
+if module_selected "07"; then
   install_node "ComfyUI-WanVideoWrapper" "https://github.com/kijai/ComfyUI-WanVideoWrapper"
   install_node "ComfyUI-Lotus" "https://github.com/kijai/ComfyUI-Lotus"
   install_node "ComfyUI-KJNodes" "https://github.com/kijai/ComfyUI-KJNodes"
@@ -555,7 +540,7 @@ if [ -n "$MODULES" ]; then
   echo ""
   echo "  HuggingFace login is required for:"
   echo "    - Faster, rate-limit-free downloads"
-  echo "    - Gated models (Module 07 Flux.1-dev)"
+  echo "    - Gated models (Module 05 Flux.1-dev)"
   echo ""
   HF_LOGGED_IN=0
   if $PYTHON -c "from huggingface_hub import get_token; exit(0 if get_token() else 1)" 2>/dev/null; then
@@ -579,7 +564,7 @@ if [ -n "$MODULES" ]; then
       fi
     else
       echo ""
-      echo "  Skipping login. Gated model downloads (Module 07) will fail."
+      echo "  Skipping login. Gated model downloads (Module 05) will fail."
       echo "  To log in later: python -c \"from huggingface_hub import login; login(add_to_git_credential=False)\""
     fi
   fi
@@ -591,7 +576,7 @@ if [ -n "$MODULES" ]; then
   # Module 08 (Trellis2) is Windows only — exclude from model downloads on Linux
   DOWNLOAD_MODULES="$MODULES"
   if [ "${MODULES,,}" = "all" ]; then
-    DOWNLOAD_MODULES="01,02,03,04,05,06,07,09,10,bonus-a,bonus-b"
+    DOWNLOAD_MODULES="01,02,03,04,05,06,07,bonus-a,bonus-b"
   else
     DOWNLOAD_MODULES=$(echo "$MODULES" | tr ',' '\n' | grep -v '^08$' | tr '\n' ',' | sed 's/,$//')
   fi

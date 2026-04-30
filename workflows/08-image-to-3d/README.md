@@ -93,5 +93,16 @@ Python 3.11 or 3.12 is required. Python 3.13 has no pre-built wheels for open3d 
 ### PyTorch version downgraded after install
 Expected. Trellis2 pre-built CUDA wheels require PyTorch 2.8.x due to C++ ABI compatibility. The installer downgrades automatically. All other modules continue to work on PyTorch 2.8.0.
 
+### PyTorch 2.8.0 downgrade fails — network error or hash mismatch
+The downgrade downloads ~2.5 GB from `download.pytorch.org`. A VPN, firewall, or network drop can interrupt the download and leave a corrupted pip cache, which then fails hash validation on retry.
+
+To fix:
+1. Check your network connection (disable VPN if active) and re-run `install.bat`.
+2. If hash errors persist, clear pip's cache first: `pip cache purge` then re-run the installer.
+3. The installer uses `--no-cache-dir` automatically, so re-running after restoring connectivity is usually enough.
+
 ### flash_attn import error
 Expected on Windows — no pre-built Windows wheel exists. The installer patches Trellis2 to fall back to `torch.nn.functional.scaled_dot_product_attention` automatically.
+
+### Workflow stalls at "Loading Shape Slat decoder model" — RTX 5090 / Blackwell
+Confirmed failure on RTX 5090 (Blackwell, SM_100) and RTX 6000 Max-Q. Earlier stages (image conditioning, sparse structure, sampling) complete successfully. The SLAT decoder stall is caused by Trellis2's pre-built CUDA extensions (`cumesh`, `nvdiffrast`) not including a Blackwell-compatible build target. This is an upstream issue with [ComfyUI-Trellis2](https://github.com/visualbruno/ComfyUI-Trellis2) — there is no workaround until the author publishes SM_100 wheels. Ada Lovelace GPUs (RTX 4090, RTX 6000 Ada) are unaffected.

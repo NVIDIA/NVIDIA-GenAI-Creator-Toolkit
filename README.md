@@ -80,13 +80,11 @@ bash install.sh /path/to/ComfyUI --modules 02,03
 | 01 | [LLM Prompt Enhancer](workflows/01-llm-prompt-enhancer/) | Gemma 3 via Ollama | 24 / 32 GB | ~65 GB | Build an AI agent that refines weak prompts into model-ready instructions |
 | 02 | [Image Deconstruction](workflows/02-image-deconstruction/) | Qwen Image Layered | 24 / 32 GB | ~51 GB | Split any image into foreground, midground, and background layers |
 | 03 | [Targeted Inpainting](workflows/03-targeted-inpainting/) | Qwen Image Edit 2511 | 24 / 32 GB | ~52 GB | Mask-and-patch editing — change only the pixels you select |
-| 04 | [Image → Gaussian Splat](workflows/04-image-to-gaussian-splat/) | SHARP | 12 / 12 GB | ~3 GB | Convert a 2D image into a navigable 3D Gaussian point cloud |
-| 05 | [Novel View Synthesis](workflows/05-novel-view-synthesis/) | Qwen Image Edit 2511 + LoRA | 24 / 32 GB | ~60 GB | Fill occluded areas in Gaussian Splat output for full camera freedom |
-| 06 | [Image → Equirectangular](workflows/06-image-to-equirectangular/) | Qwen Image Edit 2511 + MikMumpitz 360 LoRA | 24 / 32 GB | ~61 GB | Turn a single image into a seamless 360° panorama |
-| 07 | [Panorama → HDRI](workflows/07-panorama-to-hdri/) | Flux Dev Kontext + Exposure LoRAs | 24 / 32 GB | ~23 GB | Generate a production-ready HDRI from a panoramic image |
+| 04 | [Image → Equirectangular](workflows/04-image-to-equirectangular/) | Qwen Image Edit 2511 + MikMumpitz 360 LoRA | 24 / 32 GB | ~61 GB | Turn a single image into a seamless 360° panorama |
+| 05 | [Panorama → HDRI](workflows/05-panorama-to-hdri/) | Flux Dev Kontext + Exposure LoRAs | 24 / 32 GB | ~23 GB | Generate a production-ready HDRI from a panoramic image |
+| 06 | [Image Cut Out Time to Move](workflows/06-image-cut-out-time-to-move/) | Wan2.2 TTM + VideoPrep | 32 / 48 GB | ~77 GB | Trajectory-controlled video — define exactly when and where motion happens |
+| 07 | [Video to Video](workflows/07-video-to-video/) | Wan2.2 VACE + Lotus | 32 / 48 GB | ~143 GB | Transform a basic 3D render into stylized video — depth extracted automatically |
 | 08 | [Image to 3D](workflows/08-image-to-3d/) | Trellis2 | 24 / 32 GB | ~20 GB | Convert a 2D reference into a textured 3D model with PBR materials |
-| 09 | [Image Cut Out Time to Move](workflows/09-image-cut-out-time-to-move/) | Wan2.2 TTM + VideoPrep | 32 / 48 GB | ~77 GB | Trajectory-controlled video — define exactly when and where motion happens |
-| 10 | [Video to Video](workflows/10-video-to-video/) | Wan2.2 VACE + Lotus | 32 / 48 GB | ~143 GB | Transform a basic 3D render into stylized video — depth extracted automatically |
 
 ### Bonus Modules
 
@@ -102,7 +100,7 @@ bash install.sh /path/to/ComfyUI --modules 02,03
 
 ## Gated models  
 Two modules require accepting a license agreement on HuggingFace before the installer can download them. The installer will prompt you to confirm you've accepted their terms:  
- - **Module 07** (Flux.1-dev — [Black Forest Labs license](https://huggingface.co/black-forest-labs/FLUX.1-dev))  
+ - **Module 05** (Flux.1-dev — [Black Forest Labs license](https://huggingface.co/black-forest-labs/FLUX.1-dev))  
  - **Module 08** (DINOv3 — [Meta license](https://huggingface.co/facebook/dinov3-vitl16-pretrain-lvd1689m), Windows only).
 ---
 
@@ -116,7 +114,7 @@ workflows/01-llm-prompt-enhancer/
 └── 01-llm-prompt-enhancer.json   ← This is the node graph that is visible in ComfyUI. Open it from the Workflow Panel or Template Browser
 ```
 
-Module 09 includes two workflows — run `09-image-cut-out-time-to-move-videoprep.json` first, then `09-image-cut-out-time-to-move.json`.
+Module 06 includes two workflows — run `06-image-cut-out-time-to-move-videoprep.json` first, then `06-image-cut-out-time-to-move.json`.
 
 ---
 
@@ -125,14 +123,11 @@ Module 09 includes two workflows — run `09-image-cut-out-time-to-move-videopre
 Some modules build on each other:
 
 ```
-04 Image → Gaussian Splat
-└── 05 Novel View Synthesis
-
-06 Image → Equirectangular
-└── 07 Panorama → HDRI
+04 Image → Equirectangular
+└── 05 Panorama → HDRI
 
 VideoPrep (helper)
-└── 09 Image Cut Out Time to Move
+└── 06 Image Cut Out Time to Move
 
 Bonus A Texture Extraction
 └── Bonus B Texture → PBR
@@ -145,9 +140,9 @@ All other modules are fully standalone.
 To free up disk space, remove a module's model files with `--clean`. Models shared with other installed modules are kept automatically.
 ```bash
 # Windows:
-install.bat C:\path\to\ComfyUI --clean --modules 04
+install.bat C:\path\to\ComfyUI --clean --modules 06
 # Linux:
-bash install.sh /path/to/ComfyUI --clean --modules 04
+bash install.sh /path/to/ComfyUI --clean --modules 06
 ```
 
 > **What `--clean` removes:** Model files, workflow files, and template browser entries for the specified modules. Custom nodes are left in place. Models shared with other installed modules are automatically kept.
