@@ -82,7 +82,7 @@ bash install.sh /path/to/ComfyUI --modules 02,03
 | 03 | [Targeted Inpainting](workflows/03-targeted-inpainting/) | Qwen Image Edit 2511 | 24 / 32 GB | ~52 GB | Mask-and-patch editing — change only the pixels you select |
 | 04 | [Image → Gaussian Splat](workflows/04-image-to-gaussian-splat/) | SHARP | 12 / 12 GB | ~3 GB | Convert a 2D image into a navigable 3D Gaussian point cloud |
 | 05 | [Novel View Synthesis](workflows/05-novel-view-synthesis/) | Qwen Image Edit 2511 + LoRA | 24 / 32 GB | ~60 GB | Fill occluded areas in Gaussian Splat output for full camera freedom |
-| 06 | [Image → Equirectangular](workflows/06-image-to-equirectangular/) | Qwen Image Edit 2511 + MikMumpitz 360 LoRA | 24 / 32 GB | ~61 GB | Turn a single image into a seamless 360° panorama |
+| 06 | [Image → Equirectangular](workflows/06-image-to-equirectangular/) | Qwen Image Edit 2511 + MickMumpitz 360 LoRA | 24 / 32 GB | ~61 GB | Turn a single image into a seamless 360° panorama |
 | 07 | [Panorama → HDRI](workflows/07-panorama-to-hdri/) | Flux Dev Kontext + Exposure LoRAs | 24 / 32 GB | ~23 GB | Generate a production-ready HDRI from a panoramic image |
 | 08 | [Image to 3D](workflows/08-image-to-3d/) | Trellis2 | 24 / 32 GB | ~20 GB | Convert a 2D reference into a textured 3D model with PBR materials |
 | 09 | [Image Cut Out Time to Move](workflows/09-image-cut-out-time-to-move/) | Wan2.2 TTM + VideoPrep | 32 / 48 GB | ~77 GB | Trajectory-controlled video — define exactly when and where motion happens |

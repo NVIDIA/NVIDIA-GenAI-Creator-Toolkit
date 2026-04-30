@@ -301,14 +301,13 @@ def build_module_catalogue() -> dict:
                 dest_subdir="models/loras/qwen",
                 size="~230 MB",
             ),
-            ModelSpec(
-                name="MikMumpitz 360 LoRA",
-                repo="TheMindExpansionNetwork/special-loras",
-                filename="251018_MICKMUMPITZ_QWEN-EDIT_360_03.safetensors",
-                dest_subdir="models/loras/qwen",
-                size="~280 MB",
-                rename_to="MikMumpitz360.safetensors",
-            ),
+        ],
+        manual_notes=[
+            "MickMumpitz360 LoRA requires a manual download (license unconfirmed for automated distribution).",
+            "1. Subscribe at https://www.patreon.com/Mickmumpitz",
+            "2. Download the 360 LoRA for Qwen Image Edit",
+            "3. Rename the file to MickMumpitz360.safetensors",
+            "4. Place it in: ComfyUI/models/loras/qwen/MickMumpitz360.safetensors",
         ],
     )
 

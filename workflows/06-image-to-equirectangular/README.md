@@ -51,7 +51,7 @@ Green box indicates a prompt box.
 | **VRAM Min. Rec. Windows** | 24 GB |
 | **VRAM Min. Rec. Linux** | 32 GB |
 | **Custom Nodes** | 5 packages |
-| **Models** | 5 files + 1 gated LoRA |
+| **Models** | 5 files + 1 manual LoRA |
 | **Disk Space** | ~61 GB |
 
 ## Required Models
@@ -63,7 +63,7 @@ Green box indicates a prompt box.
 | `qwen_image_vae.safetensors` | VAE | ~255 MB |
 | `Qwen-Image-Lightning-8steps-V2.0.safetensors` | LoRA | ~1.7 GB |
 | `Qwen-Image-Edit-2511-Object-Remover.safetensors` | LoRA | 225 MB |
-| `MikMumpitz360.safetensors` | LoRA | 282 MB |
+| `MickMumpitz360.safetensors` | LoRA (manual) | 282 MB |
 
 ## Required Custom Nodes
 
@@ -72,6 +72,15 @@ Green box indicates a prompt box.
 - [ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use)
 - [ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes)
 - [ComfyUI-Inpaint-CropAndStitch](https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch)
+
+## MickMumpitz360 LoRA Setup
+
+This workflow requires the MickMumpitz 360 LoRA, which is not auto-downloaded by the installer. You must obtain it manually:
+
+1. Subscribe at [patreon.com/Mickmumpitz](https://www.patreon.com/Mickmumpitz)
+2. Download the 360 LoRA for Qwen Image Edit
+3. Rename the file to `MickMumpitz360.safetensors`
+4. Place it in your ComfyUI install at: `models/loras/qwen/MickMumpitz360.safetensors`
 
 ## Troubleshooting
 
