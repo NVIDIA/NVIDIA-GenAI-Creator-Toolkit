@@ -108,6 +108,7 @@ bash install.sh /path/to/your/installation-location --modules 01
 ```bash
 screen -r comfyui        # reattach to the running session
 # press Ctrl+C to stop ComfyUI
+source ~/ComfyUI/venv/bin/activate
 python3 ~/ComfyUI/main.py --listen   # start it again
 # press Ctrl+A, D to detach
 ```
