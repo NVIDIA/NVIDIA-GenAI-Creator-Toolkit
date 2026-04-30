@@ -1332,7 +1332,7 @@
         "Node name for S&R": "LoraLoaderModelOnly"
       },
       "widgets_values": [
-        "qwen/MickMumpitz360.safetensors",
+        "qwen/Mickmumpitz360.safetensors",
         1
       ]
     },
@@ -1473,7 +1473,7 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "In this portion fof the graph we pad the image to support equirectangular dimensions ( 2:1) . Once the image is padded we Fill in the grey areas with a new image. This is known as out painting . We need to insure that our image will map properly on a dome so it needs to be in equirectangular perspective. We achive this by outpainting with a finetuned lora by MickMumpitz. "
+        "In this portion fof the graph we pad the image to support equirectangular dimensions ( 2:1) . Once the image is padded we Fill in the grey areas with a new image. This is known as out painting . We need to insure that our image will map properly on a dome so it needs to be in equirectangular perspective. We achive this by outpainting with a finetuned lora by Mickmumpitz. "
       ],
       "color": "#432",
       "bgcolor": "#653"
