@@ -63,7 +63,7 @@ Green box indicates a prompt box.
 | `qwen_image_vae.safetensors` | VAE | ~255 MB |
 | `Qwen-Image-Lightning-8steps-V2.0.safetensors` | LoRA | ~1.7 GB |
 | `Qwen-Image-Edit-2511-Object-Remover.safetensors` | LoRA | 225 MB |
-| `MickMumpitz360.safetensors` | LoRA (manual) | 282 MB |
+| `Mickmumpitz360.safetensors` | LoRA (manual) | 282 MB |
 
 ## Required Custom Nodes
 
