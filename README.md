@@ -80,7 +80,7 @@ bash install.sh /path/to/ComfyUI --modules 02,03
 | 01 | [LLM Prompt Enhancer](workflows/01-llm-prompt-enhancer/) | Gemma 3 via Ollama | 24 / 32 GB | ~65 GB | Build an AI agent that refines weak prompts into model-ready instructions |
 | 02 | [Image Deconstruction](workflows/02-image-deconstruction/) | Qwen Image Layered | 24 / 32 GB | ~51 GB | Split any image into foreground, midground, and background layers |
 | 03 | [Targeted Inpainting](workflows/03-targeted-inpainting/) | Qwen Image Edit 2511 | 24 / 32 GB | ~52 GB | Mask-and-patch editing — change only the pixels you select |
-| 04 | [Image → Equirectangular](workflows/04-image-to-equirectangular/) | Qwen Image Edit 2511 + MickMumpitz 360 LoRA | 24 / 32 GB | ~61 GB | Turn a single image into a seamless 360° panorama |
+| 04 | [Image → Equirectangular](workflows/04-image-to-equirectangular/) | Qwen Image Edit 2511 + Mickmumpitz 360 LoRA (paid) | 24 / 32 GB | ~61 GB | Turn a single image into a seamless 360° panorama |
 | 05 | [Panorama → HDRI](workflows/05-panorama-to-hdri/) | Flux Dev Kontext + Exposure LoRAs | 24 / 32 GB | ~23 GB | Generate a production-ready HDRI from a panoramic image |
 | 06 | [Image Cut Out Time to Move](workflows/06-image-cut-out-time-to-move/) | Wan2.2 TTM + VideoPrep | 32 / 48 GB | ~77 GB | Trajectory-controlled video — define exactly when and where motion happens |
 | 07 | [Video to Video](workflows/07-video-to-video/) | Wan2.2 VACE + Lotus | 32 / 48 GB | ~143 GB | Transform a basic 3D render into stylized video — depth extracted automatically |
