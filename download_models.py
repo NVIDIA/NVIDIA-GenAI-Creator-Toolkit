@@ -303,11 +303,11 @@ def build_module_catalogue() -> dict:
             ),
         ],
         manual_notes=[
-            "MickMumpitz360 LoRA requires a manual download (license unconfirmed for automated distribution).",
+            "Mickmumpitz360 LoRA requires a manual download (license unconfirmed for automated distribution).",
             "1. Subscribe at https://www.patreon.com/Mickmumpitz",
             "2. Download the 360 LoRA for Qwen Image Edit",
-            "3. Rename the file to MickMumpitz360.safetensors",
-            "4. Place it in: ComfyUI/models/loras/qwen/MickMumpitz360.safetensors",
+            "3. Rename the file to Mickmumpitz360.safetensors",
+            "4. Place it in: ComfyUI/models/loras/qwen/Mickmumpitz360.safetensors",
         ],
     )
 
