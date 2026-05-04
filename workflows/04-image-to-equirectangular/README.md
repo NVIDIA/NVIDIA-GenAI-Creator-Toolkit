@@ -75,9 +75,7 @@ Green box indicates a prompt box.
 
 ## Mickmumpitz QWEN-EDIT_360 LoRA
 
-This workflow uses the Mickmumpitz QWEN-EDIT_360 LoRA, generously shared by creator [Mickmumpitz](https://www.youtube.com/@mickmumpitz). To install:
-
-1. Download the LoRA from [https://huggingface.co/mickmumpitz/QWEN-EDIT_360](https://huggingface.co/mickmumpitz/QWEN-EDIT_360)
+This workflow uses the Mickmumpitz QWEN-EDIT_360 LoRA, generously shared by creator [Mickmumpitz](https://www.youtube.com/@mickmumpitz). It will install the LoRA  automatically when using install.bat or install.sh from [https://huggingface.co/mickmumpitz/QWEN-EDIT_360](https://huggingface.co/mickmumpitz/QWEN-EDIT_360)
 
 ## Troubleshooting
 
