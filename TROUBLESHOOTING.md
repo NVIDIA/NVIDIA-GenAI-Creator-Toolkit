@@ -50,6 +50,9 @@ Trellis2's pre-built CUDA extensions (`cumesh`, `nvdiffrast`) were not compiled 
 **RTX 5090 / RTX 6000 Max-Q — Modules 09 and 10 freeze at sampling 0%**
 Wan2.2 models load and stage correctly (26–39 GB across transformer blocks), then freeze at the first sampling step with no GPU activity. The Wan2.2 attention kernels in [ComfyUI-WanVideoWrapper](https://github.com/kijai/ComfyUI-WanVideoWrapper) do not support Blackwell architecture. No workaround — waiting on upstream support. Ada Lovelace and A100/H100 class GPUs are unaffected.
 
+**RTX SPARK Does not run**
+This repository was not designed for Windows on Arm, and support is not provided. 
+
 ## Remote Access
 
 **ComfyUI starts but the browser on a remote machine can't connect**
